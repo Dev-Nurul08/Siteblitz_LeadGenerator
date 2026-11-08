@@ -62,3 +62,22 @@
 - **Not done, needs a decision:** (1) treat "listed domain has no DNS record, confirmed by a second resolver" as
   Website down immediately instead of waiting 6 h (changes approved spec row 6); (2) widen the area beyond the
   city when it has fewer businesses than asked (measured gain small: Udaipur dentists 102 → 112 at 3× area).
+
+## 2026-11-08 — fifth request (city test: India, Bangladesh, Afghanistan + top 50 countries, 10 ChatGPT rounds)
+- **Geocoder takes the first settlement hit** (city / town / village / municipality) of 5, retries without the
+  state when the state-qualified lookup only finds a landmark, and trims a city boundary larger than 1.5° to the
+  1.5° square around the city's point (inside the boundary; the job and the Find screen show it). Found live:
+  Beijing → a 1 × 2 km business district, Ho Chi Minh City → a TV station building, Shenzhen → rejected; all 0.
+  After: Shenzhen 0 → 522 available. A state or district hit is still rejected, never trimmed.
+- **A repeat search lists what it found again** (`source_job_sightings`). Before: a job whose records an earlier
+  job had saved showed nothing under "View businesses", the map, export and website checks (Pimpri-Chinchwad:
+  300 found, 19 listed, because its box overlaps Pune's).
+- **Find screen offers all 249 ISO countries** (it had 10 — Bangladesh and Afghanistan could not be chosen).
+- **Public Overpass stopped answering this machine** after three test processes ran at once (connection refused
+  for 40+ cities). The test continued with Overture only. Per-process Overpass lock is a global queue only while
+  one API process runs.
+- **Open (founder):** production OpenStreetMap data from Geofabrik country extracts processed locally (ChatGPT R5:
+  ≈ $24–96 / month, 3–5 developer days) instead of public Overpass — proposed as phase 11.
+- **Open (founder + counsel):** Overture's Places guide says joining Places with OSM "may need to carry the Open
+  Database License (ODbL) if it is a derivative database". "All sources" joins them. Internal use only today;
+  get advice before any merged list leaves the company.
