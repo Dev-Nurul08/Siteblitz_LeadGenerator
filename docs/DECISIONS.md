@@ -81,3 +81,13 @@
 - **Open (founder + counsel):** Overture's Places guide says joining Places with OSM "may need to carry the Open
   Database License (ODbL) if it is a derivative database". "All sources" joins them. Internal use only today;
   get advice before any merged list leaves the company.
+- **Overture results are limited to the chosen country** (address country). Measured in six boxes, 7,834 dentist
+  places: none lacks an address country, so the filter is complete there. Shenzhen 522 → 43 CN; Tijuana −377 US.
+- **Geocoder uses a settlement only when it carries the requested name** (any language, old or alternative name);
+  a city beats a same-named village (Nanded); a name that only matches a building is "not found"; a province-only
+  name (Tokyo) is rejected — ChatGPT R6 and Claude agreed not to search a province's admin centre automatically
+  (Buenos Aires province → La Plata). Ward names work (Shinjuku 485).
+- **Open (founder):** Foursquare Open Source Places (Apache 2.0; names, phone, email, website, socials) as a third
+  source for countries where Overture is thin (Iran, China). Needs a free Places Portal account + access token
+  created by the founder; the paid Foursquare API terms forbid lead generation, the open dataset does not.
+  Proposed as phase 12 (incremental-coverage test first: keep it only if it adds ≥ 20 % verified unique businesses).
