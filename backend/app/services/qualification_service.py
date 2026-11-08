@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Optional, Set
 
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from backend.app.engines.qualification.ai_personalizer import AIPersonalizer
 from backend.app.engines.qualification.compliance_evaluator import ComplianceEvaluator
@@ -59,7 +60,14 @@ class QualificationService:
         Evaluate and qualify a business for sales outreach.
         """
         # 1. Fetch Business
-        b_stmt = select(Business).where(Business.id == business_id)
+        # The pitch template reads business.city / business.category, which walk the
+        # locations / categories relationships. Lazy loading is not allowed in async
+        # SQLAlchemy (raises MissingGreenlet → HTTP 500), so load them up front.
+        b_stmt = (
+            select(Business)
+            .where(Business.id == business_id)
+            .options(selectinload(Business.locations), selectinload(Business.categories))
+        )
         business = (await self.session.execute(b_stmt)).scalar_one_or_none()
         if not business:
             return {"error": f"Business #{business_id} not found."}

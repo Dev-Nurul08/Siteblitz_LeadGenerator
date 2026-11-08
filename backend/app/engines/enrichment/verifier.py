@@ -80,10 +80,10 @@ class VerificationResult:
     is_valid_syntax: bool
     is_disposable: bool
     is_role_based: bool
-    is_free_email: bool
     has_valid_mx: bool
     verification_score: float  # 0.0 to 1.0
     domain: str
+    is_free_email: bool = False
     mx_records: list[str] = field(default_factory=list)
     mail_provider: Optional[str] = None
     suggested_correction: Optional[str] = None

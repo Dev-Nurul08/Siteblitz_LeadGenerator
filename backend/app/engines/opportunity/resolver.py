@@ -5,7 +5,10 @@ Validates URLs, tests HTTP reachability, follows redirects, checks SSL,
 and determines canonical website status (FOUND, BROKEN, UNDER_CONSTRUCTION, NOT_FOUND).
 """
 
+import asyncio
 from dataclasses import dataclass
+import ipaddress
+import socket
 import time
 from typing import Optional
 from urllib.parse import urlparse
@@ -16,6 +19,28 @@ import structlog
 from backend.app.models.business import WebsiteStatus
 
 logger = structlog.get_logger(__name__)
+
+
+class UnsafeDestinationError(Exception):
+    """Raised when a URL points at a private / internal network address."""
+
+
+async def ensure_public_destination(request: httpx.Request) -> None:
+    """
+    httpx request hook (SSRF guard). Website URLs come from CSV files and API edits, so without
+    this a business "website" of http://127.0.0.1:8000/… or a cloud metadata address would make
+    the server fetch internal pages. httpx runs request hooks for every redirect hop as well.
+    """
+    host = request.url.host
+    port = request.url.port or (443 if request.url.scheme == "https" else 80)
+    try:
+        infos = await asyncio.get_running_loop().getaddrinfo(host, port, type=socket.SOCK_STREAM)
+    except socket.gaierror:
+        return  # unknown domain: let httpx raise its normal connection error
+    for info in infos:
+        address = ipaddress.ip_address(info[4][0].split("%")[0])
+        if not address.is_global or address.is_multicast:
+            raise UnsafeDestinationError(f"{host} resolves to non-public address {address}")
 
 
 @dataclass
@@ -88,6 +113,7 @@ class WebsiteResolver:
                 timeout=self.timeout_seconds,
                 follow_redirects=True,
                 verify=True,  # Test SSL certificate
+                event_hooks={"request": [ensure_public_destination]},
             ) as client:
                 response = await client.get(normalized, headers=client_headers)
                 elapsed = time.monotonic() - start_time
@@ -137,6 +163,7 @@ class WebsiteResolver:
                     async with httpx.AsyncClient(
                         timeout=self.timeout_seconds,
                         follow_redirects=True,
+                        event_hooks={"request": [ensure_public_destination]},
                     ) as client:
                         response = await client.get(http_fallback, headers=client_headers)
                         elapsed = time.monotonic() - start_time
@@ -159,6 +186,15 @@ class WebsiteResolver:
                 is_reachable=False,
                 status=WebsiteStatus.BROKEN,
                 error_message="Could not establish connection to host",
+            )
+
+        except UnsafeDestinationError as e:
+            logger.warning("website_resolve_blocked", url=normalized, error=str(e))
+            return ResolutionResult(
+                original_url=normalized,
+                is_reachable=False,
+                status=WebsiteStatus.BROKEN,
+                error_message=f"Blocked: {e}",
             )
 
         except httpx.TimeoutException:

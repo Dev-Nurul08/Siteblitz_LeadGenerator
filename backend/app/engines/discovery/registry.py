@@ -13,6 +13,8 @@ from backend.app.engines.discovery.base import BaseSourceAdapter
 
 logger = structlog.get_logger(__name__)
 
+ADAPTER_PACKAGE = "backend.app.engines.discovery."
+
 
 class SourceAdapterRegistry:
     """
@@ -65,6 +67,9 @@ class SourceAdapterRegistry:
             raise ValueError(
                 f"Adapter '{slug}' not registered and no class_path provided"
             )
+        # Never import a module named by stored/request data outside the adapters package.
+        if not class_path.startswith(ADAPTER_PACKAGE):
+            raise ValueError(f"Adapter class must live in {ADAPTER_PACKAGE}*: got '{class_path}'")
 
         try:
             module_path, class_name = class_path.rsplit(".", 1)

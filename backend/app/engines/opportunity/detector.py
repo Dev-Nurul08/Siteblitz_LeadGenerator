@@ -205,40 +205,9 @@ class OpportunityDetector:
                     )
                 )
 
-            # ─────────────────────────────────────────────────────────────
-            # B) MOBILE_APP Opportunity
-            # ─────────────────────────────────────────────────────────────
-            is_mobile_app_target = any(
-                any(cand in cat for cand in MOBILE_APP_CANDIDATE_CATEGORIES)
-                for cat in categories
-            )
-            if is_mobile_app_target:
-                needs.append(
-                    DetectedNeed(
-                        service_category=ServiceCategory.MOBILE_APP,
-                        title=f"Custom iOS & Android Mobile App for {business.name}",
-                        summary=(
-                            f"As a high-frequency customer business in {business.country_code or 'the regional market'}, "
-                            f"{business.name} can unlock direct push-notification loyalty and eliminate third-party "
-                            f"intermediary fees through an owned native mobile app."
-                        ),
-                        evidence={
-                            "matched_categories": categories,
-                            "industry_fit": "high_frequency_repeat_customer",
-                            "has_website": True,
-                        },
-                        pitch_angles=[
-                            "Direct home-screen icon presence with zero-cost push notifications that boast 90%+ open rates",
-                            "Bypass high aggregator commissions (DoorDash, UberEats, Fresha, ClassPass) with an owned app",
-                            "Integrated customer loyalty points, fast re-orders, and frictionless 1-tap Apple Pay / Google Pay",
-                            "Strengthen repeat client lifetime value (LTV) by an estimated 35-50%",
-                        ],
-                        need_severity=0.80,
-                        estimated_value_usd=18000.0,
-                        urgency_level="STANDARD",
-                        competitive_advantage="Owned direct customer channel free from third-party marketplace commission cuts.",
-                    )
-                )
+            # B) Mobile Application: removed (spec website-intelligence.md row 18). A category is
+            # not evidence that a business needs an app; every reachable restaurant/clinic used
+            # to get a CRITICAL "Mobile App" opportunity.
 
             # ─────────────────────────────────────────────────────────────
             # C) ONLINE_BOOKING Opportunity

@@ -11,6 +11,7 @@ from typing import Optional
 import structlog
 from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from backend.app.engines.discovery.base import AdapterResult, BaseSourceAdapter, DiscoveredBusiness
 from backend.app.engines.discovery.normalizer import BusinessNormalizer
@@ -121,6 +122,12 @@ class DiscoveryService:
             job.records_new = stats["new"]
             job.records_duplicate = stats["duplicate"]
             job.records_error = stats["errors"]
+            # Surface the source's own reason on the job; it used to live only in
+            # ingestion_errors, so a PARTIAL job with 0 results showed no explanation.
+            if result.errors:
+                job.error_message = "; ".join(
+                    e.get("message", "unknown error") for e in result.errors[:3]
+                )[:1000]
 
             if result.has_more:
                 job.last_cursor = result.next_cursor
@@ -132,6 +139,8 @@ class DiscoveryService:
                 "source": source_slug,
                 "status": job.status.value,
                 **stats,
+                # The Discovery result card shows this under the counts.
+                **({"error": job.error_message} if job.error_message else {}),
             }
 
         except Exception as e:
@@ -311,9 +320,13 @@ class DiscoveryService:
 
         country = self.normalizer.normalize_country_code(discovered.country_code)
 
-        # Query candidates by normalized name
-        stmt = select(Business).where(
-            Business.normalized_name == normalized_name,
+        # Query candidates by normalized name, with their locations: without the stored city /
+        # coordinates every same-name business in the country looked like a duplicate, so two
+        # different "Sharma Sweets" in Pune and Delhi were merged and the second was lost.
+        stmt = (
+            select(Business)
+            .where(Business.normalized_name == normalized_name)
+            .options(selectinload(Business.locations))
         )
         if country:
             stmt = stmt.where(Business.country_code == country)
@@ -322,17 +335,22 @@ class DiscoveryService:
         candidates = result.scalars().all()
 
         for candidate in candidates:
+            location = candidate.locations[0] if candidate.locations else None
             is_dup, confidence = self.normalizer.is_potential_duplicate(
                 discovered.name,
                 candidate.name,
                 city1=discovered.city,
-                city2=None,  # Would need to join locations
+                city2=location.city if location else None,
                 country1=country,
                 country2=candidate.country_code,
                 lat1=discovered.latitude,
                 lon1=discovered.longitude,
+                lat2=location.latitude if location else None,
+                lon2=location.longitude if location else None,
             )
-            if is_dup and confidence >= 0.50:
+            # 0.70 = the normalizer's "same city" / "within 5 km" levels. Lower levels (same name,
+            # unknown place) are not enough evidence to merge two records.
+            if is_dup and confidence >= 0.70:
                 return candidate
 
         return None

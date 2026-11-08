@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "siteblitz-lead-intelligence"
@@ -16,6 +16,14 @@ dependencies = [
     "asyncpg>=0.30.0",
     "alembic>=1.14.0",
     "psycopg2-binary>=2.9.9",
+    # SQLite driver so the API can run without a Postgres server (DATABASE_URL=sqlite+aiosqlite:///...)
+    "aiosqlite>=0.20.0",
+    # Imported at startup by the email verifier (contacts API); the app cannot boot without it
+    "dnspython>=2.6.0",
+    # Reads Overture Maps Places GeoParquet from S3 by bounding box (Overture source adapter)
+    "duckdb>=1.3.0",  # 1.3 introduced the `lambda x: ...` syntax used in the query
+    # PDF export of businesses (pure-Python PDF writer)
+    "fpdf2>=2.8.0",
     # Background Jobs
     "redis>=5.0.0",
     "rq>=1.16.0",
@@ -57,6 +65,11 @@ phase2 = [
 phase3 = [
     "dnspython>=2.6.0",
 ]
+
+# Only the Python backend is a package; without this, setuptools' flat-layout discovery
+# also sees frontend/ and refuses to build ("multiple top-level packages").
+[tool.setuptools.packages.find]
+include = ["backend*"]
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]

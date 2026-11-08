@@ -10,6 +10,7 @@ Attribution: © OpenStreetMap contributors
 Docs: https://wiki.openstreetmap.org/wiki/Overpass_API
 """
 
+import re
 from typing import Optional
 
 import httpx
@@ -32,6 +33,20 @@ OVERPASS_ENDPOINTS = [
 
 # Nominatim for city → coordinate geocoding
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+
+# overpass-api.de answers HTTP 406 to generic client User-Agents (verified 2026-11-08 with
+# httpx's default "python-httpx/x.y"), so every request must identify the tool.
+OVERPASS_USER_AGENT = "SiteBlitzLeadGenerator/0.2 (internal business research tool)"
+
+
+def _ql_escape(value: str) -> str:
+    """Escape user text for use inside a double-quoted Overpass QL string."""
+    return value.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def _ql_regex_escape(value: str) -> str:
+    """Escape user text for use as a literal inside an Overpass QL (POSIX ERE) regex string."""
+    return _ql_escape(re.sub(r"([.^$*+?()\[\]{}|\\])", r"\\\1", value))
 
 # OSM amenity/shop tags that map to business categories
 OSM_BUSINESS_TAGS = {
@@ -213,54 +228,80 @@ async def _geocode_city(city: str, country_code: str = None) -> tuple[float, flo
 
 
 def _build_overpass_query(
-    *,
-    latitude: float,
-    longitude: float,
-    radius_km: float = 5.0,
+    latitude: Optional[float] = None,
+    longitude: Optional[float] = None,
+    radius_km: Optional[float] = 5.0,
     category: Optional[str] = None,
     max_results: int = 500,
+    city: Optional[str] = None,
+    country_code: Optional[str] = None,
 ) -> str:
     """
-    Build an Overpass QL query using coordinate + radius (the most reliable method).
+    Build an Overpass QL query using coordinate + radius or city/country area search.
     """
-    radius_m = int(radius_km * 1000)
-    around = f"(around:{radius_m},{latitude},{longitude})"
+    area_setup = ""
+    if latitude is not None and longitude is not None:
+        radius_m = int((radius_km or 5.0) * 1000)
+        area_filter = f"(around:{radius_m},{float(latitude)},{float(longitude)})"
+    elif city and country_code:
+        cc = _ql_escape(country_code.strip().upper())
+        city_re = _ql_regex_escape(city.strip())
+        area_filter = "(area.searchArea)"
+        area_setup = (
+            f'area["ISO3166-1"="{cc}"]["admin_level"="2"]->.country;\n'
+            f'rel(area.country)["boundary"="administrative"]'
+            f'[~"^name(:en)?$"~"^{city_re}$",i];\n'
+            f"map_to_area->.searchArea;\n"
+        )
+    elif city:
+        area_filter = "(area.searchArea)"
+        area_setup = (
+            f'area["name"="{_ql_escape(city.strip())}"]["boundary"="administrative"]->.searchArea;\n'
+        )
+    elif country_code:
+        area_filter = "(area.searchArea)"
+        area_setup = (
+            f'area["ISO3166-1"="{_ql_escape(country_code.strip().upper())}"]'
+            f'["admin_level"="2"]->.searchArea;\n'
+        )
+    else:
+        raise TypeError("Must provide either coordinates+radius or city/country")
 
     if category:
-        tag_queries = _build_category_queries(category, around)
+        tag_queries = _build_category_queries(category, area_filter)
     else:
-        tag_queries = _build_all_business_queries(around)
+        tag_queries = _build_all_business_queries(area_filter)
 
     timeout = min(60, max(25, max_results // 10))
 
     query = f"""[out:json][timeout:{timeout}];
-(
+{area_setup}(
 {tag_queries}
 );
-out center {max_results};"""
-    return query
+out center {int(max_results)};"""
+    return query.strip()
 
 
-def _build_category_queries(category: str, around: str) -> str:
+def _build_category_queries(category: str, area_filter: str) -> str:
     """Build Overpass queries for a specific category."""
     clean = category.lower().strip().replace(" ", "_")
     queries = []
 
     for tag_key, tag_values in OSM_BUSINESS_TAGS.items():
         if clean in tag_values:
-            queries.append(f'  nwr["{tag_key}"="{clean}"]{around};')
+            queries.append(f'  nwr["{tag_key}"="{clean}"]{area_filter};')
 
     if not queries:
-        # Fallback: search as name pattern
-        queries.append(f'  nwr["name"~"{category}",i]{around};')
+        name_re = _ql_regex_escape(category)
+        queries.append(f'  nwr["name"~"{name_re}",i]{area_filter};')
 
     return "\n".join(queries)
 
 
-def _build_all_business_queries(around: str) -> str:
+def _build_all_business_queries(area_filter: str) -> str:
     """Build Overpass queries for all business types."""
     main_tags = ["amenity", "shop", "tourism", "office"]
-    queries = [f'  nwr["{tag}"]["name"]{around};' for tag in main_tags]
+    queries = [f'  nwr["{tag}"]["name"]{area_filter};' for tag in main_tags]
     return "\n".join(queries)
 
 
@@ -359,7 +400,7 @@ class OSMAdapter(BaseSourceAdapter):
             data = None
             last_err = None
             headers = {
-                "User-Agent": "SiteBlitz-LeadIntelligence/1.0 (contact@siteblitz.io)",
+                "User-Agent": OVERPASS_USER_AGENT,
                 "Accept": "application/json",
             }
 

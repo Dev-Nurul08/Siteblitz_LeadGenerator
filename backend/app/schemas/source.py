@@ -3,11 +3,21 @@ Pydantic schemas for Source, SourceJob, and SourceRecord models.
 """
 
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field
 
 from backend.app.models.source import JobStatus, SourceLicense, SourceStatus
+from backend.app.schemas.types import HttpUrl, Opt, OptionalText, Slug, Text
+
+# The registry imports adapter_class by name. Accepting any dotted path from a request would let
+# a caller make the server import arbitrary modules, so only the built-in adapters are allowed.
+KNOWN_ADAPTER_CLASSES = Literal[
+    "backend.app.engines.discovery.osm.OSMAdapter",
+    "backend.app.engines.discovery.overture.OvertureAdapter",
+    "backend.app.engines.discovery.csv_import.CSVImportAdapter",
+    "backend.app.engines.discovery.wikidata.WikidataAdapter",
+]
 
 
 # ─── Source Schemas ──────────────────────────────────────────────
@@ -35,24 +45,38 @@ class SourceBase(BaseModel):
 
 
 class SourceCreate(SourceBase):
-    """Schema for creating a new source."""
+    """Schema for registering a new source (validated; limits = DB column sizes)."""
 
-    pass
+    model_config = {"extra": "forbid"}
+
+    name: Text(200, min_length=2)
+    slug: Slug
+    description: OptionalText() = None
+    license_url: Opt(HttpUrl) = None
+    license_notes: OptionalText() = None
+    attribution_text: OptionalText(500) = None
+    max_cache_duration_hours: Optional[int] = Field(None, ge=0)
+    api_base_url: Opt(HttpUrl) = None
+    # 1000 = the CSV adapter's own ceiling, the highest rate any built-in adapter uses
+    rate_limit_rpm: int = Field(30, ge=1, le=1000)
+    adapter_class: KNOWN_ADAPTER_CLASSES
 
 
 class SourceUpdate(BaseModel):
     """Schema for updating a source. All fields optional."""
 
-    name: Optional[str] = Field(None, max_length=200)
-    description: Optional[str] = None
+    model_config = {"extra": "forbid"}
+
+    name: Optional[Text(200, min_length=2)] = None
+    description: OptionalText() = None
     license_type: Optional[SourceLicense] = None
-    license_url: Optional[str] = None
-    license_notes: Optional[str] = None
+    license_url: Opt(HttpUrl) = None
+    license_notes: OptionalText() = None
     attribution_required: Optional[bool] = None
     allows_commercial_storage: Optional[bool] = None
     allows_contact_enrichment: Optional[bool] = None
     allows_marketing_use: Optional[bool] = None
-    rate_limit_rpm: Optional[int] = None
+    rate_limit_rpm: Optional[int] = Field(None, ge=1, le=1000)
     status: Optional[SourceStatus] = None
 
 

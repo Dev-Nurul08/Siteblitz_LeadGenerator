@@ -50,6 +50,14 @@ export const api = {
       body: JSON.stringify(data),
     }),
     stats: async () => request('/api/v1/businesses/stats/overview'),
+    // Download link for CSV (all columns) or PDF (summary table) of the businesses matching params.
+    exportUrl: (params = {}, format = 'csv') => {
+      const query = new URLSearchParams({ format })
+      for (const [key, val] of Object.entries(params)) {
+        if (val !== undefined && val !== null && val !== '') query.append(key, val)
+      }
+      return `/api/v1/businesses/export?${query.toString()}`
+    },
   },
 
   sources: {
@@ -234,10 +242,36 @@ export const api = {
       if (params.segment) q.set('segment', params.segment)
       if (params.recipe) q.set('recipe', params.recipe)
       if (params.limit) q.set('limit', params.limit)
-      const qs = q.toString()
-      return request(`/api/v1/lead-radar/evaluations${qs ? `?${qs}` : ''}`)
+      const queryStr = q.toString()
+      return request(`/api/v1/lead-radar/evaluations${queryStr ? `?${queryStr}` : ''}`)
     },
   },
+
+  // Map points + live source health (redesign v2)
+  points: async (params = {}) => request(`/api/v1/businesses/points?${qs(params)}`),
+  sourceHealth: async (slug) => request(`/api/v1/discovery/source-health/${slug}`),
+
+  // Website Intelligence (phase 2): verdicts, need score, tiers, evidence, labels, contact log
+  intelligence: {
+    assess: async (id, includeFranchises = false) => request(`/api/v1/intelligence/assess/${id}?include_franchises=${includeFranchises}`, { method: 'POST' }),
+    assessBatch: async (params = {}) => request(`/api/v1/intelligence/assess-batch?${qs(params)}`, { method: 'POST' }),
+    leads: async (params = {}) => request(`/api/v1/intelligence/leads?${qs(params)}`),
+    stats: async () => request('/api/v1/intelligence/stats'),
+    detail: async (id) => request(`/api/v1/intelligence/business/${id}`),
+    manualSearch: async (id, body) => request(`/api/v1/intelligence/business/${id}/manual-search`, { method: 'POST', body: JSON.stringify(body) }),
+    activity: async (id, body) => request(`/api/v1/intelligence/business/${id}/activity`, { method: 'POST', body: JSON.stringify(body) }),
+    label: async (id, body) => request(`/api/v1/intelligence/business/${id}/label`, { method: 'POST', body: JSON.stringify(body) }),
+    contactLog: async (id, body) => request(`/api/v1/intelligence/business/${id}/contact-log`, { method: 'POST', body: JSON.stringify(body) }),
+  },
+}
+
+// Query string from an object, skipping empty values.
+function qs(params) {
+  const query = new URLSearchParams()
+  for (const [key, val] of Object.entries(params)) {
+    if (val !== undefined && val !== null && val !== '') query.append(key, val)
+  }
+  return query.toString()
 }
 
 export default api

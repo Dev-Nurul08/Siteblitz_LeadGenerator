@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,400..600&display=swap" rel="stylesheet" />
+<title>SiteBlitz Lead Generator — complete flow</title>
+<!-- Generated from siteblitz-flow.mmd by build_viewer.py — edit the .mmd, then rebuild. -->
+<style>
+  :root {
+    --bg: __BG__;
+    --surface: __SURFACE__;
+    --border: __BORDER__;
+    --text: __TEXT__;
+    --text-2: __TEXT2__;
+    --accent: __ACCENT__;
+    --hot: __HOT__;
+    --lead: __LEAD__;
+    --warm: __WARM__;
+    --notlead: __NOTLEAD__;
+    --review: __REVIEW__;
+    --bad: __BAD__;
+    --neutral: __NEUTRAL__;
+    --font: __FONT__;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); }
+  header {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    padding: 16px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  h1 { font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
+  .sub { font-size: 13px; line-height: 18px; color: var(--text-2); margin: 2px 0 0; }
+  .steps { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .steps li {
+    font-size: 13px; line-height: 18px; padding: 6px 10px; border: 1px solid var(--border);
+    border-radius: 6px; background: var(--bg); white-space: nowrap;
+  }
+  .steps b { color: var(--accent); margin-right: 6px; font-variant-numeric: tabular-nums; }
+  .tools { margin-left: auto; display: flex; gap: 8px; }
+  button {
+    font: inherit; font-size: 13px; line-height: 18px; color: var(--text); cursor: pointer;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px;
+  }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  main { display: grid; grid-template-columns: 1fr 280px; gap: 0; min-height: calc(100vh - 66px); }
+  #stage { overflow: auto; padding: 32px; }
+  #diagram { width: max-content; }
+  aside { border-left: 1px solid var(--border); background: var(--surface); padding: 24px 20px; font-size: 13px; line-height: 20px; }
+  aside h2 { font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); margin: 0 0 12px; font-weight: 600; }
+  .key { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .sw { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--border); flex: none; }
+  aside p { color: var(--text-2); margin: 20px 0 0; }
+  #error { color: var(--bad); white-space: pre-wrap; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } aside { border-left: 0; border-top: 1px solid var(--border); } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>SiteBlitz Lead Generator — how a lead is found</h1>
+    <p class="sub">Target design agreed on 8 Nov 2026 · source: siteblitz-flow.mmd</p>
+  </div>
+  <ol class="steps" aria-label="Workflow steps">
+    <li><b>1</b>Find</li><li><b>2</b>Review</li><li><b>3</b>Hot leads</li><li><b>4</b>Outreach</li>
+  </ol>
+  <div class="tools">
+    <button id="zoomOut" aria-label="Zoom out">−</button>
+    <button id="fit">Fit</button>
+    <button id="zoomIn" aria-label="Zoom in">+</button>
+    <button id="svg">Download SVG</button>
+  </div>
+</header>
+<main>
+  <div id="stage"><div id="diagram" role="img" aria-label="Flow diagram of the four workflow steps"></div><div id="error"></div></div>
+  <aside>
+    <h2>What the colours mean</h2>
+    <div class="key"><span class="sw" style="background:var(--accent)"></span>Your action</div>
+    <div class="key"><span class="sw" style="background:var(--surface)"></span>System step or check</div>
+    <div class="key"><span class="sw" style="background:var(--neutral)"></span>Data source</div>
+    <div class="key"><span class="sw" style="background:var(--review)"></span>Decision, or needs your review</div>
+    <div class="key"><span class="sw" style="background:var(--lead)"></span>No real website — a possible lead</div>
+    <div class="key"><span class="sw" style="background:var(--notlead)"></span>Has its own website — not a lead</div>
+    <div class="key"><span class="sw" style="background:var(--hot)"></span>Hot lead (80–100)</div>
+    <div class="key"><span class="sw" style="background:var(--warm)"></span>Warm lead (60–79)</div>
+    <div class="key"><span class="sw" style="background:var(--bad)"></span>Error shown to you</div>
+    <p>Dotted arrows are optional or after-review paths. Your Correct / Wrong labels and real sales outcomes tune the score weights.</p>
+    <p>Nothing is guessed: a business is HOT only when every awarded point has a saved check behind it.</p>
+  </aside>
+</main>
+<script id="mmd" type="text/plain">__MMD__</script>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  const source = document.getElementById("mmd").textContent;
+  mermaid.initialize({ startOnLoad: false, securityLevel: "strict", fontFamily: getComputedStyle(document.documentElement).getPropertyValue("--font") });
+  const el = document.getElementById("diagram");
+  let scale = 1;
+  let vb = null;
+  const apply = () => { const s = el.querySelector("svg"); if (s && vb) { s.setAttribute("width", Math.round(vb.width * scale)); s.setAttribute("height", Math.round(vb.height * scale)); } };
+  try {
+    const { svg } = await mermaid.render("flow", source);
+    el.innerHTML = svg;
+    const svgEl = el.querySelector("svg");
+    vb = svgEl.viewBox.baseVal;
+    svgEl.removeAttribute("style");
+    const stage = document.getElementById("stage");
+    const fit = () => { scale = Math.min(1.25, (stage.clientWidth - 64) / vb.width); apply(); };
+    fit();
+    document.getElementById("fit").onclick = fit;
+    document.getElementById("zoomIn").onclick = () => { scale = Math.min(3, scale * 1.2); apply(); };
+    document.getElementById("zoomOut").onclick = () => { scale = Math.max(0.3, scale / 1.2); apply(); };
+    document.getElementById("svg").onclick = () => {
+      const blob = new Blob([el.innerHTML], { type: "image/svg+xml" });
+      const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "siteblitz-flow.svg" });
+      a.click();
+    };
+    document.body.dataset.rendered = "yes";
+  } catch (e) {
+    document.getElementById("error").textContent = "Diagram failed to render:\n" + e.message;
+    document.body.dataset.rendered = "error";
+  }
+</script>
+</body>
+</html>

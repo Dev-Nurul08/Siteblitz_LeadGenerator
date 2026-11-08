@@ -8,16 +8,20 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from backend.app.models.campaign import CampaignStatus, DealStage, MessageStatus, ReplyIntent
+from backend.app.models.opportunity import ServiceCategory
+from backend.app.schemas.types import CountryCode, Opt, OptionalText, Text
 
 
 class CampaignCreate(BaseModel):
     """Payload to create a new campaign."""
 
-    name: str = Field(..., min_length=2, max_length=200)
-    description: Optional[str] = None
+    model_config = {"extra": "forbid"}
+
+    name: Text(200, min_length=2)
+    description: OptionalText() = None
     daily_send_limit: int = Field(50, ge=10, le=200)
-    target_service_category: Optional[str] = None
-    country_code: Optional[str] = None
+    target_service_category: Optional[ServiceCategory] = None
+    country_code: Opt(CountryCode) = None
 
 
 class CampaignResponse(BaseModel):
@@ -74,16 +78,20 @@ class OutreachMessageResponse(BaseModel):
 class DealStageUpdateRequest(BaseModel):
     """Update deal position in CRM pipeline."""
 
+    model_config = {"extra": "forbid"}
+
     stage: DealStage
-    estimated_value: Optional[float] = None
-    notes: Optional[str] = None
+    estimated_value: Optional[float] = Field(None, ge=0)
+    notes: OptionalText() = None
 
 
 class InboundReplySimulateRequest(BaseModel):
     """Simulate recipient email reply."""
 
-    message_id: int
-    reply_text: str = Field(..., min_length=2)
+    model_config = {"extra": "forbid"}
+
+    message_id: int = Field(..., ge=1)
+    reply_text: Text(None, min_length=2)
 
 
 class InboundReplyResponse(BaseModel):

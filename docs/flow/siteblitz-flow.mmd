@@ -1,0 +1,125 @@
+---
+title: SiteBlitz Lead Generator — complete flow (target design, agreed 2026-11-08)
+config:
+  theme: base
+  themeVariables:
+    darkMode: true
+    fontFamily: "Mona Sans, Segoe UI, system-ui, sans-serif"
+    fontSize: "15px"
+    background: "#18191b"
+    mainBkg: "#222427"
+    textColor: "#eff0f1"
+    titleColor: "#eff0f1"
+    primaryColor: "#222427"
+    primaryTextColor: "#eff0f1"
+    primaryBorderColor: "#6b6e74"
+    secondaryColor: "#2a2c30"
+    tertiaryColor: "#18191b"
+    nodeBorder: "#6b6e74"
+    lineColor: "#9c9ea3"
+    edgeLabelBackground: "#18191b"
+    clusterBkg: "#1d1f22"
+    clusterBorder: "#34373b"
+  flowchart:
+    curve: basis
+    nodeSpacing: 38
+    rankSpacing: 52
+    padding: 14
+---
+flowchart LR
+  %% Four columns = the four steps of the app. Subgraphs are linked to each other (not node to
+  %% node) so every column keeps its own top-to-bottom layout in Mermaid's renderer.
+
+  %% ───────────── 1 · FIND ─────────────
+  subgraph S1["1 · FIND — you choose where and what"]
+    direction TB
+    F1(["You pick: country · city · category<br/>include franchises? default off"]):::step
+    F2["Search job starts<br/>runs in background · live progress"]:::proc
+    SRC_OV[("Overture Places · default<br/>Meta · Microsoft · Foursquare<br/>phones + social links")]:::source
+    SRC_OSM[("OpenStreetMap<br/>free · thin in small cities")]:::source
+    SRC_CSV[("CSV upload<br/>your own lists")]:::source
+    F3["Clean name, address, phone<br/>merge only same name + same place"]:::proc
+    F4{"Any businesses<br/>found?"}:::decision
+    F5["Show the exact source error<br/>rate limit · city not found · no data<br/>+ Retry search"]:::error
+    F6["Businesses saved<br/>View businesses · Export CSV / PDF"]:::proc
+    F1 --> F2
+    F2 --> SRC_OV & SRC_OSM & SRC_CSV
+    SRC_OV & SRC_OSM & SRC_CSV --> F3 --> F4
+    F4 -- "no" --> F5
+    F4 -- "yes" --> F6
+  end
+
+  %% ───────────── 2 · REVIEW ─────────────
+  subgraph S2["2 · REVIEW — the system checks, you confirm"]
+    direction TB
+    G1{"Skip it?<br/>chain / brand tag<br/>ATM · bank · fuel · school<br/>hospital · worship · govt<br/>closed · vacant · disused"}:::decision
+    SKIP["SKIP<br/>never shown as a lead"]:::skip
+    C1["① website tag in any source"]:::check
+    C2["② social links + link-in-bio<br/>Instagram · Facebook · LinkedIn<br/>TikTok · Linktree<br/>only from listings and own pages"]:::check
+    C3["③ domain guesses<br/>name.com · name.in · name.co.in<br/>only to FIND a site, never to prove none"]:::check
+    C4["④ open the site safely<br/>12 s · 5 redirects · 2 MB · no private IPs<br/>403 = protected, still a website"]:::check
+    SRC_GP[("Google Places<br/>optional live check<br/>only place ID stored")]:::source
+    C5["⑤ search name + city, top 10<br/>search API or your recorded manual search"]:::check
+    V{"Website verdict<br/>every check saved with time"}:::decision
+    V1["OWN SITE VERIFIED<br/>has own website"]:::notlead
+    V2["SOCIAL ONLY VERIFIED"]:::lead
+    V3["NO SITE VERIFIED"]:::lead
+    V4["SITE DOWN CONFIRMED<br/>2 failures ≥ 6 h apart"]:::lead
+    V5["UNKNOWN<br/>blocked or conflicting"]:::review
+    LBL(["You mark each verdict<br/>Correct · Wrong + what · Not sure<br/>→ tunes the score weights"]):::step
+    G1 -- "yes" --> SKIP
+    G1 -- "no" --> C1 --> C2 --> C3 --> C4 --> C5 --> V
+    SRC_GP -. "live status, not stored" .-> C4
+    V --> V1 & V2 & V3 & V4 & V5
+    V2 & V3 & V4 --> LBL
+  end
+
+  %% ───────────── 3 · HOT LEADS ─────────────
+  subgraph S3["3 · HOT LEADS — ranked, every point has evidence"]
+    direction TB
+    IN3["From Review<br/>no site · social only · site down → scored<br/>own site → 0 to 35 · unknown → Review"]:::proc
+    SC["Website Need Score 0–100<br/>website gap 60 · business problem 20<br/>activity 10 · service fit 10"]:::proc
+    EC["Evidence Confidence<br/>high = all 5 checks<br/>medium = no search · low = blocked"]:::proc
+    OR["Outreach Readiness<br/>ready = phone / email / form<br/>research · blocked"]:::proc
+    T{"Tier gates"}:::decision
+    HOT["HOT  80–100<br/>confidence high · activity ≥ 7<br/>a contact route exists"]:::hot
+    WARM["WARM  60–79<br/>or no search done yet"]:::warm
+    COLD["COLD  0–59"]:::cold
+    REV["REVIEW<br/>unscored — needs you"]:::review
+    IN3 --> SC & EC & OR
+    SC & EC & OR --> T
+    T --> HOT & WARM & COLD & REV
+  end
+
+  %% ───────────── 4 · OUTREACH ─────────────
+  subgraph S4["4 · OUTREACH — honest, you approve everything"]
+    direction TB
+    IN4["From Hot leads<br/>Hot · or Warm after you verify"]:::proc
+    SUP[("Do-not-contact list<br/>checked before every contact")]:::source
+    O1["Pick a route you may use<br/>phone call first · found email · contact form<br/>WhatsApp only by hand"]:::proc
+    O2["Draft built only from observed facts<br/>no invented reviews, previews or stats"]:::proc
+    O3(["You check the facts<br/>then call or send yourself"]):::step
+    O4["Log the outcome<br/>interested · not now · no reply<br/>→ wins and losses tune the score"]:::proc
+    IN4 --> O1
+    SUP -.-> O1
+    O1 --> O2 --> O3 --> O4
+  end
+
+  S1 -- "businesses found" --> S2
+  S2 -- "verdicts + your labels" --> S3
+  S3 -- "Hot leads" --> S4
+
+  %% ── styles: palette = docs/spec/ui-redesign.md v2 rows 2–7 (all text ≥ 4.5:1 on its fill) ──
+  classDef step fill:#ff4a1f,stroke:#ff6a45,stroke-width:1px,color:#18191b
+  classDef proc fill:#222427,stroke:#6b6e74,stroke-width:1px,color:#eff0f1
+  classDef check fill:#222427,stroke:#34373b,stroke-width:1px,color:#c4c6ca
+  classDef source fill:#2a2c30,stroke:#6b6e74,stroke-width:1px,color:#eff0f1
+  classDef decision fill:#352b10,stroke:#f5b83d,stroke-width:1px,color:#f5c451
+  classDef lead fill:#183324,stroke:#4fd18b,stroke-width:1px,color:#7ee2a8
+  classDef notlead fill:#2e3034,stroke:#8d9097,stroke-width:2px,color:#c4c6ca
+  classDef review fill:#352b10,stroke:#f5b83d,stroke-width:1px,stroke-dasharray:4 3,color:#f5c451
+  classDef hot fill:#ff4a1f,stroke:#ff4a1f,stroke-width:1px,color:#18191b
+  classDef warm fill:#3a2719,stroke:#ffb27a,stroke-width:1px,color:#ffb27a
+  classDef cold fill:#1d2a36,stroke:#9ec3e6,stroke-width:1px,color:#9ec3e6
+  classDef skip fill:#18191b,stroke:#6b6e74,stroke-width:1px,stroke-dasharray:4 3,color:#9c9ea3
+  classDef error fill:#3d1d24,stroke:#ff8a9b,stroke-width:1px,color:#ff8a9b

@@ -2,7 +2,7 @@
 API v1 — Source management routes.
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -86,7 +86,7 @@ async def update_source(
 @router.get("/{source_id}/jobs", response_model=list[SourceJobResponse])
 async def list_source_jobs(
     source_id: int,
-    limit: int = 20,
+    limit: int = Query(20, ge=1, le=100),
     session: AsyncSession = Depends(get_db_session),
 ):
     """List discovery jobs for a source."""

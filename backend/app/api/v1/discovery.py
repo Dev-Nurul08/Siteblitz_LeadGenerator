@@ -2,16 +2,24 @@
 API v1 — Discovery execution routes.
 """
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from typing import Literal, Optional
+
+import httpx
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.database import get_db_session
+from backend.app.engines.discovery.osm import OVERPASS_USER_AGENT
 from backend.app.models.source import SourceJob
 from backend.app.schemas.business import DiscoveryRequest, DiscoveryStatusResponse
 from backend.app.services.discovery_service import DiscoveryService
 
 router = APIRouter(prefix="/discovery", tags=["Discovery"])
+
+# Largest useful CSV: an import keeps at most 5,000 rows (DiscoveryRequest.max_results limit) and
+# one business row is at most ~3 KB at the DB column sizes (name 500, address 500, website 1000 …).
+MAX_CSV_BYTES = 15_000_000
 
 
 @router.post("/run")
@@ -48,8 +56,8 @@ async def run_discovery(
 @router.post("/import-csv")
 async def import_csv(
     file: UploadFile = File(...),
-    country_code: str = Form(None),
-    delimiter: str = Form(","),
+    country_code: Optional[str] = Form(None, pattern="^[A-Za-z]{2}$"),
+    delimiter: Literal[",", ";", "\t", "|"] = Form(","),
     session: AsyncSession = Depends(get_db_session),
 ):
     """
@@ -58,19 +66,35 @@ async def import_csv(
     The CSV should have headers that match common field names
     (name, address, city, country, phone, email, website, category).
     """
-    if not file.filename.endswith((".csv", ".txt")):
+    if not (file.filename or "").lower().endswith((".csv", ".txt")):
         raise HTTPException(
             status_code=400,
             detail="Only CSV files are supported",
         )
 
-    content = await file.read()
-    csv_content = content.decode("utf-8-sig")  # Handle BOM
+    # Read at most one byte past the limit so a huge upload is rejected without loading it all.
+    content = await file.read(MAX_CSV_BYTES + 1)
+    if len(content) > MAX_CSV_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"CSV file is larger than {MAX_CSV_BYTES // 1_000_000} MB",
+        )
+    try:
+        csv_content = content.decode("utf-8-sig")  # Handle BOM
+    except UnicodeDecodeError:
+        raise HTTPException(
+            status_code=400,
+            detail="CSV must be UTF-8 encoded (in Excel: Save As → CSV UTF-8)",
+        )
+    if "\x00" in csv_content:
+        raise HTTPException(status_code=400, detail="File is not a text CSV")
 
     service = DiscoveryService(session)
     result = await service.run_discovery(
         source_slug="csv_import",
-        country_code=country_code,
+        country_code=country_code.upper() if country_code else None,
+        # Without this the service default (500) silently dropped every row after row 500.
+        max_results=5000,
         query_params={
             "csv_content": csv_content,
             "delimiter": delimiter,
@@ -103,8 +127,8 @@ async def get_job_status(
         job_id=job.id,
         source_name=source_name,
         status=job.status.value,
-        city=job.city,
         country_code=job.country_code,
+        city=(job.city or '').strip() or None,
         category=job.category_filter,
         records_found=job.records_found,
         records_new=job.records_new,
@@ -118,7 +142,7 @@ async def get_job_status(
 
 @router.get("/jobs", response_model=list[DiscoveryStatusResponse])
 async def list_jobs(
-    limit: int = 20,
+    limit: int = Query(20, ge=1, le=100),
     session: AsyncSession = Depends(get_db_session),
 ):
     """List recent discovery jobs."""
@@ -138,8 +162,8 @@ async def list_jobs(
             job_id=job.id,
             source_name=source_name,
             status=job.status.value,
-            city=job.city,
             country_code=job.country_code,
+            city=(job.city or '').strip() or None,
             category=job.category_filter,
             records_found=job.records_found,
             records_new=job.records_new,
@@ -151,3 +175,37 @@ async def list_jobs(
         )
         for job, source_name in rows
     ]
+
+
+@router.get("/source-health/{slug}")
+async def source_health(slug: Literal["overture", "openstreetmap", "csv_import"]):
+    """
+    Live readiness of one discovery source (Settings screen). Each check is one small request:
+    Overture = the configured release folder is listable on S3; OpenStreetMap = Overpass status page.
+    """
+    from backend.app.config import get_settings
+
+    if slug == "csv_import":
+        return {"slug": slug, "status": "ready", "detail": "Upload a UTF-8 CSV (max 15 MB, 5,000 rows)."}
+    try:
+        async with httpx.AsyncClient(timeout=10.0, headers={"User-Agent": OVERPASS_USER_AGENT}) as client:
+            if slug == "overture":
+                try:
+                    import duckdb  # noqa: F401 — the adapter needs it
+                except ImportError:
+                    return {"slug": slug, "status": "not_configured", "detail": "pip install duckdb"}
+                release = get_settings().OVERTURE_RELEASE
+                response = await client.get(
+                    "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/",
+                    params={"list-type": "2", "max-keys": "1",
+                            "prefix": f"release/{release}/theme=places/type=place/"})
+                listed = response.status_code == 200 and "<Key>" in response.text
+                return {"slug": slug, "status": "ready" if listed else "unreachable",
+                        "detail": f"Release {release}" if listed else
+                        f"Release {release} not found — update OVERTURE_RELEASE"}
+            response = await client.get("https://overpass-api.de/api/status")
+            ok = response.status_code == 200
+            return {"slug": slug, "status": "ready" if ok else "unreachable",
+                    "detail": response.text.splitlines()[0][:120] if ok else f"HTTP {response.status_code}"}
+    except httpx.HTTPError as exc:
+        return {"slug": slug, "status": "unreachable", "detail": (str(exc) or type(exc).__name__)[:200]}

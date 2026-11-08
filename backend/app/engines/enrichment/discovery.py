@@ -21,6 +21,7 @@ import httpx
 import structlog
 
 from backend.app.config import get_settings
+from backend.app.engines.opportunity.resolver import ensure_public_destination
 from backend.app.models.business import Business
 from backend.app.models.opportunity import WebsiteAudit
 
@@ -159,7 +160,12 @@ class ContactDiscoveryEngine:
             "Accept": "text/html,application/xhtml+xml",
         }
 
-        async with httpx.AsyncClient(timeout=self.timeout_seconds, follow_redirects=True) as client:
+        # SSRF guard: ensure base_url and redirected targets are public
+        async with httpx.AsyncClient(
+            timeout=self.timeout_seconds,
+            follow_redirects=True,
+            event_hooks={"request": [ensure_public_destination]},
+        ) as client:
             for path in CONTACT_PAGE_PATHS[:4]:  # Probe top 4 contact paths
                 target_url = urljoin(base_url, path)
                 try:

@@ -21,6 +21,7 @@ async def lifespan(app: FastAPI):
     from backend.app.engines.discovery.osm import OSMAdapter
     from backend.app.engines.discovery.csv_import import CSVImportAdapter
     from backend.app.engines.discovery.wikidata import WikidataAdapter
+    from backend.app.engines.discovery.overture import OvertureAdapter
     from backend.app.database import get_async_engine, Base
     import backend.app.models.source  # ensure models are loaded
     import backend.app.models.business
@@ -29,10 +30,12 @@ async def lifespan(app: FastAPI):
     import backend.app.models.compliance
     import backend.app.models.campaign
     import backend.app.models.lead_radar
+    import backend.app.models.intelligence
 
     SourceAdapterRegistry.register("openstreetmap", OSMAdapter)
     SourceAdapterRegistry.register("csv_import", CSVImportAdapter)
     SourceAdapterRegistry.register("wikidata", WikidataAdapter)
+    SourceAdapterRegistry.register("overture", OvertureAdapter)
 
     # Initialize tables if needed
     engine = get_async_engine()

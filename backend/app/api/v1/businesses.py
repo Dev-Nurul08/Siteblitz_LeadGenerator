@@ -3,9 +3,10 @@ API v1 — Business management routes.
 """
 
 import math
-from typing import Optional
+from datetime import datetime, timezone
+from typing import Literal, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlalchemy import select, func, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -15,9 +16,13 @@ from backend.app.models.business import (
     Business,
     BusinessCategory,
     BusinessLocation,
+    BusinessSourceLink,
     BusinessStatus,
     WebsiteStatus,
 )
+from backend.app.models.intelligence import LeadAssessment
+from backend.app.models.source import SourceRecord
+from backend.app.services import export_service
 from backend.app.schemas.business import (
     BusinessListResponse,
     BusinessResponse,
@@ -27,30 +32,20 @@ from backend.app.schemas.business import (
 router = APIRouter(prefix="/businesses", tags=["Businesses"])
 
 
-@router.get("", response_model=BusinessListResponse)
-async def list_businesses(
-    page: int = Query(1, ge=1),
-    page_size: int = Query(25, ge=1, le=100),
-    country: Optional[str] = Query(None, description="Filter by country code"),
-    status: Optional[BusinessStatus] = Query(None),
-    website_status: Optional[WebsiteStatus] = Query(None),
-    category: Optional[str] = Query(None, description="Filter by category"),
-    search: Optional[str] = Query(None, description="Search by name"),
-    session: AsyncSession = Depends(get_db_session),
+def _filtered_businesses(
+    *,
+    country: Optional[str],
+    status: Optional[BusinessStatus],
+    website_status: Optional[WebsiteStatus],
+    category: Optional[str],
+    search: Optional[str],
+    job_id: Optional[int],
 ):
-    """
-    List businesses with filtering and pagination.
-
-    Supports filtering by country, status, website status,
-    category, and name search.
-    """
-    # Base query
+    """Business query with the list filters applied (shared by the list and the export)."""
     stmt = select(Business).options(
         selectinload(Business.locations),
         selectinload(Business.categories),
     )
-
-    # Apply filters
     if country:
         stmt = stmt.where(Business.country_code == country.upper())
     if status:
@@ -65,10 +60,23 @@ async def list_businesses(
             )
         )
     if category:
-        stmt = stmt.join(Business.categories).where(
-            BusinessCategory.normalized_category.ilike(f"%{category}%")
+        stmt = stmt.where(
+            Business.id.in_(
+                select(BusinessCategory.business_id).where(
+                    BusinessCategory.normalized_category.ilike(f"%{category}%")
+                )
+            )
         )
-
+    if job_id:
+        # Businesses a discovery job found = those linked to that job's raw source records
+        # (new ones and existing ones it matched as duplicates).
+        stmt = stmt.where(
+            Business.id.in_(
+                select(BusinessSourceLink.business_id)
+                .join(SourceRecord, SourceRecord.id == BusinessSourceLink.source_record_id)
+                .where(SourceRecord.job_id == job_id)
+            )
+        )
     # Don't show duplicates or invalid by default
     if not status:
         stmt = stmt.where(
@@ -77,6 +85,34 @@ async def list_businesses(
                 BusinessStatus.INVALID,
             ])
         )
+    return stmt
+
+
+COUNTRY_QUERY = Query(None, pattern="^[A-Za-z]{2}$", description="ISO 3166-1 alpha-2 country code")
+
+
+@router.get("", response_model=BusinessListResponse)
+async def list_businesses(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    country: Optional[str] = COUNTRY_QUERY,
+    status: Optional[BusinessStatus] = Query(None),
+    website_status: Optional[WebsiteStatus] = Query(None),
+    category: Optional[str] = Query(None, max_length=200, description="Filter by category"),
+    search: Optional[str] = Query(None, max_length=500, description="Search by name"),
+    job_id: Optional[int] = Query(None, ge=1, description="Only businesses found by this discovery job"),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """
+    List businesses with filtering and pagination.
+
+    Supports filtering by country, status, website status,
+    category, name search and discovery job.
+    """
+    stmt = _filtered_businesses(
+        country=country, status=status, website_status=website_status,
+        category=category, search=search, job_id=job_id,
+    )
 
     # Count total
     count_stmt = select(func.count()).select_from(stmt.subquery())
@@ -96,6 +132,84 @@ async def list_businesses(
         page=page,
         page_size=page_size,
         pages=math.ceil(total / page_size) if total > 0 else 0,
+    )
+
+
+@router.get("/points")
+async def business_points(
+    country: Optional[str] = COUNTRY_QUERY,
+    status: Optional[BusinessStatus] = Query(None),
+    website_status: Optional[WebsiteStatus] = Query(None),
+    category: Optional[str] = Query(None, max_length=200),
+    search: Optional[str] = Query(None, max_length=500),
+    job_id: Optional[int] = Query(None, ge=1),
+    # 5000 = the largest discovery job (DiscoveryRequest.max_results)
+    limit: int = Query(5000, ge=1, le=5000),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Lightweight map points (id, name, lat, lon, website status, category) for the same filters."""
+    stmt = _filtered_businesses(
+        country=country, status=status, website_status=website_status,
+        category=category, search=search, job_id=job_id,
+    ).order_by(Business.discovered_at.desc()).limit(limit)
+    businesses = (await session.execute(stmt)).scalars().unique().all()
+    verdicts = dict((await session.execute(
+        select(LeadAssessment.business_id, LeadAssessment.website_verdict)
+        .where(LeadAssessment.business_id.in_([b.id for b in businesses])))).all()) if businesses else {}
+    points = []
+    for b in businesses:
+        location = b.locations[0] if b.locations else None
+        if location and location.latitude is not None and location.longitude is not None:
+            points.append({
+                "id": b.id,
+                "name": b.name,
+                "lat": location.latitude,
+                "lon": location.longitude,
+                "website_status": b.website_status.value,
+                "verdict": verdicts[b.id].value if b.id in verdicts else "UNCHECKED",
+                "category": b.categories[0].category_name if b.categories else None,
+            })
+    return {"total": len(businesses), "points": points}
+
+
+# Declared before "/{business_id}": FastAPI matches routes in order, and "export" would
+# otherwise be parsed as a business id and rejected with 422.
+@router.get("/export")
+async def export_businesses(
+    format: Literal["csv", "pdf"] = Query("csv"),
+    country: Optional[str] = COUNTRY_QUERY,
+    status: Optional[BusinessStatus] = Query(None),
+    website_status: Optional[WebsiteStatus] = Query(None),
+    category: Optional[str] = Query(None, max_length=200),
+    search: Optional[str] = Query(None, max_length=500),
+    job_id: Optional[int] = Query(None, ge=1),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Download every business matching the filters as CSV (all columns) or PDF (summary table)."""
+    stmt = _filtered_businesses(
+        country=country, status=status, website_status=website_status,
+        category=category, search=search, job_id=job_id,
+    ).order_by(Business.discovered_at.desc())
+    businesses = (await session.execute(stmt)).scalars().unique().all()
+    rows = [export_service.business_row(b) for b in businesses]
+
+    applied = {
+        "country": country, "status": status.value if status else None,
+        "website": website_status.value if website_status else None,
+        "category": category, "search": search, "job": job_id,
+    }
+    filters_text = ", ".join(f"{k}={v}" for k, v in applied.items() if v)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M")
+    filename = f"siteblitz-businesses{'-job' + str(job_id) if job_id else ''}-{stamp}.{format}"
+
+    if format == "csv":
+        body, media_type = export_service.to_csv(rows), "text/csv; charset=utf-8"
+    else:
+        body, media_type = export_service.to_pdf(rows, filters_text), "application/pdf"
+    return Response(
+        content=body,
+        media_type=media_type,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
 
 

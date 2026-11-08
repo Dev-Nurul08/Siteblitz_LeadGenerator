@@ -7,6 +7,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 from backend.app.models.contact import EmailVerificationStatus, RoleLevel
+from backend.app.schemas.types import Text
 
 
 class ContactResponse(BaseModel):
@@ -62,9 +63,11 @@ class ContactListResponse(BaseModel):
 
 
 class VerifyEmailRequest(BaseModel):
-    """Request to verify an arbitrary email address."""
+    """Request to verify an arbitrary email address (format is judged by the verifier itself)."""
 
-    email: str
+    model_config = {"extra": "forbid"}
+
+    email: Text(320, min_length=3)
 
 
 class VerifyEmailResponse(BaseModel):
