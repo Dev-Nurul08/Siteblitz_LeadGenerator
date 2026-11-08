@@ -90,7 +90,7 @@ Upar ek patti hai jismein 4 steps hain — isi order mein kaam karna hai:
 | **"Google Places"** | Abhi band hai ("Not available yet") — API key aur licensing check chahiye. |
 | **"CSV file"** | Aapke paas apni list hai. |
 
-**"Country"** — desh chunein (default "India (IN)").
+**"Country"** — desh chunein (default "India (IN)"). List mein duniya ke saare 249 desh hain, naam ke hisaab se A–Z (jaise "Bangladesh (BD)", "Afghanistan (AF)"); select khol kar desh ka pehla akshar type karo to wahan pahunch jaate ho.
 
 **"City"** — shehar ka naam English mein, jaise `Udaipur`, `Pune`. Spelling sahi honi chahiye.
 State ka naam (jaise "Rajasthan") mat likhein — area bahut bada ho jaata hai aur search ruk jaati hai.
