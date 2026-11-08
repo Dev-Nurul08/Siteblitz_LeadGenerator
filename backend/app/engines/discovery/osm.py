@@ -10,6 +10,7 @@ Attribution: © OpenStreetMap contributors
 Docs: https://wiki.openstreetmap.org/wiki/Overpass_API
 """
 
+import asyncio
 import re
 from typing import Optional
 
@@ -33,6 +34,19 @@ OVERPASS_API_URL = "https://overpass-api.de/api/interpreter"
 # overpass-api.de answers HTTP 406 to generic client User-Agents (verified 2026-11-08 with
 # httpx's default "python-httpx/x.y"), so every request must identify the tool.
 OVERPASS_USER_AGENT = "SiteBlitzLeadGenerator/0.2 (internal business research tool)"
+
+
+# One Overpass request at a time for the whole process: the public server is shared infrastructure,
+# and concurrent searches (several users / batch tests) used to hit it in parallel (ChatGPT review,
+# city test round 4). Created lazily so it binds to the running event loop.
+_overpass_lock: Optional[asyncio.Lock] = None
+
+
+def _overpass_gate() -> asyncio.Lock:
+    global _overpass_lock
+    if _overpass_lock is None:
+        _overpass_lock = asyncio.Lock()
+    return _overpass_lock
 
 
 def _ql_escape(value: str) -> str:
@@ -289,7 +303,7 @@ class OSMAdapter(BaseSourceAdapter):
             # Execute query
             # The public Overpass server answers 429/502/503/504 when busy; those are retried
             # (3 tries) after waiting one rate-limit interval per try (OSM_OVERPASS_RPM → 6 s).
-            async with httpx.AsyncClient(timeout=120.0) as client:
+            async with _overpass_gate(), httpx.AsyncClient(timeout=120.0) as client:
                 for attempt in range(3):
                     response = await client.post(
                         OVERPASS_API_URL,

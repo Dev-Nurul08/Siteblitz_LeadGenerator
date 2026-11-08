@@ -38,6 +38,28 @@ from backend.app.models.source import (
 logger = structlog.get_logger(__name__)
 
 
+# Words that say what kind of business it is, not which one — never enough to call two names the same.
+_GENERIC_NAME_WORDS = {
+    "the", "and", "for", "dr", "drs", "clinic", "clinics", "dental", "dentist", "dentists", "care",
+    "centre", "center", "hospital", "multispeciality", "speciality", "specialty", "super", "advanced",
+    "smile", "smiles", "tooth", "teeth", "salon", "beauty", "parlour", "parlor", "hair", "studio",
+    "unisex", "spa", "cafe", "coffee", "restaurant", "restro", "lounge", "shop", "store", "point",
+    "house", "india", "pvt", "ltd", "health", "family", "new", "best", "city", "plus",
+}
+
+
+def _share_distinctive_word(name1: str, name2: str) -> bool:
+    """
+    True when the distinctive words of one name are all in the other ("Cosmo Dentist" ⊂
+    "Dr Gupta Cosmo Dental Clinic"). Branches differ by an extra word each ("Clove Dental Andheri"
+    vs "Clove Dental Bandra") and are kept apart.
+    """
+    words = lambda n: {w for w in BusinessNormalizer.normalize_name(n).split()
+                       if len(w) >= 4 and w not in _GENERIC_NAME_WORDS}
+    a, b = words(name1), words(name2)
+    return bool(a & b) and (a <= b or b <= a)
+
+
 class DiscoveryService:
     """
     Orchestrates the business discovery pipeline:
@@ -350,10 +372,17 @@ class DiscoveryService:
             location = candidate.locations[0] if candidate.locations else None
             same_city = bool(location and location.city and discovered.city
                              and location.city.strip().lower() == discovered.city.strip().lower())
-            near = bool(location and location.latitude is not None and discovered.latitude is not None
-                        and _haversine_distance(location.latitude, location.longitude,
-                                                discovered.latitude, discovered.longitude) < 5.0)
-            if same_city or near:
+            distance = (_haversine_distance(location.latitude, location.longitude,
+                                            discovered.latitude, discovered.longitude)
+                        if location and location.latitude is not None and discovered.latitude is not None
+                        else None)
+            if not (same_city or (distance is not None and distance < 5.0)):
+                continue
+            # A shared phone / email alone can be a chain's head office: two branches of one clinic
+            # are two sales opportunities. Merge only with a second sign — the same spot (≤ 0.5 km)
+            # or one name's distinctive words contained in the other's (see _share_distinctive_word).
+            if (distance is not None and distance <= 0.5) or _share_distinctive_word(
+                    discovered.name, candidate.name):
                 return candidate
         return None
 

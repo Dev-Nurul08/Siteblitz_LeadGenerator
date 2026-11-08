@@ -454,3 +454,15 @@ def test_same_email_same_city_is_one_business(client):
     )
     result = _import(client, "emails.csv", csv_text)
     assert (result["new"], result["duplicate"]) == (1, 1)
+
+
+def test_shared_head_office_email_does_not_merge_two_branches(client):
+    csv_text = (
+        "name,city,country,email\n"
+        "Clove Dental Andheri,Mumbai,IN,care@chain-test.in\n"
+        "Clove Dental Bandra,Mumbai,IN,care@chain-test.in\n"   # same chain e-mail, different branch
+        "Sunrise Orthodontics,Mumbai,IN,care@chain-test.in\n"  # no shared distinctive word -> separate
+    )
+    result = _import(client, "branches.csv", csv_text)
+    # Andheri / Bandra branches differ by a distinctive word each -> kept apart; the third shares none.
+    assert (result["new"], result["duplicate"]) == (3, 0)
