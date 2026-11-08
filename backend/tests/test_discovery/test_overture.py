@@ -79,6 +79,9 @@ def test_query_uses_placeholders_only():
     assert sql.count("?") == 4 + 1 + 3 + 1  # bbox(4) + confidence + category/taxonomy/name + limit
     assert "Udaipur" not in sql and "cafe" not in sql
     assert "count(*) OVER ()" in sql
+    with_country = build_query("2026-10-21.0", True, True)
+    assert with_country.count("?") == 4 + 1 + 1 + 3 + 1  # + country
+    assert "addresses[1].country" in with_country and "addresses[1].country" not in sql
 
 
 @pytest.mark.asyncio
@@ -116,6 +119,6 @@ async def test_discover_maps_rows_and_passes_parameters(monkeypatch):
     )
     assert [b.name for b in result.businesses] == ["The Sookun Cafe"]
     from backend.app.engines.discovery.categories import category_regex, name_regex
-    assert seen["params"] == [73.62, 73.80, 24.50, 24.66, 0.0,
+    assert seen["params"] == [73.62, 73.80, 24.50, 24.66, 0.0, "IN",
                               category_regex("cafe"), category_regex("cafe"), name_regex("cafe"), 50]
     assert not result.errors

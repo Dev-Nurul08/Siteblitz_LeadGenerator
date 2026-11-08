@@ -68,14 +68,20 @@ def social_platform(url: Optional[str]) -> Optional[str]:
     return None
 
 
-def build_query(release: str, with_category: bool) -> str:
+def build_query(release: str, with_category: bool, with_country: bool = False) -> str:
     """
     SQL for one bounding box. Every user-controlled value is a `?` parameter; only the release
     folder (from settings) is formatted in. A category matches on the category fields by whole
     word-parts OR on the business name (see categories.py for why both).
     `total_available` = every match in the area before LIMIT, so the UI can say "500 of 3,780".
+    With a country, a place whose address names another country is left out; a place without an
+    address country is kept. Why: the Shenzhen box includes Hong Kong, and 462 of 500 "Shenzhen, CN"
+    results were Hong Kong businesses (2026-11-08); border cities (Tijuana / San Diego) do the same.
     """
     source = f"s3://overturemaps-us-west-2/release/{release}/theme=places/type=place/*"
+    country_clause = ""
+    if with_country:
+        country_clause = "AND (addresses[1].country IS NULL OR upper(addresses[1].country) = ?)"
     category_clause = ""
     if with_category:
         category_clause = """AND (regexp_matches(coalesce(basic_category, ''), ?)
@@ -93,6 +99,7 @@ def build_query(release: str, with_category: bool) -> str:
           AND names.primary IS NOT NULL
           AND coalesce(operating_status, '') <> 'permanently_closed'
           AND confidence >= ?
+          {country_clause}
           {category_clause}
         ORDER BY confidence DESC
         LIMIT ?
@@ -239,8 +246,11 @@ class OvertureAdapter(BaseSourceAdapter):
                 )
 
             cat_re, name_re = category_regex(category), name_regex(category)
-            sql = build_query(settings.OVERTURE_RELEASE, cat_re is not None)
+            country = (country_code or "").strip().upper() or None
+            sql = build_query(settings.OVERTURE_RELEASE, cat_re is not None, country is not None)
             params: list = [west, east, south, north, min_confidence]
+            if country:
+                params.append(country)
             if cat_re:
                 params += [cat_re, cat_re, name_re]
             params.append(int(max_results))
