@@ -1,9 +1,10 @@
-# HANDOFF — SiteBlitz Lead Generator — Phases 1, 1b–1e, 2, 4a–4d
+# HANDOFF — SiteBlitz Lead Generator — Phases 1, 1b–1f, 2, 4a–4d
 
 Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 2705aca) · **not pushed**
 
 ## Done (verified)
-- Backend: 201/201 tests (pipeline repair, Overture source, input validation, SSRF guard, CSV/PDF export,
+- Phase 1f (data volume): All sources search, name matching, phone dedup, OSM by city box, retries, savepoints, up to 5,000 per search. Live: Udaipur dentists 100 new, cafés 370, salons 392; Pune salons 4,065 new, 0 errors. 208 tests pass.
+- Backend: 208/208 tests (pipeline repair, Overture source, input validation, SSRF guard, CSV/PDF export,
   website intelligence: verdicts + evidence checks + need score + tiers + labels + contact log).
 - New UI (spec v2, approved): Find (live map, businesses land with a ring, automatic website checks),
   Review (evidence drawer, labels, J/K/1/2/3), Hot leads (score builds from reasons), Outreach (fact-linked
@@ -20,6 +21,7 @@ Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 27
 - See `docs/DECISIONS.md` (three 2026-11-08 blocks).
 
 ## Known broken / deliberately skipped
+- Two data decisions open (DECISIONS.md, fourth block): dead-domain = immediate "Website down"?, widen area beyond the city?
 - **Open founder decision:** a social-only business with a phone tops out at 75 (Warm) under the approved
   weights — see DECISIONS.md "Open (founder)". Nothing changed until you choose (a) or (b).
 - Old Contacts / Qualification / Campaigns **APIs** still contain the fabricated `info@` contact, template

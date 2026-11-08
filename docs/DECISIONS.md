@@ -50,3 +50,15 @@
 - **Open (founder):** social-only + phone can never be Hot under the approved weights (max 75). Options:
   (a) keep — only no-website businesses are Hot; (b) count "its listed web address is a social profile" as the
   10-point business-problem signal (social-only + phone + confirmed open + dentist = 85 → Hot).
+
+## 2026-11-08 — fourth request ("as much data per run as I targeted")
+- **Default source = All sources (Overture + OpenStreetMap in one job).** Overlap is merged by source id,
+  phone (last 10 digits, same city / ≤ 5 km) and name + place.
+- **Category = whole word-parts of the category fields OR keywords in the business name** (categories.py).
+  Fixes `%dent%` → student_union and `%tax%` → taxi; adds 27–54 % real matches.
+- **OpenStreetMap searches the geocoded city box**, not the named boundary (the "Udaipur" boundary matched the
+  whole district + same-named villages and timed out).
+- **Each discovery record runs in a SAVEPOINT** (SQLite needs SQLAlchemy's BEGIN recipe, enabled in database.py).
+- **Not done, needs a decision:** (1) treat "listed domain has no DNS record, confirmed by a second resolver" as
+  Website down immediately instead of waiting 6 h (changes approved spec row 6); (2) widen the area beyond the
+  city when it has fewer businesses than asked (measured gain small: Udaipur dentists 102 → 112 at 3× area).
