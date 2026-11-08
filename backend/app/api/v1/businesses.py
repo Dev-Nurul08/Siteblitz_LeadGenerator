@@ -20,6 +20,7 @@ from backend.app.models.business import (
     BusinessStatus,
     WebsiteStatus,
 )
+from backend.app.models.intelligence import LeadAssessment
 from backend.app.models.source import SourceRecord
 from backend.app.services import export_service
 from backend.app.schemas.business import (
@@ -152,6 +153,9 @@ async def business_points(
         category=category, search=search, job_id=job_id,
     ).order_by(Business.discovered_at.desc()).limit(limit)
     businesses = (await session.execute(stmt)).scalars().unique().all()
+    verdicts = dict((await session.execute(
+        select(LeadAssessment.business_id, LeadAssessment.website_verdict)
+        .where(LeadAssessment.business_id.in_([b.id for b in businesses])))).all()) if businesses else {}
     points = []
     for b in businesses:
         location = b.locations[0] if b.locations else None
@@ -162,6 +166,7 @@ async def business_points(
                 "lat": location.latitude,
                 "lon": location.longitude,
                 "website_status": b.website_status.value,
+                "verdict": verdicts[b.id].value if b.id in verdicts else "UNCHECKED",
                 "category": b.categories[0].category_name if b.categories else None,
             })
     return {"total": len(businesses), "points": points}

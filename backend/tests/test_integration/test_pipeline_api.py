@@ -367,3 +367,17 @@ def test_points_endpoint_and_job_fields(client):
     points = client.get("/api/v1/businesses/points", params={"job_id": first["job_id"]}).json()
     assert points["total"] == 2  # CSV rows have no coordinates, so no map points
     assert points["points"] == []
+
+
+def test_contact_log_do_not_contact_blocks_readiness(client, no_guessed_domains):
+    _import(client, "b.csv", CSV_B)
+    salon = _id(client, "Riverside")
+    client.post(f"/api/v1/intelligence/assess/{salon}")
+    logged = client.post(f"/api/v1/intelligence/business/{salon}/contact-log",
+                         json={"channel": "phone", "outcome": "do_not_contact", "note": "asked us not to call"})
+    assert logged.status_code == 200
+    body = logged.json()
+    assert body["contact_log"][0]["outcome"] == "do_not_contact"
+    assert body["assessment"]["outreach_readiness"] == "BLOCKED"
+    assert client.post(f"/api/v1/intelligence/business/{salon}/contact-log",
+                       json={"channel": "fax", "outcome": "other"}).status_code == 422

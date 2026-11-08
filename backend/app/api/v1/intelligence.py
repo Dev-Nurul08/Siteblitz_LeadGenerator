@@ -34,6 +34,13 @@ class ActivityRequest(BaseModel):
     note: OptionalText() = None
 
 
+class ContactLogRequest(BaseModel):
+    model_config = {"extra": "forbid"}
+    channel: Literal["phone", "email", "social", "form", "visit"]
+    outcome: Literal["interested", "not_now", "no_reply", "do_not_contact", "other"]
+    note: OptionalText() = None
+
+
 class LabelRequest(BaseModel):
     model_config = {"extra": "forbid"}
     label: FounderLabel
@@ -223,4 +230,15 @@ async def label(business_id: int, payload: LabelRequest,
         business_id, payload.label, payload.wrong_part, payload.note)
     if "error" in result:
         raise HTTPException(status_code=409, detail=result["error"])
+    return result
+
+
+@router.post("/business/{business_id}/contact-log")
+async def contact_log(business_id: int, payload: ContactLogRequest,
+                      session: AsyncSession = Depends(get_db_session)):
+    """Log a call / email / message the founder made himself; "do_not_contact" blocks the lead."""
+    result = await IntelligenceService(session).log_contact(
+        business_id, payload.channel, payload.outcome, payload.note)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
     return result

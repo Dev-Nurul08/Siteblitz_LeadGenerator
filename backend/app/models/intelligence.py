@@ -143,3 +143,20 @@ class LeadAssessment(Base):
         Index("ix_lead_assessments_tier", "tier"),
         Index("ix_lead_assessments_verdict", "website_verdict"),
     )
+
+
+class ContactLog(Base):
+    """A contact attempt the founder made himself (sending from the app is off)."""
+
+    __tablename__ = "contact_logs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    business_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False
+    )
+    channel: Mapped[str] = mapped_column(String(20), nullable=False)   # phone|email|social|form|visit
+    outcome: Mapped[str] = mapped_column(String(30), nullable=False)   # interested|not_now|no_reply|do_not_contact|other
+    note: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    logged_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    __table_args__ = (Index("ix_contact_logs_business", "business_id"),)

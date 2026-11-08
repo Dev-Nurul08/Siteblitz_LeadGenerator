@@ -27,6 +27,7 @@ from backend.app.models.business import Business, BusinessSourceLink, WebsiteSta
 from backend.app.models.compliance import OptOut
 from backend.app.models.intelligence import (
     CheckType,
+    ContactLog,
     FounderLabel,
     LeadAssessment,
     SocialIdentity,
@@ -73,6 +74,10 @@ class IntelligenceService:
                 for r in rows]
 
     async def _suppressed(self, business: Business) -> bool:
+        dnc = await self.session.execute(select(func.count(ContactLog.id)).where(
+            ContactLog.business_id == business.id, ContactLog.outcome == "do_not_contact"))
+        if (dnc.scalar() or 0) > 0:
+            return True
         email = (business.email or "").lower()
         if not email:
             return False
@@ -201,7 +206,12 @@ class IntelligenceService:
                 "label_note": row.label_note,
                 "labeled_at": row.labeled_at.isoformat() if row.labeled_at else None,
             }
+        logs = (await self.session.execute(select(ContactLog).where(
+            ContactLog.business_id == business_id).order_by(ContactLog.logged_at.desc(),
+                                                            ContactLog.id.desc()))).scalars().all()
         return {
+            "contact_log": [{"id": log.id, "channel": log.channel, "outcome": log.outcome,
+                             "note": log.note, "logged_at": log.logged_at.isoformat()} for log in logs],
             "business": {
                 "id": business.id, "name": business.name, "phone": business.phone,
                 "email": business.email, "website_url": business.website_url,
@@ -247,3 +257,15 @@ class IntelligenceService:
         row.labeled_at = datetime.now(timezone.utc)
         await self.session.flush()
         return await self.detail(business_id)
+
+    async def log_contact(self, business_id: int, channel: str, outcome: str,
+                          note: Optional[str]) -> dict:
+        if not await self._business(business_id):
+            return {"error": f"Business {business_id} not found"}
+        self.session.add(ContactLog(business_id=business_id, channel=channel, outcome=outcome,
+                                    note=note, logged_at=datetime.now(timezone.utc)))
+        await self.session.flush()
+        has_assessment = (await self.session.execute(select(LeadAssessment.id).where(
+            LeadAssessment.business_id == business_id))).scalar_one_or_none()
+        # A do-not-contact entry must immediately block outreach readiness.
+        return await (self.recompute(business_id) if has_assessment else self.detail(business_id))
