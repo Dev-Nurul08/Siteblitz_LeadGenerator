@@ -7,7 +7,7 @@ export default function DiscoveryPage() {
   const [jobs, setJobs] = useState([])
   const [loadingJobs, setLoadingJobs] = useState(true)
   const [running, setRunning] = useState(false)
-  const [activeTab, setActiveTab] = useState('osm') // 'osm' | 'csv'
+  const [activeTab, setActiveTab] = useState('overture') // 'overture' | 'osm' | 'csv'
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
 
@@ -51,7 +51,7 @@ export default function DiscoveryPage() {
     setError(null)
     try {
       const payload = {
-        source_slug: 'openstreetmap',
+        source_slug: activeTab === 'overture' ? 'overture' : 'openstreetmap',
         country_code: osmForm.country_code || undefined,
         city: osmForm.city || undefined,
         category: osmForm.category || undefined,
@@ -137,6 +137,7 @@ export default function DiscoveryPage() {
             {/* Tab switcher */}
             <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: 'var(--color-bg-tertiary)', padding: '4px', borderRadius: 'var(--radius-md)' }}>
               {[
+                { id: 'overture', label: 'Overture Places', desc: 'Most data · phones + socials' },
                 { id: 'osm', label: '🗺️ OpenStreetMap', desc: 'ODbL — Open License' },
                 { id: 'csv', label: '📄 CSV Import', desc: 'Manual / Opt-in' },
               ].map(tab => (
@@ -159,10 +160,14 @@ export default function DiscoveryPage() {
             </div>
 
             {/* OSM Form */}
-            {activeTab === 'osm' && (
+            {(activeTab === 'osm' || activeTab === 'overture') && (
               <form onSubmit={runOsmDiscovery}>
                 <div style={{ background: 'rgba(34, 197, 94, 0.08)', border: '1px solid rgba(34, 197, 94, 0.15)', borderRadius: 'var(--radius-md)', padding: '10px 14px', marginBottom: '16px', fontSize: '0.78rem', color: 'var(--color-text-secondary)' }}>
-                  ✓ <strong style={{ color: 'var(--color-accent-success)' }}>ODbL License</strong> — Data is freely reusable with attribution. © OpenStreetMap contributors.
+                  {activeTab === 'overture' ? (
+                    <>✓ <strong style={{ color: 'var(--color-accent-success)' }}>Overture Maps Places</strong> — open data from Meta (Facebook pages), Microsoft, Foursquare and others, with phones and social links. Needs a city (or coordinates). ~20 s per city. © Overture Maps Foundation.</>
+                  ) : (
+                    <>✓ <strong style={{ color: 'var(--color-accent-success)' }}>ODbL License</strong> — Data is freely reusable with attribution. © OpenStreetMap contributors. Volunteer-mapped: small cities often have few businesses.</>
+                  )}
                 </div>
 
                 <div className="input-group">
@@ -210,14 +215,14 @@ export default function DiscoveryPage() {
                   </select>
                 </div>
 
-                {error && activeTab === 'osm' && (
+                {error && activeTab !== 'csv' && (
                   <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 'var(--radius-md)', padding: '10px 14px', marginBottom: '14px', fontSize: '0.8rem', color: 'var(--color-accent-danger)' }}>
                     ❌ {error}
                   </div>
                 )}
 
                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={running}>
-                  {running ? <><div className="spinner" /> Running Discovery…</> : '🔍 Start OSM Discovery'}
+                  {running ? <><div className="spinner" /> Running Discovery…</> : (activeTab === 'overture' ? 'Start Overture Discovery' : '🔍 Start OSM Discovery')}
                 </button>
               </form>
             )}
@@ -324,6 +329,16 @@ export default function DiscoveryPage() {
               <div className="card-title">Discovery Jobs</div>
               <button className="btn btn-ghost btn-sm" onClick={loadJobs}>↻</button>
             </div>
+
+            {/* Plain definitions of every number on a job card (asked for in the 2026-11-08 review). */}
+            <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '4px 12px', fontSize: '0.75rem', color: 'var(--color-text-secondary)', margin: '0 0 14px', padding: '10px 12px', background: 'var(--color-bg-tertiary)', borderRadius: 'var(--radius-md)' }}>
+              <dt style={{ fontWeight: 600 }}>Job</dt><dd style={{ margin: 0 }}>One search: one source, one city/area, one category.</dd>
+              <dt style={{ fontWeight: 600 }}>Found</dt><dd style={{ margin: 0 }}>Businesses the source returned for that search.</dd>
+              <dt style={{ fontWeight: 600 }}>New</dt><dd style={{ margin: 0 }}>Saved for the first time — these appear in Businesses.</dd>
+              <dt style={{ fontWeight: 600 }}>Dup</dt><dd style={{ margin: 0 }}>Already saved earlier (same source record, or same name in the same place) — not added again.</dd>
+              <dt style={{ fontWeight: 600 }}>Errors</dt><dd style={{ margin: 0 }}>Problems reported by the source (rate limit, city not found…); the reason is shown in red.</dd>
+              <dt style={{ fontWeight: 600 }}>Completed</dt><dd style={{ margin: 0 }}>Finished with no errors. <b>Partial</b>: finished but the source reported an error. <b>Failed</b>: crashed.</dd>
+            </dl>
 
             {loadingJobs ? (
               <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>

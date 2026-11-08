@@ -20,6 +20,8 @@ dependencies = [
     "aiosqlite>=0.20.0",
     # Imported at startup by the email verifier (contacts API); the app cannot boot without it
     "dnspython>=2.6.0",
+    # Reads Overture Maps Places GeoParquet from S3 by bounding box (Overture source adapter)
+    "duckdb>=1.3.0",  # 1.3 introduced the `lambda x: ...` syntax used in the query
     # Background Jobs
     "redis>=5.0.0",
     "rq>=1.16.0",

@@ -41,6 +41,12 @@ class Settings(BaseSettings):
     HUNTER_API_KEY: Optional[str] = None
     GOOGLE_PAGESPEED_API_KEY: Optional[str] = None
 
+    # === Overture Maps Places ===
+    # Dated release folder on s3://overturemaps-us-west-2/release/ (monthly). Newest on
+    # 2026-11-08 = 2026-10-21.0; old releases are removed, so update this when reads fail.
+    # Release notes: https://docs.overturemaps.org/blog
+    OVERTURE_RELEASE: str = "2026-10-21.0"
+
     # === Rate Limits (requests per minute) ===
     OSM_OVERPASS_RPM: int = 10
     WIKIDATA_RPM: int = 30

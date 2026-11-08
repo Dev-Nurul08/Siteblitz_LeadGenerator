@@ -148,3 +148,16 @@ def test_full_pipeline_qualify_enroll_once_and_unsubscribe_by_link(client):
     assert unsubscribed.status_code == 200, unsubscribed.text
     opt_outs = client.get("/api/v1/qualification/opt-outs").json()["items"]
     assert lead["contact_email"] in {o["email"] for o in opt_outs}
+
+
+def test_same_name_in_different_cities_is_not_merged(client):
+    # Used to merge: same normalized name + same country was enough (confidence 0.60 >= 0.50).
+    csv_text = (
+        "name,city,country,phone\n"
+        "Sharma Sweets,Pune,IN,+91 20 1111 1111\n"
+        "Sharma Sweets,Delhi,IN,+91 11 2222 2222\n"
+        "Sharma Sweets,Pune,IN,+91 20 3333 3333\n"
+    )
+    result = _import(client, "sweets.csv", csv_text)
+    # Rows 1 and 2 are different shops; row 3 is the Pune shop again with another number.
+    assert (result["new"], result["duplicate"]) == (2, 1)
