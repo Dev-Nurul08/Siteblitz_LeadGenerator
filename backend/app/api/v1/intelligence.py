@@ -71,14 +71,22 @@ async def assess_batch(
     limit: int = Query(25, ge=1, le=100),
     only_unassessed: bool = True,
     include_franchises: bool = False,
+    recheck: Optional[Literal["UNKNOWN"]] = None,
     session: AsyncSession = Depends(get_db_session),
 ):
-    """Assess up to `limit` businesses (optionally only those found by one job)."""
+    """
+    Assess up to `limit` businesses (optionally only those found by one job).
+    recheck=UNKNOWN re-runs the checks of "Needs review" businesses — e.g. a listed website that
+    failed once becomes "Website down" when it fails again ≥ 6 h later.
+    """
     stmt = select(Business.id).where(
         Business.status.notin_([BusinessStatus.DUPLICATE, BusinessStatus.INVALID]))
     if job_id:
         stmt = stmt.where(_job_filter(job_id))
-    if only_unassessed:
+    if recheck:
+        stmt = stmt.where(Business.id.in_(select(LeadAssessment.business_id).where(
+            LeadAssessment.website_verdict == WebsiteVerdict(recheck))))
+    elif only_unassessed:
         stmt = stmt.where(Business.id.notin_(select(LeadAssessment.business_id)))
     ids = (await session.execute(stmt.order_by(Business.id).limit(limit))).scalars().all()
     tiers: dict[str, int] = {}

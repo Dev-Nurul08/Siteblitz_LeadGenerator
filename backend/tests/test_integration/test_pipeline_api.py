@@ -425,3 +425,22 @@ def test_duplicate_categories_on_one_record_are_merged(client, monkeypatch):
     monkeypatch.setattr(CSVImportAdapter, "discover", two_clinic_tags)
     result = _import(client, "x.csv", "name\nignored\n")
     assert (result["new"], result["errors"]) == (1, 0)
+
+
+def test_dead_listed_domain_is_explained_and_can_be_rechecked(client, monkeypatch, no_guessed_domains):
+    async def dead(self, url):
+        return ResolutionResult(original_url=url, is_reachable=False, status=WebsiteStatus.BROKEN,
+                                error_message="Could not establish connection to host")
+
+    monkeypatch.setattr(WebsiteResolver, "resolve", dead)
+    _import(client, "a.csv", CSV_A)  # Shah Dental lists https://shahdental-test.com
+    clinic = _id(client, "Shah Dental")
+    first = client.post(f"/api/v1/intelligence/assess/{clinic}").json()
+    assert first["assessment"]["website_verdict"] == "UNKNOWN"  # one failure: wait for a 2nd ≥ 6 h later
+    fetch = [c for c in first["checks"] if c["type"] == "SITE_FETCH"][0]
+    assert "no DNS record" in fetch["detail"]["note"]
+
+    again = client.post("/api/v1/intelligence/assess-batch", params={"recheck": "UNKNOWN"}).json()
+    assert again["assessed"] == 1
+    detail = client.get(f"/api/v1/intelligence/business/{clinic}").json()
+    assert len([c for c in detail["checks"] if c["type"] == "SITE_FETCH"]) == 2

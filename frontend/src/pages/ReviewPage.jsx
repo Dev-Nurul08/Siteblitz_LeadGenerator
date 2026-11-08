@@ -220,7 +220,10 @@ export default function ReviewPage({ params, entrance, stats }) {
   async function checkBatch() {
     setBatch({ running: true })
     try {
-      const res = await api.intelligence.assessBatch({ job_id: job, limit: 25 })
+      // On "Needs review", re-run those checks (a site that failed once is confirmed down when it
+      // fails again ≥ 6 h later); otherwise check businesses not checked yet. 100 = API batch limit.
+      const res = await api.intelligence.assessBatch(verdict === 'UNKNOWN'
+        ? { job_id: job, limit: 100, recheck: 'UNKNOWN' } : { job_id: job, limit: 100 })
       setBatch({ running: false, ...res }); load(); refreshStats()
     } catch (e) { setBatch({ running: false, error: e.message }) }
   }
@@ -240,7 +243,7 @@ export default function ReviewPage({ params, entrance, stats }) {
         text="Step 2 of 4. See what was found about each business's website, and mark each verdict right or wrong."
         actions={<>
           {job && <span className="chip chip-outline">Search #{job} <a href="#/review" aria-label="Show all searches" style={{ color: 'var(--ink-3)' }}>×</a></span>}
-          <button className="btn" onClick={checkBatch} disabled={batch?.running}>{batch?.running ? <><Spinner />Checking 25…</> : <><ListChecks size={16} />Check websites for 25 businesses</>}</button>
+          <button className="btn" onClick={checkBatch} disabled={batch?.running}>{batch?.running ? <><Spinner />Checking…</> : <><ListChecks size={16} />{verdict === 'UNKNOWN' ? 'Check these again' : 'Check websites for 100 businesses'}</>}</button>
         </>} />
       {batch && !batch.running && !batch.error && <div className="banner banner-info">Checked {num(batch.assessed)} · {num(batch.remaining_unassessed)} still not checked.</div>}
       {batch?.error && <ErrorBanner message={batch.error} onRetry={checkBatch} />}
