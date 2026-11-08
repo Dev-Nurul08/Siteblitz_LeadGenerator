@@ -15,6 +15,9 @@ from backend.app.engines.discovery.base import AdapterResult, BaseSourceAdapter
 from backend.app.engines.discovery.osm import OSMAdapter
 from backend.app.engines.discovery.overture import OvertureAdapter
 
+# Overpass category-query timeout (60 s, osm.py) + one OSM rate-limit interval (6 s).
+OSM_BUDGET_SECONDS = 66
+
 
 class CombinedAdapter(BaseSourceAdapter):
     def __init__(self, rate_limit_rpm: int = 30):
@@ -44,11 +47,18 @@ class CombinedAdapter(BaseSourceAdapter):
         kwargs = dict(country_code=country_code, region=region, city=city, category=category,
                       latitude=latitude, longitude=longitude, radius_km=radius_km,
                       max_results=max_results, query_params=query_params)
+        osm_kwargs = {k: v for k, v in kwargs.items() if k != "query_params"}
         overture, osm = await asyncio.gather(
             OvertureAdapter().discover(**kwargs),
-            OSMAdapter().discover(**{k: v for k, v in kwargs.items() if k != "query_params"}),
+            # The public Overpass server is often busy (502/504, seen in the 2026-11-08 city test) and
+            # its retries could hold a whole search for ~6 minutes. OSM gets the Overpass query's own
+            # 60 s category timeout (osm.py) plus one rate-limit interval; after that the search
+            # returns Overture's results and reports OSM as skipped.
+            asyncio.wait_for(OSMAdapter().discover(**osm_kwargs), timeout=OSM_BUDGET_SECONDS),
             return_exceptions=True,
         )
+        if isinstance(osm, asyncio.TimeoutError):
+            osm = RuntimeError(f"busy — skipped after {OSM_BUDGET_SECONDS} s; Overture results kept")
         result = AdapterResult()
         for name, part in (("Overture", overture), ("OpenStreetMap", osm)):
             if isinstance(part, Exception):
