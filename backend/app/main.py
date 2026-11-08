@@ -4,7 +4,15 @@ SiteBlitz Lead Intelligence OS — FastAPI Application.
 Main entry point for the backend API server.
 """
 
+import sys
 from contextlib import asynccontextmanager
+
+# Log lines must never fail a request. On Windows, stdout redirected to a file or pipe uses the ANSI
+# code page (cp1252), and structlog printing a city like "Wrocław" raised UnicodeEncodeError, which
+# failed the whole discovery job (city test, 2026-11-08). UTF-8 with a replacement fallback instead.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="backslashreplace")
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
