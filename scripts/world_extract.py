@@ -52,6 +52,15 @@ ROWS_PER_PART = 1_000_000      # Excel opens at most 1,048,576 rows per sheet
 BOM = b"\xef\xbb\xbf"          # so Excel reads the CSV as UTF-8 (names in any script)
 
 
+# Codes outside ISO 3166-1 that the source uses (Kosovo) or that this extract uses (ZZ).
+EXTRA_NAMES = {"XK": "Kosovo", "ZZ": "Unclear country in source"}
+
+
+def _country_names(out: Path) -> dict[str, str]:
+    names = {r["code"]: r["name"] for r in csv.DictReader(open(out / "countries_A_to_Z.csv", encoding="utf-8"))}
+    return {**names, **EXTRA_NAMES}
+
+
 def connect() -> duckdb.DuckDBPyConnection:
     con = duckdb.connect()
     con.execute("INSTALL httpfs; LOAD httpfs; SET s3_region='us-west-2';")
@@ -113,9 +122,18 @@ def split(out: Path) -> None:
         return
     con = connect()
     con.execute(f"SET temp_directory = '{(out / '_work' / 'duckdb_spill').as_posix()}'")
+    # The source's country field holds 158 values that are not ISO codes (30,093 of 86.7 M places:
+    # "IN-MH", "MUMBAI", postcodes, ' NASHIK"' ...). A state-style code keeps its country ("IN-MH" -> IN);
+    # the rest go to ZZ, so no folder is named after junk (and no quote reaches a Windows path).
+    valid = sorted(_country_names(out))
+    assert all(re.fullmatch(r"[A-Z]{2}", c) for c in valid)
+    in_list = ", ".join(f"'{c}'" for c in valid)
     t = time.time()
     con.execute(f"""
-        COPY (SELECT * REPLACE (coalesce(nullif(country, ''), 'ZZ') AS country)
+        COPY (SELECT * REPLACE (
+                CASE WHEN country IN ({in_list}) THEN country
+                     WHEN left(country, 2) IN ({in_list}) AND substr(country, 3, 1) = '-' THEN left(country, 2)
+                     ELSE 'ZZ' END AS country)
               FROM read_parquet('{(raw / '*.parquet').as_posix()}'))
         TO '{dest.as_posix()}' (FORMAT PARQUET, COMPRESSION ZSTD, PARTITION_BY (country))""")
     log(f"split done in {time.time() - t:.0f}s")
@@ -175,7 +193,7 @@ def export(out: Path, only: list[str] | None = None) -> None:
     by_country = out / "_work" / "by_country"
     tmp_dir = out / "_work" / "tmp"
     tmp_dir.mkdir(parents=True, exist_ok=True)
-    names = {r["code"]: r["name"] for r in csv.DictReader(open(out / "countries_A_to_Z.csv", encoding="utf-8"))}
+    names = _country_names(out)
     dest_root = out / "countries"
     dest_root.mkdir(exist_ok=True)
     con = connect()
@@ -229,7 +247,7 @@ def export(out: Path, only: list[str] | None = None) -> None:
 def summary(out: Path) -> None:
     con = connect()
     rows = []
-    names = {r["code"]: r["name"] for r in csv.DictReader(open(out / "countries_A_to_Z.csv", encoding="utf-8"))}
+    names = _country_names(out)
     present = set()
     for folder in sorted((out / "countries").iterdir()):
         idx = next(folder.glob("*_states_and_cities.csv"), None)
