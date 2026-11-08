@@ -90,7 +90,7 @@ async def test_discover_requires_city_or_coordinates():
 
 @pytest.mark.asyncio
 async def test_discover_rejects_district_sized_area(monkeypatch):
-    async def huge_bbox(self, city, cc):
+    async def huge_bbox(self, city, cc, state=None):
         return 70.0, 75.0, 20.0, 26.0
 
     monkeypatch.setattr(OvertureAdapter, "_city_bbox", huge_bbox)
@@ -102,7 +102,7 @@ async def test_discover_rejects_district_sized_area(monkeypatch):
 async def test_discover_maps_rows_and_passes_parameters(monkeypatch):
     seen = {}
 
-    async def city_bbox(self, city, cc):
+    async def city_bbox(self, city, cc, state=None):
         return 73.62, 73.80, 24.50, 24.66
 
     def fake_query(self, sql, params):

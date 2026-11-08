@@ -183,9 +183,10 @@ class OvertureAdapter(BaseSourceAdapter):
             "adapter_class": "backend.app.engines.discovery.overture.OvertureAdapter",
         }
 
-    async def _city_bbox(self, city: str, country_code: Optional[str]) -> tuple[float, float, float, float]:
+    async def _city_bbox(self, city: str, country_code: Optional[str],
+                         state: Optional[str] = None) -> tuple[float, float, float, float]:
         """(west, east, south, north) of a city — shared, cached Nominatim lookup (geocode.py)."""
-        return await city_bbox(city, country_code)
+        return await city_bbox(city, country_code, state)
 
     def _run_query(self, sql: str, params: list) -> list[dict[str, Any]]:
         """Blocking DuckDB read of the public Parquet files (called in a worker thread)."""
@@ -226,7 +227,7 @@ class OvertureAdapter(BaseSourceAdapter):
                 d = radius_km / 111.0
                 west, east, south, north = longitude - d, longitude + d, latitude - d, latitude + d
             elif city and city.strip():
-                west, east, south, north = await self._city_bbox(city.strip(), country_code)
+                west, east, south, north = await self._city_bbox(city.strip(), country_code, region)
             else:
                 raise ValueError(
                     "Overture needs a city or coordinates + radius (a whole country is too large)."

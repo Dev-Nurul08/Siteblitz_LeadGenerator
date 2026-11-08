@@ -257,7 +257,7 @@ class OSMAdapter(BaseSourceAdapter):
             bbox = None
             if city and city.strip() and not (latitude is not None and longitude is not None and radius_km):
                 try:
-                    bbox = await city_bbox(city, country_code)
+                    bbox = await city_bbox(city, country_code, region)
                 except LookupError:
                     raise
                 except Exception as exc:

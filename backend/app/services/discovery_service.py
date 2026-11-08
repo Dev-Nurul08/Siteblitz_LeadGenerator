@@ -16,6 +16,7 @@ from sqlalchemy.orm import selectinload
 
 from backend.app.engines.discovery.base import AdapterResult, BaseSourceAdapter, DiscoveredBusiness
 from backend.app.engines.discovery.normalizer import BusinessNormalizer, _haversine_distance
+from backend.app.engines.discovery.geocode import resolved_place
 from backend.app.engines.discovery.registry import SourceAdapterRegistry
 from backend.app.models.business import (
     Business,
@@ -145,6 +146,8 @@ class DiscoveryService:
                 "status": job.status.value,
                 **stats,
                 "available": result.total_available,
+                # What the city name resolved to (Nominatim), so a wrong place is visible.
+                "resolved_place": resolved_place(city, country_code, region) if city else None,
                 # The Discovery result card shows this under the counts.
                 **({"error": job.error_message} if job.error_message else {}),
             }
