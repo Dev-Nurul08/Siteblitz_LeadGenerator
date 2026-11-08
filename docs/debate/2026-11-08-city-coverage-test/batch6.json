@@ -1,0 +1,152 @@
+[
+ {
+  "city": "Baghdad",
+  "country_code": "IQ",
+  "admin": "Baghdad Governorate"
+ },
+ {
+  "city": "Mosul",
+  "country_code": "IQ",
+  "admin": "Nineveh Governorate"
+ },
+ {
+  "city": "Basra",
+  "country_code": "IQ",
+  "admin": "Basra Governorate"
+ },
+ {
+  "city": "Madrid",
+  "country_code": "ES",
+  "admin": "Community of Madrid"
+ },
+ {
+  "city": "Barcelona",
+  "country_code": "ES",
+  "admin": "Catalonia"
+ },
+ {
+  "city": "Valencia",
+  "country_code": "ES",
+  "admin": "Valencian Community"
+ },
+ {
+  "city": "Buenos Aires",
+  "country_code": "AR",
+  "admin": "Autonomous City of Buenos Aires"
+ },
+ {
+  "city": "Córdoba",
+  "country_code": "AR",
+  "admin": "Córdoba Province"
+ },
+ {
+  "city": "Rosario",
+  "country_code": "AR",
+  "admin": "Santa Fe Province"
+ },
+ {
+  "city": "Sana'a",
+  "country_code": "YE",
+  "admin": "Amanat Al Asimah"
+ },
+ {
+  "city": "Aden",
+  "country_code": "YE",
+  "admin": "Aden Governorate"
+ },
+ {
+  "city": "Taiz",
+  "country_code": "YE",
+  "admin": "Taiz Governorate"
+ },
+ {
+  "city": "Toronto",
+  "country_code": "CA",
+  "admin": "Ontario"
+ },
+ {
+  "city": "Montréal",
+  "country_code": "CA",
+  "admin": "Quebec"
+ },
+ {
+  "city": "Calgary",
+  "country_code": "CA",
+  "admin": "Alberta"
+ },
+ {
+  "city": "Luanda",
+  "country_code": "AO",
+  "admin": "Luanda Province"
+ },
+ {
+  "city": "Lubango",
+  "country_code": "AO",
+  "admin": "Huíla"
+ },
+ {
+  "city": "Huambo",
+  "country_code": "AO",
+  "admin": "Huambo Province"
+ },
+ {
+  "city": "Kyiv",
+  "country_code": "UA",
+  "admin": "Kyiv City"
+ },
+ {
+  "city": "Kharkiv",
+  "country_code": "UA",
+  "admin": "Kharkiv Oblast"
+ },
+ {
+  "city": "Odesa",
+  "country_code": "UA",
+  "admin": "Odesa Oblast"
+ },
+ {
+  "city": "Casablanca",
+  "country_code": "MA",
+  "admin": "Casablanca-Settat"
+ },
+ {
+  "city": "Tangier",
+  "country_code": "MA",
+  "admin": "Tanger-Tétouan-Al Hoceïma"
+ },
+ {
+  "city": "Fès",
+  "country_code": "MA",
+  "admin": "Fès-Meknès"
+ },
+ {
+  "city": "Warsaw",
+  "country_code": "PL",
+  "admin": "Masovian Voivodeship"
+ },
+ {
+  "city": "Kraków",
+  "country_code": "PL",
+  "admin": "Lesser Poland Voivodeship"
+ },
+ {
+  "city": "Wrocław",
+  "country_code": "PL",
+  "admin": "Lower Silesian Voivodeship"
+ },
+ {
+  "city": "Tashkent",
+  "country_code": "UZ",
+  "admin": "Tashkent City"
+ },
+ {
+  "city": "Namangan",
+  "country_code": "UZ",
+  "admin": "Namangan Region"
+ },
+ {
+  "city": "Samarkand",
+  "country_code": "UZ",
+  "admin": "Samarkand Region"
+ }
+]

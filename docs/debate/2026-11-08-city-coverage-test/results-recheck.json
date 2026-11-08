@@ -1,0 +1,147 @@
+[
+ {
+  "city": "Nanded",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 67,
+  "new": 64,
+  "duplicate": 3,
+  "available": 67,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Nanded, Maharashtra, 431600, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 64,
+  "phone_pct": 91,
+  "email_pct": 58,
+  "website_pct": 27,
+  "social_pct": 98,
+  "social_no_website_pct": 73,
+  "seconds": 39
+ },
+ {
+  "city": "Hubballi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 63,
+  "new": 60,
+  "duplicate": 3,
+  "available": 63,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Hubballi, Hubballi Urban Taluku, Dharwad, Karnataka, 580020, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 60,
+  "phone_pct": 98,
+  "email_pct": 62,
+  "website_pct": 38,
+  "social_pct": 97,
+  "social_no_website_pct": 62,
+  "seconds": 60
+ },
+ {
+  "city": "Dharwad",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 62,
+  "new": 0,
+  "duplicate": 62,
+  "available": 62,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "Dharwad, Dharawada taluku, Dharwad, Karnataka, 580001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 59,
+  "phone_pct": 98,
+  "email_pct": 61,
+  "website_pct": 37,
+  "social_pct": 97,
+  "social_no_website_pct": 63,
+  "seconds": 73
+ },
+ {
+  "city": "Asansol",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 21,
+  "new": 21,
+  "duplicate": 0,
+  "available": 21,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Asansol, Asansol Kulti Township, Paschim Bardhaman, West Bengal, India",
+   "type": "city",
+   "bbox_km": [
+    10,
+    8
+   ]
+  },
+  "businesses": 21,
+  "phone_pct": 90,
+  "email_pct": 62,
+  "website_pct": 38,
+  "social_pct": 95,
+  "social_no_website_pct": 62,
+  "seconds": 92
+ },
+ {
+  "city": "Jhansi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 42,
+  "new": 39,
+  "duplicate": 3,
+  "available": 42,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Jhansi, Uttar Pradesh, India",
+   "type": "city",
+   "bbox_km": [
+    15,
+    8
+   ]
+  },
+  "businesses": 39,
+  "phone_pct": 95,
+  "email_pct": 51,
+  "website_pct": 28,
+  "social_pct": 92,
+  "social_no_website_pct": 69,
+  "seconds": 61
+ }
+]

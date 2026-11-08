@@ -1,0 +1,152 @@
+[
+ {
+  "city": "Maputo",
+  "country_code": "MZ",
+  "admin": "Maputo City"
+ },
+ {
+  "city": "Matola",
+  "country_code": "MZ",
+  "admin": "Maputo Province"
+ },
+ {
+  "city": "Nampula",
+  "country_code": "MZ",
+  "admin": "Nampula Province"
+ },
+ {
+  "city": "Kuala Lumpur",
+  "country_code": "MY",
+  "admin": "Kuala Lumpur"
+ },
+ {
+  "city": "Kajang",
+  "country_code": "MY",
+  "admin": "Selangor"
+ },
+ {
+  "city": "Seberang Perai",
+  "country_code": "MY",
+  "admin": "Penang"
+ },
+ {
+  "city": "Accra",
+  "country_code": "GH",
+  "admin": "Greater Accra Region"
+ },
+ {
+  "city": "Kumasi",
+  "country_code": "GH",
+  "admin": "Ashanti Region"
+ },
+ {
+  "city": "Tamale",
+  "country_code": "GH",
+  "admin": "Northern Region"
+ },
+ {
+  "city": "Riyadh",
+  "country_code": "SA",
+  "admin": "Riyadh Region"
+ },
+ {
+  "city": "Jeddah",
+  "country_code": "SA",
+  "admin": "Makkah Region"
+ },
+ {
+  "city": "Mecca",
+  "country_code": "SA",
+  "admin": "Makkah Region"
+ },
+ {
+  "city": "Lima",
+  "country_code": "PE",
+  "admin": "Lima Province"
+ },
+ {
+  "city": "Callao",
+  "country_code": "PE",
+  "admin": "Callao"
+ },
+ {
+  "city": "Arequipa",
+  "country_code": "PE",
+  "admin": "Arequipa"
+ },
+ {
+  "city": "Antananarivo",
+  "country_code": "MG",
+  "admin": "Analamanga"
+ },
+ {
+  "city": "Toamasina",
+  "country_code": "MG",
+  "admin": "Atsinanana"
+ },
+ {
+  "city": "Antsirabe",
+  "country_code": "MG",
+  "admin": "Vakinankaratra"
+ },
+ {
+  "city": "Abidjan",
+  "country_code": "CI",
+  "admin": "Abidjan"
+ },
+ {
+  "city": "Bouaké",
+  "country_code": "CI",
+  "admin": "Gbêkê"
+ },
+ {
+  "city": "Korhogo",
+  "country_code": "CI",
+  "admin": "Poro"
+ },
+ {
+  "city": "Douala",
+  "country_code": "CM",
+  "admin": "Littoral"
+ },
+ {
+  "city": "Yaoundé",
+  "country_code": "CM",
+  "admin": "Centre"
+ },
+ {
+  "city": "Bamenda",
+  "country_code": "CM",
+  "admin": "Northwest Region"
+ },
+ {
+  "city": "Kathmandu",
+  "country_code": "NP",
+  "admin": "Bagmati Province"
+ },
+ {
+  "city": "Pokhara",
+  "country_code": "NP",
+  "admin": "Gandaki Province"
+ },
+ {
+  "city": "Bharatpur",
+  "country_code": "NP",
+  "admin": "Bagmati Province"
+ },
+ {
+  "city": "Niamey",
+  "country_code": "NE",
+  "admin": "Niamey"
+ },
+ {
+  "city": "Maradi",
+  "country_code": "NE",
+  "admin": "Maradi Region"
+ },
+ {
+  "city": "Zinder",
+  "country_code": "NE",
+  "admin": "Zinder Region"
+ }
+]

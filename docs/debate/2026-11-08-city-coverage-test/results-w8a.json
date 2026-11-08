@@ -1,0 +1,1018 @@
+[
+ {
+  "city": "Udaipur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 102,
+  "new": 95,
+  "duplicate": 7,
+  "available": 102,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Udaipur, Girwa Tehsil, Udaipur, Rajasthan, 313001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 95,
+  "phone_pct": 95,
+  "email_pct": 65,
+  "website_pct": 41,
+  "social_pct": 98,
+  "social_no_website_pct": 59,
+  "seconds": 88
+ },
+ {
+  "city": "Maheshtala",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 8,
+  "new": 8,
+  "duplicate": 0,
+  "available": 8,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Maheshtala, Greater Kolkata, Thakurpukur Maheshtala, South 24 Parganas, West Bengal, India",
+   "type": "city",
+   "bbox_km": [
+    11,
+    8
+   ]
+  },
+  "businesses": 8,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 25,
+  "social_pct": 100,
+  "social_no_website_pct": 75,
+  "seconds": 124
+ },
+ {
+  "city": "Davanagere",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 31,
+  "new": 29,
+  "duplicate": 2,
+  "available": 31,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "Davanagere, Davanagere Taluku, Davanagere, Karnataka, 577000, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 29,
+  "phone_pct": 83,
+  "email_pct": 55,
+  "website_pct": 41,
+  "social_pct": 93,
+  "social_no_website_pct": 55,
+  "seconds": 125
+ },
+ {
+  "city": "Kozhikode",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 211,
+  "new": 198,
+  "duplicate": 13,
+  "available": 211,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Kozhikode, Kerala, 673001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 198,
+  "phone_pct": 89,
+  "email_pct": 70,
+  "website_pct": 46,
+  "social_pct": 97,
+  "social_no_website_pct": 54,
+  "seconds": 134
+ },
+ {
+  "city": "Kurnool",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 42,
+  "new": 38,
+  "duplicate": 4,
+  "available": 42,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Kurnool, Kurnool Mandal, Kurnool District, Andhra Pradesh, 518001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 38,
+  "phone_pct": 97,
+  "email_pct": 61,
+  "website_pct": 34,
+  "social_pct": 89,
+  "social_no_website_pct": 61,
+  "seconds": 62
+ },
+ {
+  "city": "Akola",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 31,
+  "new": 31,
+  "duplicate": 0,
+  "available": 31,
+  "errors": 0,
+  "error": "",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "Akola, Maharashtra, 444001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 31,
+  "phone_pct": 94,
+  "email_pct": 58,
+  "website_pct": 29,
+  "social_pct": 97,
+  "social_no_website_pct": 71,
+  "seconds": 67
+ },
+ {
+  "city": "Rajpur Sonarpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 62,
+  "new": 52,
+  "duplicate": 10,
+  "available": 62,
+  "errors": 0,
+  "error": "",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Rajpur Sonarpur, Greater Kolkata, Sonarpur, South 24 Parganas, West Bengal, 700150, India",
+   "type": "town",
+   "bbox_km": [
+    13,
+    10
+   ]
+  },
+  "businesses": 52,
+  "phone_pct": 96,
+  "email_pct": 67,
+  "website_pct": 44,
+  "social_pct": 94,
+  "social_no_website_pct": 54,
+  "seconds": 67
+ },
+ {
+  "city": "Bokaro",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 28,
+  "new": 26,
+  "duplicate": 2,
+  "available": 28,
+  "errors": 0,
+  "error": "",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Bokaro, Chas, Bokaro, Jharkhand, 827004, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 26,
+  "phone_pct": 92,
+  "email_pct": 62,
+  "website_pct": 38,
+  "social_pct": 96,
+  "social_no_website_pct": 58,
+  "seconds": 82
+ },
+ {
+  "city": "Ballari",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 5,
+  "new": 5,
+  "duplicate": 0,
+  "available": 5,
+  "errors": 0,
+  "error": "",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Ballari, Bellary taluk, Ballari, Karnataka, 583101, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 5,
+  "phone_pct": 100,
+  "email_pct": 40,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 83
+ },
+ {
+  "city": "Patiala",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 72,
+  "new": 68,
+  "duplicate": 4,
+  "available": 72,
+  "errors": 0,
+  "error": "",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "Patiala, Patiala Tahsil, Patiala, Punjab, India",
+   "type": "city",
+   "bbox_km": [
+    15,
+    10
+   ]
+  },
+  "businesses": 68,
+  "phone_pct": 99,
+  "email_pct": 60,
+  "website_pct": 26,
+  "social_pct": 97,
+  "social_no_website_pct": 72,
+  "seconds": 55
+ },
+ {
+  "city": "South Dum Dum",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": null,
+  "errors": 1,
+  "error": "City 'South Dum Dum' was not found in country 'IN'.",
+  "job_id": 11,
+  "resolved_place": null,
+  "seconds": 5
+ },
+ {
+  "city": "Rajarhat-Gopalpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 40,
+  "new": 39,
+  "duplicate": 1,
+  "available": 40,
+  "errors": 0,
+  "error": "",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "Rajarhat Gopalpur, Bidhannagar, Greater Kolkata, Rajarhat, North 24 Parganas, West Bengal, 700157, India",
+   "type": "suburb",
+   "bbox_km": [
+    4,
+    4
+   ]
+  },
+  "businesses": 40,
+  "phone_pct": 98,
+  "email_pct": 62,
+  "website_pct": 52,
+  "social_pct": 95,
+  "social_no_website_pct": 42,
+  "seconds": 88
+ },
+ {
+  "city": "Agartala",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 73,
+  "new": 67,
+  "duplicate": 6,
+  "available": 73,
+  "errors": 0,
+  "error": "",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "Agartala, Mohanpur, West Tripura, Tripura, 799001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 67,
+  "phone_pct": 91,
+  "email_pct": 69,
+  "website_pct": 30,
+  "social_pct": 97,
+  "social_no_website_pct": 70,
+  "seconds": 108
+ },
+ {
+  "city": "Bhagalpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 43,
+  "new": 41,
+  "duplicate": 2,
+  "available": 43,
+  "errors": 0,
+  "error": "",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "Bhagalpur, Jagdishpur, Bhagalpur, Bihar, 812002, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 41,
+  "phone_pct": 88,
+  "email_pct": 61,
+  "website_pct": 37,
+  "social_pct": 93,
+  "social_no_website_pct": 63,
+  "seconds": 70
+ },
+ {
+  "city": "Muzaffarnagar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 31,
+  "new": 28,
+  "duplicate": 3,
+  "available": 31,
+  "errors": 0,
+  "error": "",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "Muzaffarnagar, Uttar Pradesh, 251001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 28,
+  "phone_pct": 75,
+  "email_pct": 43,
+  "website_pct": 21,
+  "social_pct": 100,
+  "social_no_website_pct": 79,
+  "seconds": 93
+ },
+ {
+  "city": "Bhatpara",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 147,
+  "new": 136,
+  "duplicate": 11,
+  "available": 147,
+  "errors": 0,
+  "error": "",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "Bhatpara, Greater Kolkata, Barrackpur - I, North 24 Parganas, West Bengal, 743125, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 137,
+  "phone_pct": 90,
+  "email_pct": 68,
+  "website_pct": 26,
+  "social_pct": 95,
+  "social_no_website_pct": 74,
+  "seconds": 84
+ },
+ {
+  "city": "Latur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 50,
+  "new": 47,
+  "duplicate": 3,
+  "available": 50,
+  "errors": 0,
+  "error": "",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "Latur, Maharashtra, 413512, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 47,
+  "phone_pct": 96,
+  "email_pct": 66,
+  "website_pct": 26,
+  "social_pct": 98,
+  "social_no_website_pct": 74,
+  "seconds": 58
+ },
+ {
+  "city": "Panihati",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 60,
+  "new": 38,
+  "duplicate": 22,
+  "available": 60,
+  "errors": 0,
+  "error": "",
+  "job_id": 18,
+  "resolved_place": {
+   "name": "Panihati, Greater Kolkata, Barrackpur - II, North 24 Parganas, West Bengal, 700111, India",
+   "type": "town",
+   "bbox_km": [
+    9,
+    9
+   ]
+  },
+  "businesses": 58,
+  "phone_pct": 98,
+  "email_pct": 72,
+  "website_pct": 31,
+  "social_pct": 97,
+  "social_no_website_pct": 69,
+  "seconds": 102
+ },
+ {
+  "city": "Dhule",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 24,
+  "new": 21,
+  "duplicate": 3,
+  "available": 24,
+  "errors": 0,
+  "error": "",
+  "job_id": 19,
+  "resolved_place": {
+   "name": "Dhule, Dhule Taluka, Dhule, Maharashtra, 424001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 21,
+  "phone_pct": 90,
+  "email_pct": 71,
+  "website_pct": 19,
+  "social_pct": 100,
+  "social_no_website_pct": 81,
+  "seconds": 67
+ },
+ {
+  "city": "Rohtak",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 63,
+  "new": 56,
+  "duplicate": 7,
+  "available": 63,
+  "errors": 0,
+  "error": "",
+  "job_id": 20,
+  "resolved_place": {
+   "name": "Rohtak, Haryana, 124001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 56,
+  "phone_pct": 93,
+  "email_pct": 68,
+  "website_pct": 29,
+  "social_pct": 100,
+  "social_no_website_pct": 71,
+  "seconds": 49
+ },
+ {
+  "city": "Korba",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 22,
+  "new": 20,
+  "duplicate": 2,
+  "available": 22,
+  "errors": 0,
+  "error": "",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "Korba, Korba Tahsil, Korba, Chhattisgarh, 495600, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 20,
+  "phone_pct": 95,
+  "email_pct": 55,
+  "website_pct": 40,
+  "social_pct": 100,
+  "social_no_website_pct": 60,
+  "seconds": 46
+ },
+ {
+  "city": "Bhilwara",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 22,
+  "new": 21,
+  "duplicate": 1,
+  "available": 22,
+  "errors": 0,
+  "error": "",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "Bhilwara, Bhilwara Tehsil, Bhilwara, Rajasthan, 311001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 21,
+  "phone_pct": 90,
+  "email_pct": 67,
+  "website_pct": 29,
+  "social_pct": 100,
+  "social_no_website_pct": 71,
+  "seconds": 61
+ },
+ {
+  "city": "Brahmapur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 12,
+  "new": 11,
+  "duplicate": 1,
+  "available": 12,
+  "errors": 0,
+  "error": "",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "Brahmapur, Rangeilunda, Ganjam, Odisha, 760001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 11,
+  "phone_pct": 91,
+  "email_pct": 73,
+  "website_pct": 27,
+  "social_pct": 100,
+  "social_no_website_pct": 73,
+  "seconds": 64
+ },
+ {
+  "city": "Muzaffarpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 66,
+  "new": 60,
+  "duplicate": 6,
+  "available": 66,
+  "errors": 0,
+  "error": "",
+  "job_id": 24,
+  "resolved_place": {
+   "name": "Muzaffarpur, Musahri, Muzaffarpur, Bihar, 842001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 60,
+  "phone_pct": 85,
+  "email_pct": 62,
+  "website_pct": 30,
+  "social_pct": 98,
+  "social_no_website_pct": 68,
+  "seconds": 78
+ },
+ {
+  "city": "Ahilyanagar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 44,
+  "new": 43,
+  "duplicate": 1,
+  "available": 44,
+  "errors": 0,
+  "error": "",
+  "job_id": 25,
+  "resolved_place": {
+   "name": "Ahilyanagar, Nagar Subdistrict, Ahilyanagar District, Maharashtra, 414001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 43,
+  "phone_pct": 84,
+  "email_pct": 44,
+  "website_pct": 21,
+  "social_pct": 100,
+  "social_no_website_pct": 79,
+  "seconds": 84
+ },
+ {
+  "city": "Cox's Bazar",
+  "country_code": "BD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 18,
+  "new": 16,
+  "duplicate": 2,
+  "available": 18,
+  "errors": 0,
+  "error": "",
+  "job_id": 26,
+  "resolved_place": {
+   "name": "কক্সবাজার জেলা, চট্টগ্রাম বিভাগ, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    133,
+    143
+   ],
+   "trimmed_from_km": [
+    144,
+    179
+   ]
+  },
+  "businesses": 16,
+  "phone_pct": 94,
+  "email_pct": 75,
+  "website_pct": 12,
+  "social_pct": 100,
+  "social_no_website_pct": 88,
+  "seconds": 37
+ },
+ {
+  "city": "Sirajganj",
+  "country_code": "BD",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": null,
+  "errors": 1,
+  "error": "Overture read failed: IO Error: Could not resolve hostname error for HTTP GET to 'https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-10-21.0/theme%3Dplaces/type%3Dplace/part-00000-a0a9949b-7e8e-59fe-803b-6cc55b17f790-c000.zstd.parquet'\n\nLINE 7:         FROM read_parquet('s3://ove",
+  "job_id": 27,
+  "resolved_place": {
+   "name": "সিরাজগঞ্জ, সিরাজগঞ্জ সদর উপজেলা, সিরাজগঞ্জ জেলা, রাজশাহী বিভাগ, 6700, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 6296
+ },
+ {
+  "city": "Bhairab",
+  "country_code": "BD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 10,
+  "new": 10,
+  "duplicate": 0,
+  "available": 10,
+  "errors": 0,
+  "error": "",
+  "job_id": 32,
+  "resolved_place": {
+   "name": "ভৈরব, ভৈরব উপজেলা, কিশোরগঞ্জ জেলা, ঢাকা বিভাগ, 2350, বাংলাদেশ",
+   "type": "town",
+   "bbox_km": [
+    9,
+    9
+   ]
+  },
+  "businesses": 10,
+  "phone_pct": 80,
+  "email_pct": 40,
+  "website_pct": 10,
+  "social_pct": 100,
+  "social_no_website_pct": 90,
+  "seconds": 102
+ },
+ {
+  "city": "Saidpur",
+  "country_code": "BD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 4,
+  "new": 4,
+  "duplicate": 0,
+  "available": 4,
+  "errors": 0,
+  "error": "",
+  "job_id": 33,
+  "resolved_place": {
+   "name": "সৈয়দপুর শহর, সৈয়দপুর উপজেলা, নীলফামারী জেলা, রংপুর বিভাগ, 5310, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    4,
+    7
+   ]
+  },
+  "businesses": 4,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 43
+ },
+ {
+  "city": "Jhenaidah",
+  "country_code": "BD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 6,
+  "new": 6,
+  "duplicate": 0,
+  "available": 6,
+  "errors": 0,
+  "error": "",
+  "job_id": 34,
+  "resolved_place": {
+   "name": "ঝিনাইদহ, ঝিনাইদহ সদর উপজেলা, ঝিনাইদহ জেলা, খুলনা বিভাগ, 7301, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 6,
+  "phone_pct": 100,
+  "email_pct": 33,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 52
+ },
+ {
+  "city": "Satkhira",
+  "country_code": "BD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 9,
+  "new": 9,
+  "duplicate": 0,
+  "available": 9,
+  "errors": 0,
+  "error": "",
+  "job_id": 35,
+  "resolved_place": {
+   "name": "সাতক্ষীরা, সাতক্ষীরা সদর উপজেলা, সাতক্ষীরা জেলা, খুলনা বিভাগ, 9400, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 9,
+  "phone_pct": 89,
+  "email_pct": 78,
+  "website_pct": 22,
+  "social_pct": 100,
+  "social_no_website_pct": 78,
+  "seconds": 50
+ },
+ {
+  "city": "Narsingdi",
+  "country_code": "BD",
+  "admin": "Dhaka",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 33,
+  "new": 33,
+  "duplicate": 0,
+  "available": 33,
+  "errors": 0,
+  "error": "",
+  "job_id": 36,
+  "resolved_place": {
+   "name": "নরসিংদী, নরসিংদী সদর উপজেলা, নরসিংদী জেলা, ঢাকা বিভাগ, 1602, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 33,
+  "phone_pct": 97,
+  "email_pct": 70,
+  "website_pct": 12,
+  "social_pct": 100,
+  "social_no_website_pct": 88,
+  "countries": {
+   "BD": 33
+  },
+  "seconds": 57
+ },
+ {
+  "city": "Naogaon",
+  "country_code": "BD",
+  "admin": "Rajshahi",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 7,
+  "new": 7,
+  "duplicate": 0,
+  "available": 7,
+  "errors": 0,
+  "error": "",
+  "job_id": 37,
+  "resolved_place": {
+   "name": "নওগাঁ, নওগাঁ সদর উপজেলা, নওগাঁ জেলা, রাজশাহী বিভাগ, 6500, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 7,
+  "phone_pct": 100,
+  "email_pct": 71,
+  "website_pct": 14,
+  "social_pct": 100,
+  "social_no_website_pct": 86,
+  "countries": {
+   "BD": 7
+  },
+  "seconds": 38
+ },
+ {
+  "city": "Pabna",
+  "country_code": "BD",
+  "admin": "Rajshahi",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 15,
+  "new": 15,
+  "duplicate": 0,
+  "available": 15,
+  "errors": 0,
+  "error": "",
+  "job_id": 38,
+  "resolved_place": {
+   "name": "পাবনা, পাবনা সদর উপজেলা, পাবনা জেলা, রাজশাহী বিভাগ, 6600, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 15,
+  "phone_pct": 100,
+  "email_pct": 87,
+  "website_pct": 20,
+  "social_pct": 100,
+  "social_no_website_pct": 80,
+  "countries": {
+   "BD": 15
+  },
+  "seconds": 33
+ },
+ {
+  "city": "Jamalpur",
+  "country_code": "BD",
+  "admin": "Mymensingh",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 8,
+  "new": 8,
+  "duplicate": 0,
+  "available": 8,
+  "errors": 0,
+  "error": "",
+  "job_id": 39,
+  "resolved_place": {
+   "name": "জামালপুর, জামালপুর সদর উপজেলা, জামালপুর জেলা, ময়মনসিংহ বিভাগ, 2000, বাংলাদেশ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 8,
+  "phone_pct": 100,
+  "email_pct": 88,
+  "website_pct": 12,
+  "social_pct": 100,
+  "social_no_website_pct": 88,
+  "countries": {
+   "BD": 8
+  },
+  "seconds": 30
+ }
+]

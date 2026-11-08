@@ -1,0 +1,20 @@
+[
+ {
+  "city": "Goma",
+  "country_code": "CD",
+  "admin": "Nord-Kivu",
+  "expect": "Goma city, North Kivu, DR Congo; not Gisenyi in Rwanda across the border"
+ },
+ {
+  "city": "Zaranj",
+  "country_code": "AF",
+  "admin": "Nimruz",
+  "expect": "Zaranj city, Nimruz Province, Afghanistan; exclude Iranian places across the border"
+ },
+ {
+  "city": "Abadan",
+  "country_code": "IR",
+  "admin": "Khuzestan",
+  "expect": "Abadan city, Khuzestan Province, Iran; not Iraqi places across the Shatt al-Arab border"
+ }
+]

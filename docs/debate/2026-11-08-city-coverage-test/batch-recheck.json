@@ -1,0 +1,27 @@
+[
+ {
+  "city": "Nanded",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Hubballi",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Dharwad",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Asansol",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Jhansi",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ }
+]

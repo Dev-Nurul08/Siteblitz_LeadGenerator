@@ -1,0 +1,823 @@
+[
+ {
+  "city": "Maputo",
+  "country_code": "MZ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 39,
+  "new": 38,
+  "duplicate": 1,
+  "available": 39,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Cidade de Maputo, Zona Sul, Moçambique",
+   "type": "city",
+   "bbox_km": [
+    61,
+    31
+   ]
+  },
+  "businesses": 38,
+  "phone_pct": 92,
+  "email_pct": 63,
+  "website_pct": 26,
+  "social_pct": 100,
+  "social_no_website_pct": 74,
+  "seconds": 66
+ },
+ {
+  "city": "Matola",
+  "country_code": "MZ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 26,
+  "new": 0,
+  "duplicate": 26,
+  "available": 26,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Matola, Maputo, Zona Sul, Moçambique",
+   "type": "city",
+   "bbox_km": [
+    21,
+    33
+   ]
+  },
+  "businesses": 26,
+  "phone_pct": 92,
+  "email_pct": 62,
+  "website_pct": 23,
+  "social_pct": 100,
+  "social_no_website_pct": 77,
+  "seconds": 79
+ },
+ {
+  "city": "Nampula",
+  "country_code": "MZ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "Nampula, Cidade de Nampula, Nampula, Zona Norte, Moçambique",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 108
+ },
+ {
+  "city": "Kuala Lumpur",
+  "country_code": "MY",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 289,
+  "duplicate": 11,
+  "available": 895,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Kuala Lumpur, Malaysia",
+   "type": "state",
+   "bbox_km": [
+    16,
+    23
+   ]
+  },
+  "businesses": 289,
+  "phone_pct": 100,
+  "email_pct": 84,
+  "website_pct": 70,
+  "social_pct": 100,
+  "social_no_website_pct": 30,
+  "seconds": 113
+ },
+ {
+  "city": "Kajang",
+  "country_code": "MY",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 222,
+  "duplicate": 78,
+  "available": 427,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Majlis Perbandaran Kajang, Hulu Langat, Selangor, Malaysia",
+   "type": "city",
+   "bbox_km": [
+    28,
+    45
+   ]
+  },
+  "businesses": 287,
+  "phone_pct": 99,
+  "email_pct": 73,
+  "website_pct": 52,
+  "social_pct": 100,
+  "social_no_website_pct": 48,
+  "seconds": 108
+ },
+ {
+  "city": "Seberang Perai",
+  "country_code": "MY",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": null,
+  "errors": 1,
+  "error": "City 'Seberang Perai' was not found in country 'MY'.",
+  "job_id": 6,
+  "resolved_place": null,
+  "seconds": 4
+ },
+ {
+  "city": "Accra",
+  "country_code": "GH",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 72,
+  "new": 67,
+  "duplicate": 5,
+  "available": 72,
+  "errors": 0,
+  "error": "",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Accra, Korle-Klottey Municipal District, Greater Accra Region, Ghana",
+   "type": "city",
+   "bbox_km": [
+    25,
+    17
+   ]
+  },
+  "businesses": 67,
+  "phone_pct": 94,
+  "email_pct": 63,
+  "website_pct": 60,
+  "social_pct": 96,
+  "social_no_website_pct": 39,
+  "seconds": 56
+ },
+ {
+  "city": "Kumasi",
+  "country_code": "GH",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 11,
+  "new": 9,
+  "duplicate": 2,
+  "available": 11,
+  "errors": 0,
+  "error": "",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Kumasi, Kumasi Metropolitan District, Ashanti Region, AK-010-1295, Ghana",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 9,
+  "phone_pct": 100,
+  "email_pct": 78,
+  "website_pct": 67,
+  "social_pct": 100,
+  "social_no_website_pct": 33,
+  "seconds": 68
+ },
+ {
+  "city": "Tamale",
+  "country_code": "GH",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Tamale, Tamale Metropolitan District, Northern Region, NT-0001-6507, Ghana",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 61
+ },
+ {
+  "city": "Riyadh",
+  "country_code": "SA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 278,
+  "duplicate": 22,
+  "available": 337,
+  "errors": 0,
+  "error": "",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "الرياض, محافظة الرياض, منطقة الرياض, 12643, السعودية",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 278,
+  "phone_pct": 84,
+  "email_pct": 44,
+  "website_pct": 46,
+  "social_pct": 95,
+  "social_no_website_pct": 54,
+  "seconds": 105
+ },
+ {
+  "city": "Jeddah",
+  "country_code": "SA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 214,
+  "new": 195,
+  "duplicate": 19,
+  "available": 214,
+  "errors": 0,
+  "error": "",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "جدة, محافظة جدة, منطقة مكة المكرمة, 23124, السعودية",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 195,
+  "phone_pct": 86,
+  "email_pct": 48,
+  "website_pct": 42,
+  "social_pct": 97,
+  "social_no_website_pct": 58,
+  "seconds": 108
+ },
+ {
+  "city": "Mecca",
+  "country_code": "SA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 33,
+  "new": 33,
+  "duplicate": 0,
+  "available": 33,
+  "errors": 0,
+  "error": "",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "محافظة مكة المكرمة, منطقة مكة المكرمة, السعودية",
+   "type": "city",
+   "bbox_km": [
+    108,
+    81
+   ]
+  },
+  "businesses": 33,
+  "phone_pct": 85,
+  "email_pct": 42,
+  "website_pct": 45,
+  "social_pct": 85,
+  "social_no_website_pct": 55,
+  "seconds": 98
+ },
+ {
+  "city": "Lima",
+  "country_code": "PE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 297,
+  "duplicate": 3,
+  "available": 5015,
+  "errors": 0,
+  "error": "",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "Lima, Lima Metropolitana, Lima, 15001, Perú",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 297,
+  "phone_pct": 99,
+  "email_pct": 84,
+  "website_pct": 57,
+  "social_pct": 97,
+  "social_no_website_pct": 43,
+  "seconds": 164
+ },
+ {
+  "city": "Callao",
+  "country_code": "PE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 43,
+  "duplicate": 257,
+  "available": 4244,
+  "errors": 0,
+  "error": "",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "Callao, Lima Metropolitana, Callao, 07001, Perú",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 298,
+  "phone_pct": 99,
+  "email_pct": 83,
+  "website_pct": 57,
+  "social_pct": 98,
+  "social_no_website_pct": 43,
+  "seconds": 132
+ },
+ {
+  "city": "Arequipa",
+  "country_code": "PE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 286,
+  "duplicate": 14,
+  "available": 622,
+  "errors": 0,
+  "error": "",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "Arequipa, 04001, Perú",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 286,
+  "phone_pct": 98,
+  "email_pct": 70,
+  "website_pct": 34,
+  "social_pct": 99,
+  "social_no_website_pct": 66,
+  "seconds": 129
+ },
+ {
+  "city": "Antananarivo",
+  "country_code": "MG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 2,
+  "new": 2,
+  "duplicate": 0,
+  "available": 2,
+  "errors": 0,
+  "error": "",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "Antananarivo, Analamanga, Province d’Antananarivo, 101, Madagasikara / Madagascar",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 2,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 72
+ },
+ {
+  "city": "Toamasina",
+  "country_code": "MG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "Toamasina, Toamasina I, Atsinanana, Province de Tamatave, 501, Madagasikara / Madagascar",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 65
+ },
+ {
+  "city": "Antsirabe",
+  "country_code": "MG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 18,
+  "resolved_place": {
+   "name": "Antsirabe, Antsirabe I, Vakinankaratra, Province d’Antananarivo, 110, Madagasikara / Madagascar",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 88
+ },
+ {
+  "city": "Abidjan",
+  "country_code": "CI",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 36,
+  "new": 33,
+  "duplicate": 3,
+  "available": 36,
+  "errors": 0,
+  "error": "",
+  "job_id": 19,
+  "resolved_place": {
+   "name": "Abidjan, Côte d’Ivoire",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 33,
+  "phone_pct": 94,
+  "email_pct": 82,
+  "website_pct": 33,
+  "social_pct": 100,
+  "social_no_website_pct": 67,
+  "seconds": 99
+ },
+ {
+  "city": "Bouaké",
+  "country_code": "CI",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 20,
+  "resolved_place": {
+   "name": "Bouaké, Gbêkê, Vallée du Bandama, Côte d’Ivoire",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 100,
+  "social_pct": 100,
+  "social_no_website_pct": 0,
+  "seconds": 70
+ },
+ {
+  "city": "Korhogo",
+  "country_code": "CI",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "Korhogo, Poro, Savanes, Côte d’Ivoire",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 49
+ },
+ {
+  "city": "Douala",
+  "country_code": "CM",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 25,
+  "new": 24,
+  "duplicate": 1,
+  "available": 25,
+  "errors": 0,
+  "error": "",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "Douala, Douala II, Communauté urbaine de Douala, Wouri, Littoral, Cameroun",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 24,
+  "phone_pct": 96,
+  "email_pct": 88,
+  "website_pct": 33,
+  "social_pct": 100,
+  "social_no_website_pct": 67,
+  "seconds": 39
+ },
+ {
+  "city": "Yaoundé",
+  "country_code": "CM",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 25,
+  "new": 21,
+  "duplicate": 4,
+  "available": 25,
+  "errors": 0,
+  "error": "",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "Communauté urbaine de Yaoundé, Mfoundi, Centre, Cameroun",
+   "type": "city",
+   "bbox_km": [
+    18,
+    28
+   ]
+  },
+  "businesses": 21,
+  "phone_pct": 81,
+  "email_pct": 52,
+  "website_pct": 19,
+  "social_pct": 100,
+  "social_no_website_pct": 81,
+  "seconds": 67
+ },
+ {
+  "city": "Bamenda",
+  "country_code": "CM",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 24,
+  "resolved_place": {
+   "name": "Communauté urbaine de Bamenda, Mezam, Northwest, Cameroun",
+   "type": "city",
+   "bbox_km": [
+    29,
+    21
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 75
+ },
+ {
+  "city": "Kathmandu",
+  "country_code": "NP",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 282,
+  "duplicate": 18,
+  "available": 373,
+  "errors": 0,
+  "error": "",
+  "job_id": 25,
+  "resolved_place": {
+   "name": "काठमाडौँ महानगरपालिका, काठमाडौं जिल्ला, बागमती प्रदेश, नेपाल",
+   "type": "city",
+   "bbox_km": [
+    11,
+    9
+   ]
+  },
+  "businesses": 282,
+  "phone_pct": 97,
+  "email_pct": 80,
+  "website_pct": 42,
+  "social_pct": 100,
+  "social_no_website_pct": 58,
+  "seconds": 90
+ },
+ {
+  "city": "Pokhara",
+  "country_code": "NP",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 60,
+  "new": 58,
+  "duplicate": 2,
+  "available": 60,
+  "errors": 0,
+  "error": "",
+  "job_id": 26,
+  "resolved_place": {
+   "name": "Pokhara, कास्की, गण्डकी प्रदेश, नेपाल",
+   "type": "city",
+   "bbox_km": [
+    39,
+    29
+   ]
+  },
+  "businesses": 58,
+  "phone_pct": 88,
+  "email_pct": 66,
+  "website_pct": 24,
+  "social_pct": 100,
+  "social_no_website_pct": 76,
+  "seconds": 56
+ },
+ {
+  "city": "Bharatpur",
+  "country_code": "NP",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 38,
+  "new": 35,
+  "duplicate": 3,
+  "available": 38,
+  "errors": 0,
+  "error": "",
+  "job_id": 27,
+  "resolved_place": {
+   "name": "भरतपुर, भरतपुर महानगरपालिका, चितवन जिल्ला, बागमती प्रदेश, 44207, नेपाल",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 35,
+  "phone_pct": 94,
+  "email_pct": 60,
+  "website_pct": 40,
+  "social_pct": 100,
+  "social_no_website_pct": 60,
+  "seconds": 60
+ },
+ {
+  "city": "Niamey",
+  "country_code": "NE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 28,
+  "resolved_place": {
+   "name": "Niamey, Kollo, Niger",
+   "type": "city",
+   "bbox_km": [
+    34,
+    29
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 63
+ },
+ {
+  "city": "Maradi",
+  "country_code": "NE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 29,
+  "resolved_place": {
+   "name": "Maradi, Madarounfa, Maradi, Niger",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 57
+ },
+ {
+  "city": "Zinder",
+  "country_code": "NE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 30,
+  "resolved_place": {
+   "name": "Zinder, Mirriah, Zinder, 07, Niger",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 56
+ }
+]

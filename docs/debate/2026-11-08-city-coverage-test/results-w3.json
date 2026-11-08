@@ -1,0 +1,860 @@
+[
+ {
+  "city": "Shanghai",
+  "country_code": "CN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 13,
+  "new": 13,
+  "duplicate": 0,
+  "available": 13,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "上海市, 黄浦区, 上海市, 200001, 中国",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 13,
+  "phone_pct": 100,
+  "email_pct": 69,
+  "website_pct": 100,
+  "social_pct": 69,
+  "social_no_website_pct": 0,
+  "seconds": 56
+ },
+ {
+  "city": "Beijing",
+  "country_code": "CN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "北京金融街, 金融街街道, 首都功能核心区, 西城区, 北京市, 100032, 中国",
+   "type": "commercial",
+   "bbox_km": [
+    1,
+    2
+   ]
+  },
+  "seconds": 43
+ },
+ {
+  "city": "Shenzhen",
+  "country_code": "CN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 2,
+  "error": "Overture: 'Shenzhen' matched an area of 1.7° × 1.2° (a district or state). Enter a city name or use coordinates + radius.; OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "深圳市, 广东省, 中国",
+   "type": "administrative",
+   "bbox_km": [
+    190,
+    133
+   ]
+  },
+  "seconds": 24
+ },
+ {
+  "city": "New York City",
+  "country_code": "US",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 299,
+  "duplicate": 1,
+  "available": 7551,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "New York, United States",
+   "type": "administrative",
+   "bbox_km": [
+    62,
+    49
+   ]
+  },
+  "businesses": 299,
+  "phone_pct": 99,
+  "email_pct": 72,
+  "website_pct": 95,
+  "social_pct": 79,
+  "social_no_website_pct": 3,
+  "seconds": 103
+ },
+ {
+  "city": "Los Angeles",
+  "country_code": "US",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 299,
+  "duplicate": 1,
+  "available": 5395,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Los Angeles, Los Angeles County, California, United States",
+   "type": "administrative",
+   "bbox_km": [
+    57,
+    75
+   ]
+  },
+  "businesses": 299,
+  "phone_pct": 98,
+  "email_pct": 69,
+  "website_pct": 96,
+  "social_pct": 77,
+  "social_no_website_pct": 2,
+  "seconds": 148
+ },
+ {
+  "city": "Chicago",
+  "country_code": "US",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 292,
+  "duplicate": 8,
+  "available": 2556,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "Chicago, South Chicago Township, Cook County, Illinois, United States",
+   "type": "administrative",
+   "bbox_km": [
+    46,
+    42
+   ]
+  },
+  "businesses": 292,
+  "phone_pct": 98,
+  "email_pct": 64,
+  "website_pct": 94,
+  "social_pct": 76,
+  "social_no_website_pct": 3,
+  "seconds": 105
+ },
+ {
+  "city": "Jakarta",
+  "country_code": "ID",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 284,
+  "duplicate": 16,
+  "available": 452,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Jakarta Timur, Daerah Khusus Ibukota Jakarta, Indonesia",
+   "type": "administrative",
+   "bbox_km": [
+    15,
+    25
+   ]
+  },
+  "businesses": 284,
+  "phone_pct": 92,
+  "email_pct": 40,
+  "website_pct": 33,
+  "social_pct": 97,
+  "social_no_website_pct": 67,
+  "seconds": 70
+ },
+ {
+  "city": "Surabaya",
+  "country_code": "ID",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 293,
+  "new": 267,
+  "duplicate": 26,
+  "available": 293,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Surabaya, Jawa Timur, Indonesia",
+   "type": "administrative",
+   "bbox_km": [
+    28,
+    19
+   ]
+  },
+  "businesses": 267,
+  "phone_pct": 89,
+  "email_pct": 40,
+  "website_pct": 25,
+  "social_pct": 99,
+  "social_no_website_pct": 75,
+  "seconds": 85
+ },
+ {
+  "city": "Bekasi",
+  "country_code": "ID",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 298,
+  "new": 174,
+  "duplicate": 124,
+  "available": 298,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Bekasi, Jawa Barat, Indonesia",
+   "type": "administrative",
+   "bbox_km": [
+    16,
+    25
+   ]
+  },
+  "businesses": 179,
+  "phone_pct": 85,
+  "email_pct": 29,
+  "website_pct": 18,
+  "social_pct": 98,
+  "social_no_website_pct": 82,
+  "seconds": 60
+ },
+ {
+  "city": "Karachi",
+  "country_code": "PK",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 287,
+  "duplicate": 13,
+  "available": 466,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "کراچی ڈویژن, سندھ, پاکستان",
+   "type": "administrative",
+   "bbox_km": [
+    144,
+    139
+   ]
+  },
+  "businesses": 287,
+  "phone_pct": 99,
+  "email_pct": 77,
+  "website_pct": 42,
+  "social_pct": 99,
+  "social_no_website_pct": 58,
+  "seconds": 78
+ },
+ {
+  "city": "Lahore",
+  "country_code": "PK",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 289,
+  "duplicate": 11,
+  "available": 411,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "لاہور, تحصیل لاہور شہر, ضلع لاہور, لاہور ڈویژن, پنجاب, 54100, پاکستان",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 290,
+  "phone_pct": 98,
+  "email_pct": 72,
+  "website_pct": 47,
+  "social_pct": 99,
+  "social_no_website_pct": 52,
+  "seconds": 52
+ },
+ {
+  "city": "Faisalabad",
+  "country_code": "PK",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 44,
+  "new": 40,
+  "duplicate": 4,
+  "available": 44,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "تحصیل فیصل آباد شہر, ضلع فیصل آباد, فیصل آباد ڈویژن, پنجاب, پاکستان",
+   "type": "administrative",
+   "bbox_km": [
+    22,
+    21
+   ]
+  },
+  "businesses": 40,
+  "phone_pct": 95,
+  "email_pct": 50,
+  "website_pct": 22,
+  "social_pct": 100,
+  "social_no_website_pct": 78,
+  "seconds": 65
+ },
+ {
+  "city": "Lagos",
+  "country_code": "NG",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 118,
+  "new": 108,
+  "duplicate": 10,
+  "available": 118,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "Lagos, Lagos Island, Lagos, 100242, Nigeria",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 108,
+  "phone_pct": 94,
+  "email_pct": 75,
+  "website_pct": 68,
+  "social_pct": 95,
+  "social_no_website_pct": 32,
+  "seconds": 39
+ },
+ {
+  "city": "Kano",
+  "country_code": "NG",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 10,
+  "new": 8,
+  "duplicate": 2,
+  "available": 10,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "Kano, Yakasai, Kano Municipal, Kano, 700271, Nigeria",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 8,
+  "phone_pct": 75,
+  "email_pct": 62,
+  "website_pct": 50,
+  "social_pct": 100,
+  "social_no_website_pct": 50,
+  "seconds": 25
+ },
+ {
+  "city": "Ibadan",
+  "country_code": "NG",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 21,
+  "new": 20,
+  "duplicate": 1,
+  "available": 21,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "Ìbàdàn, Ibadan South West, Oyo, 234102, Nigeria",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 20,
+  "phone_pct": 95,
+  "email_pct": 60,
+  "website_pct": 45,
+  "social_pct": 100,
+  "social_no_website_pct": 55,
+  "seconds": 31
+ },
+ {
+  "city": "São Paulo",
+  "country_code": "BR",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 291,
+  "duplicate": 9,
+  "available": 13302,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "São Paulo, Região Sudeste, Brasil",
+   "type": "administrative",
+   "bbox_km": [
+    51,
+    72
+   ]
+  },
+  "businesses": 291,
+  "phone_pct": 100,
+  "email_pct": 84,
+  "website_pct": 87,
+  "social_pct": 100,
+  "social_no_website_pct": 13,
+  "seconds": 174
+ },
+ {
+  "city": "Rio de Janeiro",
+  "country_code": "BR",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 299,
+  "duplicate": 1,
+  "available": 5619,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "Rio de Janeiro, Região Sudeste, Brasil",
+   "type": "administrative",
+   "bbox_km": [
+    77,
+    37
+   ]
+  },
+  "businesses": 299,
+  "phone_pct": 100,
+  "email_pct": 82,
+  "website_pct": 66,
+  "social_pct": 100,
+  "social_no_website_pct": 34,
+  "seconds": 69
+ },
+ {
+  "city": "Brasília",
+  "country_code": "BR",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 296,
+  "duplicate": 4,
+  "available": 1376,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 18,
+  "resolved_place": {
+   "name": "Brasília, Plano Piloto, Distrito Federal, Região Centro-Oeste, 70391-900, Brasil",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 296,
+  "phone_pct": 100,
+  "email_pct": 84,
+  "website_pct": 68,
+  "social_pct": 99,
+  "social_no_website_pct": 32,
+  "seconds": 56
+ },
+ {
+  "city": "Moscow",
+  "country_code": "RU",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 282,
+  "duplicate": 18,
+  "available": 1806,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 19,
+  "resolved_place": {
+   "name": "Москва, Центральный федеральный округ, Россия",
+   "type": "city",
+   "bbox_km": [
+    75,
+    49
+   ]
+  },
+  "businesses": 282,
+  "phone_pct": 98,
+  "email_pct": 71,
+  "website_pct": 94,
+  "social_pct": 100,
+  "social_no_website_pct": 6,
+  "seconds": 69
+ },
+ {
+  "city": "Saint Petersburg",
+  "country_code": "RU",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 266,
+  "duplicate": 34,
+  "available": 775,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 20,
+  "resolved_place": {
+   "name": "Санкт-Петербург, Северо-Западный федеральный округ, Россия",
+   "type": "city",
+   "bbox_km": [
+    58,
+    38
+   ]
+  },
+  "businesses": 266,
+  "phone_pct": 98,
+  "email_pct": 61,
+  "website_pct": 95,
+  "social_pct": 91,
+  "social_no_website_pct": 5,
+  "seconds": 44
+ },
+ {
+  "city": "Novosibirsk",
+  "country_code": "RU",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 121,
+  "new": 107,
+  "duplicate": 14,
+  "available": 121,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия",
+   "type": "city",
+   "bbox_km": [
+    45,
+    44
+   ]
+  },
+  "businesses": 107,
+  "phone_pct": 96,
+  "email_pct": 54,
+  "website_pct": 79,
+  "social_pct": 92,
+  "social_no_website_pct": 21,
+  "seconds": 40
+ },
+ {
+  "city": "Addis Ababa",
+  "country_code": "ET",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 61,
+  "new": 60,
+  "duplicate": 1,
+  "available": 61,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "አዲስ አበባ, Arada, አዲስ አበባ, 3578, ኢትዮጵያ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 60,
+  "phone_pct": 95,
+  "email_pct": 67,
+  "website_pct": 37,
+  "social_pct": 100,
+  "social_no_website_pct": 63,
+  "seconds": 34
+ },
+ {
+  "city": "Mekelle",
+  "country_code": "ET",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "Mekelle, ትግራይ تجراى, ኢትዮጵያ",
+   "type": "administrative",
+   "bbox_km": [
+    7,
+    6
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 43
+ },
+ {
+  "city": "Dire Dawa",
+  "country_code": "ET",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 24,
+  "resolved_place": {
+   "name": "Dirree Dhawaa / Dir Dhabe / ድሬዳዋ, ኢትዮጵያ",
+   "type": "administrative",
+   "bbox_km": [
+    68,
+    35
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 100,
+  "social_pct": 100,
+  "social_no_website_pct": 0,
+  "seconds": 32
+ },
+ {
+  "city": "Mexico City",
+  "country_code": "MX",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 295,
+  "duplicate": 5,
+  "available": 9091,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 25,
+  "resolved_place": {
+   "name": "Ciudad de México, Cuauhtémoc, Ciudad de México, México",
+   "type": "administrative",
+   "bbox_km": [
+    38,
+    37
+   ]
+  },
+  "businesses": 295,
+  "phone_pct": 99,
+  "email_pct": 81,
+  "website_pct": 71,
+  "social_pct": 98,
+  "social_no_website_pct": 29,
+  "seconds": 143
+ },
+ {
+  "city": "Tijuana",
+  "country_code": "MX",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 288,
+  "duplicate": 12,
+  "available": 2667,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 26,
+  "resolved_place": {
+   "name": "Tijuana, Municipio de Tijuana, Baja California, 22000, México",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 288,
+  "phone_pct": 100,
+  "email_pct": 83,
+  "website_pct": 79,
+  "social_pct": 95,
+  "social_no_website_pct": 20,
+  "seconds": 86
+ },
+ {
+  "city": "Ecatepec de Morelos",
+  "country_code": "MX",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 274,
+  "duplicate": 26,
+  "available": 949,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 27,
+  "resolved_place": {
+   "name": "Ecatepec de Morelos, Atenco, Estado de México, México",
+   "type": "administrative",
+   "bbox_km": [
+    16,
+    19
+   ]
+  },
+  "businesses": 274,
+  "phone_pct": 96,
+  "email_pct": 65,
+  "website_pct": 28,
+  "social_pct": 99,
+  "social_no_website_pct": 71,
+  "seconds": 68
+ },
+ {
+  "city": "Tokyo",
+  "country_code": "JP",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 261,
+  "new": 256,
+  "duplicate": 5,
+  "available": 261,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 28,
+  "resolved_place": {
+   "name": "八王子市, 東京都, 日本",
+   "type": "administrative",
+   "bbox_km": [
+    30,
+    13
+   ]
+  },
+  "businesses": 256,
+  "phone_pct": 98,
+  "email_pct": 6,
+  "website_pct": 92,
+  "social_pct": 51,
+  "social_no_website_pct": 8,
+  "seconds": 63
+ },
+ {
+  "city": "Yokohama",
+  "country_code": "JP",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 300,
+  "duplicate": 0,
+  "available": 1557,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 29,
+  "resolved_place": {
+   "name": "横浜市, 神奈川県, 231-0017, 日本",
+   "type": "administrative",
+   "bbox_km": [
+    35,
+    31
+   ]
+  },
+  "businesses": 300,
+  "phone_pct": 99,
+  "email_pct": 22,
+  "website_pct": 100,
+  "social_pct": 98,
+  "social_no_website_pct": 0,
+  "seconds": 95
+ },
+ {
+  "city": "Osaka",
+  "country_code": "JP",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 296,
+  "duplicate": 4,
+  "available": 1270,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 30,
+  "resolved_place": {
+   "name": "大阪市, 大阪府, 日本",
+   "type": "administrative",
+   "bbox_km": [
+    32,
+    20
+   ]
+  },
+  "businesses": 296,
+  "phone_pct": 100,
+  "email_pct": 29,
+  "website_pct": 97,
+  "social_pct": 98,
+  "social_no_website_pct": 3,
+  "seconds": 66
+ }
+]

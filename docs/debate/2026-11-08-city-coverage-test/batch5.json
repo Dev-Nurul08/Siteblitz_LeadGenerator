@@ -1,0 +1,152 @@
+[
+ {
+  "city": "Paris",
+  "country_code": "FR",
+  "admin": "Île-de-France"
+ },
+ {
+  "city": "Marseille",
+  "country_code": "FR",
+  "admin": "Provence-Alpes-Côte d'Azur"
+ },
+ {
+  "city": "Lyon",
+  "country_code": "FR",
+  "admin": "Auvergne-Rhône-Alpes"
+ },
+ {
+  "city": "Johannesburg",
+  "country_code": "ZA",
+  "admin": "Gauteng"
+ },
+ {
+  "city": "Cape Town",
+  "country_code": "ZA",
+  "admin": "Western Cape"
+ },
+ {
+  "city": "Durban",
+  "country_code": "ZA",
+  "admin": "KwaZulu-Natal"
+ },
+ {
+  "city": "Roma",
+  "country_code": "IT",
+  "admin": "Lazio"
+ },
+ {
+  "city": "Milano",
+  "country_code": "IT",
+  "admin": "Lombardia"
+ },
+ {
+  "city": "Napoli",
+  "country_code": "IT",
+  "admin": "Campania"
+ },
+ {
+  "city": "Nairobi",
+  "country_code": "KE",
+  "admin": "Nairobi County"
+ },
+ {
+  "city": "Mombasa",
+  "country_code": "KE",
+  "admin": "Mombasa County"
+ },
+ {
+  "city": "Nakuru",
+  "country_code": "KE",
+  "admin": "Nakuru County"
+ },
+ {
+  "city": "Yangon",
+  "country_code": "MM",
+  "admin": "Yangon Region"
+ },
+ {
+  "city": "Mandalay",
+  "country_code": "MM",
+  "admin": "Mandalay Region"
+ },
+ {
+  "city": "Naypyidaw",
+  "country_code": "MM",
+  "admin": "Naypyidaw Union Territory"
+ },
+ {
+  "city": "Bogotá",
+  "country_code": "CO",
+  "admin": "Bogotá D.C."
+ },
+ {
+  "city": "Medellín",
+  "country_code": "CO",
+  "admin": "Antioquia"
+ },
+ {
+  "city": "Cali",
+  "country_code": "CO",
+  "admin": "Valle del Cauca"
+ },
+ {
+  "city": "Omdurman",
+  "country_code": "SD",
+  "admin": "Khartoum"
+ },
+ {
+  "city": "Khartoum",
+  "country_code": "SD",
+  "admin": "Khartoum"
+ },
+ {
+  "city": "Khartoum North",
+  "country_code": "SD",
+  "admin": "Khartoum"
+ },
+ {
+  "city": "Kampala",
+  "country_code": "UG",
+  "admin": "Central Region"
+ },
+ {
+  "city": "Nansana",
+  "country_code": "UG",
+  "admin": "Central Region"
+ },
+ {
+  "city": "Kira",
+  "country_code": "UG",
+  "admin": "Central Region"
+ },
+ {
+  "city": "Seoul",
+  "country_code": "KR",
+  "admin": "Seoul"
+ },
+ {
+  "city": "Busan",
+  "country_code": "KR",
+  "admin": "Busan"
+ },
+ {
+  "city": "Incheon",
+  "country_code": "KR",
+  "admin": "Incheon"
+ },
+ {
+  "city": "Algiers",
+  "country_code": "DZ",
+  "admin": "Algiers"
+ },
+ {
+  "city": "Oran",
+  "country_code": "DZ",
+  "admin": "Oran"
+ },
+ {
+  "city": "Constantine",
+  "country_code": "DZ",
+  "admin": "Constantine"
+ }
+]

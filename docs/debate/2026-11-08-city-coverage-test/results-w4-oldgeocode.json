@@ -1,0 +1,309 @@
+[
+ {
+  "city": "Cairo",
+  "country_code": "EG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 292,
+  "duplicate": 8,
+  "available": 3169,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "القاهرة, مصر",
+   "type": "city",
+   "bbox_km": [
+    76,
+    64
+   ]
+  },
+  "businesses": 292,
+  "phone_pct": 100,
+  "email_pct": 74,
+  "website_pct": 45,
+  "social_pct": 100,
+  "social_no_website_pct": 55,
+  "seconds": 71
+ },
+ {
+  "city": "Alexandria",
+  "country_code": "EG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 292,
+  "duplicate": 8,
+  "available": 904,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "الإسكندرية, 21519, مصر",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 292,
+  "phone_pct": 98,
+  "email_pct": 66,
+  "website_pct": 28,
+  "social_pct": 100,
+  "social_no_website_pct": 72,
+  "seconds": 62
+ },
+ {
+  "city": "Giza",
+  "country_code": "EG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 67,
+  "duplicate": 233,
+  "available": 3220,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "الجيزة, 12524, مصر",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 68,
+  "phone_pct": 100,
+  "email_pct": 71,
+  "website_pct": 34,
+  "social_pct": 100,
+  "social_no_website_pct": 66,
+  "seconds": 86
+ },
+ {
+  "city": "Quezon City",
+  "country_code": "PH",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 294,
+  "duplicate": 6,
+  "available": 2840,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Quezon City, Eastern Manila District, Metro Manila, Philippines",
+   "type": "administrative",
+   "bbox_km": [
+    16,
+    21
+   ]
+  },
+  "businesses": 294,
+  "phone_pct": 100,
+  "email_pct": 80,
+  "website_pct": 35,
+  "social_pct": 100,
+  "social_no_website_pct": 65,
+  "seconds": 76
+ },
+ {
+  "city": "Manila",
+  "country_code": "PH",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 231,
+  "duplicate": 69,
+  "available": 1582,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Manila, Capital District, Metro Manila, Philippines",
+   "type": "administrative",
+   "bbox_km": [
+    26,
+    10
+   ]
+  },
+  "businesses": 234,
+  "phone_pct": 99,
+  "email_pct": 73,
+  "website_pct": 29,
+  "social_pct": 100,
+  "social_no_website_pct": 71,
+  "seconds": 92
+ },
+ {
+  "city": "Davao City",
+  "country_code": "PH",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 278,
+  "duplicate": 22,
+  "available": 449,
+  "errors": 0,
+  "error": "",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "Davao City, Davao Region, 8000, Philippines",
+   "type": "administrative",
+   "bbox_km": [
+    53,
+    72
+   ]
+  },
+  "businesses": 278,
+  "phone_pct": 91,
+  "email_pct": 51,
+  "website_pct": 15,
+  "social_pct": 100,
+  "social_no_website_pct": 85,
+  "seconds": 47
+ },
+ {
+  "city": "Kinshasa",
+  "country_code": "CD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 5,
+  "new": 5,
+  "duplicate": 0,
+  "available": 5,
+  "errors": 0,
+  "error": "",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Kinshasa, Aketi, Kinshasa, République démocratique du Congo",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 5,
+  "phone_pct": 80,
+  "email_pct": 60,
+  "website_pct": 60,
+  "social_pct": 80,
+  "social_no_website_pct": 40,
+  "seconds": 38
+ },
+ {
+  "city": "Lubumbashi",
+  "country_code": "CD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Lubumbashi, Ville de Lubumbashi, Haut-Katanga, République démocratique du Congo",
+   "type": "administrative",
+   "bbox_km": [
+    9,
+    10
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 28
+ },
+ {
+  "city": "Mbuji-Mayi",
+  "country_code": "CD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Mbuji-Mayi, Dibindi, Ville de Mbujimayi, Kasaï-Oriental, République démocratique du Congo",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 35
+ },
+ {
+  "city": "Ho Chi Minh City",
+  "country_code": "VN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "Đài Phát thanh - Truyền hình Thành phố Hồ Chí Minh, 9, Phường Sài Gòn, Thành phố Hồ Chí Minh, 71016, Việt Nam",
+   "type": "commercial",
+   "bbox_km": [
+    0,
+    0
+   ]
+  },
+  "seconds": 34
+ },
+ {
+  "city": "Hanoi",
+  "country_code": "VN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 2,
+  "new": 2,
+  "duplicate": 0,
+  "available": 2,
+  "errors": 0,
+  "error": "",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "Khu đô thị Mailand Hanoi City, Xã Sơn Đồng, Thành phố Hà Nội, 13224, Việt Nam",
+   "type": "residential",
+   "bbox_km": [
+    3,
+    2
+   ]
+  },
+  "businesses": 2,
+  "phone_pct": 100,
+  "email_pct": 50,
+  "website_pct": 50,
+  "social_pct": 100,
+  "social_no_website_pct": 50,
+  "seconds": 38
+ }
+]
