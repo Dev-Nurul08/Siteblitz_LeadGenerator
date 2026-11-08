@@ -51,6 +51,8 @@ def main() -> None:
     cities = json.loads(Path(args.cities).read_text(encoding="utf-8"))
     out_path = Path(args.results)
     done = json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists() else []
+    # A city whose request never reached the API (server restarted / network) is tried again.
+    done = [d for d in done if d.get("http") is not None]
     seen = {(d["city"], d["country_code"]) for d in done}
 
     for item in cities:
