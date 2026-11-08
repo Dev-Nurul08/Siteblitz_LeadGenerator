@@ -54,8 +54,9 @@ def main() -> None:
     cities = json.loads(Path(args.cities).read_text(encoding="utf-8"))
     out_path = Path(args.results)
     done = json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists() else []
-    # A city whose request never reached the API (server restarted / network) is tried again.
-    done = [d for d in done if d.get("http") is not None]
+    # A city whose request never reached the API (server restarted / network), or whose city lookup
+    # failed on the network (DNS outage seen 2026-11-08), is tried again.
+    done = [d for d in done if d.get("http") is not None and "City lookup failed" not in (d.get("error") or "")]
     # The same city name may be tested in two states (Portland, Maine / Oregon), so the state is part
     # of the key; records written before the state was stored match on city + country only.
     seen = {(d["city"], d["country_code"], d.get("admin")) for d in done if "admin" in d}
