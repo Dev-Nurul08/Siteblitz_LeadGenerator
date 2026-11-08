@@ -16,6 +16,7 @@ import csv
 import io
 import json
 import time
+from collections import Counter
 from pathlib import Path
 
 import httpx
@@ -35,6 +36,8 @@ def completeness(api: str, job_id: int) -> dict:
         "website_pct": round(100 * sum(bool(r["website_url"]) for r in rows) / n),
         "social_pct": round(100 * sum(has_social) / n),
         "social_no_website_pct": round(100 * sum(s and not r["website_url"] for s, r in zip(has_social, rows)) / n),
+        # wrong-country rows show up here (border cities)
+        "countries": dict(Counter(r.get("country") or "" for r in rows)),
     }
 
 
@@ -53,14 +56,19 @@ def main() -> None:
     done = json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists() else []
     # A city whose request never reached the API (server restarted / network) is tried again.
     done = [d for d in done if d.get("http") is not None]
-    seen = {(d["city"], d["country_code"]) for d in done}
+    # The same city name may be tested in two states (Portland, Maine / Oregon), so the state is part
+    # of the key; records written before the state was stored match on city + country only.
+    seen = {(d["city"], d["country_code"], d.get("admin")) for d in done if "admin" in d}
+    seen_legacy = {(d["city"], d["country_code"]) for d in done if "admin" not in d}
 
     for item in cities:
-        key = (item["city"], item["country_code"])
-        if key in seen:
+        if (item["city"], item["country_code"], item.get("admin")) in seen                 or (item["city"], item["country_code"]) in seen_legacy:
             continue
         started = time.time()
-        record = {"city": item["city"], "country_code": item["country_code"], "category": args.category}
+        record = {"city": item["city"], "country_code": item["country_code"], "admin": item.get("admin"),
+                  "category": args.category}
+        if item.get("expect"):
+            record["expect"] = item["expect"]
         try:
             response = httpx.post(f"{args.api}/api/v1/discovery/run", timeout=900, json={
                 "source_slug": args.source, "country_code": item["country_code"], "city": item["city"],
