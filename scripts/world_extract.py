@@ -115,28 +115,46 @@ def download(out: Path, release: str) -> None:
 
 
 def split(out: Path) -> None:
+    """raw -> by_country/country=XX/pNNNNN_*.parquet, one raw file at a time.
+
+    Why per file (2026-11-09): one COPY of all 86.7 M rows partitioned by country spilled 16.4 GB to
+    disk and failed with "Out of Memory". One raw file (~5.5 M rows) at a time stays small. A marker
+    per finished raw file makes the pass resumable; an interrupted file's outputs are removed first.
+    """
     raw = out / "_work" / "raw"
     dest = out / "_work" / "by_country"
-    if dest.exists() and any(dest.iterdir()):
-        log("split already done")
-        return
+    marks = out / "_work" / "split_done"
+    dest.mkdir(parents=True, exist_ok=True)
+    marks.mkdir(parents=True, exist_ok=True)
     con = connect()
     con.execute(f"SET temp_directory = '{(out / '_work' / 'duckdb_spill').as_posix()}'")
+    con.execute("SET memory_limit = '6GB'")
     # The source's country field holds 158 values that are not ISO codes (30,093 of 86.7 M places:
     # "IN-MH", "MUMBAI", postcodes, ' NASHIK"' ...). A state-style code keeps its country ("IN-MH" -> IN);
     # the rest go to ZZ, so no folder is named after junk (and no quote reaches a Windows path).
     valid = sorted(_country_names(out))
     assert all(re.fullmatch(r"[A-Z]{2}", c) for c in valid)
     in_list = ", ".join(f"'{c}'" for c in valid)
-    t = time.time()
-    con.execute(f"""
-        COPY (SELECT * REPLACE (
-                CASE WHEN country IN ({in_list}) THEN country
-                     WHEN left(country, 2) IN ({in_list}) AND substr(country, 3, 1) = '-' THEN left(country, 2)
-                     ELSE 'ZZ' END AS country)
-              FROM read_parquet('{(raw / '*.parquet').as_posix()}'))
-        TO '{dest.as_posix()}' (FORMAT PARQUET, COMPRESSION ZSTD, PARTITION_BY (country))""")
-    log(f"split done in {time.time() - t:.0f}s")
+    files = sorted(raw.glob("part-*.parquet"))
+    for f in files:
+        idx = f.stem.split("-")[1]
+        mark = marks / f"{idx}.done"
+        if mark.exists():
+            continue
+        for old in dest.glob(f"country=*/p{idx}_*.parquet"):
+            old.unlink()
+        t = time.time()
+        con.execute(f"""
+            COPY (SELECT * REPLACE (
+                    CASE WHEN country IN ({in_list}) THEN country
+                         WHEN left(country, 2) IN ({in_list}) AND substr(country, 3, 1) = '-' THEN left(country, 2)
+                         ELSE 'ZZ' END AS country)
+                  FROM read_parquet('{f.as_posix()}'))
+            TO '{dest.as_posix()}' (FORMAT PARQUET, COMPRESSION ZSTD, PARTITION_BY (country),
+                                    APPEND, FILENAME_PATTERN 'p{idx}_{{uuid}}')""")
+        mark.write_text("ok", encoding="utf-8")
+        log(f"split {f.name} done in {time.time() - t:.0f}s")
+    log(f"split done: {len(list(dest.iterdir()))} countries")
 
 
 def _host(col: str) -> str:
