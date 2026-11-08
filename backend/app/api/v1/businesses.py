@@ -16,13 +16,12 @@ from backend.app.models.business import (
     Business,
     BusinessCategory,
     BusinessLocation,
-    BusinessSourceLink,
     BusinessStatus,
     WebsiteStatus,
 )
 from backend.app.models.intelligence import LeadAssessment
-from backend.app.models.source import SourceRecord
 from backend.app.services import export_service
+from backend.app.services.job_scope import found_by_job
 from backend.app.schemas.business import (
     BusinessListResponse,
     BusinessResponse,
@@ -68,15 +67,8 @@ def _filtered_businesses(
             )
         )
     if job_id:
-        # Businesses a discovery job found = those linked to that job's raw source records
-        # (new ones and existing ones it matched as duplicates).
-        stmt = stmt.where(
-            Business.id.in_(
-                select(BusinessSourceLink.business_id)
-                .join(SourceRecord, SourceRecord.id == BusinessSourceLink.source_record_id)
-                .where(SourceRecord.job_id == job_id)
-            )
-        )
+        # New ones, ones it matched as duplicates, and ones an earlier job had already saved.
+        stmt = stmt.where(found_by_job(job_id))
     # Don't show duplicates or invalid by default
     if not status:
         stmt = stmt.where(

@@ -12,11 +12,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from backend.app.database import get_db_session
-from backend.app.models.business import Business, BusinessSourceLink, BusinessStatus
+from backend.app.models.business import Business, BusinessStatus
 from backend.app.models.intelligence import ContactLog, FounderLabel, LeadAssessment, LeadTier, WebsiteVerdict
-from backend.app.models.source import SourceJob, SourceRecord
+from backend.app.models.source import SourceJob
 from backend.app.schemas.types import HttpUrl, Opt, OptionalText
 from backend.app.services.intelligence_service import IntelligenceService
+from backend.app.services.job_scope import found_by_job
 
 router = APIRouter(prefix="/intelligence", tags=["Website Intelligence"])
 
@@ -49,10 +50,7 @@ class LabelRequest(BaseModel):
 
 
 def _job_filter(job_id: int):
-    return Business.id.in_(
-        select(BusinessSourceLink.business_id)
-        .join(SourceRecord, SourceRecord.id == BusinessSourceLink.source_record_id)
-        .where(SourceRecord.job_id == job_id))
+    return found_by_job(job_id)
 
 
 @router.post("/assess/{business_id}")

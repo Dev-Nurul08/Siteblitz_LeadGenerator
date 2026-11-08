@@ -32,6 +32,7 @@ from backend.app.models.source import (
     JobStatus,
     Source,
     SourceJob,
+    SourceJobSighting,
     SourceRecord,
 )
 
@@ -323,7 +324,18 @@ class DiscoveryService:
         existing = result.scalar_one_or_none()
 
         if existing:
-            return None  # Already have this record
+            # Already saved by an earlier job: remember that this job found it too, so the
+            # job's business list includes it (see SourceJobSighting).
+            if existing.job_id != job.id:
+                seen = await self.session.execute(
+                    select(SourceJobSighting.id).where(
+                        SourceJobSighting.job_id == job.id,
+                        SourceJobSighting.source_record_id == existing.id,
+                    )
+                )
+                if seen.scalar_one_or_none() is None:
+                    self.session.add(SourceJobSighting(job_id=job.id, source_record_id=existing.id))
+            return None
 
         record = SourceRecord(
             source_id=source.id,

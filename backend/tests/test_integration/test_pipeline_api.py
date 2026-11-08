@@ -106,6 +106,26 @@ def test_each_csv_file_imports_its_own_rows_and_reimport_is_duplicate(client):
     assert names == {"Shah Dental Care", "Lakeview Bakery", "Riverside Salon"}
 
 
+def test_a_repeat_search_still_lists_the_businesses_it_found(client):
+    # The second job finds the same records again (all duplicates). Its business list, map,
+    # export and website checks used to be empty for it.
+    _import(client, "a.csv", CSV_A)
+    again = _import(client, "a.csv", CSV_A)
+    assert (again["new"], again["duplicate"]) == (0, 2)
+    job = again["job_id"]
+
+    listed = client.get("/api/v1/businesses", params={"job_id": job}).json()
+    assert {b["name"] for b in listed["items"]} == {"Shah Dental Care", "Lakeview Bakery"}
+    # the CSV rows have no coordinates, so the map has 2 businesses and no pins
+    assert client.get("/api/v1/businesses/points", params={"job_id": job}).json()["total"] == 2
+    csv_rows = client.get("/api/v1/businesses/export", params={"format": "csv", "job_id": job}).text.strip().splitlines()
+    assert len(csv_rows) == 3  # header + 2
+
+    # A third run of the same file adds no second sighting row (unique per job + record)
+    third = _import(client, "a.csv", CSV_A)
+    assert client.get("/api/v1/businesses", params={"job_id": third["job_id"]}).json()["total"] == 2
+
+
 def test_full_pipeline_qualify_enroll_once_and_unsubscribe_by_link(client):
     _import(client, "a.csv", CSV_A)
     items = client.get("/api/v1/businesses", params={"search": "Shah"}).json()["items"]
