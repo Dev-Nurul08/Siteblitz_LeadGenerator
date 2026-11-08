@@ -288,3 +288,82 @@ def test_export_pdf_and_job_filter(client):
     assert f"-job{first['job_id']}-" in pdf.headers["content-disposition"]
 
     assert client.get("/api/v1/businesses/export", params={"format": "xlsx"}).status_code == 422
+
+
+# ─── Website Intelligence (phase 2) through the real API ─────────────────────────────────
+
+
+@pytest.fixture
+def no_guessed_domains(monkeypatch):
+    """Every guessed domain is unregistered (no DNS) — deterministic, no network."""
+    from backend.app.engines.intelligence import checks as net
+
+    async def never(host):
+        return False
+
+    monkeypatch.setattr(net, "_resolves", never)
+
+
+def _id(client, name):
+    return client.get("/api/v1/businesses", params={"search": name}).json()["items"][0]["id"]
+
+
+def test_intelligence_flow_to_hot_and_label(client, no_guessed_domains):
+    _import(client, "a.csv", CSV_A)
+    _import(client, "c.csv", "name,city,country,phone,category\n"
+                             "Glow Salon,Austin,US,+1 512 555 0177,hairdresser\n")
+    salon = _id(client, "Glow")
+    clinic = _id(client, "Shah Dental")
+
+    batch = client.post("/api/v1/intelligence/assess-batch").json()
+    assert batch["assessed"] == 3 and batch["remaining_unassessed"] == 0
+
+    own = client.get(f"/api/v1/intelligence/business/{clinic}").json()["assessment"]
+    assert own["website_verdict"] == "OWN_SITE_VERIFIED"
+
+    first = client.get(f"/api/v1/intelligence/business/{salon}").json()
+    assert first["assessment"]["website_verdict"] == "NO_SITE_VERIFIED"
+    assert first["assessment"]["evidence_confidence"] == "MEDIUM"
+    assert first["assessment"]["tier"] != "HOT"  # no search recorded yet
+    assert "Record a search for its name + city" in first["assessment"]["next_actions"]
+    assert any(c["type"] == "DOMAIN_GUESS" for c in first["checks"])
+
+    client.post(f"/api/v1/intelligence/business/{salon}/manual-search", json={"note": "Google: nothing"})
+    hot = client.post(f"/api/v1/intelligence/business/{salon}/activity",
+                      json={"active": True, "method": "call"}).json()["assessment"]
+    assert hot["tier"] == "HOT" and hot["need_score"] == 80
+    assert all(r["points"] > 0 for r in hot["reasons"])
+
+    leads = client.get("/api/v1/intelligence/leads", params={"tier": "HOT"}).json()
+    assert [i["name"] for i in leads["items"]] == ["Glow Salon"]
+    assert leads["tier_counts"]["HOT"] == 1
+
+    assert client.post(f"/api/v1/intelligence/business/{salon}/label",
+                       json={"label": "WRONG"}).status_code == 422
+    labeled = client.post(f"/api/v1/intelligence/business/{salon}/label",
+                          json={"label": "CORRECT"}).json()["assessment"]
+    assert labeled["label"] == "CORRECT"
+    assert client.get("/api/v1/intelligence/stats").json()["labeled"] == 1
+
+
+def test_found_website_disqualifies_new_website_opportunity(client, no_guessed_domains):
+    _import(client, "a.csv", CSV_A)
+    bakery = _id(client, "Lakeview")
+    opps = client.post(f"/api/v1/opportunities/evaluate-business/{bakery}").json()["opportunities"]
+    assert any(o["service_category"] == "NEW_WEBSITE" for o in opps)
+
+    result = client.post(f"/api/v1/intelligence/business/{bakery}/manual-search",
+                         json={"found_url": "lakeviewbakery-test.com"})
+    assert result.json()["assessment"]["website_verdict"] == "OWN_SITE_VERIFIED"
+    statuses = {o["service_category"]: o["status"] for o in
+                client.get("/api/v1/opportunities").json()["items"] if o["business_id"] == bakery}
+    assert statuses["NEW_WEBSITE"] == "DISQUALIFIED"
+
+
+def test_points_endpoint_and_job_fields(client):
+    first = _import(client, "a.csv", CSV_A)
+    jobs = client.get("/api/v1/discovery/jobs").json()
+    assert jobs[0]["job_id"] == first["job_id"] and "city" in jobs[0] and "category" in jobs[0]
+    points = client.get("/api/v1/businesses/points", params={"job_id": first["job_id"]}).json()
+    assert points["total"] == 2  # CSV rows have no coordinates, so no map points
+    assert points["points"] == []

@@ -134,6 +134,39 @@ async def list_businesses(
     )
 
 
+@router.get("/points")
+async def business_points(
+    country: Optional[str] = COUNTRY_QUERY,
+    status: Optional[BusinessStatus] = Query(None),
+    website_status: Optional[WebsiteStatus] = Query(None),
+    category: Optional[str] = Query(None, max_length=200),
+    search: Optional[str] = Query(None, max_length=500),
+    job_id: Optional[int] = Query(None, ge=1),
+    # 5000 = the largest discovery job (DiscoveryRequest.max_results)
+    limit: int = Query(5000, ge=1, le=5000),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Lightweight map points (id, name, lat, lon, website status, category) for the same filters."""
+    stmt = _filtered_businesses(
+        country=country, status=status, website_status=website_status,
+        category=category, search=search, job_id=job_id,
+    ).order_by(Business.discovered_at.desc()).limit(limit)
+    businesses = (await session.execute(stmt)).scalars().unique().all()
+    points = []
+    for b in businesses:
+        location = b.locations[0] if b.locations else None
+        if location and location.latitude is not None and location.longitude is not None:
+            points.append({
+                "id": b.id,
+                "name": b.name,
+                "lat": location.latitude,
+                "lon": location.longitude,
+                "website_status": b.website_status.value,
+                "category": b.categories[0].category_name if b.categories else None,
+            })
+    return {"total": len(businesses), "points": points}
+
+
 # Declared before "/{business_id}": FastAPI matches routes in order, and "export" would
 # otherwise be parsed as a business id and rejected with 422.
 @router.get("/export")

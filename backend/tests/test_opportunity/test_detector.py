@@ -73,8 +73,8 @@ class TestOpportunityDetector:
         redesign_need = next(n for n in needs if n.service_category == ServiceCategory.WEBSITE_REDESIGN)
         assert any("mobile" in r.lower() for r in redesign_need.evidence["reasons"])
 
-    def test_mobile_app_opportunity_for_restaurant(self):
-        """Restaurants and high-frequency hospitality trigger MOBILE_APP opportunity."""
+    def test_no_mobile_app_opportunity_from_category_alone(self):
+        """A restaurant category alone no longer creates a MOBILE_APP opportunity (spec row 18)."""
         biz = Business(
             name="Golden Dragon Bistro",
             country_code="US",
@@ -100,7 +100,7 @@ class TestOpportunityDetector:
             business_categories=["Restaurant", "Food & Beverage"],
         )
         categories = [n.service_category for n in needs]
-        assert ServiceCategory.MOBILE_APP in categories
+        assert ServiceCategory.MOBILE_APP not in categories
 
     def test_online_booking_opportunity_for_clinic(self):
         """Clinics and salons without online booking trigger ONLINE_BOOKING."""

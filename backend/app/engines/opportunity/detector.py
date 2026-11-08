@@ -157,32 +157,9 @@ class OpportunityDetector:
                     )
                 )
 
-            # B) Mobile Application Opportunity
-            is_mobile_app_target = any(
-                any(cand in cat for cand in MOBILE_APP_CANDIDATE_CATEGORIES)
-                for cat in categories
-            )
-            if is_mobile_app_target:
-                needs.append(
-                    DetectedNeed(
-                        service_category=ServiceCategory.MOBILE_APP,
-                        title=f"Custom iOS/Android Mobile App for {business.name}",
-                        summary=(
-                            f"As a customer-centric business in {business.country_code or 'the market'}, "
-                            f"{business.name} can drive repeat retention and direct revenue through a dedicated mobile app."
-                        ),
-                        evidence={
-                            "matched_category": categories,
-                            "business_type": "high_frequency_repeat_interaction",
-                        },
-                        pitch_angles=[
-                            "Direct home-screen access and zero-cost push notification promotions",
-                            "One-tap customer reordering, appointments, and loyalty reward tracking",
-                            "Eliminate third-party delivery/booking commissions with an owned native app",
-                        ],
-                        need_severity=0.75,
-                    )
-                )
+            # B) Mobile Application: removed (spec website-intelligence.md row 18). A category is
+            # not evidence that a business needs an app; every reachable restaurant/clinic used
+            # to get a CRITICAL "Mobile App" opportunity.
 
             # C) Online Booking Opportunity
             is_booking_target = any(

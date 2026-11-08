@@ -1,6 +1,6 @@
 # SPEC LOCK — Phase 2: Website Intelligence Engine
 
-Status: **DRAFT — waiting for the founder's `go`** (spec-lock rule). Source of every value:
+Status: **APPROVED** — founder replied "go … complete everything" on 2026-11-08. Source of every value:
 ChatGPT review round `docs/debate/2026-11-08-…/RESULT.md` rows 3–4b, 8 and the audit.
 Replaces the current `detector.py` / `scorer.py` logic for "does this business need a website?".
 

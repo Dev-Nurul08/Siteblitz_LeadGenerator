@@ -161,6 +161,10 @@ class DiscoveryStatusResponse(BaseModel):
     job_id: int
     source_name: str
     status: str
+    # What was searched, so a job list can say "Cafés in Udaipur, IN"
+    country_code: Optional[str] = None
+    city: Optional[str] = None
+    category: Optional[str] = None
     records_found: int
     records_new: int
     records_duplicate: int
