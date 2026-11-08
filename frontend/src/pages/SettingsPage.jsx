@@ -8,7 +8,7 @@ import { TitleBlock } from '../components/TitleBlock'
 import { DelayedSkeleton, ErrorBanner, Spinner, StateBlock } from '../components/ui'
 
 const SOURCES = [
-  { slug: 'overture', name: 'Overture Places (default)', needs: 'Internet + DuckDB; reads public map data by city' },
+  { slug: 'overture', name: 'Overture Places', needs: 'Internet + DuckDB; reads public map data by city' },
   { slug: 'openstreetmap', name: 'OpenStreetMap', needs: 'Internet (Overpass API)' },
   { slug: 'csv_import', name: 'CSV file', needs: 'A UTF-8 CSV with a name column' },
 ]
