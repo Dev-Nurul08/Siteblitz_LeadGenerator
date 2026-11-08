@@ -16,6 +16,9 @@ from typing import Optional
 import httpx
 import structlog
 
+from backend.app.engines.discovery.categories import CATEGORY_TOKENS, name_words
+from backend.app.engines.discovery.geocode import city_bbox
+
 from backend.app.engines.discovery.base import (
     AdapterResult,
     BaseSourceAdapter,
@@ -97,9 +100,11 @@ def _build_overpass_query(
     radius_km: Optional[float] = None,
     category: Optional[str] = None,
     max_results: int = 500,
+    bbox: Optional[tuple[float, float, float, float]] = None,
 ) -> str:
     """
     Build an Overpass QL query for business discovery.
+    `bbox` = (west, east, south, north) of a geocoded city — preferred over a named area.
 
     Supports either named area (city/country) or coordinate+radius search.
     """
@@ -107,7 +112,11 @@ def _build_overpass_query(
     # City areas in OSM never carry the ISO3166-1 tag (only countries do), so a city is
     # found as an administrative boundary *inside* the country and converted to an area.
     area_setup = ""
-    if latitude is not None and longitude is not None and radius_km:
+    if bbox is not None:
+        west, east, south, north = (float(v) for v in bbox)
+        area_filter = f"({south},{west},{north},{east})"
+        latitude = south  # marks a geometry filter (not a named area) for the query builders below
+    elif latitude is not None and longitude is not None and radius_km:
         radius_m = int(radius_km * 1000)
         area_filter = f"(around:{radius_m},{float(latitude)},{float(longitude)})"
     elif city and country_code:
@@ -155,36 +164,28 @@ out center {int(max_results)};
     return query.strip()
 
 
+# OSM keys whose values name a kind of business (healthcare=dentist, leisure=fitness_centre …).
+CATEGORY_KEYS = ["amenity", "shop", "office", "craft", "healthcare", "leisure", "tourism"]
+
+
 def _build_category_queries(
     category: str, area_filter: str, is_coord_search: bool
 ) -> str:
-    """Build Overpass queries for a specific category."""
+    """
+    Overpass queries for one category: every OSM key whose value is one of the category's
+    word-parts, plus a name match (e.g. "Smile Dental Care" tagged only as a generic clinic).
+    Both are needed for volume — see categories.py.
+    """
+    where = area_filter if is_coord_search else "(area.searchArea)"
     clean = category.lower().strip().replace(" ", "_")
-    queries = []
-
-    for tag_key, tag_values in OSM_BUSINESS_TAGS.items():
-        if clean in tag_values:
-            if is_coord_search:
-                queries.append(
-                    f'  nwr["{tag_key}"="{clean}"]{area_filter};'
-                )
-            else:
-                queries.append(
-                    f'  nwr["{tag_key}"="{clean}"](area.searchArea);'
-                )
-
-    if not queries:
-        # Fallback: search as name
-        name_re = _ql_regex_escape(category)
-        if is_coord_search:
-            queries.append(
-                f'  nwr["name"~"{name_re}",i]{area_filter};'
-            )
-        else:
-            queries.append(
-                f'  nwr["name"~"{name_re}",i](area.searchArea);'
-            )
-
+    tokens = sorted({clean, *CATEGORY_TOKENS.get(clean, [])})
+    values = "|".join(_ql_regex_escape(t) for t in tokens)
+    queries = [f'  nwr["{key}"~"^({values})$"]{where};' for key in CATEGORY_KEYS]
+    words = "|".join(_ql_regex_escape(w) for w in name_words(category))
+    if words:
+        # Name matches only on elements that are some kind of business (not "Dental College Road").
+        keys = "|".join(CATEGORY_KEYS)
+        queries.append(f'  nwr["name"~"({words})",i][~"^({keys})$"~"."]{where};')
     return "\n".join(queries)
 
 
@@ -251,8 +252,20 @@ class OSMAdapter(BaseSourceAdapter):
         result = AdapterResult()
 
         try:
+            # A city is searched by its geocoded bounding box (same area as Overture, and fast);
+            # the named-area query is only the fallback when the geocoder is unreachable.
+            bbox = None
+            if city and city.strip() and not (latitude is not None and longitude is not None and radius_km):
+                try:
+                    bbox = await city_bbox(city, country_code)
+                except LookupError:
+                    raise
+                except Exception as exc:
+                    logger.warning("osm_geocode_failed_fallback_to_area", city=city, error=str(exc))
+
             # Build query
             query = _build_overpass_query(
+                bbox=bbox,
                 country_code=country_code,
                 city=city,
                 latitude=latitude,
@@ -274,15 +287,22 @@ class OSMAdapter(BaseSourceAdapter):
             await self._rate_limit()
 
             # Execute query
+            # The public Overpass server answers 429/502/503/504 when busy; those are retried
+            # (3 tries) after waiting one rate-limit interval per try (OSM_OVERPASS_RPM → 6 s).
             async with httpx.AsyncClient(timeout=120.0) as client:
-                response = await client.post(
-                    OVERPASS_API_URL,
-                    data={"data": query},
-                    headers={
-                        "Accept": "application/json",
-                        "User-Agent": OVERPASS_USER_AGENT,
-                    },
-                )
+                for attempt in range(3):
+                    response = await client.post(
+                        OVERPASS_API_URL,
+                        data={"data": query},
+                        headers={
+                            "Accept": "application/json",
+                            "User-Agent": OVERPASS_USER_AGENT,
+                        },
+                    )
+                    if response.status_code not in (429, 502, 503, 504) or attempt == 2:
+                        break
+                    logger.info("overpass_busy_retry", status=response.status_code, attempt=attempt + 1)
+                    await self._async_sleep(self._min_interval * (attempt + 1))
                 response.raise_for_status()
                 data = response.json()
 
@@ -325,6 +345,8 @@ class OSMAdapter(BaseSourceAdapter):
                         is_retryable=e.response.status_code >= 500,
                     )
                 )
+        except LookupError as e:
+            result.errors.append(self._create_error("city_not_found", str(e)))
         except httpx.TimeoutException:
             result.errors.append(
                 self._create_error(
@@ -367,7 +389,7 @@ class OSMAdapter(BaseSourceAdapter):
         # Determine categories from tags
         categories = []
         source_categories = []
-        for tag_key in ["amenity", "shop", "tourism", "office", "craft"]:
+        for tag_key in ["amenity", "shop", "tourism", "office", "craft", "healthcare", "leisure"]:
             if tag_key in tags:
                 value = tags[tag_key]
                 source_categories.append(f"{tag_key}:{value}")

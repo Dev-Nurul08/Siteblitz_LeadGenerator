@@ -18,7 +18,8 @@ const COUNTRIES = [['IN', 'India'], ['GB', 'United Kingdom'], ['US', 'United Sta
 const CATEGORIES = ['dentist', 'salon', 'hairdresser', 'cafe', 'restaurant', 'gym', 'clinic', 'hotel', 'school',
   'lawyer', 'accountant', 'estate_agent', 'car_repair', 'plumber', 'electrician', 'bakery', 'shop']
 const SOURCES = [
-  { id: 'overture', name: 'Overture Places (default)', note: 'Free · map position, phone and social links for most businesses' },
+  { id: 'all_sources', name: 'All sources (default)', note: 'Overture Places + OpenStreetMap together, duplicates merged — the most businesses per search' },
+  { id: 'overture', name: 'Overture Places', note: 'Free · map position, phone and social links for most businesses' },
   { id: 'openstreetmap', name: 'OpenStreetMap', note: 'Free · volunteer-mapped, thin in small cities' },
   { id: 'google', name: 'Google Places', note: 'Not available yet — needs an API key and a licensing check', disabled: true },
   { id: 'csv', name: 'CSV file', note: 'Your own list · UTF-8, up to 15 MB / 5,000 rows' },
@@ -70,7 +71,7 @@ function ExportLinks({ jobId }) {
 }
 
 export default function FindPage({ entrance }) {
-  const [form, setForm] = useState({ source: 'overture', country: 'IN', city: '', category: '', max: 500, franchises: false })
+  const [form, setForm] = useState({ source: 'all_sources', country: 'IN', city: '', category: '', max: 500, franchises: false })
   const [csvFile, setCsvFile] = useState(null)
   const [jobs, setJobs] = useState(null)
   const [jobsError, setJobsError] = useState(null)
@@ -182,7 +183,7 @@ export default function FindPage({ entrance }) {
                 <div className="field">
                   <label className="label" htmlFor="max">Max results</label>
                   <select id="max" className="input" value={form.max} onChange={set('max')}>
-                    {[50, 100, 200, 500, 1000].map((n) => <option key={n} value={n}>{n}</option>)}
+                    {[50, 100, 200, 500, 1000, 2000, 5000].map((n) => <option key={n} value={n}>{n}</option>)}
                   </select>
                 </div>
               </>
@@ -214,6 +215,12 @@ export default function FindPage({ entrance }) {
                     <span key={label} className={`dotstep ${phaseIndex >= i ? 'on' : ''}`}><i />{label}{i < 2 && <span aria-hidden="true"> —</span>}</span>
                   ))}
                 </div>
+                {job && job.available != null && (
+                  <p className="ink2" style={{ margin: '0 0 8px', fontSize: 14 }}>
+                    The sources have <span className="num">{num(job.available)}</span> matching businesses here; this search took{' '}
+                    <span className="num">{num(job.found)}</span>{job.available > job.found ? ' — raise Max results to get more.' : ' — all of them.'}
+                  </p>
+                )}
                 <div className="tickers">
                   {[['Found', job?.found], ['New', job?.new], ['Duplicates', job?.duplicate], ['Errors', job?.errors]].map(([label, value]) => (
                     <div className="ticker" key={label}><div className="label">{label}</div><div className="stat"><Ticker value={value ?? 0} /></div></div>
@@ -277,7 +284,7 @@ export default function FindPage({ entrance }) {
                       {j.error_message && <div className="mono" style={{ fontSize: 13, color: 'var(--error)' }}>{j.error_message}</div>}</td>
                     <td className="hide-sm">{j.source_name}</td>
                     <td><JobChip status={j.status} /></td>
-                    <td className="num">{num(j.records_found)}</td>
+                    <td className="num">{num(j.records_found)}{j.available != null && j.available > j.records_found && <div className="muted" style={{ fontSize: 13 }}>of {num(j.available)}</div>}</td>
                     <td className="num">{num(j.records_new)}</td>
                     <td className="num hide-sm">{num(j.records_duplicate)}</td>
                     <td className="num hide-sm">{num(j.records_error)}</td>

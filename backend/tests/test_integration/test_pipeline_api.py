@@ -381,3 +381,47 @@ def test_contact_log_do_not_contact_blocks_readiness(client, no_guessed_domains)
     assert body["assessment"]["outreach_readiness"] == "BLOCKED"
     assert client.post(f"/api/v1/intelligence/business/{salon}/contact-log",
                        json={"channel": "fax", "outcome": "other"}).status_code == 422
+
+
+def test_same_phone_same_city_is_one_business_even_with_another_name(client):
+    csv_text = (
+        "name,city,country,phone\n"
+        "Cafe Nirvana,Udaipur,IN,+91 76652 95252\n"
+        "Nirvana Cafe & Lounge,Udaipur,IN,076652 95252\n"   # same number, other spelling
+        "Cafe Nirvana,Jaipur,IN,+91 76652 95252\n"          # same number, other city: kept
+    )
+    result = _import(client, "phones.csv", csv_text)
+    assert (result["new"], result["duplicate"]) == (2, 1)
+
+
+def test_one_bad_record_does_not_fail_the_job(client, monkeypatch):
+    from backend.app.services.discovery_service import DiscoveryService
+
+    original = DiscoveryService._create_business
+
+    async def flaky(self, discovered, source_record):
+        if discovered.name == "Broken Row":
+            raise RuntimeError("simulated bad record")
+        return await original(self, discovered, source_record)
+
+    monkeypatch.setattr(DiscoveryService, "_create_business", flaky)
+    csv_text = "name,city,country\nGood One,Pune,IN\nBroken Row,Pune,IN\nGood Two,Pune,IN\n"
+    result = _import(client, "flaky.csv", csv_text)
+    assert result["status"] in ("COMPLETED", "PARTIAL")
+    assert (result["new"], result["errors"]) == (2, 1)
+    names = {b["name"] for b in client.get("/api/v1/businesses").json()["items"]}
+    assert names == {"Good One", "Good Two"}
+
+
+def test_duplicate_categories_on_one_record_are_merged(client, monkeypatch):
+    from backend.app.engines.discovery.csv_import import CSVImportAdapter
+    from backend.app.engines.discovery.base import AdapterResult, DiscoveredBusiness
+
+    async def two_clinic_tags(self, **kw):
+        return AdapterResult(businesses=[DiscoveredBusiness(
+            source_external_id="csv:row:x1", name="Care Clinic", city="Pune", country_code="IN",
+            categories=["clinic", "clinic"], source_categories=["amenity:clinic", "healthcare:clinic"])])
+
+    monkeypatch.setattr(CSVImportAdapter, "discover", two_clinic_tags)
+    result = _import(client, "x.csv", "name\nignored\n")
+    assert (result["new"], result["errors"]) == (1, 0)
