@@ -169,7 +169,7 @@ export default function BusinessesPage() {
                         <tr
                           key={biz.id}
                           onClick={() => setSelected(selected?.id === biz.id ? null : biz)}
-                          style={{ cursor: 'pointer', background: selected?.id === biz.id ? 'rgba(99,102,241,0.06)' : undefined }}
+                          style={{ cursor: 'pointer', background: selected?.id === biz.id ? 'var(--color-bg-elevated)' : undefined }}
                         >
                           <td>
                             <div style={{ fontWeight: 600, color: 'var(--color-text-primary)', fontSize: '0.85rem' }}>
@@ -284,7 +284,7 @@ export default function BusinessesPage() {
               </div>
 
               {/* Opportunity Signals & Audit */}
-              <div style={{ marginTop: '20px', padding: '12px', background: 'rgba(99, 102, 241, 0.06)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(99, 102, 241, 0.12)' }}>
+              <div style={{ marginTop: '20px', padding: '12px', background: 'var(--color-bg-tertiary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     Opportunity Engine

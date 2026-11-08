@@ -1,374 +1,339 @@
 import { useState, useEffect } from 'react'
-import PageHeader from '../components/PageHeader'
-import Badge from '../components/Badge'
 import api from '../services/api'
+import Badge from '../components/Badge'
 
-export default function DiscoveryPage() {
+export default function DiscoveryPage({ onNavigate }) {
   const [jobs, setJobs] = useState([])
   const [loadingJobs, setLoadingJobs] = useState(true)
   const [running, setRunning] = useState(false)
-  const [activeTab, setActiveTab] = useState('osm') // 'osm' | 'csv'
+  const [activeSource, setActiveSource] = useState('openstreetmap') // 'openstreetmap' | 'wikidata' | 'csv_import'
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
 
-  // OSM form state
-  const [osmForm, setOsmForm] = useState({
-    country_code: 'GB',
-    city: 'London',
+  // Query Parameters
+  const [form, setForm] = useState({
+    country_code: 'IN',
+    city: 'Mumbai',
     category: 'restaurant',
-    radius_km: '',
-    latitude: '',
-    longitude: '',
     max_results: 100,
   })
 
-  // CSV form state
+  // CSV Ingestion
   const [csvFile, setCsvFile] = useState(null)
-  const [csvCountry, setCsvCountry] = useState('')
+  const [csvCountry, setCsvCountry] = useState('IN')
   const [csvDelimiter, setCsvDelimiter] = useState(',')
 
   useEffect(() => {
     loadJobs()
-    const interval = setInterval(loadJobs, 10000)
-    return () => clearInterval(interval)
+    const timer = setInterval(loadJobs, 8000)
+    return () => clearInterval(timer)
   }, [])
 
   async function loadJobs() {
     try {
-      const data = await api.discovery.jobs(20)
+      const data = await api.discovery.jobs(15)
       setJobs(data || [])
-    } catch {
-      // Ignore if API offline
-    } finally {
+    } catch (_) {}
+    finally {
       setLoadingJobs(false)
     }
   }
 
-  async function runOsmDiscovery(e) {
+  async function handleRunDiscovery(e) {
     e.preventDefault()
     setRunning(true)
     setResult(null)
     setError(null)
     try {
-      const payload = {
-        source_slug: 'openstreetmap',
-        country_code: osmForm.country_code || undefined,
-        city: osmForm.city || undefined,
-        category: osmForm.category || undefined,
-        max_results: parseInt(osmForm.max_results) || 100,
-        query_params: {},
+      if (activeSource === 'csv_import') {
+        if (!csvFile) throw new Error('Please select a valid CSV file')
+        const res = await api.discovery.importCsv(csvFile, csvCountry, csvDelimiter)
+        setResult(res)
+      } else {
+        const payload = {
+          source_slug: activeSource,
+          country_code: form.country_code || undefined,
+          city: form.city || undefined,
+          category: form.category || undefined,
+          max_results: parseInt(form.max_results) || 100,
+          query_params: {},
+        }
+        const res = await api.discovery.run(payload)
+        setResult(res)
       }
-      if (osmForm.latitude && osmForm.longitude) {
-        payload.latitude = parseFloat(osmForm.latitude)
-        payload.longitude = parseFloat(osmForm.longitude)
-        payload.radius_km = parseFloat(osmForm.radius_km) || 5
-      }
-      const res = await api.discovery.run(payload)
-      setResult(res)
-      loadJobs()
-    } catch (e) {
-      setError(e.message)
+      await loadJobs()
+    } catch (err) {
+      setError(err.message)
     } finally {
       setRunning(false)
     }
   }
 
-  async function runCsvImport(e) {
-    e.preventDefault()
-    if (!csvFile) { setError('Please select a CSV file'); return }
-    setRunning(true)
-    setResult(null)
-    setError(null)
-    try {
-      const res = await api.discovery.importCsv(csvFile, csvCountry, csvDelimiter)
-      setResult(res)
-      loadJobs()
-    } catch (e) {
-      setError(e.message)
-    } finally {
-      setRunning(false)
-    }
-  }
-
-  const COUNTRIES = [
-    { code: 'GB', name: 'United Kingdom' },
-    { code: 'US', name: 'United States' },
-    { code: 'AU', name: 'Australia' },
-    { code: 'CA', name: 'Canada' },
-    { code: 'DE', name: 'Germany' },
-    { code: 'FR', name: 'France' },
-    { code: 'IN', name: 'India' },
-    { code: 'AE', name: 'United Arab Emirates' },
-    { code: 'SG', name: 'Singapore' },
-    { code: 'NZ', name: 'New Zealand' },
-  ]
-
-  const CATEGORIES = [
-    '', 'restaurant', 'cafe', 'hotel', 'shop', 'bar', 'pub',
-    'clinic', 'dentist', 'gym', 'salon', 'school',
-    'lawyer', 'accountant', 'estate_agent', 'it',
-    'car_repair', 'plumber', 'electrician',
-  ]
+  // Aggregate matrix stats
+  const totalDiscovered = jobs.reduce((acc, j) => acc + (j.records_extracted || 0), 0)
+  const totalJobsCompleted = jobs.filter(j => j.status === 'COMPLETED').length
 
   return (
-    <>
-      <PageHeader
-        title="Discovery Engine"
-        subtitle="Phase 1 — Find businesses from permitted sources"
-        actions={
-          running && (
-            <div className="flex items-center gap-2" style={{ color: 'var(--color-accent-primary)', fontSize: '0.85rem' }}>
-              <div className="spinner" />
-              Running…
-            </div>
-          )
-        }
-      />
-
-      <div className="page-body animate-fadeIn">
-        <div className="grid-2" style={{ gap: '24px', alignItems: 'start' }}>
-
-          {/* Discovery Form */}
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">Configure Discovery</div>
-            </div>
-
-            {/* Tab switcher */}
-            <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: 'var(--color-bg-tertiary)', padding: '4px', borderRadius: 'var(--radius-md)' }}>
-              {[
-                { id: 'osm', label: '🗺️ OpenStreetMap', desc: 'ODbL — Open License' },
-                { id: 'csv', label: '📄 CSV Import', desc: 'Manual / Opt-in' },
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className="btn"
-                  style={{
-                    flex: 1, fontSize: '0.8rem',
-                    background: activeTab === tab.id ? 'var(--gradient-primary)' : 'transparent',
-                    color: activeTab === tab.id ? 'white' : 'var(--color-text-secondary)',
-                    border: 'none', padding: '8px 12px',
-                  }}
-                >
-                  {tab.label}
-                  <br />
-                  <span style={{ fontSize: '0.65rem', opacity: 0.75 }}>{tab.desc}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* OSM Form */}
-            {activeTab === 'osm' && (
-              <form onSubmit={runOsmDiscovery}>
-                <div style={{ background: 'rgba(34, 197, 94, 0.08)', border: '1px solid rgba(34, 197, 94, 0.15)', borderRadius: 'var(--radius-md)', padding: '10px 14px', marginBottom: '16px', fontSize: '0.78rem', color: 'var(--color-text-secondary)' }}>
-                  ✓ <strong style={{ color: 'var(--color-accent-success)' }}>ODbL License</strong> — Data is freely reusable with attribution. © OpenStreetMap contributors.
-                </div>
-
-                <div className="input-group">
-                  <label className="input-label">Country *</label>
-                  <select className="input" value={osmForm.country_code} onChange={e => setOsmForm(p => ({ ...p, country_code: e.target.value }))}>
-                    {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.name} ({c.code})</option>)}
-                  </select>
-                </div>
-
-                <div className="input-group">
-                  <label className="input-label">City</label>
-                  <input className="input" placeholder="e.g. London, Manchester, Glasgow…" value={osmForm.city} onChange={e => setOsmForm(p => ({ ...p, city: e.target.value }))} />
-                </div>
-
-                <div className="input-group">
-                  <label className="input-label">Business Category</label>
-                  <select className="input" value={osmForm.category} onChange={e => setOsmForm(p => ({ ...p, category: e.target.value }))}>
-                    <option value="">All categories</option>
-                    {CATEGORIES.filter(Boolean).map(c => <option key={c} value={c}>{c.replace(/_/g, ' ')}</option>)}
-                  </select>
-                </div>
-
-                <div style={{ padding: '12px', background: 'var(--color-bg-tertiary)', borderRadius: 'var(--radius-md)', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: '10px' }}>OR SEARCH BY COORDINATES</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                    <div className="input-group" style={{ marginBottom: 0 }}>
-                      <label className="input-label">Latitude</label>
-                      <input className="input" placeholder="51.5074" type="number" step="any" value={osmForm.latitude} onChange={e => setOsmForm(p => ({ ...p, latitude: e.target.value }))} />
-                    </div>
-                    <div className="input-group" style={{ marginBottom: 0 }}>
-                      <label className="input-label">Longitude</label>
-                      <input className="input" placeholder="-0.1278" type="number" step="any" value={osmForm.longitude} onChange={e => setOsmForm(p => ({ ...p, longitude: e.target.value }))} />
-                    </div>
-                    <div className="input-group" style={{ marginBottom: 0, gridColumn: 'span 2' }}>
-                      <label className="input-label">Radius (km)</label>
-                      <input className="input" placeholder="5" type="number" min="0.1" max="100" value={osmForm.radius_km} onChange={e => setOsmForm(p => ({ ...p, radius_km: e.target.value }))} />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="input-group">
-                  <label className="input-label">Max Results</label>
-                  <select className="input" value={osmForm.max_results} onChange={e => setOsmForm(p => ({ ...p, max_results: e.target.value }))}>
-                    {[50, 100, 200, 500, 1000].map(n => <option key={n} value={n}>{n} businesses</option>)}
-                  </select>
-                </div>
-
-                {error && activeTab === 'osm' && (
-                  <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 'var(--radius-md)', padding: '10px 14px', marginBottom: '14px', fontSize: '0.8rem', color: 'var(--color-accent-danger)' }}>
-                    ❌ {error}
-                  </div>
-                )}
-
-                <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={running}>
-                  {running ? <><div className="spinner" /> Running Discovery…</> : '🔍 Start OSM Discovery'}
-                </button>
-              </form>
-            )}
-
-            {/* CSV Import Form */}
-            {activeTab === 'csv' && (
-              <form onSubmit={runCsvImport}>
-                <div style={{ background: 'rgba(148, 163, 184, 0.08)', border: '1px solid rgba(148, 163, 184, 0.15)', borderRadius: 'var(--radius-md)', padding: '10px 14px', marginBottom: '16px', fontSize: '0.78rem', color: 'var(--color-text-secondary)' }}>
-                  ℹ️ <strong>Manual / Opt-in</strong> — Data provenance and usage rights are your responsibility.
-                </div>
-
-                <div className="input-group">
-                  <label className="input-label">CSV File *</label>
-                  <div
-                    style={{
-                      border: '2px dashed var(--color-border)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: '24px',
-                      textAlign: 'center',
-                      cursor: 'pointer',
-                      transition: 'border-color 0.2s',
-                    }}
-                    onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--color-accent-primary)' }}
-                    onDragLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)' }}
-                    onDrop={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--color-border)'; setCsvFile(e.dataTransfer.files[0]) }}
-                    onClick={() => document.getElementById('csv-file-input').click()}
-                  >
-                    <input id="csv-file-input" type="file" accept=".csv,.txt" style={{ display: 'none' }} onChange={e => setCsvFile(e.target.files[0])} />
-                    {csvFile ? (
-                      <div>
-                        <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>📄</div>
-                        <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>{csvFile.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{(csvFile.size / 1024).toFixed(1)} KB</div>
-                      </div>
-                    ) : (
-                      <div>
-                        <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>📂</div>
-                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>Drop CSV file here or click to browse</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '4px' }}>
-                          Supports: name, address, city, country, phone, email, website, category
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <div className="input-group" style={{ marginBottom: 0 }}>
-                    <label className="input-label">Default Country</label>
-                    <select className="input" value={csvCountry} onChange={e => setCsvCountry(e.target.value)}>
-                      <option value="">Auto-detect</option>
-                      {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.code} — {c.name}</option>)}
-                    </select>
-                  </div>
-                  <div className="input-group" style={{ marginBottom: 0 }}>
-                    <label className="input-label">Delimiter</label>
-                    <select className="input" value={csvDelimiter} onChange={e => setCsvDelimiter(e.target.value)}>
-                      <option value=",">Comma (,)</option>
-                      <option value=";">Semicolon (;)</option>
-                      <option value="\t">Tab</option>
-                    </select>
-                  </div>
-                </div>
-
-                {error && activeTab === 'csv' && (
-                  <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 'var(--radius-md)', padding: '10px 14px', marginTop: '14px', fontSize: '0.8rem', color: 'var(--color-accent-danger)' }}>
-                    ❌ {error}
-                  </div>
-                )}
-
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '16px' }} disabled={running || !csvFile}>
-                  {running ? <><div className="spinner" /> Importing…</> : '📤 Import CSV'}
-                </button>
-              </form>
-            )}
-
-            {/* Result */}
-            {result && (
-              <div style={{ marginTop: '16px', background: result.status === 'FAILED' ? 'rgba(239, 68, 68, 0.08)' : 'rgba(34, 197, 94, 0.08)', border: `1px solid ${result.status === 'FAILED' ? 'rgba(239,68,68,0.2)' : 'rgba(34,197,94,0.2)'}`, borderRadius: 'var(--radius-md)', padding: '14px 16px' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.85rem', marginBottom: '8px', color: result.status === 'FAILED' ? 'var(--color-accent-danger)' : 'var(--color-accent-success)' }}>
-                  {result.status === 'FAILED' ? '❌ Job Failed' : '✓ Job Complete'} — Job #{result.job_id}
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-                  {[
-                    { label: 'New', value: result.records_new, color: 'var(--color-accent-success)' },
-                    { label: 'Duplicate', value: result.records_duplicate, color: 'var(--color-accent-warning)' },
-                    { label: 'Errors', value: result.records_error, color: 'var(--color-accent-danger)' },
-                  ].map(({ label, value, color }) => (
-                    <div key={label} style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '1.3rem', fontWeight: 800, color }}>{value ?? 0}</div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>{label}</div>
-                    </div>
-                  ))}
-                </div>
-                {result.error && <div style={{ fontSize: '0.78rem', color: 'var(--color-accent-danger)', marginTop: '8px' }}>{result.error}</div>}
-              </div>
-            )}
-          </div>
-
-          {/* Jobs History */}
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">Discovery Jobs</div>
-              <button className="btn btn-ghost btn-sm" onClick={loadJobs}>↻</button>
-            </div>
-
-            {loadingJobs ? (
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
-                <div className="spinner spinner-lg" />
-              </div>
-            ) : jobs.length === 0 ? (
-              <div className="empty-state" style={{ padding: '40px 20px' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🔍</div>
-                <div className="empty-state-title">No discovery jobs yet</div>
-                <div className="empty-state-description">Run a discovery to see results here</div>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {jobs.map(job => (
-                  <div key={job.job_id} style={{
-                    padding: '12px 14px', background: 'var(--color-bg-tertiary)',
-                    borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                      <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>
-                        {job.source_name} <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>#{job.job_id}</span>
-                      </div>
-                      <Badge status={job.status} />
-                    </div>
-                    <div style={{ display: 'flex', gap: '12px', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                      <span style={{ color: 'var(--color-accent-success)' }}>+{job.records_new} new</span>
-                      <span>{job.records_duplicate} dup</span>
-                      {job.records_error > 0 && <span style={{ color: 'var(--color-accent-danger)' }}>{job.records_error} errors</span>}
-                    </div>
-                    {job.error_message && (
-                      <div style={{ fontSize: '0.72rem', color: 'var(--color-accent-danger)', marginTop: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {job.error_message}
-                      </div>
-                    )}
-                    {job.started_at && (
-                      <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '4px' }}>
-                        {new Date(job.started_at).toLocaleString()}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+    <div className="page-body space-y-4">
+      {/* ── Header ── */}
+      <div className="flex justify-between items-center pb-3 border-b border-color-border">
+        <div>
+          <h1 className="page-title">Phase 1 — Discovery Engine</h1>
+          <p className="page-subtitle">Spatial registry adapters, multi-source ingestion, and canonical deduplication.</p>
+        </div>
+        <div className="flex gap-2">
+          {onNavigate && (
+            <button 
+              className="btn btn-secondary btn-sm"
+              onClick={() => onNavigate('opportunities')}
+            >
+              Go to Phase 2 (Opportunities) →
+            </button>
+          )}
         </div>
       </div>
-    </>
+
+      {error && (
+        <div className="alert alert-danger flex justify-between items-center">
+          <span>Error: {error}</span>
+          <button className="btn btn-sm btn-outline" onClick={() => setError(null)}>Dismiss</button>
+        </div>
+      )}
+
+      {/* ── KPI Matrix ── */}
+      <div className="stats-grid">
+        <div className="stat-card accent-primary">
+          <div className="stat-value">{totalDiscovered.toLocaleString()}</div>
+          <div className="stat-label">Total Records Ingested</div>
+        </div>
+        <div className="stat-card accent-success">
+          <div className="stat-value">{totalJobsCompleted}</div>
+          <div className="stat-label">Discovery Jobs Completed</div>
+        </div>
+        <div className="stat-card accent-secondary">
+          <div className="stat-value">{activeSource.toUpperCase()}</div>
+          <div className="stat-label">Active Extraction Engine</div>
+        </div>
+        <div className="stat-card accent-warning">
+          <div className="stat-value font-mono">CANONICAL</div>
+          <div className="stat-label">Deduplication Mode</div>
+        </div>
+      </div>
+
+      {/* ── Query Matrix Control Panel ── */}
+      <div className="card">
+        <div className="card-header">
+          <div className="flex gap-2">
+            <button 
+              className={`btn btn-sm ${activeSource === 'openstreetmap' ? 'btn-primary' : 'btn-outline'}`}
+              onClick={() => setActiveSource('openstreetmap')}
+            >
+              OpenStreetMap (Overpass API)
+            </button>
+            <button 
+              className={`btn btn-sm ${activeSource === 'wikidata' ? 'btn-primary' : 'btn-outline'}`}
+              onClick={() => setActiveSource('wikidata')}
+            >
+              Wikidata (SPARQL)
+            </button>
+            <button 
+              className={`btn btn-sm ${activeSource === 'csv_import' ? 'btn-primary' : 'btn-outline'}`}
+              onClick={() => setActiveSource('csv_import')}
+            >
+              CSV File Ingestion
+            </button>
+          </div>
+          <span className="text-xs font-mono text-gray-500">API RATE SAFEGUARD: ACTIVE</span>
+        </div>
+
+        <form onSubmit={handleRunDiscovery} className="space-y-3">
+          {activeSource === 'csv_import' ? (
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label>CSV File</label>
+                <input 
+                  type="file" 
+                  accept=".csv,.tsv" 
+                  className="input input-sm w-full"
+                  onChange={(e) => setCsvFile(e.target.files[0])}
+                  required
+                />
+              </div>
+              <div>
+                <label>Country Code</label>
+                <input 
+                  type="text" 
+                  className="input input-sm w-full font-mono uppercase"
+                  value={csvCountry}
+                  onChange={(e) => setCsvCountry(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>Delimiter</label>
+                <select 
+                  className="input input-sm w-full"
+                  value={csvDelimiter}
+                  onChange={(e) => setCsvDelimiter(e.target.value)}
+                >
+                  <option value=",">Comma (,)</option>
+                  <option value=";">Semicolon (;)</option>
+                  <option value="\t">Tab (\t)</option>
+                </select>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-4 gap-3">
+              <div>
+                <label>Target Country</label>
+                <select 
+                  className="input input-sm w-full"
+                  value={form.country_code}
+                  onChange={(e) => setForm({...form, country_code: e.target.value})}
+                >
+                  <option value="IN">India (IN)</option>
+                  <option value="US">United States (US)</option>
+                  <option value="GB">United Kingdom (GB)</option>
+                  <option value="DE">Germany (DE)</option>
+                  <option value="AU">Australia (AU)</option>
+                  <option value="CA">Canada (CA)</option>
+                  <option value="AE">UAE (AE)</option>
+                </select>
+              </div>
+              <div>
+                <label>Target City</label>
+                <input 
+                  type="text" 
+                  className="input input-sm w-full"
+                  value={form.city}
+                  onChange={(e) => setForm({...form, city: e.target.value})}
+                  placeholder="e.g. Mumbai, London, Dallas"
+                  required
+                />
+              </div>
+              <div>
+                <label>Business Category</label>
+                <select 
+                  className="input input-sm w-full"
+                  value={form.category}
+                  onChange={(e) => setForm({...form, category: e.target.value})}
+                >
+                  <option value="restaurant">Restaurants & Dining</option>
+                  <option value="clinic">Clinics & Healthcare</option>
+                  <option value="hairdresser">Salons & Spas</option>
+                  <option value="hotel">Hotels & Lodging</option>
+                  <option value="industrial">Manufacturers & Suppliers</option>
+                  <option value="retail">Retail & Wholesale</option>
+                </select>
+              </div>
+              <div>
+                <label>Max Results</label>
+                <input 
+                  type="number" 
+                  className="input input-sm w-full font-mono"
+                  value={form.max_results}
+                  onChange={(e) => setForm({...form, max_results: e.target.value})}
+                  min="10" max="1000"
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-between items-center pt-2">
+            <span className="text-xs text-gray-500">
+              Adapters automatically normalize names, parse geo-coordinates, and deduplicate against database.
+            </span>
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+              disabled={running}
+            >
+              {running ? 'Extracting Data...' : 'Execute Phase 1 Discovery'}
+            </button>
+          </div>
+        </form>
+
+        {result && (
+          <div className={`alert ${result.found > 0 ? 'alert-success' : result.errors > 0 ? 'alert-warning' : 'alert-info'} mt-3 flex justify-between items-center text-xs`}>
+            <div>
+              <strong>Extraction Status:</strong> Discovered {result.found ?? result.records_found ?? result.records_extracted ?? 0} entities, normalized {result.new ?? result.records_new ?? 0} records, merged {result.duplicate ?? result.records_duplicate ?? 0} duplicates.
+              {result.errors > 0 && <span className="text-amber-400 ml-2">({result.errors} endpoint errors/timeouts recorded in job log)</span>}
+            </div>
+            {result.found > 0 && onNavigate && (
+              <button 
+                className="btn btn-sm btn-outline text-white"
+                onClick={() => onNavigate('opportunities')}
+              >
+                Proceed to Phase 2 (Audit) →
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ── Ingestion Jobs Matrix Table ── */}
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title">Discovery Ingestion Matrix Log</span>
+          <span className="text-xs font-mono text-gray-500">{jobs.length} jobs logged</span>
+        </div>
+
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Source</th>
+                <th>Target Parameters</th>
+                <th>Records Extracted</th>
+                <th>Normalized</th>
+                <th>Duplicates Merged</th>
+                <th>Status</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loadingJobs && jobs.length === 0 ? (
+                <tr>
+                  <td colSpan="8" className="text-center py-6 text-gray-500">Loading discovery execution log...</td>
+                </tr>
+              ) : jobs.length === 0 ? (
+                <tr>
+                  <td colSpan="8" className="text-center py-6 text-gray-500">No discovery jobs executed yet. Run a search above to populate.</td>
+                </tr>
+              ) : (
+                jobs.map((job) => (
+                  <tr key={job.job_id || job.id}>
+                    <td className="font-mono text-xs">#{job.job_id || job.id}</td>
+                    <td>
+                      <span className="font-semibold text-primary font-mono text-xs">
+                        {job.source_name || job.source_slug || 'OpenStreetMap'}
+                      </span>
+                    </td>
+                    <td className="text-xs">
+                      {job.city ? `${job.city}, ` : ''}{job.country_code || 'Global'} — {job.category || 'All categories'}
+                    </td>
+                    <td className="font-mono text-xs font-bold text-primary">
+                      {job.records_found ?? job.records_extracted ?? 0}
+                    </td>
+                    <td className="font-mono text-xs text-success">
+                      {job.records_new ?? job.records_normalized ?? 0}
+                    </td>
+                    <td className="font-mono text-xs text-warning">
+                      {job.records_duplicate ?? job.duplicates_found ?? 0}
+                    </td>
+                    <td>
+                      <Badge status={job.status} />
+                    </td>
+                    <td className="font-mono text-xs text-gray-500">
+                      {job.completed_at ? new Date(job.completed_at).toLocaleTimeString() : job.started_at ? new Date(job.started_at).toLocaleTimeString() : '—'}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   )
 }

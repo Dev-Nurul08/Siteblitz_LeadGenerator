@@ -7,6 +7,7 @@ const NAV_ITEMS = [
     section: 'Overview',
     items: [
       { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+      { id: 'lead-radar', label: 'Lead Radar ⚡', icon: '📡', badge: 'STRATEGY' },
     ]
   },
   {

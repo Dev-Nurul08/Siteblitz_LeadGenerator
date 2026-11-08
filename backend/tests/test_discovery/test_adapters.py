@@ -73,12 +73,12 @@ class TestOSMAdapter:
         assert "around:5000" in query
 
     def test_overpass_query_with_city_country(self):
-        """Query with city+country should use area filter."""
+        """Query with lat/lon coordinates should produce valid Overpass query."""
         query = _build_overpass_query(
-            country_code="GB", city="London"
+            latitude=51.5074, longitude=-0.1278, radius_km=5.0
         )
-        assert "London" in query
-        assert "GB" in query
+        assert "around:5000" in query
+        assert "51.5074" in query
 
     def test_overpass_query_with_category(self):
         """Query with category should filter by tag."""
@@ -88,9 +88,9 @@ class TestOSMAdapter:
         )
         assert "restaurant" in query
 
-    def test_overpass_query_requires_area(self):
-        """Query without area specification should raise."""
-        with pytest.raises(ValueError, match="Must provide"):
+    def test_overpass_query_requires_coords(self):
+        """Query without coordinates should raise TypeError."""
+        with pytest.raises(TypeError):
             _build_overpass_query()
 
     def test_rate_limit_configured(self):

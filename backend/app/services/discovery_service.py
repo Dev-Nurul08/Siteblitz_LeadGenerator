@@ -169,6 +169,7 @@ class DiscoveryService:
             # Try known adapters
             known = {
                 "openstreetmap": "backend.app.engines.discovery.osm.OSMAdapter",
+                "wikidata": "backend.app.engines.discovery.wikidata.WikidataAdapter",
                 "csv_import": "backend.app.engines.discovery.csv_import.CSVImportAdapter",
             }
             if slug not in known:

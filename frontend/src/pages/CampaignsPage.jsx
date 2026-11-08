@@ -385,7 +385,7 @@ export default function CampaignsPage() {
                       <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{camp.name}</h3>
                       <Badge variant={camp.status === 'RUNNING' ? 'success' : 'secondary'} label={camp.status} />
                       {camp.target_service_category && (
-                        <span className="badge badge-info">{camp.target_service_category.replace(/_/g, ' ')}</span>
+                        <span className="badge badge-secondary">{camp.target_service_category.replace(/_/g, ' ')}</span>
                       )}
                     </div>
                     {camp.description && (

@@ -5,9 +5,9 @@ import Badge from '../components/Badge'
 import api from '../services/api'
 
 const ROLE_META = {
-  EXECUTIVE: { label: 'Executive', color: 'badge-purple', icon: '👑' },
-  MANAGEMENT: { label: 'Management', color: 'badge-info', icon: '💼' },
-  TECHNICAL: { label: 'Technical', color: 'badge-cyan', icon: '💻' },
+  EXECUTIVE: { label: 'Executive', color: 'badge-secondary', icon: '👑' },
+  MANAGEMENT: { label: 'Management', color: 'badge-secondary', icon: '💼' },
+  TECHNICAL: { label: 'Technical', color: 'badge-secondary', icon: '💻' },
   MARKETING: { label: 'Marketing', color: 'badge-success', icon: '📈' },
   STAFF: { label: 'Staff', color: 'badge-secondary', icon: '👤' },
   GENERAL_INBOX: { label: 'General Inbox', color: 'badge-warning', icon: '📥' },
@@ -16,7 +16,7 @@ const ROLE_META = {
 const STATUS_META = {
   VERIFIED: { label: 'Verified', variant: 'success', icon: '✓' },
   RISKY: { label: 'Risky', variant: 'warning', icon: '⚠️' },
-  ROLE_BASED: { label: 'Role Inbox', variant: 'info', icon: '🏢' },
+  ROLE_BASED: { label: 'Role Inbox', variant: 'secondary', icon: '🏢' },
   DISPOSABLE: { label: 'Disposable', variant: 'danger', icon: '🚫' },
   UNDELIVERABLE: { label: 'Undeliverable', variant: 'danger', icon: '❌' },
   UNVERIFIED: { label: 'Unverified', variant: 'secondary', icon: '⏳' },

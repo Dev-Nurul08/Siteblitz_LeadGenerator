@@ -8,7 +8,7 @@ detects service needs, and scores opportunities for agency outreach.
 from backend.app.engines.opportunity.resolver import WebsiteResolver
 from backend.app.engines.opportunity.auditor import WebsiteAuditor, AuditResult
 from backend.app.engines.opportunity.detector import OpportunityDetector, DetectedNeed
-from backend.app.engines.opportunity.scorer import OpportunityScorer
+from backend.app.engines.opportunity.scorer import OpportunityScorer, ScoredOpportunity
 
 __all__ = [
     "WebsiteResolver",
@@ -17,4 +17,5 @@ __all__ = [
     "OpportunityDetector",
     "DetectedNeed",
     "OpportunityScorer",
+    "ScoredOpportunity",
 ]

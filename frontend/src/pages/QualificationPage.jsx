@@ -9,16 +9,16 @@ const LEAD_STATUS_META = {
   QUALIFIED: { label: 'Qualified', variant: 'info', icon: '✅' },
   NEEDS_REVIEW: { label: 'Needs Review', variant: 'warning', icon: '⚠️' },
   DISQUALIFIED: { label: 'Disqualified', variant: 'danger', icon: '🚫' },
-  CONTACTED: { label: 'Contacted', variant: 'purple', icon: '📨' },
+  CONTACTED: { label: 'Contacted', variant: 'secondary', icon: '📨' },
   CONVERTED: { label: 'Converted', variant: 'success', icon: '🎉' },
 }
 
 const FRAMEWORK_META = {
-  CAN_SPAM: { label: 'US CAN-SPAM', icon: '🇺🇸', color: 'badge-info' },
-  GDPR_UK: { label: 'UK PECR/GDPR', icon: '🇬🇧', color: 'badge-purple' },
+  CAN_SPAM: { label: 'US CAN-SPAM', icon: '🇺🇸', color: 'badge-secondary' },
+  GDPR_UK: { label: 'UK PECR/GDPR', icon: '🇬🇧', color: 'badge-secondary' },
   GDPR_EU: { label: 'EU GDPR', icon: '🇪🇺', color: 'badge-warning' },
   CASL: { label: 'Canada CASL', icon: '🇨🇦', color: 'badge-danger' },
-  AUSTRALIA_SPAM_ACT: { label: 'AU Spam Act', icon: '🇦🇺', color: 'badge-cyan' },
+  AUSTRALIA_SPAM_ACT: { label: 'AU Spam Act', icon: '🇦🇺', color: 'badge-secondary' },
   GENERAL_B2B: { label: 'General B2B', icon: '🌐', color: 'badge-secondary' },
 }
 
@@ -334,7 +334,7 @@ export default function QualificationPage() {
                         </div>
                       </td>
                       <td>
-                        <span className="badge badge-info">
+                        <span className="badge badge-secondary">
                           {lead.opportunity_service?.replace(/_/g, ' ') || 'Digital Need'}
                         </span>
                       </td>

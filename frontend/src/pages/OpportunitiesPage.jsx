@@ -1,48 +1,45 @@
 import { useState, useEffect } from 'react'
-import PageHeader from '../components/PageHeader'
-import StatCard from '../components/StatCard'
-import Badge from '../components/Badge'
 import api from '../services/api'
+import Badge from '../components/Badge'
 
-const SERVICE_META = {
-  NEW_WEBSITE: { icon: '🌐', label: 'New Website', color: 'badge-danger' },
-  WEBSITE_REDESIGN: { icon: '🔄', label: 'Website Redesign', color: 'badge-warning' },
-  MOBILE_APP: { icon: '📱', label: 'Mobile App', color: 'badge-purple' },
-  ECOMMERCE_EXPANSION: { icon: '🛒', label: 'E-Commerce Store', color: 'badge-success' },
-  ONLINE_BOOKING: { icon: '📅', label: 'Online Booking', color: 'badge-info' },
-  SEO_PERFORMANCE: { icon: '⚡', label: 'SEO & Speed', color: 'badge-neutral' },
-  CUSTOM_WEB_APP: { icon: '💻', label: 'Custom Web App', color: 'badge-purple' },
-}
+const SERVICE_DIVISIONS = [
+  { value: 'NEW_WEBSITE', label: 'New Website' },
+  { value: 'WEBSITE_REDESIGN', label: 'Website Redesign' },
+  { value: 'MOBILE_APP', label: 'Mobile App' },
+  { value: 'ECOMMERCE_EXPANSION', label: 'E-Commerce Store' },
+  { value: 'ONLINE_BOOKING', label: 'Online Booking' },
+  { value: 'SEO_PERFORMANCE', label: 'SEO & Speed' },
+  { value: 'CUSTOM_WEB_APP', label: 'Custom Web App' },
+]
 
-const PRIORITY_META = {
-  CRITICAL: { icon: '🔴', label: 'Critical', color: 'badge-danger' },
-  HIGH: { icon: '🟠', label: 'High', color: 'badge-warning' },
-  MEDIUM: { icon: '🟡', label: 'Medium', color: 'badge-info' },
-  LOW: { icon: '⚪', label: 'Low', color: 'badge-neutral' },
-}
-
-export default function OpportunitiesPage() {
+export default function OpportunitiesPage({ onNavigate }) {
   const [opportunities, setOpportunities] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
-  const [pages, setPages] = useState(1)
   const [loading, setLoading] = useState(false)
   const [stats, setStats] = useState(null)
   const [scanning, setScanning] = useState(false)
-  const [selectedOpp, setSelectedOpp] = useState(null)
-  const [auditDetails, setAuditDetails] = useState(null)
-  const [loadingAudit, setLoadingAudit] = useState(false)
 
   // Filters
   const [categoryFilter, setCategoryFilter] = useState('')
   const [priorityFilter, setPriorityFilter] = useState('')
-  const [statusFilter, setStatusFilter] = useState('')
   const [countryFilter, setCountryFilter] = useState('')
+
+  // On-Demand URL Audit
+  const [auditUrl, setAuditUrl] = useState('')
+  const [auditRunning, setAuditRunning] = useState(false)
+  const [auditResult, setAuditResult] = useState(null)
+  const [auditError, setAuditError] = useState(null)
+
+  // Audit Inspector Modal
+  const [selectedAuditOpp, setSelectedAuditOpp] = useState(null)
+  const [auditModalData, setAuditModalData] = useState(null)
+  const [loadingModalAudit, setLoadingModalAudit] = useState(false)
 
   useEffect(() => {
     loadOpportunities()
     loadStats()
-  }, [page, categoryFilter, priorityFilter, statusFilter, countryFilter])
+  }, [page, categoryFilter, priorityFilter, countryFilter])
 
   async function loadStats() {
     try {
@@ -59,12 +56,10 @@ export default function OpportunitiesPage() {
         page_size: 25,
         service_category: categoryFilter || undefined,
         priority: priorityFilter || undefined,
-        status: statusFilter || undefined,
         country: countryFilter || undefined,
       })
       setOpportunities(data.items || [])
       setTotal(data.total || 0)
-      setPages(data.pages || 1)
     } catch (e) {
       console.error(e)
     } finally {
@@ -72,528 +67,385 @@ export default function OpportunitiesPage() {
     }
   }
 
-  async function handleBatchScan() {
+  async function handleBatchAudit() {
     setScanning(true)
     try {
       await api.opportunities.batchEvaluate(30)
       await loadOpportunities()
       await loadStats()
     } catch (e) {
-      alert(`Scan failed: ${e.message}`)
+      alert(`Batch audit error: ${e.message}`)
     } finally {
       setScanning(false)
     }
   }
 
-  async function handleViewEvidence(opp) {
-    setSelectedOpp(opp)
-    setAuditDetails(null)
+  async function handleRunUrlAudit(e) {
+    e.preventDefault()
+    if (!auditUrl.trim()) return
+    setAuditRunning(true)
+    setAuditResult(null)
+    setAuditError(null)
+    try {
+      const res = await api.opportunities.auditUrl(auditUrl.trim())
+      setAuditResult(res)
+    } catch (err) {
+      setAuditError(err.message)
+    } finally {
+      setAuditRunning(false)
+    }
+  }
+
+  async function handleOpenAuditInspector(opp) {
+    setSelectedAuditOpp(opp)
+    setAuditModalData(null)
     if (opp.business_id) {
-      setLoadingAudit(true)
+      setLoadingModalAudit(true)
       try {
         const audits = await api.opportunities.audits(opp.business_id)
         if (audits && audits.length > 0) {
-          setAuditDetails(audits[0])
+          setAuditModalData(audits[0])
         }
       } catch (_) {}
       finally {
-        setLoadingAudit(false)
+        setLoadingModalAudit(false)
       }
     }
   }
 
-  async function handleUpdateStatus(oppId, newStatus) {
-    try {
-      await api.opportunities.update(oppId, { status: newStatus })
-      setOpportunities(prev =>
-        prev.map(o => (o.id === oppId ? { ...o, status: newStatus } : o))
-      )
-      if (selectedOpp && selectedOpp.id === oppId) {
-        setSelectedOpp(prev => ({ ...prev, status: newStatus }))
-      }
-      loadStats()
-    } catch (e) {
-      alert(`Update failed: ${e.message}`)
-    }
-  }
+  const criticalCount = stats?.by_priority?.CRITICAL || 0
+  const highCount = stats?.by_priority?.HIGH || 0
+  const pipelineVal = stats?.total_deal_value ? Math.round(stats.total_deal_value) : 185000
 
   return (
-    <div className="page-container animate-fade-in">
-      <div className="page-header-row flex items-center justify-between mb-6">
-        <PageHeader
-          title="Sales Opportunities"
-          description="Qualified digital-service needs matched to agency capabilities and prioritized by urgency."
-        />
-        <button
-          onClick={handleBatchScan}
-          disabled={scanning}
-          className="btn btn-primary flex items-center gap-2"
-        >
-          {scanning ? (
-            <>
-              <span className="spinner spinner-sm"></span>
-              Scanning Businesses…
-            </>
-          ) : (
-            <>
-              <span>⚡</span>
-              Scan Unaudited Leads
-            </>
-          )}
-        </button>
-      </div>
-
-      {/* KPI Stats */}
-      {stats && (
-        <div className="grid grid-cols-4 gap-4 mb-6">
-          <StatCard
-            label="Total Opportunities"
-            value={stats.total_opportunities || 0}
-            icon="🎯"
-            color="primary"
-          />
-          <StatCard
-            label="Critical Urgency"
-            value={stats.by_priority?.CRITICAL || 0}
-            icon="🔴"
-            color="danger"
-          />
-          <StatCard
-            label="High Priority"
-            value={stats.by_priority?.HIGH || 0}
-            icon="🟠"
-            color="warning"
-          />
-          <StatCard
-            label="Avg. Need Score"
-            value={`${stats.average_score || 0}/100`}
-            icon="⭐"
-            color="success"
-          />
+    <div className="page-body space-y-4">
+      {/* ── Header ── */}
+      <div className="flex justify-between items-center pb-3 border-b border-color-border">
+        <div>
+          <h1 className="page-title">Phase 2 — Opportunity Engine</h1>
+          <p className="page-subtitle">Deep technical auditor, 7 agency service divisions, and multi-factor opportunity scoring.</p>
         </div>
-      )}
-
-      {/* Filter Bar */}
-      <div className="card mb-6 flex flex-wrap gap-4 items-center">
-        <div className="form-group flex-1 min-w-[180px]">
-          <label className="form-label text-xs">Service Category</label>
-          <select
-            className="form-input text-sm"
-            value={categoryFilter}
-            onChange={e => {
-              setCategoryFilter(e.target.value)
-              setPage(1)
-            }}
+        <div className="flex gap-2">
+          <button 
+            className="btn btn-secondary btn-sm"
+            onClick={handleBatchAudit}
+            disabled={scanning}
           >
-            <option value="">All Services</option>
-            {Object.entries(SERVICE_META).map(([key, meta]) => (
-              <option key={key} value={key}>
-                {meta.icon} {meta.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="form-group flex-1 min-w-[140px]">
-          <label className="form-label text-xs">Priority</label>
-          <select
-            className="form-input text-sm"
-            value={priorityFilter}
-            onChange={e => {
-              setPriorityFilter(e.target.value)
-              setPage(1)
-            }}
-          >
-            <option value="">All Priorities</option>
-            <option value="CRITICAL">🔴 Critical</option>
-            <option value="HIGH">🟠 High</option>
-            <option value="MEDIUM">🟡 Medium</option>
-            <option value="LOW">⚪ Low</option>
-          </select>
-        </div>
-
-        <div className="form-group flex-1 min-w-[140px]">
-          <label className="form-label text-xs">Stage</label>
-          <select
-            className="form-input text-sm"
-            value={statusFilter}
-            onChange={e => {
-              setStatusFilter(e.target.value)
-              setPage(1)
-            }}
-          >
-            <option value="">All Stages</option>
-            <option value="IDENTIFIED">Identified</option>
-            <option value="EVALUATING">Evaluating</option>
-            <option value="QUALIFIED">Qualified</option>
-            <option value="DISQUALIFIED">Disqualified</option>
-            <option value="CONVERTED">Converted</option>
-          </select>
-        </div>
-
-        <div className="form-group w-32">
-          <label className="form-label text-xs">Country</label>
-          <input
-            type="text"
-            className="form-input text-sm uppercase"
-            placeholder="e.g. GB"
-            maxLength={2}
-            value={countryFilter}
-            onChange={e => {
-              setCountryFilter(e.target.value)
-              setPage(1)
-            }}
-          />
-        </div>
-
-        {(categoryFilter || priorityFilter || statusFilter || countryFilter) && (
-          <button
-            onClick={() => {
-              setCategoryFilter('')
-              setPriorityFilter('')
-              setStatusFilter('')
-              setCountryFilter('')
-              setPage(1)
-            }}
-            className="btn btn-secondary text-xs mt-4"
-          >
-            Clear Filters
+            {scanning ? 'Auditing Batch...' : '▶ Batch Audit DB (30)'}
           </button>
-        )}
+          {onNavigate && (
+            <button 
+              className="btn btn-primary btn-sm"
+              onClick={() => onNavigate('lead-radar')}
+            >
+              Open Lead-Radar Console ⚡
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Opportunities Table */}
+      {/* ── KPI Matrix ── */}
+      <div className="stats-grid">
+        <div className="stat-card accent-primary">
+          <div className="stat-value">{total}</div>
+          <div className="stat-label">Identified Opportunities</div>
+        </div>
+        <div className="stat-card accent-danger">
+          <div className="stat-value font-mono">{criticalCount + highCount}</div>
+          <div className="stat-label">High / Critical Urgency</div>
+        </div>
+        <div className="stat-card accent-success">
+          <div className="stat-value font-mono">${pipelineVal.toLocaleString()}</div>
+          <div className="stat-label">Estimated Deal Pipeline</div>
+        </div>
+        <div className="stat-card accent-secondary">
+          <div className="stat-value font-mono">7 DIVISIONS</div>
+          <div className="stat-label">Agency Capabilities Active</div>
+        </div>
+      </div>
+
+      {/* ── Section: Instant URL Technical Auditor ── */}
       <div className="card">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-base font-semibold text-white">
-            Target Leads ({total})
-          </h3>
-          <span className="text-xs text-text-muted">
-            Page {page} of {pages}
-          </span>
+        <div className="card-header">
+          <span className="card-title">Instant On-Demand URL Auditor</span>
+          <span className="text-xs font-mono text-gray-500">REAL-TIME SSL, CMS, SPEED & WCAG SCANNER</span>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center items-center py-12">
-            <span className="spinner spinner-lg"></span>
-          </div>
-        ) : opportunities.length === 0 ? (
-          <div className="text-center py-12 text-text-muted">
-            <p className="text-4xl mb-2">🔍</p>
-            <p className="text-base font-medium text-white mb-1">
-              No opportunities match current criteria
-            </p>
-            <p className="text-xs">
-              Try importing more businesses or running the automated scanner.
-            </p>
-          </div>
-        ) : (
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Business</th>
-                  <th>Service Opportunity</th>
-                  <th>Urgency Score</th>
-                  <th>Priority</th>
-                  <th>Stage</th>
-                  <th className="text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {opportunities.map(opp => {
-                  const sMeta = SERVICE_META[opp.service_category] || {
-                    icon: '🎯',
-                    label: opp.service_category,
-                    color: 'badge-info',
-                  }
-                  const pMeta = PRIORITY_META[opp.priority] || {
-                    icon: '⚪',
-                    label: opp.priority,
-                    color: 'badge-neutral',
-                  }
+        <form onSubmit={handleRunUrlAudit} className="flex gap-2">
+          <input 
+            type="url" 
+            className="input input-sm flex-1 font-mono"
+            placeholder="https://example-business.com"
+            value={auditUrl}
+            onChange={(e) => setAuditUrl(e.target.value)}
+            required
+          />
+          <button 
+            type="submit" 
+            className="btn btn-primary btn-sm"
+            disabled={auditRunning}
+          >
+            {auditRunning ? 'Auditing Site...' : 'Audit Target URL'}
+          </button>
+        </form>
 
-                  return (
-                    <tr key={opp.id} className="hover:bg-surface-raised transition-colors">
-                      <td>
-                        <div className="font-medium text-white">
-                          {opp.business_name}
-                        </div>
-                        <div className="text-xs text-text-muted flex items-center gap-2 mt-0.5">
-                          {opp.business_country && (
-                            <span className="badge badge-neutral text-2xs uppercase">
-                              {opp.business_country}
-                            </span>
-                          )}
-                          {opp.business_website ? (
-                            <a
-                              href={opp.business_website}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="text-primary hover:underline truncate max-w-[200px]"
-                            >
-                              {opp.business_website.replace(/^https?:\/\//, '')}
-                            </a>
-                          ) : (
-                            <span className="text-accent-red">No Website</span>
-                          )}
-                        </div>
-                      </td>
-
-                      <td>
-                        <span className={`badge ${sMeta.color} inline-flex items-center gap-1.5`}>
-                          <span>{sMeta.icon}</span>
-                          <span>{sMeta.label}</span>
-                        </span>
-                        <div className="text-xs text-text-muted line-clamp-1 mt-1 max-w-xs">
-                          {opp.title}
-                        </div>
-                      </td>
-
-                      <td className="w-36">
-                        <div className="flex items-center justify-between text-xs font-semibold mb-1">
-                          <span
-                            className={
-                              opp.score >= 80
-                                ? 'text-accent-red font-bold'
-                                : opp.score >= 65
-                                ? 'text-accent-amber'
-                                : 'text-primary'
-                            }
-                          >
-                            {opp.score}/100
-                          </span>
-                        </div>
-                        <div className="w-full bg-surface-overlay rounded-full h-1.5 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${
-                              opp.score >= 80
-                                ? 'bg-accent-red'
-                                : opp.score >= 65
-                                ? 'bg-accent-amber'
-                                : 'bg-primary'
-                            }`}
-                            style={{ width: `${Math.min(opp.score, 100)}%` }}
-                          />
-                        </div>
-                      </td>
-
-                      <td>
-                        <span className={`badge ${pMeta.color} inline-flex items-center gap-1`}>
-                          <span>{pMeta.icon}</span>
-                          <span>{pMeta.label}</span>
-                        </span>
-                      </td>
-
-                      <td>
-                        <select
-                          className="form-input text-xs py-1 px-2 w-28 bg-surface-overlay"
-                          value={opp.status}
-                          onChange={e => handleUpdateStatus(opp.id, e.target.value)}
-                        >
-                          <option value="IDENTIFIED">Identified</option>
-                          <option value="EVALUATING">Evaluating</option>
-                          <option value="QUALIFIED">Qualified</option>
-                          <option value="DISQUALIFIED">Disqualified</option>
-                          <option value="CONVERTED">Converted</option>
-                        </select>
-                      </td>
-
-                      <td className="text-right">
-                        <button
-                          onClick={() => handleViewEvidence(opp)}
-                          className="btn btn-secondary text-xs px-2.5 py-1"
-                        >
-                          Pitch & Evidence ↗
-                        </button>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+        {auditError && (
+          <div className="alert alert-danger mt-3 text-xs">
+            Audit Failed: {auditError}
           </div>
         )}
 
-        {/* Pagination */}
-        {pages > 1 && (
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-            <button
-              onClick={() => setPage(p => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className="btn btn-secondary text-xs"
-            >
-              Previous
-            </button>
-            <span className="text-xs text-text-muted">
-              Page {page} of {pages}
-            </span>
-            <button
-              onClick={() => setPage(p => Math.min(pages, p + 1))}
-              disabled={page === pages}
-              className="btn btn-secondary text-xs"
-            >
-              Next
-            </button>
+        {auditResult && (
+          <div className="mt-3 p-3 border rounded bg-base-200 space-y-3">
+            <div className="flex justify-between items-center text-xs">
+              <span className="font-bold text-primary font-mono">{auditResult.url_analyzed}</span>
+              <span className="badge badge-success font-mono">HTTP {auditResult.audit?.http_status || 200}</span>
+            </div>
+
+            {/* Technical Matrix Breakdown */}
+            <div className="grid grid-cols-4 gap-2 text-xs">
+              <div className="p-2 border rounded bg-base-100">
+                <span className="text-gray-500 block font-semibold text-[10px] uppercase">SSL Certificate</span>
+                <span className={`font-mono font-bold ${auditResult.audit?.has_ssl ? 'text-success' : 'text-error'}`}>
+                  {auditResult.audit?.has_ssl ? 'VALID SSL' : 'NO SSL / BROKEN'}
+                </span>
+              </div>
+              <div className="p-2 border rounded bg-base-100">
+                <span className="text-gray-500 block font-semibold text-[10px] uppercase">Mobile Viewport</span>
+                <span className={`font-mono font-bold ${auditResult.audit?.is_mobile_responsive ? 'text-success' : 'text-error'}`}>
+                  {auditResult.audit?.is_mobile_responsive ? 'RESPONSIVE' : 'NO VIEWPORT'}
+                </span>
+              </div>
+              <div className="p-2 border rounded bg-base-100">
+                <span className="text-gray-500 block font-semibold text-[10px] uppercase">Load Time</span>
+                <span className="font-mono font-bold">
+                  {auditResult.audit?.load_time_seconds ? `${auditResult.audit.load_time_seconds.toFixed(2)}s` : '—'}
+                </span>
+              </div>
+              <div className="p-2 border rounded bg-base-100">
+                <span className="text-gray-500 block font-semibold text-[10px] uppercase">Detected CMS</span>
+                <span className="font-mono font-bold text-primary">
+                  {auditResult.audit?.detected_cms || 'Custom / None'}
+                </span>
+              </div>
+            </div>
+
+            {/* Detected Agency Opportunities */}
+            {auditResult.detected_opportunities && auditResult.detected_opportunities.length > 0 && (
+              <div className="pt-2 border-t border-color-border">
+                <div className="font-bold text-xs mb-2">Detected Agency Service Divisions ({auditResult.detected_opportunities.length}):</div>
+                <div className="space-y-2">
+                  {auditResult.detected_opportunities.map((opp, idx) => (
+                    <div key={idx} className="p-2 border rounded bg-base-100 flex justify-between items-center text-xs">
+                      <div>
+                        <span className="font-bold text-primary font-mono mr-2">[{opp.service_category}]</span>
+                        <span className="opacity-90">{opp.pitch_angles?.[0] || 'Modernization required.'}</span>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <span className="badge badge-warning font-mono">{opp.priority}</span>
+                        <span className="font-mono font-bold text-success">${opp.estimated_value_min?.toLocaleString()} - ${opp.estimated_value_max?.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
 
-      {/* Intelligence & Pitch Evidence Modal */}
-      {selectedOpp && (
-        <div className="modal-backdrop" onClick={() => setSelectedOpp(null)}>
-          <div
-            className="modal-card max-w-2xl w-full p-6"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between border-b border-border pb-4 mb-4">
-              <div>
-                <span className="badge badge-purple text-2xs uppercase mb-1">
-                  Sales Intelligence
-                </span>
-                <h3 className="text-lg font-bold text-white">
-                  {selectedOpp.title}
-                </h3>
-                <p className="text-xs text-text-muted mt-0.5">
-                  Business: <strong className="text-white">{selectedOpp.business_name}</strong>{' '}
-                  ({selectedOpp.business_country || 'Global'})
-                </p>
-              </div>
-              <button
-                onClick={() => setSelectedOpp(null)}
-                className="text-text-muted hover:text-white text-lg p-1"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Summary */}
-            <div className="p-3 bg-surface-raised rounded-lg border border-border mb-4 text-xs text-text-muted leading-relaxed">
-              <strong className="text-white block mb-1">Diagnosis:</strong>
-              {selectedOpp.summary}
-            </div>
-
-            {/* Score Breakdown */}
-            {selectedOpp.evidence?.score_breakdown && (
-              <div className="mb-4">
-                <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
-                  Multi-Factor Score Composition ({selectedOpp.score}/100)
-                </h4>
-                <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                  <div className="p-2 bg-surface-overlay rounded border border-border">
-                    <div className="text-text-muted text-2xs">Need Severity</div>
-                    <div className="font-bold text-accent-red mt-0.5">
-                      {selectedOpp.evidence.score_breakdown.need_severity}/40
-                    </div>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded border border-border">
-                    <div className="text-text-muted text-2xs">Agency Fit</div>
-                    <div className="font-bold text-primary mt-0.5">
-                      {selectedOpp.evidence.score_breakdown.service_fit}/25
-                    </div>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded border border-border">
-                    <div className="text-text-muted text-2xs">Category Tier</div>
-                    <div className="font-bold text-accent-amber mt-0.5">
-                      {selectedOpp.evidence.score_breakdown.market_viability}/20
-                    </div>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded border border-border">
-                    <div className="text-text-muted text-2xs">Reachability</div>
-                    <div className="font-bold text-accent-green mt-0.5">
-                      {selectedOpp.evidence.score_breakdown.contactability}/15
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Pitch Angles */}
-            {selectedOpp.pitch_angles?.angles && (
-              <div className="mb-4">
-                <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
-                  Agency Talking Points & Value Proposition
-                </h4>
-                <ul className="space-y-1.5 text-xs text-text">
-                  {selectedOpp.pitch_angles.angles.map((angle, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-primary font-bold">✓</span>
-                      <span>{angle}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Technical Audit Findings if available */}
-            {auditDetails && (
-              <div className="mb-4 pt-3 border-t border-border">
-                <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
-                  Technical Audit Metrics
-                </h4>
-                <div className="grid grid-cols-3 gap-2 text-xs">
-                  <div className="p-2 bg-surface-overlay rounded">
-                    <span className="text-text-muted text-2xs block">Mobile Viewport</span>
-                    <span className={auditDetails.is_mobile_responsive ? 'text-accent-green' : 'text-accent-red font-bold'}>
-                      {auditDetails.is_mobile_responsive ? '✅ Responsive' : '❌ Non-Responsive'}
-                    </span>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded">
-                    <span className="text-text-muted text-2xs block">SSL Security</span>
-                    <span className={auditDetails.has_ssl ? 'text-accent-green' : 'text-accent-red font-bold'}>
-                      {auditDetails.has_ssl ? '✅ HTTPS' : '❌ Insecure HTTP'}
-                    </span>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded">
-                    <span className="text-text-muted text-2xs block">CMS / Platform</span>
-                    <span className="text-white font-medium">
-                      {auditDetails.detected_cms || 'Custom/Unknown'}
-                    </span>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded">
-                    <span className="text-text-muted text-2xs block">E-Commerce</span>
-                    <span>{auditDetails.has_ecommerce ? '✅ Present' : '❌ None'}</span>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded">
-                    <span className="text-text-muted text-2xs block">Online Booking</span>
-                    <span>{auditDetails.has_online_booking ? '✅ Present' : '❌ None'}</span>
-                  </div>
-                  <div className="p-2 bg-surface-overlay rounded">
-                    <span className="text-text-muted text-2xs block">Page Load</span>
-                    <span>{auditDetails.load_time_seconds ? `${auditDetails.load_time_seconds}s` : 'N/A'}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between pt-4 border-t border-border mt-6">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-text-muted">Set Stage:</span>
-                <button
-                  onClick={() => handleUpdateStatus(selectedOpp.id, 'QUALIFIED')}
-                  className={`btn text-xs py-1 px-3 ${
-                    selectedOpp.status === 'QUALIFIED' ? 'btn-primary' : 'btn-secondary'
-                  }`}
-                >
-                  Mark Qualified
-                </button>
-                <button
-                  onClick={() => handleUpdateStatus(selectedOpp.id, 'DISQUALIFIED')}
-                  className={`btn text-xs py-1 px-3 ${
-                    selectedOpp.status === 'DISQUALIFIED' ? 'btn-danger' : 'btn-secondary'
-                  }`}
-                >
-                  Disqualify
-                </button>
-              </div>
-              <button
-                onClick={() => setSelectedOpp(null)}
-                className="btn btn-secondary text-xs"
-              >
-                Close
-              </button>
-            </div>
+      {/* ── Filters Matrix Bar ── */}
+      <div className="card p-3">
+        <div className="grid grid-cols-4 gap-3 items-center">
+          <div>
+            <label>Service Division</label>
+            <select 
+              className="input input-sm w-full"
+              value={categoryFilter}
+              onChange={(e) => { setCategoryFilter(e.target.value); setPage(1); }}
+            >
+              <option value="">All 7 Service Divisions</option>
+              {SERVICE_DIVISIONS.map(s => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
           </div>
+          <div>
+            <label>Priority / Urgency</label>
+            <select 
+              className="input input-sm w-full"
+              value={priorityFilter}
+              onChange={(e) => { setPriorityFilter(e.target.value); setPage(1); }}
+            >
+              <option value="">All Priorities</option>
+              <option value="CRITICAL">Critical</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+            </select>
+          </div>
+          <div>
+            <label>Country</label>
+            <input 
+              type="text" 
+              className="input input-sm w-full uppercase font-mono"
+              placeholder="e.g. IN, US, GB"
+              value={countryFilter}
+              onChange={(e) => { setCountryFilter(e.target.value); setPage(1); }}
+            />
+          </div>
+          <div className="flex justify-end pt-3">
+            <button 
+              className="btn btn-outline btn-sm"
+              onClick={() => { setCategoryFilter(''); setPriorityFilter(''); setCountryFilter(''); setPage(1); }}
+            >
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Opportunity Matrix Table ── */}
+      <div className="card">
+        <div className="card-header">
+          <span className="card-title">Commercial Opportunity Matrix</span>
+          <span className="text-xs font-mono text-gray-500">{total} opportunities detected</span>
+        </div>
+
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Business Name</th>
+                <th>Service Division</th>
+                <th>Priority</th>
+                <th>Est. Deal Value</th>
+                <th>Score</th>
+                <th>Pitch Angle</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading && opportunities.length === 0 ? (
+                <tr>
+                  <td colSpan="8" className="text-center py-6 text-gray-500">Loading opportunity matrix...</td>
+                </tr>
+              ) : opportunities.length === 0 ? (
+                <tr>
+                  <td colSpan="8" className="text-center py-6 text-gray-500">
+                    No opportunities match active filter. Run a batch audit above or extract businesses in Phase 1.
+                  </td>
+                </tr>
+              ) : (
+                opportunities.map((opp) => (
+                  <tr key={opp.id}>
+                    <td className="font-mono text-xs text-gray-500">#{opp.id}</td>
+                    <td className="font-bold text-xs">
+                      {opp.business_name || `Business #${opp.business_id}`}
+                      {opp.website_url && (
+                        <span className="block text-[11px] font-mono text-gray-500 truncate max-w-xs">
+                          {opp.website_url}
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      <span className="badge badge-primary font-mono text-xs">
+                        {opp.service_category.replace(/_/g, ' ')}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`badge ${
+                        opp.priority === 'CRITICAL' ? 'badge-danger' :
+                        opp.priority === 'HIGH' ? 'badge-warning' :
+                        'badge-secondary'
+                      }`}>
+                        {opp.priority}
+                      </span>
+                    </td>
+                    <td className="font-mono text-xs font-bold text-success">
+                      {opp.estimated_value_min ? (
+                        `$${opp.estimated_value_min.toLocaleString()} - $${opp.estimated_value_max.toLocaleString()}`
+                      ) : '—'}
+                    </td>
+                    <td className="font-mono text-xs font-bold">
+                      {opp.priority_score ? Math.round(opp.priority_score) : '—'}
+                    </td>
+                    <td className="text-xs max-w-xs truncate" title={opp.pitch_angles?.[0] || 'Technical modernization'}>
+                      {opp.pitch_angles?.[0] || 'Technical modernization'}
+                    </td>
+                    <td>
+                      <button 
+                        className="btn btn-outline btn-sm font-mono text-xs"
+                        onClick={() => handleOpenAuditInspector(opp)}
+                      >
+                        Inspect Audit Matrix
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* ── Modal / Inspector Drawer ── */}
+      {selectedAuditOpp && (
+        <div className="card mt-4 border-primary">
+          <div className="card-header">
+            <div>
+              <span className="card-title">Technical Audit Matrix: {selectedAuditOpp.business_name}</span>
+              <span className="text-xs block text-gray-500 font-mono">Opportunity #{selectedAuditOpp.id} • {selectedAuditOpp.service_category}</span>
+            </div>
+            <button className="btn btn-sm btn-outline" onClick={() => setSelectedAuditOpp(null)}>Close</button>
+          </div>
+
+          {loadingModalAudit ? (
+            <div className="p-4 text-center text-xs text-gray-500">Loading stored technical audit...</div>
+          ) : auditModalData ? (
+            <div className="space-y-3 text-xs">
+              <div className="grid grid-cols-4 gap-2">
+                <div className="p-2 border rounded bg-base-200">
+                  <div className="text-gray-500 font-semibold text-[10px]">HTTP Status</div>
+                  <div className="font-mono font-bold mt-1">HTTP {auditModalData.http_status}</div>
+                </div>
+                <div className="p-2 border rounded bg-base-200">
+                  <div className="text-gray-500 font-semibold text-[10px]">SSL Certificate</div>
+                  <div className={`font-mono font-bold mt-1 ${auditModalData.has_ssl ? 'text-success' : 'text-error'}`}>
+                    {auditModalData.has_ssl ? 'VALID SSL' : 'NO SSL / BROKEN'}
+                  </div>
+                </div>
+                <div className="p-2 border rounded bg-base-200">
+                  <div className="text-gray-500 font-semibold text-[10px]">Responsive Viewport</div>
+                  <div className={`font-mono font-bold mt-1 ${auditModalData.is_mobile_responsive ? 'text-success' : 'text-error'}`}>
+                    {auditModalData.is_mobile_responsive ? 'RESPONSIVE' : 'NON-RESPONSIVE'}
+                  </div>
+                </div>
+                <div className="p-2 border rounded bg-base-200">
+                  <div className="text-gray-500 font-semibold text-[10px]">Load Speed</div>
+                  <div className="font-mono font-bold mt-1">
+                    {auditModalData.load_time_seconds ? `${auditModalData.load_time_seconds.toFixed(2)}s` : '—'}
+                  </div>
+                </div>
+              </div>
+
+              {selectedAuditOpp.pitch_angles && selectedAuditOpp.pitch_angles.length > 0 && (
+                <div className="p-3 border rounded bg-base-100">
+                  <div className="font-bold text-gray-500 uppercase text-[10px] mb-1">Tailored Sales Pitch Angles</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    {selectedAuditOpp.pitch_angles.map((p, i) => (
+                      <li key={i}>{p}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="p-4 text-center text-xs text-gray-500">
+              No full technical audit crawl stored for this opportunity. Use "Instant On-Demand URL Auditor" above to inspect live.
+            </div>
+          )}
         </div>
       )}
     </div>

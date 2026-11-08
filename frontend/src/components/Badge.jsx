@@ -4,7 +4,7 @@
 
 const STATUS_MAP = {
   // Business status
-  DISCOVERED: { label: 'Discovered', variant: 'info' },
+  DISCOVERED: { label: 'Discovered', variant: 'secondary' },
   ACTIVE: { label: 'Active', variant: 'success' },
   INACTIVE: { label: 'Inactive', variant: 'secondary' },
   DUPLICATE: { label: 'Duplicate', variant: 'warning' },
@@ -21,7 +21,7 @@ const STATUS_MAP = {
 
   // Job status
   PENDING: { label: 'Pending', variant: 'secondary' },
-  RUNNING: { label: 'Running', variant: 'info' },
+  RUNNING: { label: 'Running', variant: 'warning' },
   COMPLETED: { label: 'Completed', variant: 'success' },
   FAILED: { label: 'Failed', variant: 'danger' },
   CANCELLED: { label: 'Cancelled', variant: 'secondary' },
@@ -29,14 +29,17 @@ const STATUS_MAP = {
 
   // License
   OPEN_LICENSE: { label: 'Open License', variant: 'success' },
-  LICENSED_COMMERCIAL: { label: 'Commercial', variant: 'info' },
+  LICENSED_COMMERCIAL: { label: 'Commercial', variant: 'secondary' },
   API_RESTRICTED: { label: 'API Restricted', variant: 'warning' },
   MANUAL_OR_OPT_IN: { label: 'Manual/Opt-in', variant: 'secondary' },
 }
 
 export default function Badge({ status, label, variant }) {
   const mapped = STATUS_MAP[status] || {}
-  const finalVariant = variant || mapped.variant || 'secondary'
+  let finalVariant = variant || mapped.variant || 'secondary'
+  if (finalVariant === 'info' || finalVariant === 'purple') {
+    finalVariant = 'secondary'
+  }
   const finalLabel = label || mapped.label || status || '—'
 
   return (

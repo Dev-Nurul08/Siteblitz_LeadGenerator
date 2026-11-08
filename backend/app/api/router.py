@@ -11,6 +11,7 @@ from backend.app.api.v1.opportunities import router as opportunities_router
 from backend.app.api.v1.contacts import router as contacts_router
 from backend.app.api.v1.qualification import router as qualification_router
 from backend.app.api.v1.campaigns import router as campaigns_router
+from backend.app.api.v1.lead_radar import router as lead_radar_router
 
 api_v1_router = APIRouter(prefix="/api/v1")
 
@@ -21,3 +22,4 @@ api_v1_router.include_router(opportunities_router)
 api_v1_router.include_router(contacts_router)
 api_v1_router.include_router(qualification_router)
 api_v1_router.include_router(campaigns_router)
+api_v1_router.include_router(lead_radar_router)

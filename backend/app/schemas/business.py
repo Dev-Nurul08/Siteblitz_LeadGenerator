@@ -127,6 +127,9 @@ class DiscoveryStatusResponse(BaseModel):
     job_id: int
     source_name: str
     status: str
+    city: Optional[str] = None
+    country_code: Optional[str] = None
+    category: Optional[str] = None
     records_found: int
     records_new: int
     records_duplicate: int

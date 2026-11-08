@@ -7,6 +7,7 @@ import OpportunitiesPage from './pages/OpportunitiesPage'
 import ContactsPage from './pages/ContactsPage'
 import QualificationPage from './pages/QualificationPage'
 import CampaignsPage from './pages/CampaignsPage'
+import LeadRadarPage from './pages/LeadRadarPage'
 import Sidebar from './components/Sidebar'
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard': return <Dashboard onNavigate={setCurrentPage} />
+      case 'lead-radar': return <LeadRadarPage onNavigate={setCurrentPage} />
       case 'businesses': return <BusinessesPage onNavigate={setCurrentPage} />
       case 'discovery': return <DiscoveryPage onNavigate={setCurrentPage} />
       case 'sources': return <SourcesPage onNavigate={setCurrentPage} />

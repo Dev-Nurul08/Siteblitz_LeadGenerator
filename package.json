@@ -1,0 +1,11 @@
+{
+  "name": "siteblitz-lead-generator",
+  "version": "1.0.0",
+  "description": "SiteBlitz Lead Intelligence OS",
+  "scripts": {
+    "start": "python run_all.py",
+    "dev": "python run_all.py",
+    "test": "pytest backend/tests"
+  }
+}
+
