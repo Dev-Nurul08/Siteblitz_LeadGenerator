@@ -30,6 +30,17 @@ from backend.app.models.intelligence import CheckType
 CCTLDS = {"IN": [".in", ".co.in"], "GB": [".co.uk", ".uk"], "AU": [".com.au"], "NZ": [".co.nz"]}
 LINK_IN_BIO_PLATFORMS = {"linktree"}
 LINK_IN_BIO_HOSTS = ("linktr.ee", "bio.link", "beacons.ai")
+# Links that point at a listing of the business, not a website it owns (Google short links /
+# Maps / retired business.site pages, and directories). Recorded, never counted as "own website".
+LISTING_HOSTS = ("g.co", "goo.gl", "google.com", "business.site", "justdial.com", "practo.com",
+                 "zomato.com", "swiggy.com", "sulekha.com", "indiamart.com", "tripadvisor.com")
+
+
+def is_listing(url: Optional[str]) -> bool:
+    host = (urlparse(url if url and "://" in url else f"https://{url or ''}").hostname or "").lower()
+    return any(host == h or host.endswith("." + h) for h in LISTING_HOSTS)
+
+
 PARKED_TOKENS = ("domain parked", "buy this domain", "this domain is for sale", "coming soon",
                  "under construction", "website in development", "parked free")
 
@@ -59,7 +70,8 @@ def source_checks(raw_records: list[dict], website_url: Optional[str],
                     detail={"reason": skip} if skip else {})]
     links = website_links(raw_records, website_url)
     if links:
-        checks += [Check(None, CheckType.SOURCE_TAG, "found", target=link) for link in links]
+        checks += [Check(None, CheckType.SOURCE_TAG, "listing" if is_listing(link) else "found",
+                         target=link) for link in links]
     else:
         checks.append(Check(None, CheckType.SOURCE_TAG, "none",
                             detail={"note": "No website field in any source record"}))
@@ -142,6 +154,8 @@ async def site_fetch_check(url: str, resolver: WebsiteResolver) -> Check:
         return Check(None, CheckType.SITE_FETCH, "blocked", target=url, detail=detail)
     if result.final_url and social_platform(result.final_url):
         return Check(None, CheckType.SITE_FETCH, "social", target=url, detail=detail)
+    if result.final_url and is_listing(result.final_url):
+        return Check(None, CheckType.SITE_FETCH, "listing", target=url, detail=detail)
     status = result.http_status
     if status in (401, 403, 429):
         return Check(None, CheckType.SITE_FETCH, "protected", target=url, detail=detail)

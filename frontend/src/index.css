@@ -131,6 +131,8 @@ h3 { font-size: 16px; line-height: 24px; font-weight: 500; margin: 0; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: var(--s5); }
 .panel-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
 .grid-find { display: grid; grid-template-columns: 400px 1fr; gap: var(--s5); align-items: start; }
+/* The map stays in view while the form and the live status scroll. */
+.grid-find > :last-child { position: sticky; top: calc(var(--header) + var(--s4)); }
 .stack { display: flex; flex-direction: column; gap: var(--s5); }
 .row { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
 .label { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--ink-3); }
@@ -296,6 +298,7 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 @media (max-width: 1023px) {
   :root { --gutter: 24px; }
   .grid-find, .outreach-grid, .draft-grid { grid-template-columns: 1fr; }
+  .grid-find > :last-child { position: static; }
   .scrim { display: block; }
 }
 @media (max-width: 767px) {

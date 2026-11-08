@@ -105,3 +105,14 @@ def test_own_site_without_viewport_scores_redesign_gap():
               Check(2, T.SITE_FETCH, "ok", "http://x.in", {"has_viewport": False, "has_ssl": False})]
     a = assess(checks, facts(), NOW)
     assert a.breakdown["website_gap"] == 35
+
+
+def test_google_short_link_and_directory_are_listings_not_websites():
+    from backend.app.engines.intelligence.checks import is_listing, source_checks
+    assert is_listing("https://g.co/kgs/Yxpf3j") and is_listing("https://www.justdial.com/Udaipur/x")
+    assert is_listing("https://smile.business.site") and not is_listing("https://smiledental.in")
+    checks = source_checks([], "https://g.co/kgs/Yxpf3j", {}, None)
+    tag = [c for c in checks if c.type == T.SOURCE_TAG][0]
+    assert tag.outcome == "listing"
+    a = assess(no_site_checks(Check(5, T.SOURCE_TAG, "listing", "https://www.practo.com/udaipur/x")), facts(phone=None), NOW)
+    assert a.verdict == V.NO_SITE_VERIFIED and a.breakdown["business_problem"] == 8

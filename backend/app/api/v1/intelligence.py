@@ -81,10 +81,8 @@ async def assess_batch(
     if only_unassessed:
         stmt = stmt.where(Business.id.notin_(select(LeadAssessment.business_id)))
     ids = (await session.execute(stmt.order_by(Business.id).limit(limit))).scalars().all()
-    service = IntelligenceService(session)
     tiers: dict[str, int] = {}
-    for business_id in ids:
-        detail = await service.assess_business(business_id, include_franchises)
+    for detail in await IntelligenceService(session).assess_many(list(ids), include_franchises):
         tier = (detail.get("assessment") or {}).get("tier", "ERROR")
         tiers[tier] = tiers.get(tier, 0) + 1
     remaining_stmt = select(func.count(Business.id)).where(

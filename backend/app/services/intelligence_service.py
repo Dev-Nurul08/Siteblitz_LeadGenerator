@@ -5,6 +5,7 @@ assess()      network checks (source tags, socials, link-in-bio, site fetch, dom
 recompute()   verdict + score from stored checks only (after a manual search / activity / label)
 """
 
+import asyncio
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -105,32 +106,63 @@ class IntelligenceService:
 
     # ─── public API ──────────────────────────────────────────────────────
 
-    async def assess_business(self, business_id: int, include_franchises: bool = False) -> dict:
+    async def _prepare(self, business_id: int, include_franchises: bool) -> Optional[dict]:
+        """Database reads for one assessment (must run sequentially on the shared session)."""
         business = await self._business(business_id)
         if not business:
-            return {"error": f"Business {business_id} not found"}
+            return None
         raw = await self._raw_records(business_id)
-        suppressed = await self._suppressed(business)
-        facts = self._facts(business, raw, include_franchises, suppressed)
-        skip = skip_reason(facts)
-        city = business.locations[0].city if business.locations else None
-
-        new = net.source_checks(raw, business.website_url, business.social_urls or {}, skip)
+        facts = self._facts(business, raw, include_franchises, await self._suppressed(business))
         await self._sync_socials(business)
-        if not skip:
-            bio_checks, bio_links = await net.link_in_bio_checks(business.social_urls or {})
-            new += bio_checks
-            links = net.website_links(raw, business.website_url) + bio_links
-            site_ok = False
-            for url in list(dict.fromkeys(links))[:3]:
-                fetch = await net.site_fetch_check(url, self.resolver)
-                new.append(fetch)
-                site_ok = site_ok or fetch.outcome in ("ok", "protected")
-            if not site_ok:
-                new += await net.domain_guess_checks(business.name, business.country_code, city,
-                                                     business.phone, self.resolver)
-        await self._store(business_id, new)
+        return {
+            "id": business_id, "raw": raw, "skip": skip_reason(facts), "name": business.name,
+            "website_url": business.website_url, "social_urls": dict(business.social_urls or {}),
+            "country": business.country_code, "phone": business.phone,
+            "city": business.locations[0].city if business.locations else None,
+        }
+
+    async def _network_checks(self, prep: dict) -> list[Check]:
+        """All network observations for one business — no database access, so many can run at once."""
+        new = net.source_checks(prep["raw"], prep["website_url"], prep["social_urls"], prep["skip"])
+        if prep["skip"]:
+            return new
+        bio_checks, bio_links = await net.link_in_bio_checks(prep["social_urls"])
+        new += bio_checks
+        links = net.website_links(prep["raw"], prep["website_url"]) + bio_links
+        site_ok = False
+        own = [u for u in dict.fromkeys(links) if not net.is_listing(u)]  # listings are not fetched
+        for url in own[:3]:
+            fetch = await net.site_fetch_check(url, self.resolver)
+            new.append(fetch)
+            site_ok = site_ok or fetch.outcome in ("ok", "protected")
+        if not site_ok:
+            new += await net.domain_guess_checks(prep["name"], prep["country"], prep["city"],
+                                                 prep["phone"], self.resolver)
+        return new
+
+    async def assess_business(self, business_id: int, include_franchises: bool = False) -> dict:
+        prep = await self._prepare(business_id, include_franchises)
+        if not prep:
+            return {"error": f"Business {business_id} not found"}
+        await self._store(business_id, await self._network_checks(prep))
         return await self.recompute(business_id, include_franchises=include_franchises)
+
+    async def assess_many(self, business_ids: list[int], include_franchises: bool = False) -> list[dict]:
+        """
+        Batch: DB reads in order, then every business's network checks concurrently (a batch is at
+        most 100 businesses — the API limit), then results stored in order. Sequential checks took
+        minutes per batch because each website fetch may wait up to 12 s.
+        """
+        preps = [p for p in [await self._prepare(i, include_franchises) for i in business_ids] if p]
+        results = await asyncio.gather(*(self._network_checks(p) for p in preps), return_exceptions=True)
+        details = []
+        for prep, checks in zip(preps, results):
+            if isinstance(checks, Exception):
+                logger.warning("assessment_failed", business_id=prep["id"], error=str(checks))
+                checks = [Check(None, CheckType.SITE_FETCH, "error", detail={"error": str(checks)[:300]})]
+            await self._store(prep["id"], checks)
+            details.append(await self.recompute(prep["id"], include_franchises=include_franchises))
+        return details
 
     async def _sync_socials(self, business: Business) -> None:
         existing = {(s.platform, s.url) for s in (await self.session.execute(

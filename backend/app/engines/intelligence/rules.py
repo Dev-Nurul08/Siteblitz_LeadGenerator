@@ -183,7 +183,7 @@ def _problem_points(verdict: WebsiteVerdict, facts: Facts, checks: list[Check]) 
     """Spec row 11 — strongest single observed signal, never the category alone."""
     if verdict == WebsiteVerdict.OWN_SITE_VERIFIED:
         return 0, ""
-    links = [c.target or "" for c in checks if c.type == CheckType.SOURCE_TAG and c.outcome == "found"]
+    links = [c.target or "" for c in checks if c.type == CheckType.SOURCE_TAG and c.outcome in ("found", "listing")]
     if verdict == WebsiteVerdict.SOCIAL_ONLY_VERIFIED and not facts.phone and not facts.email:
         return 10, "Customers can reach it only by social DM / WhatsApp"
     if any(host in link.lower() for link in links for host in AGGREGATOR_HOSTS):
