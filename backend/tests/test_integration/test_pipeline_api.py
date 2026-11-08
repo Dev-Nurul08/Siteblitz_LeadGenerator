@@ -256,3 +256,35 @@ def test_csv_import_keeps_more_than_500_rows(client):
 ])
 def test_other_endpoints_reject_bad_input(client, method, url, kwargs):
     assert getattr(client, method)(url, **kwargs).status_code == 422
+
+
+# ─── Export CSV / PDF ───────────────────────────────────────────────────────────────────
+
+
+def test_export_csv_has_all_rows_and_neutralises_formulas(client):
+    _import(client, "a.csv", CSV_A + '"=HYPERLINK(""http://evil"")",Austin,US,,,,bakery\n')
+    response = client.get("/api/v1/businesses/export", params={"format": "csv"})
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/csv")
+    assert "attachment;" in response.headers["content-disposition"]
+    text = response.content.decode("utf-8-sig")
+    lines = text.strip().splitlines()
+    assert lines[0].startswith("id,name,category")
+    assert len(lines) == 1 + 3
+    assert "'=HYPERLINK" in text           # formula neutralised
+    assert "'+15125550101" in text         # phone kept as text, not a number/formula
+
+
+def test_export_pdf_and_job_filter(client):
+    first = _import(client, "a.csv", CSV_A)
+    _import(client, "b.csv", CSV_B)
+    by_job = client.get("/api/v1/businesses", params={"job_id": first["job_id"]}).json()
+    assert {b["name"] for b in by_job["items"]} == {"Shah Dental Care", "Lakeview Bakery"}
+
+    pdf = client.get("/api/v1/businesses/export", params={"format": "pdf", "job_id": first["job_id"]})
+    assert pdf.status_code == 200
+    assert pdf.headers["content-type"] == "application/pdf"
+    assert pdf.content.startswith(b"%PDF")
+    assert f"-job{first['job_id']}-" in pdf.headers["content-disposition"]
+
+    assert client.get("/api/v1/businesses/export", params={"format": "xlsx"}).status_code == 422

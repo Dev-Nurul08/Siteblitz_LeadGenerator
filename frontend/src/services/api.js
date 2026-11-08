@@ -50,6 +50,14 @@ export const api = {
       body: JSON.stringify(data),
     }),
     stats: async () => request('/api/v1/businesses/stats/overview'),
+    // Download link for CSV (all columns) or PDF (summary table) of the businesses matching params.
+    exportUrl: (params = {}, format = 'csv') => {
+      const query = new URLSearchParams({ format })
+      for (const [key, val] of Object.entries(params)) {
+        if (val !== undefined && val !== null && val !== '') query.append(key, val)
+      }
+      return `/api/v1/businesses/export?${query.toString()}`
+    },
   },
 
   sources: {

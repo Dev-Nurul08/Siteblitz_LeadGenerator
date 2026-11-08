@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader'
 import Badge from '../components/Badge'
 import api from '../services/api'
 
-export default function DiscoveryPage() {
+export default function DiscoveryPage({ onNavigate }) {
   const [jobs, setJobs] = useState([])
   const [loadingJobs, setLoadingJobs] = useState(true)
   const [running, setRunning] = useState(false)
@@ -373,6 +373,11 @@ export default function DiscoveryPage() {
                         {job.error_message}
                       </div>
                     )}
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                      <button className="btn btn-ghost btn-sm" onClick={() => { sessionStorage.setItem('sb.jobFilter', String(job.job_id)); onNavigate && onNavigate('businesses') }}>View businesses</button>
+                      <a className="btn btn-ghost btn-sm" href={api.businesses.exportUrl({ job_id: job.job_id }, 'csv')} download>Export CSV</a>
+                      <a className="btn btn-ghost btn-sm" href={api.businesses.exportUrl({ job_id: job.job_id }, 'pdf')} download>Export PDF</a>
+                    </div>
                     {job.started_at && (
                       <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '4px' }}>
                         {new Date(job.started_at).toLocaleString()}

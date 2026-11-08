@@ -4,6 +4,8 @@ import Badge from '../components/Badge'
 import api from '../services/api'
 
 export default function BusinessesPage() {
+  // A Discovery job card can open this page filtered to that job (see DiscoveryPage).
+  const [jobId, setJobId] = useState(() => sessionStorage.getItem('sb.jobFilter') || '')
   const [businesses, setBusinesses] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -19,6 +21,12 @@ export default function BusinessesPage() {
     category: '',
     search: '',
   })
+  const activeFilters = { ...Object.fromEntries(Object.entries(filters).filter(([, v]) => v)), ...(jobId ? { job_id: jobId } : {}) }
+
+  function clearJobFilter() {
+    sessionStorage.removeItem('sb.jobFilter')
+    setJobId('')
+  }
   const [auditLoading, setAuditLoading] = useState(false)
   const [auditResult, setAuditResult] = useState(null)
 
@@ -32,7 +40,7 @@ export default function BusinessesPage() {
 
   useEffect(() => {
     loadBusinesses()
-  }, [page, filters])
+  }, [page, filters, jobId])
 
   async function loadBusinesses() {
     setLoading(true)
@@ -40,7 +48,7 @@ export default function BusinessesPage() {
       const data = await api.businesses.list({
         page,
         page_size: 25,
-        ...Object.fromEntries(Object.entries(filters).filter(([, v]) => v)),
+        ...activeFilters,
       })
       setBusinesses(data.items || [])
       setTotal(data.total || 0)
@@ -68,9 +76,14 @@ export default function BusinessesPage() {
     <>
       <PageHeader
         title="Businesses"
-        subtitle={`${total.toLocaleString()} discovered businesses`}
+        subtitle={`${total.toLocaleString()} discovered businesses${jobId ? ` · found by job #${jobId}` : ''}`}
         actions={
-          <button className="btn btn-ghost btn-sm" onClick={loadBusinesses}>↻ Refresh</button>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            {jobId && <button className="btn btn-ghost btn-sm" onClick={clearJobFilter}>Show all jobs ✕</button>}
+            <a className="btn btn-ghost btn-sm" href={api.businesses.exportUrl(activeFilters, 'csv')} download>Export CSV</a>
+            <a className="btn btn-ghost btn-sm" href={api.businesses.exportUrl(activeFilters, 'pdf')} download>Export PDF</a>
+            <button className="btn btn-ghost btn-sm" onClick={loadBusinesses}>↻ Refresh</button>
+          </div>
         }
       />
 

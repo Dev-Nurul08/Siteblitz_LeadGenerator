@@ -224,7 +224,8 @@ class CSVImportAdapter(BaseSourceAdapter):
             header = fields.get(key)
             if not header:
                 return None
-            value = row.get(header, "").strip()
+            # Short rows (trailing empty columns omitted, common in Excel exports) give None.
+            value = (row.get(header) or "").strip()
             return value if value else None
 
         name = get_field("name")

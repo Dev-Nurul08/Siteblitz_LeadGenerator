@@ -22,6 +22,8 @@ dependencies = [
     "dnspython>=2.6.0",
     # Reads Overture Maps Places GeoParquet from S3 by bounding box (Overture source adapter)
     "duckdb>=1.3.0",  # 1.3 introduced the `lambda x: ...` syntax used in the query
+    # PDF export of businesses (pure-Python PDF writer)
+    "fpdf2>=2.8.0",
     # Background Jobs
     "redis>=5.0.0",
     "rq>=1.16.0",
