@@ -1,0 +1,13 @@
+Round 8: 230 reference lines, 229 cities, 229 with business data (100 %).
+- GG: 13/13 cities covered, 18,970 businesses near them
+- GN: 14/14 cities covered, 3,907 businesses near them
+- GT: 26/26 cities covered, 139,802 businesses near them
+- GU: 19/19 cities covered, 40,061 businesses near them
+- GW: 14/14 cities covered, 468 businesses near them
+- GY: 12/12 cities covered, 9,346 businesses near them
+- HK: 20/20 cities covered, 1,538,106 businesses near them
+- HN: 23/23 cities covered, 43,063 businesses near them
+- HT: 16/16 cities covered, 21,712 businesses near them
+- HU: 20/20 cities covered, 174,376 businesses near them
+- IN: 39/39 cities covered, 1,380,418 businesses near them
+- IS: 13/13 cities covered, 60,004 businesses near them

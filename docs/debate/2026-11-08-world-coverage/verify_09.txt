@@ -1,0 +1,14 @@
+Round 9: 349 reference lines, 349 cities, 349 with business data (100 %).
+- ID: 41/41 cities covered, 933,267 businesses near them
+- IE: 33/33 cities covered, 167,821 businesses near them
+- IL: 12/12 cities covered, 255,498 businesses near them
+- IM: 21/21 cities covered, 25,325 businesses near them
+- IQ: 19/19 cities covered, 57,546 businesses near them
+- IR: 31/31 cities covered, 21,499 businesses near them
+- IT: 21/21 cities covered, 841,022 businesses near them
+- JE: 15/15 cities covered, 50,321 businesses near them
+- JM: 17/17 cities covered, 28,482 businesses near them
+- JO: 19/19 cities covered, 247,067 businesses near them
+- JP: 48/48 cities covered, 1,423,616 businesses near them
+- KE: 52/52 cities covered, 98,172 businesses near them
+- KZ: 20/20 cities covered, 50,511 businesses near them

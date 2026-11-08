@@ -1,0 +1,13 @@
+Round 1: 263 reference lines, 260 cities, 259 with business data (100 %).
+- AD: 10/10 cities covered, 34,301 businesses near them
+- AF: 34/34 cities covered, 6,918 businesses near them
+- AG: 13/13 cities covered, 18,572 businesses near them
+- AI: 14/14 cities covered, 7,197 businesses near them
+- AL: 14/14 cities covered, 63,377 businesses near them
+- AM: 14/14 cities covered, 34,689 businesses near them
+- AO: 22/22 cities covered, 12,839 businesses near them
+- AR: 26/26 cities covered, 393,818 businesses near them
+- AS: 11/12 cities covered, 4,958 businesses near them; no data at: Taulaga
+- AW: 12/12 cities covered, 45,546 businesses near them
+- AX: 19/19 cities covered, 1,568 businesses near them
+- DZ: 70/70 cities covered, 77,211 businesses near them

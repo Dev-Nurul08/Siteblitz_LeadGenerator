@@ -1,0 +1,14 @@
+Round 5: 223 reference lines, 223 cities, 219 with business data (98 %).
+- CD: 27/27 cities covered, 9,464 businesses near them
+- CI: 33/33 cities covered, 20,031 businesses near them
+- CK: 16/20 cities covered, 3,082 businesses near them; no data at: Kimiangatau, Palmerston, Roto, Rakahanga
+- CR: 12/12 cities covered, 255,216 businesses near them
+- CU: 16/16 cities covered, 11,508 businesses near them
+- CW: 1/1 cities covered, 4,473 businesses near them
+- CY: 10/10 cities covered, 98,571 businesses near them
+- CZ: 14/14 cities covered, 162,103 businesses near them
+- DJ: 10/10 cities covered, 1,066 businesses near them
+- DK: 12/12 cities covered, 162,245 businesses near them
+- DM: 13/13 cities covered, 4,503 businesses near them
+- DO: 33/33 cities covered, 118,807 businesses near them
+- HR: 22/22 cities covered, 94,669 businesses near them

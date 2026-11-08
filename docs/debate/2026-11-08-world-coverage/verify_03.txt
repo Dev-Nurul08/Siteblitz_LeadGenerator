@@ -1,0 +1,12 @@
+Round 3: 192 reference lines, 190 cities, 190 with business data (100 %).
+- BA: 10/10 cities covered, 29,176 businesses near them
+- BF: 20/20 cities covered, 8,650 businesses near them
+- BG: 28/28 cities covered, 124,837 businesses near them
+- BI: 12/12 cities covered, 1,701 businesses near them
+- BN: 11/11 cities covered, 19,840 businesses near them
+- BO: 12/12 cities covered, 108,286 businesses near them
+- BR: 27/27 cities covered, 1,454,119 businesses near them
+- BW: 21/21 cities covered, 21,243 businesses near them
+- CM: 12/12 cities covered, 15,229 businesses near them
+- KH: 26/26 cities covered, 157,007 businesses near them
+- VG: 11/11 cities covered, 6,058 businesses near them
