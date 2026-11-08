@@ -24,6 +24,7 @@ import re
 import shutil
 import sys
 import time
+import unicodedata
 import zipfile
 from pathlib import Path
 
@@ -161,7 +162,7 @@ def _host(col: str) -> str:
     return f"lower(coalesce(regexp_extract({col}, '{HOST}', 2), ''))"
 
 
-def _export_sql(src: str) -> str:
+def _export_sql(src: str, cc: str) -> str:
     """Flatten one country's places to the CSV columns (own website, one column per social platform).
 
     A place without a state gets the state most other places of the same city carry (Overture gives the
@@ -173,11 +174,16 @@ def _export_sql(src: str) -> str:
         for name, rx in SOCIAL.items())
     any_social = "|".join(f"({rx})" for rx in SOCIAL.values())
     return f"""
-        WITH p AS (
-          SELECT *, nullif(trim(state), '') AS st, nullif(trim(city), '') AS ci,
+        WITH p0 AS (
+          SELECT *, nullif(trim(state), '') AS st_raw, nullif(trim(city), '') AS ci
+          FROM read_parquet('{src}')
+        ),
+        p AS (
+          SELECT p0.*, coalesce(m.state_name, p0.st_raw) AS st,
                  list_filter(coalesce(websites, []),
                              lambda x: NOT regexp_matches({_host('x')}, '{any_social}|{LISTING}')) AS own_sites
-          FROM read_parquet('{src}')
+          FROM p0 LEFT JOIN state_map m
+            ON m.cc = '{cc}' AND m.k = regexp_replace(lower(strip_accents(p0.st_raw)), '\s+', ' ', 'g')
         ),
         city_state AS (SELECT ci, mode(st) AS st_guess FROM p WHERE st IS NOT NULL AND ci IS NOT NULL GROUP BY ci)
         SELECT id AS overture_id, name, coalesce(category, basic_category) AS category, brand,
@@ -198,6 +204,63 @@ def _export_sql(src: str) -> str:
     """
 
 
+def _plain(text: str) -> str:
+    """Accent-free text: ISO writes "Mahārāshtra", maps and people write "Maharashtra"."""
+    return "".join(c for c in unicodedata.normalize("NFKD", text) if not unicodedata.combining(c))
+
+
+def _key(text: str) -> str:
+    return re.sub(r"\s+", " ", _plain(text).lower()).strip()
+
+
+# Replaced ISO 3166-2 codes -> current code (Odisha, Uttarakhand, Telangana, Chhattisgarh).
+OLD_SUBDIVISION_CODES = {"IN-OR": "IN-OD", "IN-UT": "IN-UK", "IN-TG": "IN-TS", "IN-CT": "IN-CG"}
+
+
+def build_state_map(out: Path) -> Path:
+    """country, key -> state name, from ISO 3166-2 (pycountry), so "MH", "IN-MH", "Maharashtra" and
+    "maharashtra" all become "Maharashtra", and "Dhaka Division" becomes "Dhaka".
+
+    Why (2026-11-09): the source gives the state as a code for some places and a name for others (India's
+    index had "MH" 568,802 rows next to "Maharashtra"), so one state appeared as several.
+    Top-level subdivisions win; a lower-level one (district) maps to its top-level parent only when that key
+    is not already taken.
+    """
+    import pycountry  # imported here: only the export pass needs it
+
+    dest = out / "_work" / "state_map.csv"
+    by_code = {s.code: s for s in pycountry.subdivisions}
+
+    def top(sub):
+        while getattr(sub, "parent_code", None) and sub.parent_code in by_code:
+            sub = by_code[sub.parent_code]
+        return sub
+
+    rows: dict[tuple[str, str], str] = {}
+    for level in ("top", "child"):
+        for sub in pycountry.subdivisions:
+            is_top = not getattr(sub, "parent_code", None)
+            if (level == "top") != is_top:
+                continue
+            cc, suffix = sub.code.split("-", 1)
+            canonical = _plain(top(sub).name)
+            keys = {suffix, sub.code, sub.name, f"{sub.name} {sub.type}"}
+            for k in keys:
+                rows.setdefault((cc, _key(k)), canonical)
+    # Older ISO 3166-2 codes the source still uses (India's index kept "OR" 22,398, "UT", "TG", "CT").
+    for old_code, new_code in OLD_SUBDIVISION_CODES.items():
+        cc, suffix = old_code.split("-", 1)
+        if new_code in by_code:
+            rows.setdefault((cc, _key(suffix)), _plain(top(by_code[new_code]).name))
+            rows.setdefault((cc, _key(old_code)), _plain(top(by_code[new_code]).name))
+    with open(dest, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["cc", "k", "state_name"])
+        for (cc, k), v in rows.items():
+            w.writerow([cc, k, v])
+    return dest
+
+
 def _copy_with_bom(con, sql: str, dest: Path, tmp_dir: Path) -> None:
     tmp = tmp_dir / (dest.name + ".tmp")
     con.execute(f"COPY ({sql}) TO '{tmp.as_posix()}' (HEADER)")
@@ -207,7 +270,7 @@ def _copy_with_bom(con, sql: str, dest: Path, tmp_dir: Path) -> None:
     tmp.unlink()
 
 
-def export(out: Path, only: list[str] | None = None) -> None:
+def export(out: Path, only: list[str] | None = None, redo: bool = False) -> None:
     by_country = out / "_work" / "by_country"
     tmp_dir = out / "_work" / "tmp"
     tmp_dir.mkdir(parents=True, exist_ok=True)
@@ -217,6 +280,8 @@ def export(out: Path, only: list[str] | None = None) -> None:
     con = connect()
     con.execute(f"SET temp_directory = '{(out / '_work' / 'duckdb_spill').as_posix()}'")
     con.execute("SET memory_limit = '8GB'")
+    state_map = build_state_map(out)
+    con.execute(f"CREATE OR REPLACE TABLE state_map AS SELECT * FROM read_csv('{state_map.as_posix()}', header=true, all_varchar=true)")
     for part in sorted(by_country.iterdir()):
         cc = part.name.split("=", 1)[1]
         if only and cc not in only:
@@ -224,13 +289,13 @@ def export(out: Path, only: list[str] | None = None) -> None:
         name = re.sub(r'[<>:"/\\|?*]', "", names.get(cc, "Unknown country" if cc == "ZZ" else cc))
         folder = dest_root / f"{cc} {name}"
         done_flag = folder / ".done"
-        if done_flag.exists():
+        if done_flag.exists() and not (redo and "v2" not in done_flag.read_text(encoding="utf-8")):
             continue
         folder.mkdir(exist_ok=True)
         src = (part / "*.parquet").as_posix()
         t = time.time()
         con.execute("CREATE OR REPLACE TEMP TABLE c AS SELECT *, row_number() OVER (ORDER BY state, city, name) AS rn "
-                    f"FROM ({_export_sql(src)})")
+                    f"FROM ({_export_sql(src, cc)})")
         total = con.execute("SELECT count(*) FROM c").fetchone()[0]
         parts = max(1, -(-total // ROWS_PER_PART))
         with zipfile.ZipFile(folder / f"{cc}_businesses.zip", "w", zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
@@ -258,7 +323,7 @@ def export(out: Path, only: list[str] | None = None) -> None:
                    count(*) FILTER (WHERE online_presence = 'no website, no social') AS no_website_no_social
             FROM c GROUP BY ALL ORDER BY businesses DESC""", folder / f"{cc}_categories.csv", tmp_dir)
         con.execute("DROP TABLE c")
-        done_flag.write_text(f"{time.strftime('%Y-%m-%d %H:%M:%S')} rows={total}", encoding="utf-8")
+        done_flag.write_text(f"{time.strftime('%Y-%m-%d %H:%M:%S')} rows={total} v2", encoding="utf-8")
         log(f"{cc} {name}: {total:,} businesses in {parts} part(s), {time.time() - t:.0f}s")
 
 
@@ -296,8 +361,9 @@ if __name__ == "__main__":
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--release", default=DEFAULT_RELEASE)
     ap.add_argument("--only", nargs="*", help="export only these country codes")
+    ap.add_argument("--redo", action="store_true", help="export again every country not yet in the v2 layout")
     a = ap.parse_args()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     {"download": lambda: download(out, a.release), "split": lambda: split(out),
-     "export": lambda: export(out, a.only), "summary": lambda: summary(out)}[a.step]()
+     "export": lambda: export(out, a.only, a.redo), "summary": lambda: summary(out)}[a.step]()
