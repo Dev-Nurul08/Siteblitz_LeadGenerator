@@ -3,6 +3,13 @@
 Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 2705aca) · **not pushed**
 
 ## Done (verified)
+- **World business data (6th request, overnight)**: `E:\SiteBlitz-World-Business-Data\` (outside the repo,
+  shareable): 86,751,626 businesses from Overture Places 2026-10-21.0, 249 country folders (ZIP of CSV parts
+  ≤ 1 M rows with UTF-8 BOM + `<CC>_states_and_cities.csv` + `<CC>_categories.csv`), ISO state names,
+  world_summary.csv, README (English + Roman Hindi), LICENSE-and-ATTRIBUTION. All 249 ZIPs open; CRC + row
+  counts checked on samples. ChatGPT reference lists for all 249 countries (5,090 state capitals / largest cities):
+  5,048 (99.2 %) have data — `verification/README.md`. Rebuild: `bash scripts/world_run_all.sh` (download → split →
+  export → summary, resumable); `_work/` (12.5 GB) is only needed to rebuild or re-verify.
 - **City coverage test (5th request)**: 357 population-ranked cities in 53 countries (India 150, Bangladesh 38,
   Afghanistan 22, 3 each in the 50 most populous other countries) + 39 re-check / validation searches, 10 ChatGPT
   rounds. Full write-up: `docs/debate/2026-11-08-city-coverage-test/RESULT.md`.
