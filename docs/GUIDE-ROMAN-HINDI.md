@@ -383,7 +383,9 @@ Sirf phone wale business ko Outreach screen ke "Add to do-not-contact list" se b
 |---|---|---|
 | "City '…' was not found" | Shehar ka naam galat / us desh mein nahi | Spelling theek karo, sahi country chuno |
 | "… matched an area of …° × …° (a district or state)" | State/district ka naam likh diya | Shehar ka naam likho |
+| Bahut bada shehar (Beijing, Shenzhen, Ho Chi Minh City) — sirf beech ka hissa aaya | Shehar ki seema 1.5° (≈ 165 km) se badi hai, isliye shehar ke centre ke aas-paas 1.5° ka square search hota hai (job par `trimmed_from_km` likha hota hai) | Baaki hisse ke liye us area ke chhote shehar / district ke shehar alag se search karo |
 | "Overpass API request timed out" / "Overpass API error: 502" | OpenStreetMap ka free server busy | Thodi der baad "Retry search". "All sources" mein Overture ka data phir bhi aa jaata hai |
+| "OpenStreetMap: … All connection attempts failed" (ghanton tak) | OpenStreetMap ke free server ne is computer ka IP kuch der ke liye block kiya (ek saath bahut search chale) | Ek time par ek hi search chalao; tab tak "Overture Places" source se search karo |
 | "Overture read failed … update OVERTURE_RELEASE" | Overture ne purana data release hata diya | `backend/app/config.py` mein `OVERTURE_RELEASE` naye release se badlo (docs.overturemaps.org/blog) |
 | "Could not load …" + "Retry" | Backend band hai | Window 1 check karo |
 | "Map tiles did not load" | Map ka free server nahi mila | "Retry map"; list kaam karti rahegi |

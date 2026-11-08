@@ -12,9 +12,18 @@ import { ease, ms } from '../motion'
 
 const MapView = lazy(() => import('../components/MapView'))
 
-// Same country list the old Discovery page offered; any ISO code can be typed in "Other".
-const COUNTRIES = [['IN', 'India'], ['GB', 'United Kingdom'], ['US', 'United States'], ['AU', 'Australia'],
-  ['CA', 'Canada'], ['DE', 'Germany'], ['FR', 'France'], ['AE', 'United Arab Emirates'], ['SG', 'Singapore'], ['NZ', 'New Zealand']]
+// Every ISO 3166-1 alpha-2 country (the backend accepts any two-letter code). The list used to have
+// 10 countries, so Bangladesh or Afghanistan could not be searched from this screen.
+// Names come from the browser (Intl.DisplayNames), sorted by name.
+const ISO_CODES = ('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW '
+  + 'BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO '
+  + 'FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO '
+  + 'JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS '
+  + 'MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU '
+  + 'RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA '
+  + 'UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW').split(' ')
+const regionName = new Intl.DisplayNames(['en'], { type: 'region' })
+const COUNTRIES = ISO_CODES.map((code) => [code, regionName.of(code)]).sort((a, b) => a[1].localeCompare(b[1]))
 const CATEGORIES = ['dentist', 'salon', 'hairdresser', 'cafe', 'restaurant', 'gym', 'clinic', 'hotel', 'school',
   'lawyer', 'accountant', 'estate_agent', 'car_repair', 'plumber', 'electrician', 'bakery', 'shop']
 const SOURCES = [
@@ -220,6 +229,13 @@ export default function FindPage({ entrance }) {
                   <p className="ink2" style={{ margin: '0 0 8px', fontSize: 14 }}>
                     The sources have <span className="num">{num(job.available)}</span> matching businesses here; this search took{' '}
                     <span className="num">{num(job.found)}</span>{job.available > job.found ? ' — raise Max results to get more.' : ' — all of them.'}
+                  </p>
+                )}
+                {job?.resolved_place && (
+                  // What the city name resolved to, so a wrong match (a landmark, another state) is visible.
+                  <p className="muted" style={{ margin: '0 0 8px', fontSize: 13 }}>
+                    Searched area: {job.resolved_place.name} · <span className="num">{job.resolved_place.bbox_km?.join(' × ')}</span> km
+                    {job.resolved_place.trimmed_from_km && <> — the city's boundary is <span className="num">{job.resolved_place.trimmed_from_km.join(' × ')}</span> km, so its centre was searched</>}
                   </p>
                 )}
                 <div className="tickers">
