@@ -1,0 +1,14 @@
+Round 10: 238 reference lines, 238 cities, 234 with business data (98 %).
+- KG: 13/13 cities covered, 7,427 businesses near them
+- KI: 26/30 cities covered, 525 businesses near them; no data at: Kuuma, Toboiaki, Tekawa, Tangkore
+- KW: 14/14 cities covered, 116,065 businesses near them
+- LA: 20/20 cities covered, 21,962 businesses near them
+- LB: 13/13 cities covered, 90,833 businesses near them
+- LI: 11/11 cities covered, 19,905 businesses near them
+- LR: 21/21 cities covered, 5,268 businesses near them
+- LS: 11/11 cities covered, 2,868 businesses near them
+- LT: 12/12 cities covered, 55,629 businesses near them
+- LU: 20/20 cities covered, 100,167 businesses near them
+- LV: 42/42 cities covered, 104,171 businesses near them
+- LY: 23/23 cities covered, 23,455 businesses near them
+- MO: 8/8 cities covered, 104,918 businesses near them

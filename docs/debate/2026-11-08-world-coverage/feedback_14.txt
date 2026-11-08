@@ -1,0 +1,6 @@
+## Check of your message-13 list
+Round 13: 278 reference lines, 278 cities, 274 with business data (99 %).
+Not covered: - MP: 12/13 cities covered, 9,509 businesses near them; no data at: Agrihan
+Not covered: - PW: 16/19 cities covered, 1,803 businesses near them; no data at: Ngaramasch, Tobi, Dongosaru
+
+Same format again:

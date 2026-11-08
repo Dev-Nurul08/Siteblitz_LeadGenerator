@@ -1,0 +1,16 @@
+Round 19: 295 reference lines, 295 cities, 285 with business data (97 %).
+- AE: 10/10 cities covered, 135,523 businesses near them
+- EH: 1/10 cities covered, 1 businesses near them; no data at: Dakhla, Smara, Boujdour, El Marsa, Meharrize, Tichla, El Aargub, Bir Ganduz, Amgala
+- GB: 11/11 cities covered, 892,361 businesses near them
+- UA: 28/28 cities covered, 225,161 businesses near them
+- US: 60/60 cities covered, 2,075,488 businesses near them
+- UY: 21/21 cities covered, 55,516 businesses near them
+- UZ: 16/16 cities covered, 18,864 businesses near them
+- VA: 1/1 cities covered, 47 businesses near them
+- VE: 27/27 cities covered, 57,127 businesses near them
+- VN: 37/37 cities covered, 1,054,500 businesses near them
+- VU: 11/11 cities covered, 3,716 businesses near them
+- WF: 11/11 cities covered, 307 businesses near them
+- YE: 22/23 cities covered, 7,351 businesses near them; no data at: Al Jabin
+- ZM: 14/14 cities covered, 19,158 businesses near them
+- ZW: 15/15 cities covered, 27,294 businesses near them

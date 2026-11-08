@@ -1,0 +1,8 @@
+## Check of your message-18 list
+Round 18: 367 reference lines, 366 cities, 356 with business data (97 %).
+Not covered: - TK: 1/3 cities covered, 2 businesses near them; no data at: Atafu, Fakaofo
+Not covered: - TM: 11/12 cities covered, 704 businesses near them; no data at: Tejen
+Not covered: - TV: 12/16 cities covered, 236 businesses near them; no data at: Kulia, Savave, Pepesala, Aulotu
+Not covered: - UG: 147/150 cities covered, 74,341 businesses near them; no data at: Amuru, Nabilatuk, Lalogi
+
+Last message - same format again:

@@ -1,0 +1,14 @@
+Round 11: 260 reference lines, 260 cities, 253 with business data (97 %).
+- FM: 9/10 cities covered, 498 businesses near them; no data at: Tol
+- MG: 26/26 cities covered, 10,267 businesses near them
+- MH: 28/31 cities covered, 538 businesses near them; no data at: Airuk, Jabat, Lib
+- ML: 21/21 cities covered, 3,545 businesses near them
+- MQ: 13/13 cities covered, 36,626 businesses near them
+- MR: 16/17 cities covered, 4,364 businesses near them; no data at: Guerou
+- MT: 12/12 cities covered, 220,425 businesses near them
+- MU: 16/18 cities covered, 72,942 businesses near them; no data at: Vingt Cinq, Raphael Island
+- MV: 25/25 cities covered, 17,138 businesses near them
+- MW: 10/10 cities covered, 5,802 businesses near them
+- MX: 38/38 cities covered, 1,696,304 businesses near them
+- MY: 22/22 cities covered, 870,833 businesses near them
+- YT: 17/17 cities covered, 11,920 businesses near them

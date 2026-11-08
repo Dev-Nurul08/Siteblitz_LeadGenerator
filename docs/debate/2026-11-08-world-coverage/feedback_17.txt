@@ -1,0 +1,7 @@
+## Check of your message-16 list
+Round 16: 372 reference lines, 371 cities, 367 with business data (99 %).
+Not covered: - SB: 12/13 cities covered, 1,085 businesses near them; no data at: Tigoa
+Not covered: - SO: 18/19 cities covered, 4,841 businesses near them; no data at: Bu'ale
+Not covered: - SS: 12/14 cities covered, 1,537 businesses near them; no data at: Abyei, Pariang
+
+Same format again:

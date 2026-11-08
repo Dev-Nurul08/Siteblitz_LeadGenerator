@@ -1,0 +1,14 @@
+Round 15: 271 reference lines, 271 cities, 267 with business data (99 %).
+- RS: 27/31 cities covered, 80,266 businesses near them; no data at: Pristina, Gjilan, Peja, Prizren
+- RU: 83/83 cities covered, 411,937 businesses near them
+- RW: 12/12 cities covered, 3,561 businesses near them
+- SA: 17/17 cities covered, 76,741 businesses near them
+- SC: 26/26 cities covered, 22,008 businesses near them
+- SG: 12/12 cities covered, 716,171 businesses near them
+- SK: 10/10 cities covered, 60,823 businesses near them
+- SL: 10/10 cities covered, 5,024 businesses near them
+- SM: 13/13 cities covered, 29,246 businesses near them
+- SN: 18/18 cities covered, 12,259 businesses near them
+- ST: 10/10 cities covered, 1,121 businesses near them
+- SX: 10/10 cities covered, 15,916 businesses near them
+- WS: 19/19 cities covered, 6,276 businesses near them

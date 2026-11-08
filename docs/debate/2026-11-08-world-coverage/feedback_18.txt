@@ -1,0 +1,4 @@
+## Check of your message-17 list
+Round 17: 272 reference lines, 272 cities, 272 with business data (100 %).
+
+Same format again:

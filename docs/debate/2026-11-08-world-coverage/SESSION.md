@@ -3394,3 +3394,4122 @@ Output ONLY one code block, one line per city, pipe-separated, no header, no com
 - CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
 After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
 then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 20:00 UTC - saved as 10_chatgpt.md
+
+```
+KI|Abaiang|Taburao|1.85|173.00|S
+KI|Abemama|Tabiang|0.49|173.83|S
+KI|Aranuka|Takaeang|0.16|173.59|S
+KI|Arorae|Tamaroa|-2.63|176.82|S
+KI|Banaba|Umwa|-0.87|169.53|S
+KI|Beru|Tabiang|-1.32|175.99|S
+KI|Betio Town Council|Betio|1.36|172.92|SN
+KI|Butaritari|Kuuma|3.17|172.96|S
+KI|Eutan Tarawa Council|Abaokoro|1.50|173.02|S
+KI|Kiritimati|Tabwakea|2.02|-157.49|SN
+KI|Kuria|Oneeke|0.23|173.42|S
+KI|Maiana|Tebikerai|1.01|173.00|S
+KI|Makin|Little Makin|3.38|172.99|S
+KI|Marakei|Rawannawi|2.05|173.26|S
+KI|Nikunau|Rungata|-1.34|176.44|S
+KI|Nonouti|Toboiaki|-0.74|174.45|S
+KI|Onotoa|Tekawa|-1.80|175.53|S
+KI|Tabiteuea North|Utiroa|-1.21|174.76|S
+KI|Tabiteuea South|Tewai|-1.44|175.01|S
+KI|Tabuaeran|Paelau|3.86|-159.36|S
+KI|Tamana|Barebuka|-2.49|175.97|S
+KI|Teinainano Urban Council|Bairiki|1.33|172.98|SN
+KI|Teraina|Tangkore|4.68|-160.40|S
+KI|Teinainano Urban Council|Bikenibeu|1.35|173.13|N
+KI|Teinainano Urban Council|Teaoraereke|1.33|173.00|N
+KI|Teinainano Urban Council|Temwaiku|1.35|173.14|N
+KI|Teinainano Urban Council|Eita|1.35|173.10|N
+KI|Teinainano Urban Council|Ambo|1.33|173.02|N
+KI|Teinainano Urban Council|Bonriki|1.38|173.16|N
+KI|Kiritimati|London|1.99|-157.48|N
+KW|Capital|Kuwait City|29.37|47.98|S
+KW|Al Ahmadi|Al Ahmadi|29.08|48.08|S
+KW|Al Farwaniyah|Farwaniya|29.28|47.96|SN
+KW|Hawalli|Hawalli|29.33|48.03|SN
+KW|Al Jahra|Jahra|29.34|47.66|S
+KW|Mubarak Al Kabeer|Mubarak Al Kabeer|29.19|48.06|S
+KW|Hawalli|Salmiya|29.34|48.08|N
+KW|Al Farwaniyah|Jleeb Al Shuyoukh|29.27|47.93|N
+KW|Al Ahmadi|Mahboula|29.15|48.12|N
+KW|Al Farwaniyah|Khaitan|29.29|47.98|N
+KW|Al Ahmadi|Mangaf|29.10|48.13|N
+KW|Al Jahra|Jaber Al Ahmad City|29.34|47.76|N
+KW|Al Ahmadi|Fahaheel|29.08|48.13|N
+KW|Al Ahmadi|Sabah Al Ahmad City|28.78|48.06|N
+KG|Batken|Batken|40.06|70.82|S
+KG|Bishkek City|Bishkek|42.87|74.60|SN
+KG|Chuy|Tokmok|42.84|75.30|SN
+KG|Issyk-Kul|Karakol|42.49|78.39|SN
+KG|Jalal-Abad|Manas|40.93|73.00|SN
+KG|Naryn|Naryn|41.43|75.99|S
+KG|Osh Region|Uzgen|40.77|73.30|SN
+KG|Osh City|Osh|40.53|72.80|SN
+KG|Talas|Talas|42.52|72.24|S
+KG|Jalal-Abad|Bazar-Korgon|41.04|72.75|N
+KG|Chuy|Kara-Balta|42.81|73.85|N
+KG|Issyk-Kul|Balykchy|42.46|76.19|N
+KG|Batken|Kyzyl-Kiya|40.26|72.13|N
+LA|Attapeu|Attapeu|14.81|106.84|S
+LA|Bokeo|Houayxay|20.27|100.41|S
+LA|Bolikhamxay|Paksan|18.39|103.66|S
+LA|Champasak|Pakse|15.12|105.80|SN
+LA|Houaphanh|Xam Neua|20.42|104.04|SN
+LA|Khammouane|Thakhek|17.41|104.83|SN
+LA|Luang Namtha|Luang Namtha|20.95|101.41|S
+LA|Luang Prabang|Luang Prabang|19.89|102.15|SN
+LA|Oudomxay|Muang Xay|20.69|101.99|SN
+LA|Phongsaly|Phongsaly|21.68|102.10|S
+LA|Salavan|Salavan|15.71|106.41|S
+LA|Savannakhet|Savannakhet|16.57|104.76|SN
+LA|Sekong|Sekong|15.35|106.72|S
+LA|Vientiane Capital|Vientiane|17.97|102.60|SN
+LA|Vientiane Province|Phonhong|18.50|102.42|S
+LA|Xaisomboun|Anouvong|18.98|103.11|S
+LA|Xayaboury|Xayaboury|19.25|101.71|S
+LA|Xiangkhouang|Phonsavan|19.45|103.19|SN
+LA|Bokeo|Ban Khoan|20.35|100.09|N
+LA|Savannakhet|Ban Xeno|16.68|104.99|N
+LV|Ādaži|Ādaži|57.08|24.33|S
+LV|Aizkraukle|Aizkraukle|56.60|25.26|S
+LV|Alūksne|Alūksne|57.42|27.05|S
+LV|Augšdaugava|Ilūkste|55.98|26.29|S
+LV|Balvi|Balvi|57.13|27.27|S
+LV|Bauska|Bauska|56.41|24.19|S
+LV|Cēsis|Cēsis|57.31|25.27|S
+LV|Dienvidkurzeme|Grobiņa|56.54|21.17|S
+LV|Dobele|Dobele|56.63|23.28|S
+LV|Gulbene|Gulbene|57.18|26.76|S
+LV|Jēkabpils|Jēkabpils|56.50|25.87|SN
+LV|Jelgava Municipality|Ozolnieki|56.69|23.79|S
+LV|Ķekava|Ķekava|56.83|24.24|S
+LV|Krāslava|Krāslava|55.90|27.17|S
+LV|Kuldīga|Kuldīga|56.97|21.97|S
+LV|Limbaži|Limbaži|57.51|24.71|S
+LV|Līvāni|Līvāni|56.35|26.18|S
+LV|Ludza|Ludza|56.55|27.72|S
+LV|Madona|Madona|56.85|26.22|S
+LV|Mārupe|Mārupe|56.90|24.05|S
+LV|Ogre|Ogre|56.82|24.61|SN
+LV|Olaine|Olaine|56.79|23.94|S
+LV|Preiļi|Preiļi|56.29|26.72|S
+LV|Rēzekne Municipality|Viļāni|56.55|26.93|S
+LV|Ropaži|Ulbroka|56.94|24.29|S
+LV|Salaspils|Salaspils|56.86|24.36|S
+LV|Saldus|Saldus|56.67|22.49|S
+LV|Saulkrasti|Saulkrasti|57.26|24.41|S
+LV|Sigulda|Sigulda|57.15|24.86|S
+LV|Smiltene|Smiltene|57.42|25.90|S
+LV|Talsi|Talsi|57.24|22.59|S
+LV|Tukums|Tukums|56.97|23.16|S
+LV|Valka|Valka|57.78|26.02|S
+LV|Valmiera|Valmiera|57.54|25.43|SN
+LV|Ventspils Municipality|Ugāle|57.28|22.05|S
+LV|Daugavpils City|Daugavpils|55.87|26.53|SN
+LV|Jelgava City|Jelgava|56.65|23.71|SN
+LV|Jūrmala City|Jūrmala|56.97|23.77|SN
+LV|Liepāja City|Liepāja|56.50|21.01|SN
+LV|Rēzekne City|Rēzekne|56.51|27.34|SN
+LV|Riga City|Riga|56.95|24.11|SN
+LV|Ventspils City|Ventspils|57.39|21.56|SN
+LB|Akkar|Halba|34.54|36.08|S
+LB|Baalbek-Hermel|Baalbek|34.01|36.22|S
+LB|Beirut|Beirut|33.89|35.50|SN
+LB|Beqaa|Zahle|33.85|35.90|SN
+LB|Keserwan-Jbeil|Jounieh|33.98|35.62|SN
+LB|Mount Lebanon|Baabda|33.83|35.54|S
+LB|Nabatieh|Nabatieh|33.38|35.48|SN
+LB|North Lebanon|Tripoli|34.44|35.84|SN
+LB|South Lebanon|Sidon|33.56|35.37|SN
+LB|South Lebanon|Tyre|33.27|35.20|N
+LB|Mount Lebanon|Aley|33.81|35.60|N
+LB|Nabatieh|Habbouch|33.41|35.48|N
+LB|Baalbek-Hermel|Arsal|34.18|36.42|N
+LS|Berea|Teyateyaneng|-29.15|27.74|SN
+LS|Butha-Buthe|Butha-Buthe|-28.77|28.25|SN
+LS|Leribe|Hlotse|-28.87|28.04|SN
+LS|Mafeteng|Mafeteng|-29.82|27.24|SN
+LS|Maseru|Maseru|-29.32|27.48|SN
+LS|Mohale's Hoek|Mohale's Hoek|-30.16|27.48|SN
+LS|Mokhotlong|Mokhotlong|-29.29|29.07|S
+LS|Qacha's Nek|Qacha's Nek|-30.12|28.69|SN
+LS|Quthing|Quthing|-30.40|27.57|SN
+LS|Thaba-Tseka|Thaba-Tseka|-29.52|28.61|SN
+LS|Leribe|Maputsoe|-28.89|27.90|N
+LR|Bomi|Tubmanburg|6.87|-10.82|S
+LR|Bong|Gbarnga|7.00|-9.47|SN
+LR|Gbarpolu|Bopolu|7.07|-10.49|S
+LR|Grand Bassa|Buchanan|5.88|-10.05|SN
+LR|Grand Cape Mount|Robertsport|6.75|-11.37|S
+LR|Grand Gedeh|Zwedru|6.07|-8.13|S
+LR|Grand Kru|Barclayville|4.68|-8.23|S
+LR|Lofa|Voinjama|8.42|-9.75|SN
+LR|Margibi|Kakata|6.53|-10.35|SN
+LR|Maryland|Harper|4.38|-7.72|S
+LR|Montserrado|Bensonville|6.45|-10.61|S
+LR|Nimba|Sanniquellie|7.36|-8.71|S
+LR|River Cess|Cestos City|5.47|-9.58|S
+LR|River Gee|Fish Town|5.20|-7.88|S
+LR|Sinoe|Greenville|5.01|-9.04|S
+LR|Montserrado|Monrovia|6.31|-10.80|N
+LR|Montserrado|Paynesville|6.29|-10.71|N
+LR|Nimba|Ganta|7.24|-8.99|N
+LR|Margibi|Harbel|6.28|-10.35|N
+LR|Maryland|Pleebo|4.59|-7.68|N
+LR|Lofa|Foya|8.37|-10.21|N
+LY|Al Butnan|Tobruk|32.08|23.96|SN
+LY|Al Jabal al Akhdar|Al Bayda|32.76|21.76|SN
+LY|Al Jabal al Gharbi|Gharyan|32.18|13.02|S
+LY|Al Jafara|Aziziyah|32.53|13.02|S
+LY|Al Jufra|Hun|29.13|15.95|S
+LY|Al Kufra|Al Jawf|24.22|23.30|S
+LY|Al Marj|Al Marj|32.49|20.83|SN
+LY|Al Marqab|Al Khums|32.65|14.26|S
+LY|Al Wahat|Ajdabiya|30.75|20.23|SN
+LY|An Nuqat al Khams|Zuwara|32.93|12.08|S
+LY|Az Zawiyah|Zawiya|32.76|12.73|SN
+LY|Benghazi|Benghazi|32.12|20.07|SN
+LY|Derna|Derna|32.77|22.64|S
+LY|Ghat|Ghat|25.71|10.18|S
+LY|Misrata|Misrata|32.38|15.09|SN
+LY|Murzuq|Murzuq|25.92|13.92|S
+LY|Nalut|Nalut|31.87|10.98|S
+LY|Sabha|Sabha|27.03|14.43|SN
+LY|Sirte|Sirte|31.21|16.59|S
+LY|Tripoli|Tripoli|32.89|13.19|SN
+LY|Wadi al Hayaa|Ubari|26.59|12.78|S
+LY|Wadi ash Shati|Brak|27.55|14.27|S
+LY|Misrata|Zliten|32.47|14.57|N
+LI|Balzers|Balzers|47.07|9.50|SN
+LI|Eschen|Eschen|47.21|9.52|SN
+LI|Gamprin|Gamprin|47.22|9.51|SN
+LI|Mauren|Mauren|47.22|9.54|SN
+LI|Planken|Planken|47.19|9.55|S
+LI|Ruggell|Ruggell|47.24|9.52|SN
+LI|Schaan|Schaan|47.16|9.51|SN
+LI|Schellenberg|Schellenberg|47.23|9.55|SN
+LI|Triesen|Triesen|47.11|9.52|SN
+LI|Triesenberg|Triesenberg|47.12|9.54|SN
+LI|Vaduz|Vaduz|47.14|9.52|SN
+LT|Alytus|Alytus|54.40|24.05|SN
+LT|Kaunas|Kaunas|54.90|23.90|SN
+LT|Klaipėda|Klaipėda|55.70|21.14|SN
+LT|Marijampolė|Marijampolė|54.56|23.35|SN
+LT|Panevėžys|Panevėžys|55.73|24.36|SN
+LT|Šiauliai|Šiauliai|55.93|23.32|SN
+LT|Tauragė|Tauragė|55.25|22.29|S
+LT|Telšiai|Telšiai|55.99|22.25|S
+LT|Utena|Utena|55.50|25.60|SN
+LT|Vilnius|Vilnius|54.69|25.28|SN
+LT|Telšiai|Mažeikiai|56.31|22.34|N
+LT|Kaunas|Jonava|55.08|24.28|N
+LU|Capellen|Capellen|49.65|5.99|S
+LU|Clervaux|Clervaux|50.05|6.03|S
+LU|Diekirch|Diekirch|49.87|6.16|S
+LU|Echternach|Echternach|49.81|6.42|S
+LU|Esch-sur-Alzette|Esch-sur-Alzette|49.50|5.98|SN
+LU|Grevenmacher|Grevenmacher|49.68|6.44|S
+LU|Luxembourg|Luxembourg|49.61|6.13|SN
+LU|Mersch|Mersch|49.75|6.11|S
+LU|Redange|Redange-sur-Attert|49.76|5.89|S
+LU|Remich|Remich|49.55|6.36|S
+LU|Vianden|Vianden|49.94|6.21|S
+LU|Wiltz|Wiltz|49.97|5.94|S
+LU|Esch-sur-Alzette|Differdange|49.52|5.89|N
+LU|Esch-sur-Alzette|Dudelange|49.48|6.09|N
+LU|Esch-sur-Alzette|Pétange|49.56|5.88|N
+LU|Esch-sur-Alzette|Sanem|49.55|5.93|N
+LU|Luxembourg|Hesperange|49.57|6.15|N
+LU|Esch-sur-Alzette|Schifflange|49.51|6.01|N
+LU|Esch-sur-Alzette|Bettembourg|49.52|6.10|N
+LU|Capellen|Mamer|49.63|6.02|N
+MO|Nossa Senhora de Fátima|Areia Preta|22.21|113.55|S
+MO|Santo António|Patane|22.20|113.54|S
+MO|São Lázaro|São Lázaro|22.20|113.55|S
+MO|Sé|Macau|22.19|113.54|SN
+MO|São Lourenço|Barra|22.18|113.53|S
+MO|Nossa Senhora do Carmo|Taipa|22.16|113.56|S
+MO|São Francisco Xavier|Coloane|22.12|113.56|S
+MO|Cotai|Cotai|22.15|113.57|S
+```
+
+KI — Kiribati uses 23 island councils for local administration; these are coverage proxies rather than a conventional provincial tier. BTC, TUC and ETC are the Betio, Teinainano and Eutan Tarawa councils. Kanton is geographically recognised but has no separate council in the current 23-council list. The ten `N` villages follow the 2020 census.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://mcia.gov.ki\&sz=32)
+
+Ministry of Culture and Internal Affairs+2
+
+
+
+KW — Six governorates. Capital is also called Al Asimah; Al Farwaniyah/Farwaniya and Al Jahra/Jahra are name variants. The ten `N` flags use June 2026 residential-locality populations, rather than the census's larger grouped urban areas. Some are suburbs rather than legally separate cities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://timeskuwait.com\&sz=32)
+
+Times Kuwait+1
+
+
+
+KG — Seven regions and two separately administered cities. Jalal-Abad city was renamed Manas in September 2025, but Jalal-Abad Region retains its name. Bishkek and Osh are outside their surrounding oblast administrations; Tokmok and Uzgen represent those regions internally.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://assets.publishing.service.gov.uk\&sz=32)
+
+assets.publishing.service.gov.uk
+
+
+
+LA — Seventeen provinces plus Vientiane Capital. Xam Neua/Sam Neua, Houayxay/Huay Xai, Phonsavan/Muang Phonsavan and Xayaboury/Sayaboury are naming variants. The `N` ranking uses settlement-level GeoNames estimates of differing years; Ban Khoan is a particularly uncertain population record. Laos's 2026 subdistrict reform does not change this first-level structure.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://investlaos.gov.la\&sz=32)
+
+Investment Promotion and Management Committee+2
+
+
+
+LV — Thirty-five municipalities and seven separately administered state cities, totalling 42 units following the July 2025 absorption of Varakļāni into Madona. Augšdaugava and the rural Jelgava, Rēzekne and Ventspils municipalities are distinguished from their namesake cities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://likumi.lv\&sz=32)
+
+LIKUMI.LV+1
+
+
+
+LB — Nine governorates. Keserwan-Jbeil is also written Kesrouan-Jbeil; Beqaa/Bekaa, Zahle/Zahlé, Sidon/Saida and Tyre/Sour are common variants. No recent comprehensive national census supports a fully comparable top-ten settlement ranking, particularly across Greater Beirut.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.downloadexcelfiles.com\&sz=32)
+
+Capital
+
+
+
+LS — Ten districts. Butha-Buthe/Botha-Bothe, Hlotse/Leribe and Quthing/Moyeni are common alternative names. Maputsoe is the largest additional town in Leribe District. The ten `N` entries follow the published urban-centre ranking.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.bos.gov.ls\&sz=32)
+
+bos.gov.ls
+
+
+
+LR — Fifteen counties. Bensonville is the Montserrado county seat, while Monrovia and Paynesville are the principal urban centres. Cestos City is also called River Cess, and Ganta is also called Gompa. Paynesville and Monrovia overlap in metropolitan-area statistics but are represented separately as municipalities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://insightsliberia.com\&sz=32)
+
+Insights Liberia+1
+
+
+
+LY — Twenty-two districts under the commonly used administrative-boundary classification. Al Bayda/Beida, Zawiya/Az Zawiyah, Ajdabiya/Ajdabiyah and Sabha/Sebha are variants. City rankings rely on estimates because Libya lacks a recent comprehensive census; district and municipality hierarchies can differ between data providers.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.gov.uk\&sz=32)
+
+GOV.UK
+
+
+
+LI — Eleven municipalities (Gemeinden). Vaduz is the national capital, while Schaan is the most populous municipality. Planken is excluded from the ten `N` flags because it is the smallest municipality by population.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://stateintegrity.org.uk\&sz=32)
+
+State Integrity
+
+
+
+LT — Ten counties (apskritys), used as geographic and statistical first-level units; their governing administrations were abolished in 2010. The ten `N` entries use city-proper populations. Vilnius/Vilna, Kaunas/Kovno and Klaipėda/Memel have historic alternative names.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.worldometers.info\&sz=32)
+
+Worldometer
+
+
+
+LU — Twelve cantons used as first-level geographic units; municipalities are the functioning local-government level. The ten `N` entries use January 2026 municipality populations, which can include surrounding villages rather than only the named settlement.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://statistiques.public.lu\&sz=32)
+
+Luxembourg+2
+
+
+
+MO — Macau has no conventional first-level provinces. Seven historical parishes and Cotai are included as geographic coverage proxies, not separate governing districts. Macau/Macao is one continuous city, so it has only one `N` flag. The territory is also represented within China's provincial-level structure under `CN`.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.eastasianjournal.com\&sz=32)
+
+East Asian Journal
+
+
+
+Points still open:
+
+- KI: Validate the exact settlement coordinates for the most remote island councils, particularly Makin, Tamana, Beru and Teraina. Check whether Kanton requires a separate non-commercial coverage record.
+- KW: Reconcile the June 2026 residential-locality ranking with grouped census urban areas. Confirm Jaber Al Ahmad City's governorate assignment against Overture's administrative polygons.
+- KG: Check whether Overture and historical business records use Manas or Jalal-Abad for the renamed city; retain the older name as an alias.
+- LA: Verify Ban Khoan's reported population and mapping identity. A consistent 2015 census ranking differs from the GeoNames-based ten-city list.
+- LV: Ensure Varakļāni is no longer treated as a separate municipality. Keep separately administered state cities distinct from adjacent municipalities.
+- LB: Obtain a consistent locality-level ranking if strict population ordering is required; Habbouch, Arsal and other settlements have incompatible estimates.
+- LS: Confirm that Hlotse and Maputsoe are treated as separate towns within Leribe District.
+- LR: Avoid double-counting Greater Monrovia businesses under Monrovia and Paynesville. Verify the map labels for Cestos City and Fish Town.
+- LY: Validate all 22 district boundaries and population rankings against the particular administrative hierarchy used in the Overture extract.
+- LI: Check the municipality versus village-centre boundaries, particularly Gamprin and Schellenberg.
+- LT: Confirm that Overture exposes the ten counties rather than only the current municipalities as its highest subnational layer.
+- LU: Compare municipality-level and actual locality-level population rankings; Sanem and Pétange contain multiple settlements.
+- MO: Confirm whether the extraction should use the seven historical parishes plus Cotai or a single Macau-wide geographic unit. Avoid duplicate extraction under `CN` and `MO`.
+
+
+---
+
+## Claude Code - 2026-11-08 20:01 UTC - 11_claude.md - attachments: none
+
+# World coverage - every country, every state, its main cities
+
+Context: SiteBlitz finds small businesses (to sell websites to those without one). Its data source is
+Overture Maps Places (open data, about 60-90 million places). We are extracting every place of every country
+into files organised country -> state -> city. To check that no state or major city is missing, we need, for
+every country in the world (A-Z, ISO 3166-1, 249 entries incl. territories), a reference list of its states
+and main cities. We go alphabetically, about 13 countries per message, 19 messages in total.
+
+## Check of the lists so far (businesses within 10 km or with that city name)
+Round 1: 263 reference lines, 260 cities, 259 with business data (100 %).
+Round 2: 251 reference lines, 251 cities, 250 with business data (100 %).
+Round 3: 192 reference lines, 190 cities, 190 with business data (100 %).
+Round 4: 221 reference lines, 221 cities, 221 with business data (100 %).
+Round 5: 223 reference lines, 223 cities, 219 with business data (98 %).
+Round 6: 238 reference lines, 238 cities, 235 with business data (99 %).
+Round 7: 160 reference lines, 159 cities, 159 with business data (100 %).
+Round 8: 230 reference lines, 229 cities, 229 with business data (100 %).
+Round 9: 349 reference lines, 349 cities, 349 with business data (100 %).
+Round 10: 238 reference lines, 238 cities, 234 with business data (98 %).
+
+Same format again:
+
+
+## Message 11 of 19 - countries
+Madagascar (MG), Malawi (MW), Malaysia (MY), Maldives (MV), Mali (ML), Malta (MT), Marshall Islands (MH), Martinique (MQ), Mauritania (MR), Mauritius (MU), Mayotte (YT), Mexico (MX), Micronesia (FM)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 20:11 UTC - saved as 11_chatgpt.md
+
+```
+MG|Alaotra-Mangoro|Ambatondrazaka|-17.83|48.43|S
+MG|Ambatosoa|Maroantsetra|-15.44|49.74|S
+MG|Amoron'i Mania|Ambositra|-20.53|47.25|S
+MG|Analamanga|Antananarivo|-18.91|47.54|SN
+MG|Analanjirofo|Fenoarivo Atsinanana|-17.38|49.41|S
+MG|Androy|Ambovombe-Androy|-25.18|46.08|S
+MG|Anosy|Tôlanaro|-25.03|46.99|S
+MG|Atsimo-Andrefana|Toliara|-23.35|43.67|SN
+MG|Atsimo-Atsinanana|Farafangana|-22.82|47.83|S
+MG|Atsinanana|Toamasina|-18.15|49.40|SN
+MG|Betsiboka|Maevatanana|-16.95|46.83|S
+MG|Boeny|Mahajanga|-15.72|46.32|SN
+MG|Bongolava|Tsiroanomandidy|-18.77|46.03|S
+MG|Diana|Antsiranana|-12.28|49.29|SN
+MG|Fitovinany|Manakara|-22.15|48.02|S
+MG|Haute Matsiatra|Fianarantsoa|-21.45|47.08|SN
+MG|Ihorombe|Ihosy|-22.40|46.12|S
+MG|Itasy|Miarinarivo|-18.96|46.91|S
+MG|Melaky|Maintirano|-18.06|44.02|S
+MG|Menabe|Morondava|-20.28|44.28|S
+MG|Sava|Sambava|-14.27|50.17|SN
+MG|Sofia|Antsohihy|-14.88|47.99|S
+MG|Vakinankaratra|Antsirabe|-19.87|47.03|SN
+MG|Vatovavy|Mananjary|-21.22|48.34|S
+MG|Itasy|Imerintsiatosika|-18.98|47.32|N
+MG|Sava|Antalaha|-14.90|50.28|N
+MW|Central Region|Lilongwe|-13.97|33.79|SN
+MW|Northern Region|Mzuzu|-11.46|34.02|SN
+MW|Southern Region|Blantyre|-15.79|35.01|SN
+MW|Southern Region|Zomba|-15.39|35.32|N
+MW|Northern Region|Karonga|-9.93|33.93|N
+MW|Central Region|Kasungu|-13.03|33.48|N
+MW|Southern Region|Mangochi|-14.48|35.26|N
+MW|Central Region|Salima|-13.78|34.46|N
+MW|Southern Region|Liwonde|-15.07|35.23|N
+MW|Southern Region|Balaka|-14.98|34.96|N
+MY|Johor|Johor Bahru|1.49|103.74|SN
+MY|Kedah|Alor Setar|6.12|100.37|S
+MY|Kelantan|Kota Bharu|6.13|102.24|S
+MY|Malacca|Malacca City|2.20|102.25|S
+MY|Negeri Sembilan|Seremban|2.73|101.94|S
+MY|Pahang|Kuantan|3.81|103.33|S
+MY|Penang|George Town|5.42|100.34|SN
+MY|Perak|Ipoh|4.60|101.09|S
+MY|Perlis|Kangar|6.44|100.20|S
+MY|Sabah|Kota Kinabalu|5.98|116.07|S
+MY|Sarawak|Kuching|1.55|110.34|S
+MY|Selangor|Shah Alam|3.07|101.52|SN
+MY|Terengganu|Kuala Terengganu|5.33|103.14|S
+MY|Federal Territory of Kuala Lumpur|Kuala Lumpur|3.14|101.69|SN
+MY|Federal Territory of Labuan|Victoria|5.28|115.24|S
+MY|Federal Territory of Putrajaya|Putrajaya|2.93|101.69|S
+MY|Selangor|Kajang|2.99|101.79|N
+MY|Penang|Seberang Perai|5.38|100.40|N
+MY|Selangor|Subang Jaya|3.04|101.58|N
+MY|Selangor|Klang|3.04|101.45|N
+MY|Selangor|Petaling Jaya|3.10|101.64|N
+MY|Selangor|Selayang|3.25|101.65|N
+MV|Haa Alifu|Dhidhdhoo|6.89|73.11|S
+MV|Haa Dhaalu|Kulhudhuffushi|6.62|73.07|SN
+MV|Shaviyani|Funadhoo|6.15|73.29|S
+MV|Noonu|Manadhoo|5.76|73.41|S
+MV|Raa|Ungoofaaru|5.67|73.02|S
+MV|Baa|Eydhafushi|5.10|73.07|S
+MV|Lhaviyani|Naifaru|5.44|73.37|SN
+MV|Kaafu|Thulusdhoo|4.37|73.65|S
+MV|Alifu Alifu|Rasdhoo|4.26|72.99|S
+MV|Alifu Dhaalu|Mahibadhoo|3.76|72.97|S
+MV|Vaavu|Felidhoo|3.47|73.55|S
+MV|Meemu|Muli|2.92|73.58|S
+MV|Faafu|Nilandhoo|3.06|72.89|S
+MV|Dhaalu|Kudahuvadhoo|2.67|72.90|S
+MV|Thaa|Veymandoo|2.18|73.12|S
+MV|Laamu|Fonadhoo|1.83|73.50|S
+MV|Gaafu Alifu|Villingili|0.76|73.43|S
+MV|Gaafu Dhaalu|Thinadhoo|0.53|73.00|SN
+MV|Gnaviyani|Fuvahmulah|-0.30|73.42|SN
+MV|Seenu|Hithadhoo|-0.60|73.08|SN
+MV|Malé City|Malé|4.18|73.51|SN
+MV|Malé City|Hulhumalé|4.21|73.54|N
+MV|Malé City|Villimalé|4.17|73.48|N
+MV|Laamu|Gan|1.92|73.54|N
+MV|Kaafu|Maafushi|3.94|73.49|N
+ML|Bamako District|Bamako|12.65|-8.00|SN
+ML|Bandiagara|Bandiagara|14.35|-3.61|S
+ML|Bougouni|Bougouni|11.41|-7.49|SN
+ML|Dioïla|Dioïla|12.49|-6.80|S
+ML|Douentza|Douentza|15.01|-2.95|S
+ML|Gao|Gao|16.27|-0.05|SN
+ML|Kayes|Kayes|14.45|-11.44|SN
+ML|Kidal|Kidal|18.46|1.41|S
+ML|Kita|Kita|13.04|-9.49|S
+ML|Koulikoro|Koulikoro|12.86|-7.56|S
+ML|Koutiala|Koutiala|12.39|-5.47|SN
+ML|Ménaka|Ménaka|15.92|2.40|S
+ML|Mopti|Mopti|14.49|-4.20|SN
+ML|Nara|Nara|15.17|-7.29|S
+ML|Nioro|Nioro du Sahel|15.23|-9.59|S
+ML|San|San|13.30|-4.90|SN
+ML|Ségou|Ségou|13.44|-6.26|SN
+ML|Sikasso|Sikasso|11.32|-5.67|SN
+ML|Taoudenni|Taoudenni|22.68|-3.98|S
+ML|Timbuktu|Timbuktu|16.77|-3.01|S
+ML|Koulikoro|Kati|12.74|-8.07|N
+MT|Eastern Region|Birkirkara|35.90|14.46|SN
+MT|Gozo Region|Victoria|36.04|14.24|S
+MT|Northern Region|St. Paul's Bay|35.95|14.42|SN
+MT|Port Region|Żabbar|35.87|14.54|SN
+MT|Southern Region|Qormi|35.88|14.47|SN
+MT|Western Region|Żebbuġ|35.87|14.44|S
+MT|Northern Region|Mosta|35.91|14.43|N
+MT|Eastern Region|Sliema|35.91|14.50|N
+MT|Southern Region|Marsaskala|35.86|14.56|N
+MT|Northern Region|Naxxar|35.91|14.44|N
+MT|Eastern Region|Msida|35.90|14.49|N
+MT|Northern Region|San Ġwann|35.91|14.48|N
+MH|Ailinglaplap|Airuk|7.28|168.82|S
+MH|Ailuk|Ailuk|10.22|169.98|S
+MH|Arno|Arno|7.07|171.55|S
+MH|Aur|Aur|8.15|171.17|S
+MH|Bikini & Kili|Kili|5.64|169.12|S
+MH|Ebon|Ebon|4.58|168.70|S
+MH|Enewetak & Ujelang|Enewetak|11.35|162.34|S
+MH|Jabat|Jabat|7.75|168.98|S
+MH|Jaluit|Jabor|5.92|169.64|SN
+MH|Kwajalein|Ebeye|8.77|167.74|SN
+MH|Lae|Lae|8.92|166.26|S
+MH|Lib|Lib|8.31|167.38|S
+MH|Likiep|Likiep|9.83|169.31|S
+MH|Majuro|Majuro|7.09|171.38|S
+MH|Maloelap|Taroa|8.71|171.23|S
+MH|Mejit|Mejit|10.28|170.86|S
+MH|Mili|Mili|6.08|171.74|S
+MH|Namorik|Namdrik|5.60|168.10|S
+MH|Namu|Loen|7.76|168.23|S
+MH|Rongelap|Rongelap|11.16|166.89|S
+MH|Ujae|Ujae|8.93|165.76|S
+MH|Utrik|Utrik|11.23|169.85|S
+MH|Wotho|Wotho|10.17|166.00|S
+MH|Wotje|Wotje|9.45|170.24|SN
+MH|Majuro|Delap|7.09|171.38|N
+MH|Majuro|Djarrit|7.12|171.36|N
+MH|Majuro|Rairok|7.08|171.32|N
+MH|Majuro|Uliga|7.11|171.37|N
+MH|Majuro|Laura|7.15|171.04|N
+MH|Majuro|Ajeltake|7.08|171.17|N
+MH|Majuro|Woja|7.10|171.10|N
+MQ|Fort-de-France Arrondissement|Fort-de-France|14.61|-61.06|SN
+MQ|Le Marin Arrondissement|Le Marin|14.47|-60.87|S
+MQ|La Trinité Arrondissement|La Trinité|14.74|-60.96|S
+MQ|Saint-Pierre Arrondissement|Saint-Pierre|14.74|-61.18|S
+MQ|Fort-de-France Arrondissement|Le Lamentin|14.62|-61.00|N
+MQ|La Trinité Arrondissement|Le Robert|14.68|-60.94|N
+MQ|Fort-de-France Arrondissement|Schœlcher|14.62|-61.10|N
+MQ|Le Marin Arrondissement|Ducos|14.58|-60.97|N
+MQ|Fort-de-France Arrondissement|Saint-Joseph|14.67|-61.04|N
+MQ|Le Marin Arrondissement|Le François|14.62|-60.90|N
+MQ|La Trinité Arrondissement|Sainte-Marie|14.78|-60.99|N
+MQ|Le Marin Arrondissement|Rivière-Salée|14.53|-60.98|N
+MQ|Le Marin Arrondissement|Rivière-Pilote|14.49|-60.90|N
+MR|Adrar|Atar|20.52|-13.05|S
+MR|Assaba|Kiffa|16.62|-11.40|SN
+MR|Brakna|Aleg|17.06|-13.91|S
+MR|Dakhlet Nouadhibou|Nouadhibou|20.93|-17.03|SN
+MR|Gorgol|Kaédi|16.15|-13.50|SN
+MR|Guidimaka|Sélibaby|15.16|-12.18|SN
+MR|Hodh Ech Chargui|Néma|16.62|-7.25|SN
+MR|Hodh El Gharbi|Aïoun el Atrous|16.66|-9.61|SN
+MR|Inchiri|Akjoujt|19.75|-14.39|S
+MR|Nouakchott-Nord|Dar Naim|18.08|-15.96|S
+MR|Nouakchott-Ouest|Tevragh Zeina|18.12|-15.98|S
+MR|Nouakchott-Sud|Arafat|18.08|-15.95|S
+MR|Tagant|Tidjikja|18.56|-11.43|S
+MR|Tiris Zemmour|Zouérat|22.74|-12.48|SN
+MR|Trarza|Rosso|16.51|-15.81|SN
+MR|Nouakchott-Ouest|Nouakchott|18.08|-15.98|N
+MR|Assaba|Guerou|16.82|-11.83|N
+MU|Agalega|Vingt Cinq|-10.44|56.62|S
+MU|Black River|Tamarin|-20.33|57.37|S
+MU|Cargados Carajos|Raphael Island|-16.45|59.62|S
+MU|Flacq|Centre de Flacq|-20.19|57.71|SN
+MU|Grand Port|Mahébourg|-20.41|57.70|S
+MU|Moka|Moka|-20.22|57.50|S
+MU|Pamplemousses|Triolet|-20.06|57.55|SN
+MU|Plaines Wilhems|Beau Bassin-Rose Hill|-20.23|57.47|SN
+MU|Port Louis|Port Louis|-20.16|57.50|SN
+MU|Rivière du Rempart|Mapou|-20.08|57.60|S
+MU|Rodrigues|Port Mathurin|-19.68|63.42|S
+MU|Savanne|Souillac|-20.52|57.53|S
+MU|Plaines Wilhems|Vacoas-Phoenix|-20.30|57.48|N
+MU|Plaines Wilhems|Quatre Bornes|-20.26|57.48|N
+MU|Plaines Wilhems|Curepipe|-20.32|57.53|N
+MU|Rivière du Rempart|Goodlands|-20.04|57.65|N
+MU|Flacq|Bel Air Rivière Sèche|-20.26|57.75|N
+MU|Moka|St Pierre|-20.22|57.52|N
+YT|Acoua|Acoua|-12.72|45.06|S
+YT|Bandraboua|Bandraboua|-12.70|45.12|SN
+YT|Bandrélé|Bandrélé|-12.91|45.19|S
+YT|Bouéni|Bouéni|-12.90|45.08|S
+YT|Chiconi|Chiconi|-12.83|45.11|SN
+YT|Chirongui|Chirongui|-12.93|45.15|S
+YT|Dembeni|Dembeni|-12.84|45.19|SN
+YT|Dzaoudzi|Dzaoudzi|-12.79|45.27|SN
+YT|Kani-Kéli|Kani-Kéli|-12.96|45.10|S
+YT|Koungou|Koungou|-12.74|45.20|SN
+YT|Mamoudzou|Mamoudzou|-12.78|45.23|SN
+YT|Mtsamboro|Mtsamboro|-12.68|45.07|S
+YT|M'Tsangamouji|M'Tsangamouji|-12.76|45.08|SN
+YT|Ouangani|Ouangani|-12.83|45.14|SN
+YT|Pamandzi|Pamandzi|-12.80|45.28|S
+YT|Sada|Sada|-12.85|45.10|SN
+YT|Tsingoni|Tsingoni|-12.79|45.10|SN
+MX|Aguascalientes|Aguascalientes|21.88|-102.30|S
+MX|Baja California|Mexicali|32.62|-115.45|S
+MX|Baja California Sur|La Paz|24.14|-110.31|S
+MX|Campeche|Campeche|19.85|-90.52|S
+MX|Chiapas|Tuxtla Gutiérrez|16.75|-93.12|S
+MX|Chihuahua|Chihuahua City|28.63|-106.07|S
+MX|Coahuila|Saltillo|25.43|-100.99|S
+MX|Colima|Colima|19.24|-103.72|S
+MX|Durango|Durango|24.03|-104.65|S
+MX|Guanajuato|Guanajuato|21.02|-101.26|S
+MX|Guerrero|Chilpancingo|17.55|-99.50|S
+MX|Hidalgo|Pachuca|20.12|-98.73|S
+MX|Jalisco|Guadalajara|20.67|-103.35|SN
+MX|Mexico City|Mexico City|19.43|-99.13|SN
+MX|Mexico State|Toluca|19.29|-99.65|S
+MX|Michoacán|Morelia|19.70|-101.19|S
+MX|Morelos|Cuernavaca|18.92|-99.23|S
+MX|Nayarit|Tepic|21.50|-104.89|S
+MX|Nuevo León|Monterrey|25.68|-100.31|SN
+MX|Oaxaca|Oaxaca City|17.06|-96.72|S
+MX|Puebla|Puebla|19.04|-98.20|SN
+MX|Querétaro|Querétaro|20.59|-100.39|S
+MX|Quintana Roo|Chetumal|18.51|-88.31|S
+MX|San Luis Potosí|San Luis Potosí|22.16|-100.99|S
+MX|Sinaloa|Culiacán|24.80|-107.39|S
+MX|Sonora|Hermosillo|29.07|-110.96|S
+MX|Tabasco|Villahermosa|17.99|-92.93|S
+MX|Tamaulipas|Ciudad Victoria|23.74|-99.15|S
+MX|Tlaxcala|Tlaxcala|19.32|-98.24|S
+MX|Veracruz|Xalapa|19.54|-96.91|S
+MX|Yucatán|Mérida|20.97|-89.62|S
+MX|Zacatecas|Zacatecas|22.77|-102.57|S
+MX|Baja California|Tijuana|32.53|-117.04|N
+MX|Mexico State|Ecatepec de Morelos|19.60|-99.05|N
+MX|Guanajuato|León|21.12|-101.68|N
+MX|Chihuahua|Ciudad Juárez|31.74|-106.49|N
+MX|Jalisco|Zapopan|20.72|-103.39|N
+MX|Mexico State|Ciudad Nezahualcóyotl|19.40|-99.02|N
+FM|Chuuk|Weno|7.45|151.84|SN
+FM|Kosrae|Tofol|5.32|163.01|SN
+FM|Pohnpei|Kolonia|6.96|158.21|SN
+FM|Yap|Colonia|9.52|138.12|SN
+FM|Pohnpei|Palikir|6.92|158.16|N
+FM|Pohnpei|Kitti|6.83|158.26|N
+FM|Pohnpei|Nett|6.96|158.25|N
+FM|Chuuk|Tol|7.32|151.62|N
+FM|Pohnpei|Madolenihmw|6.86|158.33|N
+FM|Chuuk|Tonoas|7.38|151.89|N
+```
+
+### Naming caveats
+
+MG — 24 regions, including Ambatosoa established in 2025. Fitovinany and Vatovavy are separate regions. Tôlanaro is also called Fort-Dauphin; Haute Matsiatra is also Matsiatra Ambony.
+
+MW — Three regions are used as first-level divisions; Malawi's 28 districts are subordinate administrative units.
+
+MY — 13 states and three federal territories. Victoria is also Bandar Labuan; Malacca is also Melaka. Population rankings use local-authority areas, so Seberang Perai and Selayang represent larger municipal jurisdictions.
+
+MV — 20 administrative atolls plus Malé City. Seenu is also Addu Atoll; Villingili is also Viligili; Villimalé is part of Malé and differs from Villingili in Gaafu Alifu. Gan is in Laamu Atoll.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://statisticsmaldives.gov.mv\&sz=32)
+
+statisticsmaldives.gov.mv+1
+
+
+
+ML — 19 regions plus Bamako District, reflecting the expanded regional structure. Timbuktu is also Tombouctou; Taoudenni is also Taoudénit.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://en.wikipedia.org\&sz=32)
+
+Wikipedia
+
+
+
+MT — Six local-government regions, distinct from Malta's six statistical districts. Victoria is also Rabat (Gozo); Żebbuġ here refers to the locality on Malta rather than Gozo.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://address.gov.mt\&sz=32)
+
+Office of the Address Registrar+1
+
+
+
+MH — 24 municipalities, with Bikini & Kili and Enewetak & Ujelang counted jointly. Rongelap and Bikini atolls had zero residents in the 2021 census. The ten N entries follow individual-settlement populations, rather than treating Majuro and its component neighborhoods as separate population aggregates.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.thefactbook.org\&sz=32)
+
+The Factbook+2
+
+
+
+MQ — Martinique is one French territorial collectivity; its four arrondissements are used for geographic subdivision. Schœlcher is also written Schoelcher.
+
+MR — 15 wilayas, including the three Nouakchott divisions. Nouakchott itself spans Nouakchott-Nord, Nouakchott-Ouest and Nouakchott-Sud; the city point is assigned to Ouest as a reference.
+
+MU — Nine geographic districts plus Rodrigues, Agalega and Cargados Carajos dependencies. The geographic districts are retained for mapping although they no longer function as administrative entities. Cargados Carajos is also Saint Brandon; Raphael Island is a small settlement.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://statsmauritius.govmu.org\&sz=32)
+
+statsmauritius.govmu.org+1
+
+
+
+YT — Mayotte has 17 communes directly below its single French departmental/territorial level. The top ten are ranked by commune population, not by separately defined built-up urban areas.
+
+MX — 31 states plus Mexico City, which is a separate federal entity. Mexico State means Estado de México, not Mexico City. The top ten use individual-city populations rather than metropolitan areas.
+
+FM — Four states. Kolonia in Pohnpei and Colonia in Yap are different towns; Palikir is the national capital. The population selections mix town centers and populous island municipalities because settlement-level classifications differ.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://wm-site-staging.cloudflare-47b.workers.dev\&sz=32)
+
+Worldometer+1
+
+
+
+### Points still open
+
+- Confirm consistent population-boundary rules where cities and municipalities differ, particularly MY, MV, MH and FM.
+- Verify sparse or seasonal settlement coverage in MH's Rongelap municipality and MU's Cargados Carajos dependency.
+- Reconcile city aliases and municipality names against Overture's actual place labels, especially MY's Seberang Perai, MV's Villingili/Villimalé and FM's island municipalities.
+- Validate each point against the extracted business files; the 260 reference rows above are geographic targets, not a claim that business coverage has been checked.
+
+
+---
+
+## Claude Code - 2026-11-08 20:12 UTC - 12_claude.md - attachments: none
+
+## Check of your message-11 list
+Round 11: 260 reference lines, 260 cities, 253 with business data (97 %).
+Not covered: - FM: 9/10 cities covered, 498 businesses near them; no data at: Tol
+Not covered: - MH: 28/31 cities covered, 538 businesses near them; no data at: Airuk, Jabat, Lib
+Not covered: - MR: 16/17 cities covered, 4,364 businesses near them; no data at: Guerou
+Not covered: - MU: 16/18 cities covered, 72,942 businesses near them; no data at: Vingt Cinq, Raphael Island
+
+Same format again:
+
+
+## Message 12 of 19 - countries
+Moldova (MD), Monaco (MC), Mongolia (MN), Montenegro (ME), Montserrat (MS), Morocco (MA), Mozambique (MZ), Myanmar (Burma) (MM), Namibia (NA), Nauru (NR), Nepal (NP), Netherlands (NL), New Caledonia (NC)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 20:21 UTC - saved as 12_chatgpt.md
+
+```
+MD|Anenii Noi|Anenii Noi|46.88|29.22|S
+MD|Basarabeasca|Basarabeasca|46.33|28.97|S
+MD|Briceni|Briceni|48.36|27.08|S
+MD|Cahul|Cahul|45.90|28.19|SN
+MD|Cantemir|Cantemir|46.28|28.20|S
+MD|Călărași|Călărași|47.25|28.31|S
+MD|Căușeni|Căușeni|46.64|29.41|S
+MD|Cimișlia|Cimișlia|46.52|28.79|S
+MD|Criuleni|Criuleni|47.21|29.16|S
+MD|Dondușeni|Dondușeni|48.22|27.58|S
+MD|Drochia|Drochia|48.03|27.82|S
+MD|Dubăsari|Cocieri|47.30|29.11|S
+MD|Edineț|Edineț|48.17|27.31|S
+MD|Fălești|Fălești|47.57|27.71|S
+MD|Florești|Florești|47.89|28.30|S
+MD|Glodeni|Glodeni|47.77|27.51|S
+MD|Hîncești|Hîncești|46.83|28.59|S
+MD|Ialoveni|Ialoveni|46.94|28.78|S
+MD|Leova|Leova|46.48|28.25|S
+MD|Nisporeni|Nisporeni|47.08|28.18|S
+MD|Ocnița|Ocnița|48.39|27.44|S
+MD|Orhei|Orhei|47.38|28.82|SN
+MD|Rezina|Rezina|47.74|28.96|S
+MD|Rîșcani|Rîșcani|47.95|27.56|S
+MD|Sîngerei|Sîngerei|47.64|28.14|S
+MD|Soroca|Soroca|48.16|28.30|S
+MD|Strășeni|Strășeni|47.14|28.62|S
+MD|Șoldănești|Șoldănești|47.82|28.80|S
+MD|Ștefan Vodă|Ștefan Vodă|46.51|29.66|S
+MD|Taraclia|Taraclia|45.90|28.67|S
+MD|Telenești|Telenești|47.50|28.37|S
+MD|Ungheni|Ungheni|47.20|27.80|SN
+MD|Bălți Municipality|Bălți|47.76|27.93|SN
+MD|Bender Municipality|Bender|46.83|29.48|SN
+MD|Chișinău Municipality|Chișinău|47.01|28.86|SN
+MD|Gagauzia|Comrat|46.30|28.66|S
+MD|Transnistria|Tiraspol|46.85|29.63|SN
+MD|Transnistria|Rîbnița|47.77|29.00|N
+MD|Chișinău Municipality|Durlești|47.01|28.76|N
+MD|Transnistria|Dubăsari|47.27|29.16|N
+MC|Fontvieille|Fontvieille|43.73|7.42|S
+MC|Jardin Exotique|Jardin Exotique|43.73|7.41|S
+MC|La Condamine|La Condamine|43.73|7.42|S
+MC|La Rousse|La Rousse|43.75|7.43|S
+MC|Larvotto|Larvotto|43.75|7.43|S
+MC|Les Moneghetti|Les Moneghetti|43.73|7.42|S
+MC|Monaco-Ville|Monaco-Ville|43.73|7.42|S
+MC|Monte Carlo|Monte Carlo|43.74|7.43|S
+MC|Monaco|Monaco|43.73|7.42|N
+MN|Arkhangai|Tsetserleg|47.48|101.45|S
+MN|Bayankhongor|Bayankhongor|46.19|100.72|SN
+MN|Bayan-Ölgii|Ölgii|48.97|89.97|SN
+MN|Bulgan|Bulgan|48.81|103.53|S
+MN|Darkhan-Uul|Darkhan|49.46|105.92|SN
+MN|Dornod|Choibalsan|48.07|114.53|SN
+MN|Dornogovi|Sainshand|44.88|110.12|S
+MN|Dundgovi|Mandalgovi|45.76|106.27|S
+MN|Govi-Altai|Altai|46.37|96.26|S
+MN|Govisümber|Choir|46.36|108.36|S
+MN|Khentii|Chinggis City|47.32|110.65|S
+MN|Khovd|Khovd|48.00|91.64|SN
+MN|Khövsgöl|Mörön|49.64|100.16|SN
+MN|Orkhon|Erdenet|49.03|104.04|SN
+MN|Ömnögovi|Dalanzadgad|43.57|104.42|S
+MN|Övörkhangai|Arvaikheer|46.26|102.78|SN
+MN|Selenge|Sükhbaatar|50.24|106.21|S
+MN|Sükhbaatar|Baruun-Urt|46.68|113.28|S
+MN|Töv|Zuunmod|47.70|106.95|S
+MN|Ulaanbaatar|Ulaanbaatar|47.92|106.92|SN
+MN|Uvs|Ulaangom|49.98|92.07|S
+MN|Zavkhan|Uliastai|47.74|96.84|S
+MN|Ulaanbaatar|Nalaikh|47.77|107.25|N
+ME|Andrijevica|Andrijevica|42.73|19.79|S
+ME|Bar|Bar|42.10|19.10|SN
+ME|Berane|Berane|42.84|19.87|S
+ME|Bijelo Polje|Bijelo Polje|43.04|19.75|SN
+ME|Budva|Budva|42.29|18.84|SN
+ME|Cetinje|Cetinje|42.39|18.92|SN
+ME|Danilovgrad|Danilovgrad|42.55|19.11|S
+ME|Gusinje|Gusinje|42.56|19.83|S
+ME|Herceg Novi|Herceg Novi|42.45|18.54|S
+ME|Kolašin|Kolašin|42.82|19.52|S
+ME|Kotor|Kotor|42.42|18.77|S
+ME|Mojkovac|Mojkovac|42.96|19.58|S
+ME|Nikšić|Nikšić|42.77|18.94|SN
+ME|Petnjica|Petnjica|42.91|20.05|S
+ME|Plav|Plav|42.60|19.95|S
+ME|Pljevlja|Pljevlja|43.36|19.36|SN
+ME|Plužine|Plužine|43.15|18.84|S
+ME|Podgorica|Podgorica|42.44|19.26|SN
+ME|Rožaje|Rožaje|42.84|20.17|SN
+ME|Šavnik|Šavnik|42.96|19.09|S
+ME|Tivat|Tivat|42.43|18.70|SN
+ME|Tuzi|Tuzi|42.37|19.33|S
+ME|Ulcinj|Ulcinj|41.93|19.21|SN
+ME|Žabljak|Žabljak|43.16|19.13|S
+ME|Zeta|Golubovci|42.37|19.22|S
+MS|Saint Anthony|Plymouth|16.71|-62.21|S
+MS|Saint George|Harris|16.74|-62.17|S
+MS|Saint Peter|Brades|16.79|-62.21|SN
+MS|Saint Peter|Look Out|16.79|-62.18|N
+MS|Saint Peter|Davy Hill|16.79|-62.21|N
+MS|Saint Peter|St. John's|16.78|-62.19|N
+MS|Saint Peter|St. Peter's|16.77|-62.22|N
+MS|Saint Peter|Olveston|16.75|-62.23|N
+MS|Saint Peter|Salem|16.75|-62.22|N
+MS|Saint Peter|Woodlands|16.76|-62.22|N
+MS|Saint Peter|Baker Hill|16.77|-62.20|N
+MS|Saint Peter|Barzeys|16.78|-62.18|N
+MA|Béni Mellal-Khénifra|Béni Mellal|32.34|-6.36|S
+MA|Casablanca-Settat|Casablanca|33.57|-7.59|SN
+MA|Dakhla-Oued Ed-Dahab|Dakhla|23.68|-15.96|S
+MA|Drâa-Tafilalet|Errachidia|31.93|-4.42|S
+MA|Fès-Meknès|Fès|34.06|-4.98|SN
+MA|Guelmim-Oued Noun|Guelmim|28.99|-10.06|S
+MA|Laâyoune-Sakia El Hamra|Laâyoune|27.15|-13.20|S
+MA|Marrakech-Safi|Marrakech|31.63|-8.00|SN
+MA|Oriental|Oujda|34.68|-1.91|SN
+MA|Rabat-Salé-Kénitra|Rabat|34.02|-6.84|SN
+MA|Souss-Massa|Agadir|30.42|-9.60|SN
+MA|Tanger-Tétouan-Al Hoceïma|Tangier|35.76|-5.83|SN
+MA|Rabat-Salé-Kénitra|Salé|34.05|-6.80|N
+MA|Fès-Meknès|Meknès|33.90|-5.55|N
+MA|Rabat-Salé-Kénitra|Kénitra|34.26|-6.58|N
+MZ|Cabo Delgado|Pemba|-12.97|40.52|SN
+MZ|Gaza|Xai-Xai|-25.05|33.64|S
+MZ|Inhambane|Inhambane|-23.87|35.38|S
+MZ|Manica|Chimoio|-19.12|33.48|SN
+MZ|Maputo City|Maputo|-25.97|32.58|SN
+MZ|Maputo Province|Matola|-25.96|32.46|SN
+MZ|Nampula|Nampula|-15.12|39.27|SN
+MZ|Niassa|Lichinga|-13.31|35.24|SN
+MZ|Sofala|Beira|-19.84|34.84|SN
+MZ|Tete|Tete|-16.16|33.59|SN
+MZ|Zambézia|Quelimane|-17.88|36.89|SN
+MZ|Nampula|Nacala|-14.56|40.69|N
+MM|Ayeyarwady Region|Pathein|16.78|94.73|SN
+MM|Bago Region|Bago|17.34|96.48|SN
+MM|Chin State|Hakha|22.65|93.60|S
+MM|Kachin State|Myitkyina|25.38|97.40|SN
+MM|Kayah State|Loikaw|19.68|97.21|S
+MM|Kayin State|Hpa-An|16.89|97.63|S
+MM|Magway Region|Magway|20.15|94.94|S
+MM|Mandalay Region|Mandalay|21.98|96.09|SN
+MM|Mon State|Mawlamyine|16.49|97.62|SN
+MM|Naypyidaw Union Territory|Naypyidaw|19.76|96.08|SN
+MM|Rakhine State|Sittwe|20.15|92.90|S
+MM|Sagaing Region|Sagaing|21.88|95.98|S
+MM|Shan State|Taunggyi|20.79|97.04|SN
+MM|Tanintharyi Region|Dawei|14.08|98.20|S
+MM|Yangon Region|Yangon|16.84|96.17|SN
+MM|Sagaing Region|Kalay|23.19|94.05|N
+MM|Mandalay Region|Pyin Oo Lwin|22.04|96.47|N
+NA|Erongo|Swakopmund|-22.68|14.53|SN
+NA|Hardap|Mariental|-24.63|17.96|S
+NA|ǁKaras|Keetmanshoop|-26.57|18.13|S
+NA|Kavango East|Rundu|-17.93|19.77|SN
+NA|Kavango West|Nkurenkuru|-17.62|18.62|S
+NA|Khomas|Windhoek|-22.56|17.08|SN
+NA|Kunene|Opuwo|-18.06|13.84|S
+NA|Ohangwena|Eenhana|-17.47|16.33|S
+NA|Omaheke|Gobabis|-22.45|18.97|S
+NA|Omusati|Outapi|-17.51|14.98|S
+NA|Oshana|Oshakati|-17.79|15.70|SN
+NA|Oshikoto|Omuthiya|-18.36|16.58|S
+NA|Otjozondjupa|Otjiwarongo|-20.46|16.65|SN
+NA|Zambezi|Katima Mulilo|-17.50|24.27|SN
+NA|Erongo|Walvis Bay|-22.96|14.51|N
+NA|Otjozondjupa|Okahandja|-21.98|16.91|N
+NA|Hardap|Rehoboth|-23.32|17.09|N
+NA|Oshikoto|Tsumeb|-19.24|17.71|N
+NR|Aiwo|Aiwo|-0.53|166.91|SN
+NR|Anabar|Anabar|-0.51|166.95|SN
+NR|Anetan|Anetan|-0.50|166.94|SN
+NR|Anibare|Anibare|-0.53|166.95|S
+NR|Baitsi|Baitsi|-0.51|166.93|S
+NR|Boe|Boe|-0.54|166.91|SN
+NR|Buada|Buada|-0.54|166.93|SN
+NR|Denigomodu|Denigomodu|-0.52|166.91|S
+NR|Ewa|Ewa|-0.51|166.94|SN
+NR|Ijuw|Ijuw|-0.52|166.95|S
+NR|Meneng|Meneng|-0.54|166.95|SN
+NR|Nibok|Nibok|-0.52|166.92|SN
+NR|Uaboe|Uaboe|-0.51|166.92|S
+NR|Yaren|Yaren|-0.55|166.92|SN
+NR|Denigomodu|Location|-0.52|166.91|N
+NP|Bagmati|Hetauda|27.43|85.03|S
+NP|Gandaki|Pokhara|28.21|83.99|SN
+NP|Karnali|Birendranagar|28.60|81.63|S
+NP|Koshi|Biratnagar|26.45|87.27|SN
+NP|Lumbini|Deukhuri|27.85|82.72|S
+NP|Madhesh|Janakpur|26.73|85.93|SN
+NP|Sudurpashchim|Godawari|28.83|80.56|S
+NP|Bagmati|Kathmandu|27.72|85.32|N
+NP|Bagmati|Bharatpur|27.68|84.43|N
+NP|Bagmati|Lalitpur|27.66|85.32|N
+NP|Madhesh|Birgunj|27.01|84.88|N
+NP|Lumbini|Ghorahi|28.03|82.50|N
+NP|Sudurpashchim|Dhangadhi|28.70|80.60|N
+NP|Koshi|Itahari|26.67|87.27|N
+NL|Drenthe|Assen|53.00|6.56|S
+NL|Flevoland|Lelystad|52.51|5.47|S
+NL|Friesland|Leeuwarden|53.20|5.80|S
+NL|Gelderland|Arnhem|51.98|5.91|S
+NL|Groningen|Groningen|53.22|6.57|SN
+NL|Limburg|Maastricht|50.85|5.69|S
+NL|North Brabant|'s-Hertogenbosch|51.69|5.30|S
+NL|North Holland|Haarlem|52.39|4.65|S
+NL|Overijssel|Zwolle|52.52|6.09|S
+NL|South Holland|The Hague|52.08|4.30|SN
+NL|Utrecht|Utrecht|52.09|5.12|SN
+NL|Zeeland|Middelburg|51.50|3.61|S
+NL|Bonaire|Kralendijk|12.15|-68.27|S
+NL|Saba|The Bottom|17.63|-63.25|S
+NL|Sint Eustatius|Oranjestad|17.49|-62.98|S
+NL|North Holland|Amsterdam|52.37|4.90|N
+NL|South Holland|Rotterdam|51.92|4.48|N
+NL|North Brabant|Eindhoven|51.44|5.48|N
+NL|Flevoland|Almere|52.37|5.22|N
+NL|North Brabant|Tilburg|51.56|5.09|N
+NL|North Brabant|Breda|51.59|4.78|N
+NL|Gelderland|Nijmegen|51.84|5.87|N
+NC|Loyalty Islands|Wé|-20.92|167.28|S
+NC|North Province|Koné|-21.06|164.86|SN
+NC|South Province|Nouméa|-22.28|166.46|SN
+NC|South Province|Dumbéa|-22.15|166.46|N
+NC|South Province|Païta|-22.13|166.37|N
+NC|South Province|Le Mont-Dore|-22.28|166.58|N
+NC|South Province|Bourail|-21.57|165.50|N
+NC|North Province|Poindimié|-20.93|165.33|N
+NC|North Province|Koumac|-20.56|164.29|N
+NC|North Province|Canala|-21.53|165.96|N
+NC|North Province|Houaïlou|-21.29|165.62|N
+```
+
+### Naming caveats
+
+MD — 32 districts, three municipalities, Gagauzia and Transnistria. Transnistria is internationally recognized as part of Moldova but administered separately; Bender and Tiraspol have overlapping territorial-status considerations. A proposed administrative reform has not been applied to this list.
+
+MC — Monaco is one municipality, not eight municipalities. The eight named quartiers are included as geographic subdivisions for coverage checking; the only city-level N entry is Monaco.
+
+MN — 21 aimags plus the independently administered capital Ulaanbaatar. Chinggis City was formerly Öndörkhaan; Nalaikh is administratively part of Ulaanbaatar.
+
+ME — 25 municipalities, including Zeta and Tuzi. Golubovci is the administrative centre of Zeta; Cetinje is the historic royal capital.
+
+MS — Three historic parishes. Saint Anthony and Saint George are largely uninhabited volcanic exclusion areas. Plymouth remains the official capital but is abandoned; Brades is the functioning administrative centre.
+
+MA — 12 regions. Dakhla-Oued Ed-Dahab and Laâyoune-Sakia El Hamra include territory within disputed Western Sahara. Tangier is also Tanger, and Fès is also Fez.
+
+MZ — Ten provinces plus Maputo City as a separate provincial-level entity. Matola is the capital of Maputo Province; Maputo City is not part of that province.
+
+MM — Seven states, seven regions and Naypyidaw Union Territory. Myanmar is also called Burma; Yangon is Rangoon, Ayeyarwady is Irrawaddy, and Kayin is Karen. Recent census coverage is affected by conflict.
+
+NA — 14 regions. Zambezi was formerly Caprivi; ǁKaras was formerly Karas. Some data sources use `//Karas` instead of the click-character spelling.
+
+NR — 14 districts and no conventional cities. District-centre names are used as settlement proxies; Location is a populated settlement within Denigomodu, not a separate district.
+
+NP — Seven provinces. Province No. 1 is now Koshi. Lumbini's designated capital is Deukhuri/Rapti Valley rather than Butwal; Sudurpashchim's designated capital is Godawari, while provincial offices have continued operating in Dhangadhi.
+
+NL — 12 European provinces plus Bonaire, Saba and Sint Eustatius, which are Caribbean public bodies rather than provinces. The Hague is Den Haag; 's-Hertogenbosch is Den Bosch. Aruba, Curaçao and Sint Maarten have separate ISO codes.
+
+NC — Three provinces. Wé is on Lifou in the Loyalty Islands; Nouméa is the territorial capital. The N entries represent urban settlements rather than ranking all geographically extensive rural and island communes by total population.
+
+### Points still open
+
+- Round 11 unresolved: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island.
+- Round 12 coverage: 233 reference rows prepared; Overture business-data coverage has not yet been checked.
+- Sparse or unusual settlements: Check Montserrat's abandoned southern settlements, Nauru's Location, Monaco's quartiers, and the Netherlands' Caribbean public bodies separately from ordinary city records.
+- Population-definition differences: Verify municipality-versus-urban-settlement rankings for Moldova, Mongolia, Nepal and New Caledonia against the chosen population dataset.
+
+
+---
+
+## Claude Code - 2026-11-08 20:21 UTC - 13_claude.md - attachments: none
+
+## Check of your message-12 list
+Round 12: 233 reference lines, 233 cities, 231 with business data (99 %).
+Not covered: - NL: 20/22 cities covered, 537,748 businesses near them; no data at: The Bottom, Oranjestad
+
+Same format again:
+
+
+## Message 13 of 19 - countries
+New Zealand (NZ), Nicaragua (NI), Niger (NE), Nigeria (NG), Niue (NU), Norfolk Island (NF), North Korea (KP), North Macedonia (MK), Northern Mariana Islands (MP), Norway (NO), Oman (OM), Pakistan (PK), Palau (PW)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 20:29 UTC - saved as 13_chatgpt.md
+
+```
+NZ|Auckland|Auckland|-36.85|174.76|SN
+NZ|Bay of Plenty|Tauranga|-37.69|176.17|SN
+NZ|Canterbury|Christchurch|-43.53|172.64|SN
+NZ|Chatham Islands|Waitangi|-43.95|-176.56|S
+NZ|Gisborne|Gisborne|-38.66|178.02|S
+NZ|Hawke's Bay|Napier|-39.49|176.91|SN
+NZ|Manawatū-Whanganui|Palmerston North|-40.35|175.61|SN
+NZ|Marlborough|Blenheim|-41.51|173.96|S
+NZ|Nelson|Nelson|-41.27|173.28|S
+NZ|Northland|Whangārei|-35.73|174.32|S
+NZ|Otago|Dunedin|-45.87|170.50|SN
+NZ|Southland|Invercargill|-46.41|168.35|S
+NZ|Taranaki|New Plymouth|-39.06|174.08|SN
+NZ|Tasman|Richmond|-41.34|173.18|S
+NZ|Waikato|Hamilton|-37.78|175.28|SN
+NZ|Wellington|Wellington|-41.29|174.78|SN
+NZ|West Coast|Greymouth|-42.45|171.21|S
+NZ|Wellington|Lower Hutt|-41.21|174.91|N
+NI|Boaco|Boaco|12.47|-85.66|S
+NI|Carazo|Jinotepe|11.85|-86.20|S
+NI|Chinandega|Chinandega|12.63|-87.13|SN
+NI|Chontales|Juigalpa|12.09|-85.37|S
+NI|Estelí|Estelí|13.09|-86.35|SN
+NI|Granada|Granada|11.93|-85.96|SN
+NI|Jinotega|Jinotega|13.09|-86.00|S
+NI|León|León|12.44|-86.88|SN
+NI|Madriz|Somoto|13.48|-86.58|S
+NI|Managua|Managua|12.13|-86.25|SN
+NI|Masaya|Masaya|11.97|-86.10|SN
+NI|Matagalpa|Matagalpa|12.93|-85.92|SN
+NI|Nueva Segovia|Ocotal|13.63|-86.48|S
+NI|Rivas|Rivas|11.44|-85.83|S
+NI|Río San Juan|San Carlos|11.12|-84.78|S
+NI|North Caribbean Coast|Bilwi|14.03|-83.39|SN
+NI|South Caribbean Coast|Bluefields|12.01|-83.76|S
+NI|Managua|Tipitapa|12.20|-86.10|N
+NI|Managua|Ciudad Sandino|12.16|-86.34|N
+NE|Agadez|Agadez|16.97|7.99|SN
+NE|Diffa|Diffa|13.32|12.61|S
+NE|Dosso|Dosso|13.05|3.19|SN
+NE|Maradi|Maradi|13.50|7.10|SN
+NE|Niamey|Niamey|13.52|2.12|SN
+NE|Tahoua|Tahoua|14.89|5.27|SN
+NE|Tillabéri|Tillabéri|14.21|1.45|S
+NE|Zinder|Zinder|13.80|8.99|SN
+NE|Agadez|Arlit|18.73|7.39|N
+NE|Tahoua|Birni N'Konni|13.80|5.25|N
+NE|Dosso|Gaya|11.89|3.45|N
+NE|Maradi|Tessaoua|13.75|7.99|N
+NG|Abia|Umuahia|5.53|7.49|S
+NG|Adamawa|Yola|9.21|12.48|S
+NG|Akwa Ibom|Uyo|5.04|7.93|SN
+NG|Anambra|Awka|6.21|7.07|S
+NG|Bauchi|Bauchi|10.32|9.84|S
+NG|Bayelsa|Yenagoa|4.92|6.27|S
+NG|Benue|Makurdi|7.74|8.52|S
+NG|Borno|Maiduguri|11.83|13.15|S
+NG|Cross River|Calabar|4.95|8.33|S
+NG|Delta|Asaba|6.20|6.73|S
+NG|Ebonyi|Abakaliki|6.32|8.11|S
+NG|Edo|Benin City|6.34|5.63|SN
+NG|Ekiti|Ado Ekiti|7.62|5.22|S
+NG|Enugu|Enugu|6.44|7.51|S
+NG|Federal Capital Territory|Abuja|9.06|7.49|S
+NG|Gombe|Gombe|10.29|11.17|S
+NG|Imo|Owerri|5.49|7.03|SN
+NG|Jigawa|Dutse|11.76|9.34|S
+NG|Kaduna|Kaduna|10.52|7.44|SN
+NG|Kano|Kano|12.00|8.52|SN
+NG|Katsina|Katsina|12.99|7.60|S
+NG|Kebbi|Birnin Kebbi|12.45|4.20|S
+NG|Kogi|Lokoja|7.80|6.74|S
+NG|Kwara|Ilorin|8.50|4.55|S
+NG|Lagos|Ikeja|6.60|3.34|S
+NG|Nasarawa|Lafia|8.49|8.52|S
+NG|Niger|Minna|9.62|6.55|S
+NG|Ogun|Abeokuta|7.15|3.35|S
+NG|Ondo|Akure|7.26|5.20|S
+NG|Osun|Osogbo|7.77|4.56|S
+NG|Oyo|Ibadan|7.39|3.90|SN
+NG|Plateau|Jos|9.93|8.89|S
+NG|Rivers|Port Harcourt|4.82|7.05|SN
+NG|Sokoto|Sokoto|13.06|5.24|S
+NG|Taraba|Jalingo|8.90|11.36|S
+NG|Yobe|Damaturu|11.75|11.96|S
+NG|Zamfara|Gusau|12.16|6.66|S
+NG|Lagos|Lagos|6.45|3.39|N
+NG|Anambra|Onitsha|6.15|6.79|N
+NG|Delta|Warri|5.52|5.75|N
+NU|Alofi North|Alofi|-19.04|-169.92|SN
+NU|Alofi South|Alofi|-19.06|-169.92|SN
+NU|Avatele|Avatele|-19.12|-169.91|SN
+NU|Hakupu|Hakupu|-19.13|-169.85|SN
+NU|Hikutavake|Hikutavake|-18.96|-169.88|S
+NU|Lakepa|Lakepa|-19.01|-169.80|SN
+NU|Liku|Liku|-19.05|-169.79|SN
+NU|Makefu|Makefu|-19.00|-169.91|S
+NU|Mutalau|Mutalau|-18.96|-169.83|SN
+NU|Namukulu|Namukulu|-18.98|-169.88|S
+NU|Tamakautoga|Tamakautoga|-19.10|-169.92|SN
+NU|Toi|Toi|-18.97|-169.85|S
+NU|Tuapa|Tuapa|-18.99|-169.90|SN
+NU|Vaiea|Vaiea|-19.13|-169.88|SN
+NF|Norfolk Island|Kingston|-29.05|167.97|SN
+NF|Norfolk Island|Burnt Pine|-29.03|167.95|N
+KP|Chagang|Kanggye|40.97|126.59|S
+KP|Kangwon|Wonsan|39.15|127.44|SN
+KP|North Hamgyong|Chongjin|41.80|129.78|SN
+KP|North Hwanghae|Sariwon|38.51|125.75|SN
+KP|North Pyongan|Sinuiju|40.10|124.40|SN
+KP|Ryanggang|Hyesan|41.40|128.18|S
+KP|South Hamgyong|Hamhung|39.92|127.54|SN
+KP|South Hwanghae|Haeju|38.04|125.71|S
+KP|South Pyongan|Pyongsong|39.25|125.87|S
+KP|Pyongyang|Pyongyang|39.03|125.75|SN
+KP|Nampo|Nampo|38.74|125.41|SN
+KP|Kaesong|Kaesong|37.97|126.55|SN
+KP|Rason|Rason|42.34|130.39|S
+KP|South Hamgyong|Tanchon|40.46|128.91|N
+KP|South Pyongan|Kaechon|39.70|125.91|N
+MK|Aerodrom|Aerodrom|41.99|21.47|S
+MK|Aračinovo|Aračinovo|42.02|21.56|S
+MK|Berovo|Berovo|41.71|22.86|S
+MK|Bitola|Bitola|41.03|21.34|SN
+MK|Bogdanci|Bogdanci|41.20|22.58|S
+MK|Bogovinje|Bogovinje|41.92|20.92|S
+MK|Bosilovo|Bosilovo|41.44|22.73|S
+MK|Brvenica|Brvenica|41.97|20.98|S
+MK|Butel|Butel|42.02|21.45|S
+MK|Centar|Skopje|42.00|21.43|SN
+MK|Centar Župa|Centar Župa|41.48|20.56|S
+MK|Čair|Čair|42.02|21.44|S
+MK|Čaška|Čaška|41.65|21.69|S
+MK|Češinovo-Obleševo|Obleševo|41.90|22.33|S
+MK|Čučer-Sandevo|Čučer-Sandevo|42.10|21.39|S
+MK|Debar|Debar|41.53|20.53|S
+MK|Debarca|Belčišta|41.35|20.82|S
+MK|Delčevo|Delčevo|41.97|22.77|S
+MK|Demir Hisar|Demir Hisar|41.22|21.20|S
+MK|Demir Kapija|Demir Kapija|41.41|22.24|S
+MK|Dojran|Star Dojran|41.18|22.72|S
+MK|Dolneni|Dolneni|41.43|21.45|S
+MK|Gazi Baba|Gazi Baba|42.01|21.50|S
+MK|Gevgelija|Gevgelija|41.14|22.50|S
+MK|Gjorče Petrov|Gjorče Petrov|42.01|21.35|S
+MK|Gostivar|Gostivar|41.80|20.91|SN
+MK|Gradsko|Gradsko|41.57|21.95|S
+MK|Ilinden|Ilinden|41.99|21.58|S
+MK|Jegunovce|Jegunovce|42.07|21.12|S
+MK|Karbinci|Karbinci|41.82|22.21|S
+MK|Karpoš|Karpoš|42.00|21.39|S
+MK|Kavadarci|Kavadarci|41.43|22.01|S
+MK|Kičevo|Kičevo|41.51|20.96|S
+MK|Kisela Voda|Kisela Voda|41.95|21.50|S
+MK|Kočani|Kočani|41.92|22.41|S
+MK|Konče|Konče|41.49|22.38|S
+MK|Kratovo|Kratovo|42.08|22.18|S
+MK|Kriva Palanka|Kriva Palanka|42.20|22.33|S
+MK|Krivogaštani|Krivogaštani|41.34|21.35|S
+MK|Kruševo|Kruševo|41.37|21.25|S
+MK|Kumanovo|Kumanovo|42.13|21.71|SN
+MK|Lipkovo|Lipkovo|42.16|21.59|S
+MK|Lozovo|Lozovo|41.79|21.90|S
+MK|Makedonska Kamenica|Makedonska Kamenica|42.02|22.59|S
+MK|Makedonski Brod|Makedonski Brod|41.51|21.22|S
+MK|Mavrovo and Rostuša|Rostuša|41.61|20.60|S
+MK|Mogila|Mogila|41.11|21.38|S
+MK|Negotino|Negotino|41.48|22.09|S
+MK|Novaci|Novaci|41.04|21.45|S
+MK|Novo Selo|Novo Selo|41.41|22.88|S
+MK|Ohrid|Ohrid|41.12|20.80|SN
+MK|Pehčevo|Pehčevo|41.76|22.89|S
+MK|Petrovec|Petrovec|41.94|21.61|S
+MK|Plasnica|Plasnica|41.47|21.12|S
+MK|Prilep|Prilep|41.34|21.55|SN
+MK|Probištip|Probištip|42.00|22.18|S
+MK|Radoviš|Radoviš|41.64|22.46|S
+MK|Rankovce|Rankovce|42.17|22.12|S
+MK|Resen|Resen|41.09|21.01|S
+MK|Rosoman|Rosoman|41.52|21.95|S
+MK|Saraj|Saraj|42.00|21.33|S
+MK|Sopište|Sopište|41.95|21.43|S
+MK|Staro Nagoričane|Staro Nagoričane|42.20|21.83|S
+MK|Struga|Struga|41.18|20.68|S
+MK|Strumica|Strumica|41.44|22.64|SN
+MK|Studeničani|Studeničani|41.92|21.55|S
+MK|Sveti Nikole|Sveti Nikole|41.87|21.94|S
+MK|Štip|Štip|41.75|22.20|SN
+MK|Šuto Orizari|Šuto Orizari|42.04|21.42|S
+MK|Tearce|Tearce|42.07|21.05|S
+MK|Tetovo|Tetovo|42.01|20.97|SN
+MK|Valandovo|Valandovo|41.32|22.56|S
+MK|Vasilevo|Vasilevo|41.48|22.64|S
+MK|Veles|Veles|41.72|21.78|SN
+MK|Vevčani|Vevčani|41.24|20.59|S
+MK|Vinica|Vinica|41.88|22.51|S
+MK|Vrapčište|Vrapčište|41.84|20.88|S
+MK|Zelenikovo|Zelenikovo|41.88|21.59|S
+MK|Zrnovci|Zrnovci|41.86|22.45|S
+MK|Želino|Želino|41.98|21.05|S
+MP|Northern Islands|Agrihan|18.77|145.67|S
+MP|Rota|Songsong|14.15|145.14|S
+MP|Saipan|Garapan|15.21|145.72|SN
+MP|Tinian|San Jose|14.97|145.63|S
+MP|Saipan|Kagman|15.18|145.78|N
+MP|Saipan|Finasisu|15.16|145.73|N
+MP|Saipan|San Antonio|15.15|145.70|N
+MP|Saipan|Koblerville|15.15|145.73|N
+MP|Saipan|Chalan Kanoa|15.15|145.72|N
+MP|Saipan|Dandan|15.16|145.76|N
+MP|Saipan|San Jose|15.17|145.74|N
+MP|Saipan|Gualo Rai|15.19|145.72|N
+MP|Saipan|San Vicente|15.17|145.77|N
+NO|Agder|Kristiansand|58.15|7.99|SN
+NO|Akershus|Lillestrøm|59.96|11.05|S
+NO|Buskerud|Drammen|59.74|10.21|SN
+NO|Finnmark|Vadsø|70.07|29.75|S
+NO|Innlandet|Hamar|60.79|11.07|S
+NO|Møre og Romsdal|Molde|62.74|7.16|S
+NO|Nordland|Bodø|67.28|14.40|S
+NO|Oslo|Oslo|59.91|10.75|SN
+NO|Rogaland|Stavanger|58.97|5.73|SN
+NO|Telemark|Skien|59.21|9.61|SN
+NO|Troms|Tromsø|69.65|18.96|S
+NO|Trøndelag|Steinkjer|64.02|11.50|S
+NO|Vestfold|Tønsberg|59.27|10.41|SN
+NO|Vestland|Bergen|60.39|5.32|SN
+NO|Østfold|Sarpsborg|59.28|11.11|S
+NO|Trøndelag|Trondheim|63.43|10.40|N
+NO|Østfold|Fredrikstad|59.22|10.93|N
+NO|Møre og Romsdal|Ålesund|62.47|6.15|N
+OM|Ad Dakhiliyah|Nizwa|22.93|57.53|SN
+OM|Ad Dhahirah|Ibri|23.23|56.52|S
+OM|Al Batinah North|Sohar|24.35|56.73|SN
+OM|Al Batinah South|Rustaq|23.39|57.42|S
+OM|Al Buraimi|Al Buraimi|24.25|55.80|SN
+OM|Al Wusta|Haima|19.97|56.28|S
+OM|Ash Sharqiyah North|Ibra|22.69|58.53|S
+OM|Ash Sharqiyah South|Sur|22.57|59.53|SN
+OM|Dhofar|Salalah|17.02|54.09|SN
+OM|Musandam|Khasab|26.18|56.25|S
+OM|Muscat|Muscat|23.61|58.59|S
+OM|Muscat|Seeb|23.67|58.19|N
+OM|Muscat|Bawshar|23.57|58.42|N
+OM|Muscat|Muttrah|23.62|58.56|N
+OM|Muscat|Al Amarat|23.51|58.53|N
+OM|Ash Sharqiyah South|Ja'alan Bani Bu Ali|22.00|59.34|N
+PK|Azad Jammu and Kashmir|Muzaffarabad|34.37|73.47|S
+PK|Balochistan|Quetta|30.18|66.98|SN
+PK|Gilgit-Baltistan|Gilgit|35.92|74.31|S
+PK|Islamabad Capital Territory|Islamabad|33.69|73.06|SN
+PK|Khyber Pakhtunkhwa|Peshawar|34.01|71.58|SN
+PK|Punjab|Lahore|31.55|74.34|SN
+PK|Sindh|Karachi|24.86|67.01|SN
+PK|Punjab|Faisalabad|31.42|73.08|N
+PK|Punjab|Rawalpindi|33.60|73.05|N
+PK|Punjab|Gujranwala|32.16|74.19|N
+PK|Punjab|Multan|30.20|71.47|N
+PK|Sindh|Hyderabad|25.40|68.37|N
+PW|Aimeliik|Ngchemiangel|7.45|134.48|S
+PW|Airai|Ngetkib|7.37|134.54|SN
+PW|Angaur|Ngaramasch|6.90|134.13|S
+PW|Hatohobei|Tobi|3.00|131.12|S
+PW|Kayangel|Kayangel|8.08|134.72|S
+PW|Koror|Koror|7.34|134.47|SN
+PW|Melekeok|Melekeok|7.50|134.64|S
+PW|Ngaraard|Ulimang|7.62|134.64|S
+PW|Ngarchelong|Mengellang|7.70|134.63|S
+PW|Ngardmau|Urdmang|7.61|134.57|S
+PW|Ngatpang|Ngereklmadel|7.49|134.49|S
+PW|Ngchesar|Ngersuul|7.47|134.61|S
+PW|Ngeremlengui|Imeong|7.53|134.53|S
+PW|Ngiwal|Ngerkeai|7.55|134.64|S
+PW|Peleliu|Kloulklubed|7.04|134.26|SN
+PW|Sonsorol|Dongosaru|5.33|132.22|S
+PW|Airai|Ngerusar|7.36|134.54|N
+PW|Koror|Meyuns|7.35|134.46|N
+PW|Ngeremlengui|Bkulangriil|7.52|134.51|N
+```
+
+### Naming caveats
+
+NZ — Sixteen regions plus the separately administered Chatham Islands Territory, which lies outside the regional-council system. Whangārei is also Whangarei; Manawatū-Whanganui is also Manawatu-Wanganui. Hibiscus Coast is excluded from the top-ten city ranking because it is treated as an Auckland urban area rather than a separate city.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.stats.govt.nz\&sz=32)
+
+Stats NZ+1
+
+
+
+NI — Fifteen departments plus two Caribbean autonomous regions. North Caribbean Coast is RACCN, formerly RAAN; South Caribbean Coast is RACCS, formerly RAAS. Bilwi is also Puerto Cabezas. The top ten follow 2023 national population estimates.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.worldometers.info\&sz=32)
+
+Worldometer
+
+
+
+NE — Seven regions plus the Niamey Capital District. Birni N'Konni is also Birni Nkonni; Tillabéri is also Tillabéry. The ten largest use the 2012 city-census baseline, as more recent urban-agglomeration estimates rank some differently.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://en.wikipedia.org\&sz=32)
+
+Wikipedia+1
+
+
+
+NG — Thirty-six states plus the Federal Capital Territory. Ikeja is the capital of Lagos State, while Lagos is its largest city. Top-ten N designations follow the UN 2025 urban-area estimates, under which Onitsha and Owerri rank unusually high compared with older city-proper rankings; Abuja is still included as the FCT capital.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://statisticstimes.com\&sz=32)
+
+Statistics Times
+
+
+
+NU — Fourteen village council areas. Alofi North and Alofi South share the settlement name Alofi, but are distinct census divisions. Their SN markers and the other village markers use the 2022 census village populations.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://niuestatistics.nu\&sz=32)
+
+Niue Statistics Office
+
+
+
+NF — Norfolk Island has no separate first-level provincial system. Kingston is the administrative capital; Burnt Pine is its main commercial settlement. Both are represented under the island-wide local-government area.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://geodatakit.com\&sz=32)
+
+CSV, JSON & GeoJSON · GeoDataKit
+
+
+
+KP — Nine provinces plus four directly administered or special cities: Pyongyang, Nampo, Kaesong and Rason. Ryanggang is also Yanggang, Chagang is also Jagang, and Sinuiju is also Sinŭiju. The N ranking uses conventional city populations rather than the newer UN urban-area estimates, which sometimes identify individual urban districts as separate cities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.thefactbook.org\&sz=32)
+
+The Factbook+1
+
+
+
+MK — Eight statistical regions are not the first-level municipal-government units used here. All 80 municipalities are included, including 10 within Greater Skopje; Skopje is represented under central Skopje. Češinovo-Obleševo has its centre at Obleševo, Debarca at Belčišta, Dojran at Star Dojran and Mavrovo and Rostuša at Rostuša.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://assets.publishing.service.gov.uk\&sz=32)
+
+GOV.UK+1
+
+
+
+MP — Four municipalities: Saipan, Tinian, Rota and Northern Islands. Tinian and Aguiguan are administered together. The Northern Islands have very few permanent residents; Agrihan is used as the principal populated reference settlement. Saipan's N villages reflect the 2020 census and San Jose appears separately on Saipan and Tinian.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://opd.gov.mp\&sz=32)
+
+INTRODUCTION+1
+
+
+
+NO — Fifteen counties following the 2024 splits of Viken, Vestfold og Telemark and Troms og Finnmark. Akershus is represented by Lillestrøm as a major city rather than its county offices in Oslo. Norway's official urban-settlement classification combines Stavanger/Sandnes, Fredrikstad/Sarpsborg and Porsgrunn/Skien; the N choices use identifiable constituent cities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.ssb.no\&sz=32)
+
+SSB+1
+
+
+
+OM — Eleven governorates. Al Batinah and Ash Sharqiyah each have separate North and South governorates. Muscat's urban area covers multiple separately named places, including Seeb, Bawshar and Muttrah; the N markers use the 2020 census settlement ranking.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.fm.gov.om\&sz=32)
+
+fm.gov.om+1
+
+
+
+PK — Four provinces, Islamabad Capital Territory, Gilgit-Baltistan and Azad Jammu and Kashmir. The last two are Pakistan-administered territories in the internationally disputed Kashmir region; their status is not equivalent to ordinary provinces. Pakistan's N markers follow the 2023 national census, with Karachi first and Islamabad tenth.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.pbos.gov.pk\&sz=32)
+
+Punjab Board of Secondary Education+1
+
+
+
+PW — Sixteen states. Palau's national capital is Ngerulmud in Melekeok State, while Koror is its largest city. Melekeok village is used for the state seat, Ngetkib for Airai, and Ngereklmadel for Ngatpang. Palau has fewer than ten separately ranked built-up settlements in the 2020 census, so N markers are limited accordingly.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.palaugov.pw\&sz=32)
+
+palaugov.pw+2
+
+
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island. Seven previously unmatched reference points.
+- Round 12: NL — The Bottom (Saba), Oranjestad (Sint Eustatius). Two previously unmatched reference points.
+- Round 13: Match all new reference points against Overture business data; coverage is not yet verified.
+- Geographic exceptions: Verify sparse island settlements in NU, NF, MP and PW, where village-level data and municipality-level place names may not align.
+- Administrative and population definitions: Reconcile North Macedonia's Skopje municipalities, Norway's combined urban settlements, Niger's changing population rankings and Pakistan's disputed administrative territories before treating the reference as a strict validation dataset.
+
+
+---
+
+## Claude Code - 2026-11-08 20:30 UTC - 14_claude.md - attachments: none
+
+## Check of your message-13 list
+Round 13: 278 reference lines, 278 cities, 274 with business data (99 %).
+Not covered: - MP: 12/13 cities covered, 9,509 businesses near them; no data at: Agrihan
+Not covered: - PW: 16/19 cities covered, 1,803 businesses near them; no data at: Ngaramasch, Tobi, Dongosaru
+
+Same format again:
+
+
+## Message 14 of 19 - countries
+Palestinian Territories (PS), Panama (PA), Papua New Guinea (PG), Paraguay (PY), Peru (PE), Philippines (PH), Pitcairn Islands (PN), Poland (PL), Portugal (PT), Puerto Rico (PR), Qatar (QA), Réunion (RE), Romania (RO)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 20:42 UTC - saved as 14_chatgpt.md
+
+```
+PS|Bethlehem|Bethlehem|31.70|35.20|S
+PS|Deir al-Balah|Deir al-Balah|31.42|34.35|SN
+PS|Gaza|Gaza|31.50|34.47|SN
+PS|Hebron|Hebron|31.53|35.10|SN
+PS|Jenin|Jenin|32.46|35.30|S
+PS|Jericho|Jericho|31.86|35.46|S
+PS|Jerusalem|East Jerusalem|31.78|35.24|SN
+PS|Khan Yunis|Khan Yunis|31.35|34.30|SN
+PS|Nablus|Nablus|32.22|35.26|SN
+PS|North Gaza|Jabalia|31.53|34.48|SN
+PS|Qalqilya|Qalqilya|32.19|34.97|S
+PS|Rafah|Rafah|31.30|34.25|SN
+PS|Ramallah and al-Bireh|Ramallah|31.90|35.20|S
+PS|Salfit|Salfit|32.08|35.18|S
+PS|Tubas|Tubas|32.32|35.37|S
+PS|Tulkarm|Tulkarm|32.31|35.03|S
+PS|North Gaza|Beit Lahia|31.55|34.50|N
+PS|Deir al-Balah|Nuseirat|31.45|34.39|N
+PA|Bocas del Toro|Bocas del Toro|9.34|-82.24|S
+PA|Chiriquí|David|8.43|-82.43|SN
+PA|Coclé|Penonomé|8.52|-80.36|S
+PA|Colón|Colón|9.36|-79.90|SN
+PA|Darién|La Palma|8.41|-78.15|S
+PA|Herrera|Chitré|7.96|-80.43|SN
+PA|Los Santos|Las Tablas|7.77|-80.28|S
+PA|Panamá|Panama City|8.98|-79.52|SN
+PA|Panamá Oeste|La Chorrera|8.88|-79.78|SN
+PA|Veraguas|Santiago de Veraguas|8.10|-80.98|SN
+PA|Emberá-Wounaan|Unión Chocó|8.08|-77.54|S
+PA|Guna Yala|Gaigirgordub|9.56|-78.95|S
+PA|Ngäbe-Buglé|Llano Tugrí|8.48|-81.71|S
+PA|Panamá|San Miguelito|9.03|-79.50|N
+PA|Panamá Oeste|Arraiján|8.95|-79.65|N
+PA|Panamá Oeste|Vista Alegre|8.93|-79.70|N
+PA|Bocas del Toro|Changuinola|9.43|-82.52|N
+PG|Autonomous Region of Bougainville|Buka|-5.43|154.67|S
+PG|Central|Kwikila|-9.81|147.66|S
+PG|Chimbu|Kundiawa|-6.02|144.97|S
+PG|East New Britain|Kokopo|-4.35|152.26|SN
+PG|East Sepik|Wewak|-3.55|143.63|SN
+PG|Eastern Highlands|Goroka|-6.08|145.39|SN
+PG|Enga|Wabag|-5.49|143.72|S
+PG|Gulf|Kerema|-7.97|145.77|S
+PG|Hela|Tari|-5.85|142.95|S
+PG|Jiwaka|Banz|-5.80|144.61|S
+PG|Madang|Madang|-5.22|145.79|SN
+PG|Manus|Lorengau|-2.02|147.28|S
+PG|Milne Bay|Alotau|-10.31|150.45|S
+PG|Morobe|Lae|-6.73|146.99|SN
+PG|National Capital District|Port Moresby|-9.44|147.18|SN
+PG|New Ireland|Kavieng|-2.57|150.80|S
+PG|Northern|Popondetta|-8.77|148.24|SN
+PG|Southern Highlands|Mendi|-6.15|143.65|S
+PG|West New Britain|Kimbe|-5.55|150.15|SN
+PG|West Sepik|Vanimo|-2.68|141.30|S
+PG|Western|Daru|-9.08|143.21|S
+PG|Western Highlands|Mount Hagen|-5.86|144.23|SN
+PG|Autonomous Region of Bougainville|Arawa|-6.22|155.54|N
+PY|Alto Paraguay|Fuerte Olimpo|-21.04|-57.87|S
+PY|Alto Paraná|Ciudad del Este|-25.51|-54.61|SN
+PY|Amambay|Pedro Juan Caballero|-22.55|-55.73|S
+PY|Boquerón|Filadelfia|-22.36|-60.03|S
+PY|Caaguazú|Coronel Oviedo|-25.45|-56.44|S
+PY|Caazapá|Caazapá|-26.20|-56.37|S
+PY|Canindeyú|Salto del Guairá|-24.06|-54.31|S
+PY|Capital District|Asunción|-25.28|-57.64|SN
+PY|Central|Areguá|-25.31|-57.38|S
+PY|Concepción|Concepción|-23.41|-57.43|S
+PY|Cordillera|Caacupé|-25.39|-57.14|S
+PY|Guairá|Villarrica|-25.78|-56.45|S
+PY|Itapúa|Encarnación|-27.33|-55.87|SN
+PY|Misiones|San Juan Bautista|-26.67|-57.15|S
+PY|Ñeembucú|Pilar|-26.87|-58.29|S
+PY|Paraguarí|Paraguarí|-25.62|-57.15|S
+PY|Presidente Hayes|Villa Hayes|-25.09|-57.52|S
+PY|San Pedro|San Pedro de Ycuamandiyú|-24.09|-57.08|S
+PY|Central|San Lorenzo|-25.34|-57.51|N
+PY|Central|Capiatá|-25.35|-57.42|N
+PY|Central|Luque|-25.27|-57.49|N
+PY|Central|Lambaré|-25.35|-57.60|N
+PY|Central|Limpio|-25.17|-57.48|N
+PY|Central|Fernando de la Mora|-25.32|-57.54|N
+PY|Central|Ñemby|-25.39|-57.54|N
+PE|Amazonas|Chachapoyas|-6.23|-77.87|S
+PE|Áncash|Huaraz|-9.53|-77.53|S
+PE|Apurímac|Abancay|-13.64|-72.88|S
+PE|Arequipa|Arequipa|-16.40|-71.54|SN
+PE|Ayacucho|Ayacucho|-13.16|-74.22|S
+PE|Cajamarca|Cajamarca|-7.16|-78.52|S
+PE|Callao|Callao|-12.06|-77.13|SN
+PE|Cusco|Cusco|-13.52|-71.97|SN
+PE|Huancavelica|Huancavelica|-12.79|-74.97|S
+PE|Huánuco|Huánuco|-9.93|-76.24|S
+PE|Ica|Ica|-14.07|-75.73|S
+PE|Junín|Huancayo|-12.07|-75.21|SN
+PE|La Libertad|Trujillo|-8.11|-79.03|SN
+PE|Lambayeque|Chiclayo|-6.77|-79.84|SN
+PE|Lima Province|Lima|-12.05|-77.04|SN
+PE|Lima Region|Huacho|-11.12|-77.61|S
+PE|Loreto|Iquitos|-3.75|-73.25|SN
+PE|Madre de Dios|Puerto Maldonado|-12.59|-69.19|S
+PE|Moquegua|Moquegua|-17.20|-70.93|S
+PE|Pasco|Cerro de Pasco|-10.68|-76.26|S
+PE|Piura|Piura|-5.19|-80.63|SN
+PE|Puno|Puno|-15.84|-70.02|S
+PE|San Martín|Moyobamba|-6.03|-76.97|S
+PE|Tacna|Tacna|-18.01|-70.25|S
+PE|Tumbes|Tumbes|-3.57|-80.45|S
+PE|Ucayali|Pucallpa|-8.38|-74.55|S
+PE|Áncash|Chimbote|-9.07|-78.59|N
+PH|Abra|Bangued|17.61|120.64|S
+PH|Agusan del Norte|Cabadbaran|9.12|125.53|S
+PH|Agusan del Sur|Prosperidad|8.61|125.92|S
+PH|Aklan|Kalibo|11.71|122.36|S
+PH|Albay|Legazpi|13.14|123.73|S
+PH|Antique|San Jose de Buenavista|10.74|121.94|S
+PH|Apayao|Kabugao|18.02|121.18|S
+PH|Aurora|Baler|15.76|121.56|S
+PH|Basilan|Lamitan|6.66|122.13|S
+PH|Bataan|Balanga|14.68|120.54|S
+PH|Batanes|Basco|20.45|121.97|S
+PH|Batangas|Batangas City|13.76|121.06|S
+PH|Benguet|La Trinidad|16.45|120.59|S
+PH|Biliran|Naval|11.56|124.40|S
+PH|Bohol|Tagbilaran|9.65|123.85|S
+PH|Bukidnon|Malaybalay|8.15|125.13|S
+PH|Bulacan|Malolos|14.84|120.81|S
+PH|Cagayan|Tuguegarao|17.61|121.73|S
+PH|Camarines Norte|Daet|14.11|122.95|S
+PH|Camarines Sur|Pili|13.56|123.27|S
+PH|Camiguin|Mambajao|9.25|124.71|S
+PH|Capiz|Roxas City|11.59|122.75|S
+PH|Catanduanes|Virac|13.58|124.24|S
+PH|Cavite|Imus|14.43|120.94|S
+PH|Cebu|Cebu City|10.32|123.89|SN
+PH|Cotabato|Kidapawan|7.01|125.09|S
+PH|Davao de Oro|Nabunturan|7.60|125.97|S
+PH|Davao del Norte|Tagum|7.45|125.81|S
+PH|Davao del Sur|Digos|6.75|125.36|S
+PH|Davao Occidental|Malita|6.41|125.61|S
+PH|Davao Oriental|Mati|6.95|126.22|S
+PH|Dinagat Islands|San Jose|10.02|125.56|S
+PH|Eastern Samar|Borongan|11.61|125.43|S
+PH|Guimaras|Jordan|10.60|122.59|S
+PH|Ifugao|Lagawe|16.80|121.12|S
+PH|Ilocos Norte|Laoag|18.20|120.60|S
+PH|Ilocos Sur|Vigan|17.58|120.39|S
+PH|Iloilo|Iloilo City|10.72|122.56|S
+PH|Isabela|Ilagan|17.15|121.89|S
+PH|Kalinga|Tabuk|17.47|121.47|S
+PH|La Union|San Fernando|16.62|120.32|S
+PH|Laguna|Santa Cruz|14.28|121.42|S
+PH|Lanao del Norte|Tubod|8.05|123.79|S
+PH|Lanao del Sur|Marawi|8.00|124.30|S
+PH|Leyte|Tacloban|11.24|125.00|S
+PH|Maguindanao del Norte|Datu Odin Sinsuat|7.23|124.19|S
+PH|Maguindanao del Sur|Buluan|6.72|124.80|S
+PH|Marinduque|Boac|13.45|121.84|S
+PH|Masbate|Masbate City|12.37|123.62|S
+PH|Misamis Occidental|Oroquieta|8.49|123.81|S
+PH|Misamis Oriental|Cagayan de Oro|8.48|124.65|S
+PH|Mountain Province|Bontoc|17.09|120.98|S
+PH|National Capital Region|Manila|14.60|120.98|SN
+PH|Negros Occidental|Bacolod|10.67|122.95|S
+PH|Negros Oriental|Dumaguete|9.31|123.31|S
+PH|Northern Samar|Catarman|12.50|124.64|S
+PH|Nueva Ecija|Palayan|15.54|121.09|S
+PH|Nueva Vizcaya|Bayombong|16.48|121.15|S
+PH|Occidental Mindoro|Mamburao|13.22|120.60|S
+PH|Oriental Mindoro|Calapan|13.41|121.18|S
+PH|Palawan|Puerto Princesa|9.74|118.74|S
+PH|Pampanga|San Fernando|15.03|120.69|S
+PH|Pangasinan|Lingayen|16.02|120.23|S
+PH|Quezon|Lucena|13.94|121.62|S
+PH|Quirino|Cabarroguis|16.52|121.52|S
+PH|Rizal|Antipolo|14.59|121.18|SN
+PH|Romblon|Romblon|12.58|122.27|S
+PH|Samar|Catbalogan|11.78|124.89|S
+PH|Sarangani|Alabel|6.10|125.29|S
+PH|Siquijor|Siquijor|9.21|123.51|S
+PH|Sorsogon|Sorsogon City|12.97|124.01|S
+PH|South Cotabato|Koronadal|6.50|124.85|S
+PH|Southern Leyte|Maasin|10.13|124.84|S
+PH|Sultan Kudarat|Isulan|6.63|124.61|S
+PH|Sulu|Jolo|6.05|121.00|S
+PH|Surigao del Norte|Surigao City|9.79|125.50|S
+PH|Surigao del Sur|Tandag|9.07|126.20|S
+PH|Tarlac|Tarlac City|15.48|120.60|S
+PH|Tawi-Tawi|Bongao|5.03|119.77|S
+PH|Zambales|Iba|15.33|119.98|S
+PH|Zamboanga del Norte|Dipolog|8.59|123.34|S
+PH|Zamboanga del Sur|Pagadian|7.83|123.44|S
+PH|Zamboanga Sibugay|Ipil|7.79|122.59|S
+PH|National Capital Region|Quezon City|14.68|121.04|N
+PH|National Capital Region|Caloocan|14.65|120.97|N
+PH|National Capital Region|Taguig|14.52|121.05|N
+PH|National Capital Region|Pasig|14.58|121.08|N
+PH|Davao del Sur|Davao City|7.07|125.61|N
+PH|Zamboanga del Sur|Zamboanga City|6.91|122.07|N
+PH|Cavite|Dasmariñas|14.33|120.94|N
+PN|Pitcairn Island|Adamstown|-25.07|-130.10|SN
+PL|Greater Poland|Poznań|52.41|16.93|SN
+PL|Kuyavian-Pomeranian|Bydgoszcz|53.12|18.01|SN
+PL|Kuyavian-Pomeranian|Toruń|53.01|18.61|S
+PL|Lesser Poland|Kraków|50.06|19.94|SN
+PL|Łódź|Łódź|51.76|19.46|SN
+PL|Lower Silesian|Wrocław|51.11|17.03|SN
+PL|Lublin|Lublin|51.25|22.57|SN
+PL|Lubusz|Gorzów Wielkopolski|52.74|15.23|S
+PL|Lubusz|Zielona Góra|51.94|15.50|S
+PL|Masovian|Warsaw|52.23|21.01|SN
+PL|Opole|Opole|50.67|17.93|S
+PL|Podlaskie|Białystok|53.13|23.17|SN
+PL|Pomeranian|Gdańsk|54.35|18.65|SN
+PL|Silesian|Katowice|50.26|19.02|S
+PL|Subcarpathian|Rzeszów|50.04|22.00|S
+PL|Świętokrzyskie|Kielce|50.87|20.63|S
+PL|Warmian-Masurian|Olsztyn|53.78|20.49|S
+PL|West Pomeranian|Szczecin|53.43|14.55|SN
+PT|Aveiro|Aveiro|40.64|-8.65|S
+PT|Azores|Ponta Delgada|37.74|-25.67|S
+PT|Beja|Beja|38.01|-7.86|S
+PT|Braga|Braga|41.55|-8.43|SN
+PT|Bragança|Bragança|41.81|-6.76|S
+PT|Castelo Branco|Castelo Branco|39.82|-7.49|S
+PT|Coimbra|Coimbra|40.20|-8.43|SN
+PT|Évora|Évora|38.57|-7.91|S
+PT|Faro|Faro|37.02|-7.93|S
+PT|Guarda|Guarda|40.54|-7.27|S
+PT|Leiria|Leiria|39.74|-8.81|S
+PT|Lisbon|Lisbon|38.72|-9.14|SN
+PT|Madeira|Funchal|32.65|-16.91|SN
+PT|Portalegre|Portalegre|39.30|-7.43|S
+PT|Porto|Porto|41.15|-8.61|SN
+PT|Santarém|Santarém|39.24|-8.69|S
+PT|Setúbal|Setúbal|38.52|-8.89|SN
+PT|Viana do Castelo|Viana do Castelo|41.70|-8.83|S
+PT|Vila Real|Vila Real|41.30|-7.74|S
+PT|Viseu|Viseu|40.66|-7.91|S
+PT|Porto|Vila Nova de Gaia|41.13|-8.62|N
+PT|Lisbon|Amadora|38.76|-9.23|N
+PT|Setúbal|Almada|38.68|-9.16|N
+PT|Lisbon|Agualva-Cacém|38.77|-9.30|N
+PR|Adjuntas|Adjuntas|18.16|-66.72|S
+PR|Aguada|Aguada|18.38|-67.19|S
+PR|Aguadilla|Aguadilla|18.43|-67.15|S
+PR|Aguas Buenas|Aguas Buenas|18.26|-66.10|S
+PR|Aibonito|Aibonito|18.14|-66.27|S
+PR|Añasco|Añasco|18.28|-67.14|S
+PR|Arecibo|Arecibo|18.47|-66.72|SN
+PR|Arroyo|Arroyo|17.97|-66.06|S
+PR|Barceloneta|Barceloneta|18.46|-66.54|S
+PR|Barranquitas|Barranquitas|18.19|-66.31|S
+PR|Bayamón|Bayamón|18.40|-66.16|SN
+PR|Cabo Rojo|Cabo Rojo|18.09|-67.15|S
+PR|Caguas|Caguas|18.23|-66.04|SN
+PR|Camuy|Camuy|18.48|-66.85|S
+PR|Canóvanas|Canóvanas|18.38|-65.90|S
+PR|Carolina|Carolina|18.38|-65.96|SN
+PR|Cataño|Cataño|18.44|-66.12|S
+PR|Cayey|Cayey|18.11|-66.17|S
+PR|Ceiba|Ceiba|18.26|-65.65|S
+PR|Ciales|Ciales|18.34|-66.47|S
+PR|Cidra|Cidra|18.18|-66.16|S
+PR|Coamo|Coamo|18.08|-66.36|S
+PR|Comerío|Comerío|18.22|-66.23|S
+PR|Corozal|Corozal|18.34|-66.32|S
+PR|Culebra|Culebra|18.31|-65.30|S
+PR|Dorado|Dorado|18.46|-66.27|S
+PR|Fajardo|Fajardo|18.33|-65.65|S
+PR|Florida|Florida|18.36|-66.56|S
+PR|Guánica|Guánica|17.97|-66.91|S
+PR|Guayama|Guayama|17.98|-66.11|S
+PR|Guayanilla|Guayanilla|18.02|-66.79|S
+PR|Guaynabo|Guaynabo|18.36|-66.11|SN
+PR|Gurabo|Gurabo|18.25|-65.97|S
+PR|Hatillo|Hatillo|18.49|-66.83|S
+PR|Hormigueros|Hormigueros|18.14|-67.13|S
+PR|Humacao|Humacao|18.15|-65.83|S
+PR|Isabela|Isabela|18.50|-67.02|S
+PR|Jayuya|Jayuya|18.22|-66.59|S
+PR|Juana Díaz|Juana Díaz|18.05|-66.51|S
+PR|Juncos|Juncos|18.23|-65.92|S
+PR|Lajas|Lajas|18.05|-67.06|S
+PR|Lares|Lares|18.29|-66.88|S
+PR|Las Marías|Las Marías|18.25|-66.99|S
+PR|Las Piedras|Las Piedras|18.18|-65.87|S
+PR|Loíza|Loíza|18.43|-65.88|S
+PR|Luquillo|Luquillo|18.37|-65.72|S
+PR|Manatí|Manatí|18.43|-66.49|S
+PR|Maricao|Maricao|18.18|-66.98|S
+PR|Maunabo|Maunabo|18.01|-65.90|S
+PR|Mayagüez|Mayagüez|18.20|-67.14|SN
+PR|Moca|Moca|18.39|-67.11|S
+PR|Morovis|Morovis|18.33|-66.41|S
+PR|Naguabo|Naguabo|18.21|-65.73|S
+PR|Naranjito|Naranjito|18.30|-66.24|S
+PR|Orocovis|Orocovis|18.23|-66.39|S
+PR|Patillas|Patillas|18.00|-66.01|S
+PR|Peñuelas|Peñuelas|18.06|-66.72|S
+PR|Ponce|Ponce|18.01|-66.61|SN
+PR|Quebradillas|Quebradillas|18.47|-66.94|S
+PR|Rincón|Rincón|18.34|-67.25|S
+PR|Río Grande|Río Grande|18.38|-65.83|S
+PR|Sabana Grande|Sabana Grande|18.08|-66.96|S
+PR|Salinas|Salinas|17.98|-66.30|S
+PR|San Germán|San Germán|18.08|-67.04|S
+PR|San Juan|San Juan|18.45|-66.07|SN
+PR|San Lorenzo|San Lorenzo|18.19|-65.96|S
+PR|San Sebastián|San Sebastián|18.34|-66.99|S
+PR|Santa Isabel|Santa Isabel|17.97|-66.40|S
+PR|Toa Alta|Toa Alta|18.39|-66.25|S
+PR|Toa Baja|Toa Baja|18.45|-66.26|SN
+PR|Trujillo Alto|Trujillo Alto|18.36|-66.02|SN
+PR|Utuado|Utuado|18.27|-66.70|S
+PR|Vega Alta|Vega Alta|18.41|-66.33|S
+PR|Vega Baja|Vega Baja|18.45|-66.39|S
+PR|Vieques|Vieques|18.15|-65.44|S
+PR|Villalba|Villalba|18.13|-66.49|S
+PR|Yabucoa|Yabucoa|18.05|-65.88|S
+PR|Yauco|Yauco|18.03|-66.85|S
+QA|Al Daayen|Umm Qarn|25.58|51.45|S
+QA|Al Khor and Al Thakhira|Al Khor|25.68|51.51|SN
+QA|Al Rayyan|Al Rayyan|25.29|51.42|SN
+QA|Al Shahaniya|Al Shahaniya|25.37|51.23|SN
+QA|Al Shamal|Madinat ash Shamal|26.13|51.20|S
+QA|Al Wakrah|Al Wakrah|25.17|51.60|SN
+QA|Doha|Doha|25.29|51.53|SN
+QA|Umm Salal|Umm Salal Ali|25.47|51.40|S
+QA|Doha|Doha Industrial Area|25.20|51.45|N
+QA|Umm Salal|Umm Salal Mohammed|25.42|51.39|N
+QA|Al Wakrah|Al Wukair|25.13|51.58|N
+QA|Al Daayen|Al Kheesa|25.42|51.48|N
+QA|Al Rayyan|Rawdat Rashed|25.34|51.05|N
+RE|Saint-Benoît Arrondissement|Saint-Benoît|-21.03|55.72|SN
+RE|Saint-Denis Arrondissement|Saint-Denis|-20.88|55.45|SN
+RE|Saint-Paul Arrondissement|Saint-Paul|-21.01|55.27|SN
+RE|Saint-Pierre Arrondissement|Saint-Pierre|-21.34|55.48|SN
+RE|Saint-Pierre Arrondissement|Le Tampon|-21.28|55.52|N
+RE|Saint-Benoît Arrondissement|Saint-André|-20.96|55.65|N
+RE|Saint-Pierre Arrondissement|Saint-Louis|-21.29|55.41|N
+RE|Saint-Pierre Arrondissement|Saint-Joseph|-21.38|55.62|N
+RE|Saint-Denis Arrondissement|Sainte-Marie|-20.90|55.55|N
+RE|Saint-Paul Arrondissement|La Possession|-20.93|55.33|N
+RO|Alba|Alba Iulia|46.07|23.57|S
+RO|Arad|Arad|46.18|21.31|S
+RO|Argeș|Pitești|44.86|24.87|S
+RO|Bacău|Bacău|46.57|26.91|S
+RO|Bihor|Oradea|47.05|21.93|SN
+RO|Bistrița-Năsăud|Bistrița|47.13|24.50|S
+RO|Botoșani|Botoșani|47.75|26.67|S
+RO|Brăila|Brăila|45.27|27.96|S
+RO|Brașov|Brașov|45.65|25.60|SN
+RO|Bucharest Municipality|Bucharest|44.43|26.10|SN
+RO|Buzău|Buzău|45.15|26.82|S
+RO|Călărași|Călărași|44.21|27.33|S
+RO|Caraș-Severin|Reșița|45.30|21.89|S
+RO|Cluj|Cluj-Napoca|46.77|23.59|SN
+RO|Constanța|Constanța|44.18|28.65|SN
+RO|Covasna|Sfântu Gheorghe|45.87|25.79|S
+RO|Dâmbovița|Târgoviște|44.93|25.46|S
+RO|Dolj|Craiova|44.32|23.80|SN
+RO|Galați|Galați|45.44|28.04|SN
+RO|Giurgiu|Giurgiu|43.90|25.97|S
+RO|Gorj|Târgu Jiu|45.05|23.27|S
+RO|Harghita|Miercurea Ciuc|46.36|25.80|S
+RO|Hunedoara|Deva|45.88|22.90|S
+RO|Ialomița|Slobozia|44.56|27.37|S
+RO|Iași|Iași|47.16|27.59|SN
+RO|Ilfov|Popești-Leordeni|44.38|26.17|S
+RO|Maramureș|Baia Mare|47.66|23.57|S
+RO|Mehedinți|Drobeta-Turnu Severin|44.63|22.66|S
+RO|Mureș|Târgu Mureș|46.54|24.56|S
+RO|Neamț|Piatra Neamț|46.93|26.37|S
+RO|Olt|Slatina|44.43|24.37|S
+RO|Prahova|Ploiești|44.95|26.02|SN
+RO|Sălaj|Zalău|47.19|23.06|S
+RO|Satu Mare|Satu Mare|47.79|22.89|S
+RO|Sibiu|Sibiu|45.80|24.15|S
+RO|Suceava|Suceava|47.63|26.26|S
+RO|Teleorman|Alexandria|43.97|25.33|S
+RO|Timiș|Timișoara|45.75|21.23|SN
+RO|Tulcea|Tulcea|45.18|28.80|S
+RO|Vâlcea|Râmnicu Vâlcea|45.10|24.37|S
+RO|Vaslui|Vaslui|46.64|27.73|S
+RO|Vrancea|Focșani|45.70|27.18|S
+```
+
+### Naming caveats
+
+PS — 16 governorates: 11 in the West Bank and five in Gaza. East Jerusalem has disputed sovereignty and administrative status. Gaza population rankings use prewar data and do not reflect displacement and destruction since October 2023.
+
+PA — Ten provinces and three province-level indigenous comarcas. Guna Yala's Gaigirgordub is also known as El Porvenir; Llano Tugrí is also Buäbti. Other indigenous comarcas are subordinate administrative units.
+
+PG — Twenty provinces, the Autonomous Region of Bougainville and the National Capital District. Central Province's administration is based in Port Moresby, outside the province, so Kwikila is used as a local reference. Jiwaka's capital arrangements have involved Banz and Kurumul.
+
+PY — Seventeen departments plus the separately administered Asunción Capital District. Ciudad del Este was formerly Puerto Presidente Stroessner. San Pedro de Ycuamandiyú is commonly shortened to San Pedro.
+
+PE — Twenty-four departments plus Callao and the separately governed Lima Province. Lima Region is distinct from Lima Province and has its regional-government seat in Huacho. Ayacucho is also historically Huamanga.
+
+PH — Eighty-two provinces plus the National Capital Region are used as geographic reference units; administrative regions form a separate grouping above provinces. Sulu is associated with Zamboanga Peninsula following its removal from BARMM, Negros Island Region was restored in 2024, and Maguindanao is divided into two provinces. Several highly urbanized cities are administratively independent of their surrounding provinces.
+
+PN — Only Pitcairn Island is permanently inhabited; Adamstown is its sole settlement. Henderson, Ducie and Oeno islands have no permanent residents.
+
+PL — Sixteen voivodeships. Kuyavian-Pomeranian has administrative seats in Bydgoszcz and Toruń; Lubusz has seats in Gorzów Wielkopolski and Zielona Góra. Accordingly, both cities are included for each of those voivodeships.
+
+PT — Eighteen mainland districts plus the autonomous regions of the Azores and Madeira. The Azores have government functions distributed among Ponta Delgada, Horta and Angra do Heroísmo; Ponta Delgada is used as the principal population reference.
+
+PR — Seventy-eight municipalities are used as the primary local geographic units because Puerto Rico has no state or provincial tier. The settlement centres share the municipality names; Vieques and Culebra are separate island municipalities.
+
+QA — Eight municipalities. Al Khor and Al Thakhira is also called Al Khor; Al Daayen is also Ad-Daayen. Doha Industrial Area is a census locality within Doha's urban region rather than an independent municipality.
+
+RE — Réunion is one French overseas department and region; its four arrondissements are used as geographic subdivisions. The ten largest entries are based on commune populations rather than strictly defined built-up urban areas.
+
+RO — Forty-one counties plus Bucharest municipality. Ilfov County's administrative seat is in Bucharest, outside the county, so Popești-Leordeni is used as its largest in-county city. Cluj-Napoca is also commonly called Cluj.
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island. Seven unmatched points.
+- Round 12: NL — The Bottom, Oranjestad. Two unmatched points.
+- Round 13: MP — Agrihan; PW — Ngaramasch, Tobi, Dongosaru. Four unmatched points.
+- Round 14: 386 reference rows across 13 countries, pending comparison with extracted Overture business data.
+- Administrative exceptions: Check Gaza's displaced settlements, Panama's small indigenous comarca capitals, Bougainville and Jiwaka administrative seats, the Philippines' independent cities, and Pitcairn's single permanently inhabited settlement.
+- Population comparability: The N selections combine available national censuses and settlement-level estimates; municipality populations and contiguous urban-area populations can produce different top-ten rankings.
+
+
+---
+
+## Claude Code - 2026-11-08 20:43 UTC - 15_claude.md - attachments: none
+
+## Check of your message-14 list
+Round 14: 386 reference lines, 386 cities, 385 with business data (100 %).
+Not covered: - PA: 16/17 cities covered, 50,653 businesses near them; no data at: Gaigirgordub
+
+Same format again:
+
+
+## Message 15 of 19 - countries
+Russia (RU), Rwanda (RW), Samoa (WS), San Marino (SM), São Tomé & Príncipe (ST), Saudi Arabia (SA), Senegal (SN), Serbia (RS), Seychelles (SC), Sierra Leone (SL), Singapore (SG), Sint Maarten (SX), Slovakia (SK)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 20:50 UTC - saved as 15_chatgpt.md
+
+```
+RU|Adygea|Maykop|44.61|40.10|S
+RU|Altai Republic|Gorno-Altaysk|51.96|85.96|S
+RU|Bashkortostan|Ufa|54.74|55.97|SN
+RU|Buryatia|Ulan-Ude|51.83|107.58|S
+RU|Chechnya|Grozny|43.32|45.69|S
+RU|Chuvashia|Cheboksary|56.13|47.25|S
+RU|Dagestan|Makhachkala|42.98|47.50|S
+RU|Ingushetia|Magas|43.17|44.81|S
+RU|Kabardino-Balkaria|Nalchik|43.49|43.60|S
+RU|Kalmykia|Elista|46.31|44.27|S
+RU|Karachay-Cherkessia|Cherkessk|44.22|42.05|S
+RU|Karelia|Petrozavodsk|61.79|34.35|S
+RU|Khakassia|Abakan|53.72|91.43|S
+RU|Komi|Syktyvkar|61.67|50.84|S
+RU|Mari El|Yoshkar-Ola|56.63|47.90|S
+RU|Mordovia|Saransk|54.18|45.18|S
+RU|North Ossetia-Alania|Vladikavkaz|43.02|44.68|S
+RU|Sakha|Yakutsk|62.03|129.73|S
+RU|Tatarstan|Kazan|55.79|49.12|SN
+RU|Tuva|Kyzyl|51.72|94.44|S
+RU|Udmurtia|Izhevsk|56.85|53.21|S
+RU|Altai Krai|Barnaul|53.35|83.77|S
+RU|Kamchatka Krai|Petropavlovsk-Kamchatsky|53.04|158.65|S
+RU|Khabarovsk Krai|Khabarovsk|48.48|135.08|S
+RU|Krasnodar Krai|Krasnodar|45.04|38.98|SN
+RU|Krasnoyarsk Krai|Krasnoyarsk|56.01|92.87|SN
+RU|Perm Krai|Perm|58.01|56.25|S
+RU|Primorsky Krai|Vladivostok|43.12|131.89|S
+RU|Stavropol Krai|Stavropol|45.04|41.97|S
+RU|Zabaykalsky Krai|Chita|52.03|113.50|S
+RU|Amur Oblast|Blagoveshchensk|50.29|127.53|S
+RU|Arkhangelsk Oblast|Arkhangelsk|64.54|40.54|S
+RU|Astrakhan Oblast|Astrakhan|46.35|48.04|S
+RU|Belgorod Oblast|Belgorod|50.60|36.59|S
+RU|Bryansk Oblast|Bryansk|53.24|34.37|S
+RU|Chelyabinsk Oblast|Chelyabinsk|55.16|61.40|SN
+RU|Irkutsk Oblast|Irkutsk|52.29|104.28|S
+RU|Ivanovo Oblast|Ivanovo|57.00|40.97|S
+RU|Kaliningrad Oblast|Kaliningrad|54.71|20.51|S
+RU|Kaluga Oblast|Kaluga|54.51|36.26|S
+RU|Kemerovo Oblast|Kemerovo|55.35|86.09|S
+RU|Kirov Oblast|Kirov|58.60|49.67|S
+RU|Kostroma Oblast|Kostroma|57.77|40.93|S
+RU|Kurgan Oblast|Kurgan|55.44|65.34|S
+RU|Kursk Oblast|Kursk|51.73|36.19|S
+RU|Leningrad Oblast|Gatchina|59.57|30.13|S
+RU|Lipetsk Oblast|Lipetsk|52.61|39.60|S
+RU|Magadan Oblast|Magadan|59.56|150.80|S
+RU|Moscow Oblast|Krasnogorsk|55.82|37.34|S
+RU|Murmansk Oblast|Murmansk|68.97|33.08|S
+RU|Nizhny Novgorod Oblast|Nizhny Novgorod|56.33|44.00|SN
+RU|Novgorod Oblast|Veliky Novgorod|58.52|31.28|S
+RU|Novosibirsk Oblast|Novosibirsk|55.03|82.92|SN
+RU|Omsk Oblast|Omsk|54.99|73.37|S
+RU|Orenburg Oblast|Orenburg|51.77|55.10|S
+RU|Oryol Oblast|Oryol|52.97|36.06|S
+RU|Penza Oblast|Penza|53.20|45.00|S
+RU|Pskov Oblast|Pskov|57.82|28.33|S
+RU|Rostov Oblast|Rostov-on-Don|47.22|39.72|S
+RU|Ryazan Oblast|Ryazan|54.63|39.74|S
+RU|Sakhalin Oblast|Yuzhno-Sakhalinsk|46.96|142.74|S
+RU|Samara Oblast|Samara|53.20|50.15|S
+RU|Saratov Oblast|Saratov|51.54|46.01|S
+RU|Smolensk Oblast|Smolensk|54.78|32.05|S
+RU|Sverdlovsk Oblast|Yekaterinburg|56.84|60.61|SN
+RU|Tambov Oblast|Tambov|52.73|41.44|S
+RU|Tomsk Oblast|Tomsk|56.49|84.95|S
+RU|Tula Oblast|Tula|54.20|37.62|S
+RU|Tver Oblast|Tver|56.86|35.92|S
+RU|Tyumen Oblast|Tyumen|57.15|65.53|S
+RU|Ulyanovsk Oblast|Ulyanovsk|54.32|48.39|S
+RU|Vladimir Oblast|Vladimir|56.13|40.41|S
+RU|Volgograd Oblast|Volgograd|48.71|44.51|S
+RU|Vologda Oblast|Vologda|59.22|39.89|S
+RU|Voronezh Oblast|Voronezh|51.67|39.18|S
+RU|Yaroslavl Oblast|Yaroslavl|57.63|39.87|S
+RU|Moscow|Moscow|55.75|37.62|SN
+RU|Saint Petersburg|Saint Petersburg|59.93|30.32|SN
+RU|Jewish Autonomous Oblast|Birobidzhan|48.79|132.92|S
+RU|Chukotka Autonomous Okrug|Anadyr|64.73|177.51|S
+RU|Khanty-Mansi Autonomous Okrug|Khanty-Mansiysk|61.00|69.02|S
+RU|Nenets Autonomous Okrug|Naryan-Mar|67.64|53.01|S
+RU|Yamalo-Nenets Autonomous Okrug|Salekhard|66.53|66.60|S
+RW|Kigali City|Kigali|-1.95|30.06|SN
+RW|Eastern Province|Rwamagana|-1.95|30.43|S
+RW|Northern Province|Musanze|-1.50|29.63|SN
+RW|Southern Province|Nyanza|-2.35|29.75|SN
+RW|Western Province|Kibuye|-2.06|29.35|S
+RW|Western Province|Gisenyi|-1.70|29.26|N
+RW|Southern Province|Butare|-2.60|29.74|N
+RW|Southern Province|Muhanga|-2.08|29.76|N
+RW|Northern Province|Byumba|-1.58|30.06|N
+RW|Western Province|Cyangugu|-2.48|28.90|N
+RW|Western Province|Bugarama|-2.69|29.01|N
+RW|Eastern Province|Kayonza|-1.91|30.65|N
+WS|A'ana|Leulumoega|-13.83|-171.98|S
+WS|Aiga-i-le-Tai|Mulifanua|-13.83|-172.04|S
+WS|Atua|Lufilufi|-13.88|-171.60|S
+WS|Fa'asaleleaga|Salelologa|-13.74|-172.22|SN
+WS|Gaga'emauga|Saleaula|-13.50|-172.30|S
+WS|Gaga'ifomauga|Safotu|-13.45|-172.42|S
+WS|Palauli|Vailoa|-13.76|-172.31|S
+WS|Satupa'itea|Satupa'itea|-13.71|-172.58|S
+WS|Tuamasaga|Apia|-13.83|-171.76|SN
+WS|Va'a-o-Fonoti|Samamea|-13.94|-171.54|S
+WS|Vaisigano|Asau|-13.52|-172.64|S
+WS|Tuamasaga|Vaitele Fou|-13.84|-171.80|N
+WS|Tuamasaga|Vaitele Uta|-13.84|-171.81|N
+WS|Tuamasaga|Faleula|-13.82|-171.84|N
+WS|Tuamasaga|Siusega|-13.84|-171.81|N
+WS|A'ana|Faleasiu|-13.83|-171.99|N
+WS|Tuamasaga|Leauva'a|-13.84|-171.91|N
+WS|Tuamasaga|Vaiusu|-13.84|-171.79|N
+WS|Tuamasaga|Malie|-13.80|-171.84|N
+SM|Acquaviva|Acquaviva|43.95|12.42|SN
+SM|Borgo Maggiore|Borgo Maggiore|43.94|12.45|SN
+SM|Chiesanuova|Chiesanuova|43.90|12.42|S
+SM|Domagnano|Domagnano|43.95|12.47|SN
+SM|Faetano|Faetano|43.93|12.50|S
+SM|Fiorentino|Fiorentino|43.91|12.46|SN
+SM|Montegiardino|Montegiardino|43.91|12.48|S
+SM|San Marino|San Marino|43.94|12.45|SN
+SM|Serravalle|Serravalle|43.97|12.48|SN
+SM|Serravalle|Dogana|43.98|12.49|N
+SM|Borgo Maggiore|Valdragone|43.94|12.46|N
+SM|Borgo Maggiore|Cailungo|43.95|12.45|N
+SM|San Marino|Murata|43.92|12.45|N
+ST|Água Grande|São Tomé|0.34|6.73|SN
+ST|Cantagalo|Santana|0.26|6.74|SN
+ST|Caué|São João dos Angolares|0.13|6.65|SN
+ST|Lembá|Neves|0.36|6.55|SN
+ST|Lobata|Guadalupe|0.38|6.64|SN
+ST|Mé-Zóchi|Trindade|0.30|6.68|SN
+ST|Príncipe Autonomous Region|Santo António|1.64|7.42|SN
+ST|Caué|Porto Alegre|0.03|6.54|N
+ST|Lembá|Santa Catarina|0.25|6.48|N
+ST|Cantagalo|Ribeira Afonso|0.20|6.71|N
+SA|Al Bahah|Al Bahah|20.01|41.47|S
+SA|Al Jawf|Sakaka|29.97|40.21|S
+SA|Al Qassim|Buraydah|26.36|43.98|SN
+SA|Asir|Abha|18.22|42.51|S
+SA|Eastern Province|Dammam|26.43|50.10|SN
+SA|Hail|Hail|27.52|41.69|S
+SA|Jazan|Jazan|16.89|42.55|S
+SA|Madinah|Medina|24.47|39.61|SN
+SA|Makkah|Mecca|21.42|39.83|SN
+SA|Najran|Najran|17.49|44.13|S
+SA|Northern Borders|Arar|30.98|41.04|S
+SA|Riyadh|Riyadh|24.71|46.68|SN
+SA|Tabuk|Tabuk|28.38|36.56|SN
+SA|Makkah|Jeddah|21.54|39.17|N
+SA|Eastern Province|Hofuf|25.36|49.59|N
+SA|Makkah|Taif|21.27|40.42|N
+SA|Asir|Khamis Mushait|18.31|42.73|N
+SN|Dakar|Dakar|14.69|-17.44|SN
+SN|Diourbel|Diourbel|14.66|-16.24|SN
+SN|Fatick|Fatick|14.33|-16.41|S
+SN|Kaffrine|Kaffrine|14.10|-15.55|S
+SN|Kaolack|Kaolack|14.15|-16.07|SN
+SN|Kédougou|Kédougou|12.56|-12.17|S
+SN|Kolda|Kolda|12.88|-14.95|S
+SN|Louga|Louga|15.62|-16.22|S
+SN|Matam|Matam|15.66|-13.26|S
+SN|Saint-Louis|Saint-Louis|16.03|-16.50|SN
+SN|Sédhiou|Sédhiou|12.71|-15.56|S
+SN|Tambacounda|Tambacounda|13.77|-13.67|S
+SN|Thiès|Thiès|14.79|-16.93|SN
+SN|Ziguinchor|Ziguinchor|12.57|-16.27|SN
+SN|Diourbel|Touba|14.85|-15.88|N
+SN|Dakar|Rufisque|14.72|-17.27|N
+SN|Thiès|Mbour|14.42|-16.97|N
+SN|Dakar|Tivaouane Peulh-Niaga|14.83|-17.28|N
+RS|Belgrade|Belgrade|44.82|20.46|SN
+RS|Bor District|Bor|44.07|22.10|S
+RS|Braničevo District|Požarevac|44.62|21.19|S
+RS|Jablanica District|Leskovac|42.99|21.95|S
+RS|Kolubara District|Valjevo|44.27|19.88|S
+RS|Mačva District|Šabac|44.75|19.69|S
+RS|Moravica District|Čačak|43.89|20.35|SN
+RS|Nišava District|Niš|43.32|21.90|SN
+RS|Pčinja District|Vranje|42.55|21.90|S
+RS|Pirot District|Pirot|43.15|22.59|S
+RS|Podunavlje District|Smederevo|44.66|20.93|SN
+RS|Pomoravlje District|Jagodina|43.98|21.26|S
+RS|Rasina District|Kruševac|43.58|21.33|S
+RS|Raška District|Kraljevo|43.72|20.69|S
+RS|Šumadija District|Kragujevac|44.01|20.91|SN
+RS|Toplica District|Prokuplje|43.23|21.59|S
+RS|Zaječar District|Zaječar|43.90|22.26|S
+RS|Zlatibor District|Užice|43.86|19.85|S
+RS|Central Banat District|Zrenjanin|45.38|20.39|SN
+RS|North Bačka District|Subotica|46.10|19.67|SN
+RS|North Banat District|Kikinda|45.83|20.46|S
+RS|South Bačka District|Novi Sad|45.25|19.84|SN
+RS|South Banat District|Pančevo|44.87|20.64|SN
+RS|Srem District|Sremska Mitrovica|44.98|19.61|S
+RS|West Bačka District|Sombor|45.78|19.11|S
+RS|Kosovo District|Pristina|42.66|21.16|S
+RS|Kosovo-Pomoravlje District|Gjilan|42.46|21.47|S
+RS|Kosovska Mitrovica District|Mitrovica|42.89|20.87|S
+RS|Peć District|Peja|42.66|20.29|S
+RS|Prizren District|Prizren|42.21|20.74|S
+RS|Raška District|Novi Pazar|43.14|20.52|N
+SC|Anse aux Pins|Anse aux Pins|-4.70|55.52|S
+SC|Anse Boileau|Anse Boileau|-4.72|55.48|SN
+SC|Anse Etoile|Anse Etoile|-4.61|55.46|SN
+SC|Anse Royale|Anse Royale|-4.74|55.52|SN
+SC|Au Cap|Au Cap|-4.71|55.52|S
+SC|Baie Lazare|Baie Lazare|-4.75|55.48|S
+SC|Baie Sainte Anne|Baie Sainte Anne|-4.35|55.75|SN
+SC|Beau Vallon|Beau Vallon|-4.61|55.43|SN
+SC|Bel Air|Bel Air|-4.63|55.44|S
+SC|Bel Ombre|Bel Ombre|-4.62|55.42|SN
+SC|Cascade|Cascade|-4.67|55.50|SN
+SC|English River|Victoria|-4.62|55.45|SN
+SC|Glacis|Glacis|-4.59|55.44|S
+SC|Grand Anse Mahé|Grand Anse|-4.68|55.46|S
+SC|Grand Anse Praslin|Grand Anse Praslin|-4.32|55.72|SN
+SC|Ile Perseverance|Ile Perseverance|-4.59|55.47|S
+SC|La Digue and Inner Islands|La Passe|-4.35|55.83|SN
+SC|Les Mamelles|Les Mamelles|-4.65|55.47|S
+SC|Mont Buxton|Mont Buxton|-4.61|55.45|S
+SC|Mont Fleuri|Mont Fleuri|-4.64|55.46|S
+SC|Plaisance|Plaisance|-4.65|55.46|S
+SC|Pointe Larue|Pointe Larue|-4.67|55.52|S
+SC|Port Glaud|Port Glaud|-4.66|55.42|S
+SC|Roche Caiman|Roche Caiman|-4.64|55.47|S
+SC|Saint Louis|Saint Louis|-4.62|55.44|S
+SC|Takamaka|Takamaka|-4.78|55.50|S
+SL|Eastern Province|Kenema|7.88|-11.19|SN
+SL|Northern Province|Makeni|8.88|-12.05|SN
+SL|North Western Province|Port Loko|8.77|-12.79|SN
+SL|Southern Province|Bo|7.96|-11.74|SN
+SL|Western Area|Freetown|8.48|-13.23|SN
+SL|Eastern Province|Koidu|8.64|-10.97|N
+SL|Western Area|Waterloo|8.34|-13.07|N
+SL|Northern Province|Magburaka|8.72|-11.95|N
+SL|Western Area|Goderich|8.43|-13.29|N
+SL|Eastern Province|Daru|7.99|-10.85|N
+SG|Central Region|Singapore|1.29|103.85|S
+SG|East Region|Tampines|1.35|103.94|SN
+SG|North Region|Woodlands|1.44|103.79|SN
+SG|North-East Region|Sengkang|1.39|103.90|SN
+SG|West Region|Jurong East|1.33|103.74|S
+SG|East Region|Bedok|1.32|103.93|N
+SG|West Region|Jurong West|1.34|103.70|N
+SG|North Region|Yishun|1.43|103.84|N
+SG|North-East Region|Hougang|1.37|103.89|N
+SG|North-East Region|Punggol|1.40|103.91|N
+SG|West Region|Choa Chu Kang|1.39|103.75|N
+SG|West Region|Bukit Batok|1.35|103.75|N
+SX|Sint Maarten|Philipsburg|18.02|-63.04|SN
+SX|Sint Maarten|Lower Prince's Quarter|18.05|-63.04|N
+SX|Sint Maarten|Cul de Sac|18.04|-63.06|N
+SX|Sint Maarten|Cole Bay|18.03|-63.08|N
+SX|Sint Maarten|Upper Prince's Quarter|18.05|-63.02|N
+SX|Sint Maarten|Little Bay|18.02|-63.06|N
+SX|Sint Maarten|Dutch Quarter|18.05|-63.05|N
+SX|Sint Maarten|Simpson Bay|18.04|-63.11|N
+SX|Sint Maarten|Lowlands|18.05|-63.12|N
+SX|Sint Maarten|Maho|18.05|-63.12|N
+SK|Banská Bystrica Region|Banská Bystrica|48.74|19.15|SN
+SK|Bratislava Region|Bratislava|48.15|17.11|SN
+SK|Košice Region|Košice|48.72|21.26|SN
+SK|Nitra Region|Nitra|48.31|18.09|SN
+SK|Prešov Region|Prešov|49.00|21.24|SN
+SK|Trenčín Region|Trenčín|48.89|18.04|SN
+SK|Trnava Region|Trnava|48.38|17.59|SN
+SK|Žilina Region|Žilina|49.22|18.74|SN
+SK|Žilina Region|Martin|49.07|18.92|N
+SK|Prešov Region|Poprad|49.06|20.30|N
+```
+
+### Naming caveats
+
+RU — 83 internationally recognized federal subjects are included. Russia additionally claims Crimea, Sevastopol, Donetsk, Luhansk, Kherson and Zaporizhzhia, which are internationally recognized as Ukrainian territory and therefore excluded from RU rows. Moscow Oblast's administrative seat is Krasnogorsk; Leningrad Oblast's is Gatchina. The ten largest cities follow 2025 population estimates.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://iarpa.org\&sz=32)
+
+iarpa.org+1
+
+
+
+RW — Four provinces plus Kigali City. Ruhengeri is now Musanze; Gitarama is Muhanga; Butare is also Huye. Kibuye is the Western Province administrative centre. N entries use identifiable urban localities, not entire district populations.
+
+WS — Eleven traditional administrative districts, distinct from Samoa's 51 electoral constituencies. Districts generally lack conventional urban capitals, so principal villages or traditional centres are used. Vaitele Fou and Vaitele Uta are distinct census settlements.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://thefactbook.org\&sz=32)
+
+The Factbook+1
+
+
+
+SM — Nine castelli. San Marino is the national capital, while Serravalle is the most populous municipality. Dogana, Valdragone, Cailungo and Murata are separate populated settlements within existing castelli.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.visitsanmarino.com\&sz=32)
+
+Visit San Marino+1
+
+
+
+ST — Six districts on São Tomé and the Autonomous Region of Príncipe are used as operational administrative units. The country also has a broader two-island provincial classification. Santo António is Príncipe's administrative centre.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://documents1.worldbank.org\&sz=32)
+
+World Bank+1
+
+
+
+SA — Thirteen administrative regions. Asir is also Aseer, Al Qassim is also Qassim, and Hofuf is also Al Ahsa or Al Hufuf. The ten largest cities follow the 2022 national census, with Hofuf representing the combined Hofuf–Al Mubarraz urban locality.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://saudipedia.com\&sz=32)
+
+Saudipedia+1
+
+
+
+SN — Fourteen regions. Touba is in Diourbel Region, not the city of Diourbel. The ten N entries follow the 2023 census's urban-commune classification, which combines Dakar with its contiguous urban localities, including Pikine and Guédiawaye.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.vie-publique.sn\&sz=32)
+
+Vie Publique Sénégal+1
+
+
+
+RS — Twenty-nine districts plus Belgrade under Serbia's territorial classification. Five Kosovo-related districts are included for geographic reference but are not administered by Serbia; Kosovo has its own de facto administrative system, and its independence is internationally disputed. The ten N entries outside Kosovo follow Serbia's 2022 census.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://stat.gov.rs\&sz=32)
+
+stat.gov.rs+1
+
+
+
+SC — Twenty-six districts. Ile Perseverance is the newer residential district; Au Cap was formerly Anse Louis. District centres and major settlements are used because Seychelles does not have a standardized ten-city population hierarchy; Victoria is the capital.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://sum.sc\&sz=32)
+
+Seychelles United Movement+1
+
+
+
+SL — Four provinces plus Western Area. North Western Province was separated from Northern Province in 2017. Koidu is also Koidu-New Sembehun. City population estimates differ substantially between the 2015 and 2021 censuses.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.worldometers.info\&sz=32)
+
+Worldometer
+
+
+
+SG — Five planning regions are used as geographic subdivisions; Singapore is administratively a single city-state. The N entries are the ten most populous planning areas in June 2025, rather than ten independent cities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://popquery.onemap.gov.sg\&sz=32)
+
+popquery.onemap.gov.sg+2
+
+
+
+SX — Sint Maarten is a constituent country of the Kingdom of the Netherlands without formal provincial subdivisions. Philipsburg is the capital; the N entries are neighborhood or settlement proxies, not independently incorporated cities. Lower Prince's Quarter is also written Lower Princess Quarter.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://stats.sintmaartengov.org\&sz=32)
+
+stats.sintmaartengov.org+1
+
+
+
+SK — Eight regions (kraje). Bratislava and Košice are also regional capitals; Martin and Poprad complete the ten largest cities. Regional names are shown with the English word Region, and the cities retain their Slovak spellings.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://amcham.sk\&sz=32)
+
+amcham.sk
+
+
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island.
+- Round 12: NL — The Bottom, Oranjestad.
+- Round 13: MP — Agrihan; PW — Ngaramasch, Tobi, Dongosaru.
+- Round 14: PA — Gaigirgordub.
+- Round 15: Check the new reference rows against Overture business data; coverage is not yet verified.
+- Special geographic cases: Verify Samoa's traditional district centres, Seychelles' small district settlements, São Tomé and Príncipe's administrative hierarchy, and Sint Maarten's neighborhood-based coverage.
+- Territorial consistency: Keep Russia's disputed territorial claims and Serbia's Kosovo-related districts explicitly flagged so that business records are not incorrectly assigned across internationally disputed boundaries.
+
+
+---
+
+## Claude Code - 2026-11-08 20:50 UTC - 16_claude.md - attachments: none
+
+## Check of your message-15 list
+Round 15: 271 reference lines, 271 cities, 267 with business data (99 %).
+Not covered: - RS: 27/31 cities covered, 80,266 businesses near them; no data at: Pristina, Gjilan, Peja, Prizren
+
+Same format again:
+
+
+## Message 16 of 19 - countries
+Slovenia (SI), Solomon Islands (SB), Somalia (SO), South Africa (ZA), South Georgia & South Sandwich Islands (GS), South Korea (KR), South Sudan (SS), Spain (ES), Sri Lanka (LK), St. Barthélemy (BL), St. Helena (SH), St. Kitts & Nevis (KN), St. Lucia (LC)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 21:04 UTC - saved as 16_chatgpt.md
+
+```
+SI|Ajdovščina|Ajdovščina|45.89|13.90|S
+SI|Ankaran|Ankaran|45.58|13.74|S
+SI|Apače|Apače|46.70|15.91|S
+SI|Beltinci|Beltinci|46.61|16.24|S
+SI|Benedikt|Benedikt|46.62|15.90|S
+SI|Bistrica ob Sotli|Bistrica ob Sotli|46.06|15.66|S
+SI|Bled|Bled|46.37|14.11|S
+SI|Bloke|Nova vas|45.77|14.51|S
+SI|Bohinj|Bohinjska Bistrica|46.28|13.95|S
+SI|Borovnica|Borovnica|45.90|14.38|S
+SI|Bovec|Bovec|46.34|13.55|S
+SI|Braslovče|Braslovče|46.28|15.04|S
+SI|Brda|Dobrovo|46.00|13.53|S
+SI|Brezovica|Brezovica pri Ljubljani|45.96|14.43|S
+SI|Brežice|Brežice|45.90|15.59|S
+SI|Cankova|Cankova|46.72|16.02|S
+SI|Celje|Celje|46.23|15.26|SN
+SI|Cerklje na Gorenjskem|Cerklje na Gorenjskem|46.25|14.49|S
+SI|Cerknica|Cerknica|45.80|14.39|S
+SI|Cerkno|Cerkno|46.13|13.99|S
+SI|Cerkvenjak|Cerkvenjak|46.57|15.94|S
+SI|Cirkulane|Cirkulane|46.33|16.00|S
+SI|Črenšovci|Črenšovci|46.57|16.29|S
+SI|Črna na Koroškem|Črna na Koroškem|46.47|14.85|S
+SI|Črnomelj|Črnomelj|45.54|15.19|S
+SI|Destrnik|Destrnik|46.49|15.88|S
+SI|Divača|Divača|45.68|13.97|S
+SI|Dobje|Dobje pri Planini|46.14|15.39|S
+SI|Dobrepolje|Videm|45.85|14.71|S
+SI|Dobrna|Dobrna|46.34|15.23|S
+SI|Dobrova-Polhov Gradec|Dobrova|46.06|14.32|S
+SI|Dobrovnik|Dobrovnik|46.65|16.35|S
+SI|Dol pri Ljubljani|Dol pri Ljubljani|46.09|14.64|S
+SI|Dolenjske Toplice|Dolenjske Toplice|45.73|15.01|S
+SI|Domžale|Domžale|46.14|14.64|S
+SI|Dornava|Dornava|46.44|15.99|S
+SI|Dravograd|Dravograd|46.59|15.02|S
+SI|Duplek|Spodnji Duplek|46.50|15.75|S
+SI|Gorenja vas-Poljane|Gorenja vas|46.11|14.11|S
+SI|Gorišnica|Gorišnica|46.41|16.01|S
+SI|Gorje|Zgornje Gorje|46.38|14.07|S
+SI|Gornja Radgona|Gornja Radgona|46.68|15.99|S
+SI|Gornji Grad|Gornji Grad|46.30|14.81|S
+SI|Gornji Petrovci|Gornji Petrovci|46.80|16.22|S
+SI|Grad|Grad|46.81|16.11|S
+SI|Grosuplje|Grosuplje|45.96|14.66|S
+SI|Hajdina|Zgornja Hajdina|46.42|15.82|S
+SI|Hoče-Slivnica|Spodnje Hoče|46.48|15.65|S
+SI|Hodoš|Hodoš|46.83|16.32|S
+SI|Horjul|Horjul|46.02|14.30|S
+SI|Hrastnik|Hrastnik|46.14|15.08|S
+SI|Hrpelje-Kozina|Hrpelje|45.61|13.94|S
+SI|Idrija|Idrija|46.00|13.98|S
+SI|Ig|Ig|45.96|14.53|S
+SI|Ilirska Bistrica|Ilirska Bistrica|45.58|14.28|S
+SI|Ivančna Gorica|Ivančna Gorica|45.94|14.80|S
+SI|Izola|Izola|45.53|13.67|S
+SI|Jesenice|Jesenice|46.44|14.05|S
+SI|Jezersko|Zgornje Jezersko|46.39|14.50|S
+SI|Juršinci|Juršinci|46.49|15.98|S
+SI|Kamnik|Kamnik|46.23|14.61|SN
+SI|Kanal ob Soči|Kanal|46.07|13.62|S
+SI|Kidričevo|Kidričevo|46.40|15.79|S
+SI|Kobarid|Kobarid|46.25|13.58|S
+SI|Kobilje|Kobilje|46.69|16.39|S
+SI|Kočevje|Kočevje|45.64|14.86|S
+SI|Komen|Komen|45.82|13.75|S
+SI|Komenda|Komenda|46.21|14.54|S
+SI|Koper|Koper|45.55|13.73|SN
+SI|Kostanjevica na Krki|Kostanjevica na Krki|45.83|15.44|S
+SI|Kostel|Vas|45.51|14.87|S
+SI|Kozje|Kozje|46.07|15.56|S
+SI|Kranj|Kranj|46.24|14.36|SN
+SI|Kranjska Gora|Kranjska Gora|46.48|13.79|S
+SI|Križevci|Križevci pri Ljutomeru|46.57|16.11|S
+SI|Krško|Krško|45.96|15.49|S
+SI|Kungota|Zgornja Kungota|46.64|15.60|S
+SI|Kuzma|Kuzma|46.84|16.08|S
+SI|Laško|Laško|46.15|15.24|S
+SI|Lenart|Lenart v Slovenskih goricah|46.58|15.83|S
+SI|Lendava|Lendava|46.55|16.44|S
+SI|Litija|Litija|46.06|14.83|S
+SI|Ljubljana|Ljubljana|46.05|14.51|SN
+SI|Ljubno|Ljubno ob Savinji|46.34|14.83|S
+SI|Ljutomer|Ljutomer|46.52|16.19|S
+SI|Log-Dragomer|Log pri Brezovici|46.02|14.37|S
+SI|Logatec|Logatec|45.92|14.24|S
+SI|Loška dolina|Stari trg pri Ložu|45.65|14.50|S
+SI|Loški Potok|Hrib-Loški Potok|45.69|14.60|S
+SI|Lovrenc na Pohorju|Lovrenc na Pohorju|46.54|15.40|S
+SI|Luče|Luče|46.35|14.75|S
+SI|Lukovica|Lukovica pri Domžalah|46.17|14.69|S
+SI|Majšperk|Majšperk|46.35|15.73|S
+SI|Makole|Makole|46.32|15.67|S
+SI|Maribor|Maribor|46.56|15.65|SN
+SI|Markovci|Markovci|46.39|15.96|S
+SI|Medvode|Medvode|46.14|14.40|S
+SI|Mengeš|Mengeš|46.17|14.57|S
+SI|Metlika|Metlika|45.65|15.32|S
+SI|Mežica|Mežica|46.52|14.85|S
+SI|Miklavž na Dravskem polju|Miklavž na Dravskem Polju|46.51|15.70|S
+SI|Miren-Kostanjevica|Miren|45.84|13.63|S
+SI|Mirna|Mirna|45.95|15.06|S
+SI|Mirna Peč|Mirna Peč|45.85|15.09|S
+SI|Mislinja|Mislinja|46.44|15.20|S
+SI|Mokronog-Trebelno|Mokronog|45.91|15.16|S
+SI|Moravče|Moravče|46.14|14.75|S
+SI|Moravske Toplice|Moravske Toplice|46.69|16.22|S
+SI|Mozirje|Mozirje|46.34|14.96|S
+SI|Murska Sobota|Murska Sobota|46.64|16.15|S
+SI|Muta|Muta|46.61|15.16|S
+SI|Naklo|Naklo|46.27|14.32|S
+SI|Nazarje|Nazarje|46.28|14.92|S
+SI|Nova Gorica|Nova Gorica|45.96|13.65|S
+SI|Novo mesto|Novo mesto|45.80|15.17|SN
+SI|Odranci|Odranci|46.59|16.28|S
+SI|Oplotnica|Oplotnica|46.39|15.45|S
+SI|Ormož|Ormož|46.44|16.15|S
+SI|Osilnica|Osilnica|45.54|14.72|S
+SI|Pesnica|Pesnica pri Mariboru|46.61|15.68|S
+SI|Piran|Piran|45.53|13.57|S
+SI|Pivka|Pivka|45.68|14.25|S
+SI|Podčetrtek|Podčetrtek|46.17|15.60|S
+SI|Podlehnik|Podlehnik|46.33|15.88|S
+SI|Podvelka|Podvelka|46.62|15.39|S
+SI|Poljčane|Poljčane|46.31|15.58|S
+SI|Polzela|Polzela|46.28|15.07|S
+SI|Postojna|Postojna|45.77|14.21|S
+SI|Prebold|Prebold|46.24|15.09|S
+SI|Preddvor|Preddvor|46.30|14.42|S
+SI|Prevalje|Prevalje|46.56|14.88|S
+SI|Ptuj|Ptuj|46.42|15.87|SN
+SI|Puconci|Puconci|46.72|16.10|S
+SI|Rače-Fram|Rače|46.45|15.63|S
+SI|Radeče|Radeče|46.07|15.18|S
+SI|Radenci|Radenci|46.62|16.05|S
+SI|Radlje ob Dravi|Radlje ob Dravi|46.61|15.24|S
+SI|Radovljica|Radovljica|46.34|14.21|S
+SI|Ravne na Koroškem|Ravne na Koroškem|46.55|14.96|S
+SI|Razkrižje|Razkrižje|46.52|16.27|S
+SI|Rečica ob Savinji|Rečica ob Savinji|46.32|14.92|S
+SI|Renče-Vogrsko|Bukovica|45.90|13.68|S
+SI|Ribnica|Ribnica|45.74|14.73|S
+SI|Ribnica na Pohorju|Ribnica na Pohorju|46.54|15.27|S
+SI|Rogaška Slatina|Rogaška Slatina|46.25|15.63|S
+SI|Rogašovci|Rogašovci|46.81|16.03|S
+SI|Rogatec|Rogatec|46.23|15.70|S
+SI|Ruše|Ruše|46.52|15.48|S
+SI|Šalovci|Šalovci|46.85|16.26|S
+SI|Selnica ob Dravi|Selnica ob Dravi|46.55|15.49|S
+SI|Semič|Semič|45.65|15.18|S
+SI|Šempeter-Vrtojba|Šempeter pri Gorici|45.93|13.64|S
+SI|Šenčur|Šenčur|46.24|14.42|S
+SI|Šentilj|Šentilj v Slovenskih goricah|46.69|15.71|S
+SI|Šentjernej|Šentjernej|45.84|15.34|S
+SI|Šentjur|Šentjur|46.27|15.41|S
+SI|Šentrupert|Šentrupert|45.99|15.08|S
+SI|Sevnica|Sevnica|46.01|15.30|S
+SI|Sežana|Sežana|45.73|13.87|S
+SI|Škocjan|Škocjan|45.92|15.31|S
+SI|Škofja Loka|Škofja Loka|46.14|14.28|S
+SI|Škofljica|Škofljica|45.98|14.57|S
+SI|Slovenj Gradec|Slovenj Gradec|46.49|15.07|S
+SI|Slovenska Bistrica|Slovenska Bistrica|46.39|15.57|S
+SI|Slovenske Konjice|Slovenske Konjice|46.34|15.42|S
+SI|Šmarje pri Jelšah|Šmarje pri Jelšah|46.23|15.52|S
+SI|Šmarješke Toplice|Šmarješke Toplice|45.87|15.23|S
+SI|Šmartno ob Paki|Šmartno ob Paki|46.33|15.03|S
+SI|Šmartno pri Litiji|Šmartno pri Litiji|46.05|14.84|S
+SI|Sodražica|Sodražica|45.76|14.64|S
+SI|Solčava|Solčava|46.40|14.68|S
+SI|Šoštanj|Šoštanj|46.38|15.05|S
+SI|Središče ob Dravi|Središče ob Dravi|46.40|16.27|S
+SI|Starše|Starše|46.47|15.76|S
+SI|Štore|Štore|46.22|15.31|S
+SI|Straža|Straža|45.78|15.09|S
+SI|Sveta Ana|Sveta Ana v Slovenskih goricah|46.65|15.85|S
+SI|Sveta Trojica v Slovenskih goricah|Sveta Trojica v Slovenskih goricah|46.57|15.88|S
+SI|Sveti Andraž v Slovenskih goricah|Vitomarci|46.52|15.95|S
+SI|Sveti Jurij ob Ščavnici|Sveti Jurij ob Ščavnici|46.57|16.02|S
+SI|Sveti Jurij v Slovenskih goricah|Jurovski Dol|46.62|15.78|S
+SI|Sveti Tomaž|Sveti Tomaž|46.48|16.08|S
+SI|Tabor|Tabor|46.21|15.02|S
+SI|Tišina|Tišina|46.65|16.08|S
+SI|Tolmin|Tolmin|46.19|13.73|S
+SI|Trbovlje|Trbovlje|46.15|15.05|SN
+SI|Trebnje|Trebnje|45.91|15.01|S
+SI|Trnovska vas|Trnovska vas|46.53|15.89|S
+SI|Trzin|Trzin|46.13|14.56|S
+SI|Tržič|Tržič|46.36|14.30|S
+SI|Turnišče|Turnišče|46.61|16.32|S
+SI|Velenje|Velenje|46.36|15.11|SN
+SI|Velika Polana|Velika Polana|46.57|16.34|S
+SI|Velike Lašče|Velike Lašče|45.83|14.64|S
+SI|Veržej|Veržej|46.58|16.16|S
+SI|Videm|Videm pri Ptuju|46.36|15.88|S
+SI|Vipava|Vipava|45.84|13.96|S
+SI|Vitanje|Vitanje|46.38|15.30|S
+SI|Vodice|Vodice|46.19|14.49|S
+SI|Vojnik|Vojnik|46.29|15.30|S
+SI|Vransko|Vransko|46.24|14.95|S
+SI|Vrhnika|Vrhnika|45.95|14.33|S
+SI|Vuzenica|Vuzenica|46.60|15.17|S
+SI|Zagorje ob Savi|Zagorje ob Savi|46.13|15.00|S
+SI|Žalec|Žalec|46.25|15.17|S
+SI|Zavrč|Zavrč|46.36|16.05|S
+SI|Železniki|Železniki|46.23|14.17|S
+SI|Žetale|Žetale|46.27|15.79|S
+SI|Žiri|Žiri|46.05|14.11|S
+SI|Žirovnica|Breznica|46.40|14.15|S
+SI|Zreče|Zreče|46.42|15.37|S
+SI|Žužemberk|Žužemberk|45.82|14.95|S
+SB|Central|Tulagi|-9.10|160.15|SN
+SB|Choiseul|Taro|-6.71|156.40|S
+SB|Guadalcanal|Tandai|-9.42|159.90|S
+SB|Honiara Capital Territory|Honiara|-9.43|159.95|SN
+SB|Isabel|Buala|-8.15|159.59|SN
+SB|Makira-Ulawa|Kirakira|-10.46|161.92|SN
+SB|Malaita|Auki|-8.77|160.70|SN
+SB|Rennell and Bellona|Tigoa|-11.56|160.06|S
+SB|Temotu|Lata|-10.72|165.83|SN
+SB|Western|Gizo|-8.11|156.84|SN
+SB|Western|Noro|-8.23|157.20|N
+SB|Western|Munda|-8.33|157.26|N
+SB|Western|Nusa Roviana|-8.33|157.28|N
+SO|Awdal|Borama|9.94|43.18|SN
+SO|Bakool|Hudur|4.12|43.89|S
+SO|Banadir|Mogadishu|2.05|45.32|SN
+SO|Bari|Bosaso|11.28|49.18|SN
+SO|Bay|Baidoa|3.11|43.65|SN
+SO|Galgaduud|Dhusamareb|5.54|46.39|S
+SO|Gedo|Garbaharey|3.33|42.22|S
+SO|Hiran|Beledweyne|4.74|45.20|SN
+SO|Lower Juba|Kismayo|-0.36|42.55|SN
+SO|Lower Shabelle|Marka|1.71|44.77|S
+SO|Middle Juba|Bu'ale|1.08|42.58|S
+SO|Middle Shabelle|Jowhar|2.78|45.50|S
+SO|Mudug|Galkayo|6.77|47.43|SN
+SO|Nugal|Garowe|8.41|48.48|S
+SO|Sanaag|Erigavo|10.62|47.37|S
+SO|Sool|Las Anod|8.48|47.36|S
+SO|Togdheer|Burao|9.52|45.53|SN
+SO|Woqooyi Galbeed|Hargeisa|9.56|44.07|SN
+SO|Woqooyi Galbeed|Berbera|10.44|45.01|N
+ZA|Eastern Cape|Bhisho|-32.85|27.44|S
+ZA|Free State|Bloemfontein|-29.12|26.22|S
+ZA|Gauteng|Johannesburg|-26.20|28.05|SN
+ZA|KwaZulu-Natal|Pietermaritzburg|-29.61|30.39|SN
+ZA|Limpopo|Polokwane|-23.90|29.45|S
+ZA|Mpumalanga|Mbombela|-25.47|30.97|S
+ZA|North West|Mahikeng|-25.87|25.64|S
+ZA|Northern Cape|Kimberley|-28.74|24.76|S
+ZA|Western Cape|Cape Town|-33.93|18.42|SN
+ZA|KwaZulu-Natal|Durban|-29.86|31.02|N
+ZA|Gauteng|Pretoria|-25.75|28.19|N
+ZA|Gauteng|Soweto|-26.25|27.85|N
+ZA|Eastern Cape|Gqeberha|-33.96|25.62|N
+ZA|Gauteng|Benoni|-26.19|28.32|N
+ZA|Gauteng|Tembisa|-25.99|28.23|N
+ZA|Eastern Cape|East London|-33.02|27.91|N
+GS|-|-|||none
+KR|Busan|Busan|35.18|129.07|SN
+KR|Chungcheongbuk-do|Cheongju|36.64|127.49|S
+KR|Chungcheongnam-do|Hongseong|36.60|126.66|S
+KR|Daegu|Daegu|35.87|128.60|SN
+KR|Daejeon|Daejeon|36.35|127.38|SN
+KR|Gangwon Special Self-Governing Province|Chuncheon|37.88|127.73|S
+KR|Gwangju|Gwangju|35.16|126.85|SN
+KR|Gyeonggi-do|Suwon|37.26|127.03|SN
+KR|Gyeongsangbuk-do|Andong|36.57|128.73|S
+KR|Gyeongsangnam-do|Changwon|35.23|128.68|S
+KR|Incheon|Incheon|37.46|126.70|SN
+KR|Jeju Special Self-Governing Province|Jeju City|33.50|126.53|S
+KR|Jeonbuk Special Self-Governing Province|Jeonju|35.82|127.15|S
+KR|Jeollanam-do|Muan|34.99|126.48|S
+KR|Sejong|Sejong|36.48|127.29|S
+KR|Seoul|Seoul|37.57|126.98|SN
+KR|Ulsan|Ulsan|35.54|129.31|SN
+KR|Gyeonggi-do|Yongin|37.24|127.18|N
+KR|Gyeonggi-do|Goyang|37.66|126.84|N
+SS|Abyei Administrative Area|Abyei|9.60|28.43|S
+SS|Central Equatoria|Juba|4.85|31.58|SN
+SS|Eastern Equatoria|Torit|4.41|32.57|S
+SS|Greater Pibor Administrative Area|Pibor|6.80|33.12|S
+SS|Jonglei|Bor|6.21|31.56|SN
+SS|Lakes|Rumbek|6.81|29.68|SN
+SS|Northern Bahr el Ghazal|Aweil|8.77|27.40|SN
+SS|Ruweng Administrative Area|Pariang|9.91|29.98|S
+SS|Unity|Bentiu|9.26|29.80|SN
+SS|Upper Nile|Malakal|9.53|31.66|SN
+SS|Warrap|Kuajok|8.30|27.99|SN
+SS|Western Bahr el Ghazal|Wau|7.70|27.99|SN
+SS|Western Equatoria|Yambio|4.57|28.39|SN
+SS|Central Equatoria|Yei|4.09|30.68|N
+ES|Andalusia|Seville|37.39|-5.99|SN
+ES|Aragon|Zaragoza|41.65|-0.89|SN
+ES|Asturias|Oviedo|43.36|-5.85|S
+ES|Balearic Islands|Palma|39.57|2.65|SN
+ES|Basque Country|Vitoria-Gasteiz|42.85|-2.67|S
+ES|Canary Islands|Las Palmas de Gran Canaria|28.12|-15.44|SN
+ES|Canary Islands|Santa Cruz de Tenerife|28.46|-16.25|S
+ES|Cantabria|Santander|43.46|-3.81|S
+ES|Castile and León|Valladolid|41.65|-4.73|S
+ES|Castile-La Mancha|Toledo|39.86|-4.03|S
+ES|Catalonia|Barcelona|41.39|2.17|SN
+ES|Ceuta|Ceuta|35.89|-5.32|S
+ES|Extremadura|Mérida|38.92|-6.34|S
+ES|Galicia|Santiago de Compostela|42.88|-8.54|S
+ES|La Rioja|Logroño|42.47|-2.44|S
+ES|Madrid|Madrid|40.42|-3.70|SN
+ES|Melilla|Melilla|35.29|-2.94|S
+ES|Murcia|Murcia|37.99|-1.13|SN
+ES|Navarre|Pamplona|42.82|-1.64|S
+ES|Valencian Community|Valencia|39.47|-0.38|SN
+ES|Andalusia|Málaga|36.72|-4.42|N
+ES|Valencian Community|Alicante|38.35|-0.48|N
+LK|Central Province|Kandy|7.29|80.64|SN
+LK|Eastern Province|Trincomalee|8.59|81.22|S
+LK|North Central Province|Anuradhapura|8.31|80.40|S
+LK|North Western Province|Kurunegala|7.49|80.36|S
+LK|Northern Province|Jaffna|9.66|80.01|SN
+LK|Sabaragamuwa Province|Ratnapura|6.68|80.40|S
+LK|Southern Province|Galle|6.05|80.22|SN
+LK|Uva Province|Badulla|6.99|81.06|S
+LK|Western Province|Colombo|6.93|79.86|SN
+LK|Western Province|Dehiwala-Mount Lavinia|6.85|79.87|N
+LK|Western Province|Moratuwa|6.77|79.88|N
+LK|Western Province|Negombo|7.21|79.84|N
+LK|Western Province|Sri Jayawardenepura Kotte|6.90|79.90|N
+LK|Eastern Province|Kalmunai|7.42|81.83|N
+LK|Eastern Province|Batticaloa|7.72|81.70|N
+BL|Saint Barthélemy|Gustavia|17.90|-62.85|SN
+SH|Saint Helena|Jamestown|-15.93|-5.72|SN
+SH|Ascension Island|Georgetown|-7.93|-14.41|SN
+SH|Tristan da Cunha|Edinburgh of the Seven Seas|-37.07|-12.31|SN
+SH|Saint Helena|Half Tree Hollow|-15.93|-5.72|N
+SH|Saint Helena|Longwood|-15.95|-5.67|N
+SH|Saint Helena|Saint Paul's|-15.96|-5.72|N
+SH|Saint Helena|Levelwood|-15.97|-5.66|N
+SH|Saint Helena|Sandy Bay|-15.98|-5.72|N
+SH|Saint Helena|Blue Hill|-15.97|-5.76|N
+SH|Saint Helena|Alarm Forest|-15.94|-5.70|N
+KN|Christ Church Nichola Town|Nichola Town|17.36|-62.75|SN
+KN|Saint Anne Sandy Point|Sandy Point Town|17.36|-62.84|SN
+KN|Saint George Basseterre|Basseterre|17.30|-62.73|SN
+KN|Saint George Gingerland|Market Shop|17.12|-62.55|S
+KN|Saint James Windward|Newcastle|17.21|-62.60|S
+KN|Saint John Capisterre|Dieppe Bay Town|17.41|-62.81|S
+KN|Saint John Figtree|Figtree|17.12|-62.61|S
+KN|Saint Mary Cayon|Cayon|17.35|-62.74|SN
+KN|Saint Paul Capisterre|Saint Paul's|17.40|-62.82|SN
+KN|Saint Paul Charlestown|Charlestown|17.13|-62.62|SN
+KN|Saint Peter Basseterre|Monkey Hill|17.32|-62.71|S
+KN|Saint Thomas Lowland|Cotton Ground|17.17|-62.62|S
+KN|Saint Thomas Middle Island|Middle Island|17.32|-62.79|S
+KN|Trinity Palmetto Point|Palmetto Point|17.31|-62.77|S
+KN|Saint Thomas Middle Island|Old Road Town|17.32|-62.81|N
+KN|Saint Peter Basseterre|Conaree|17.31|-62.70|N
+KN|Saint John Figtree|Bath Village|17.13|-62.62|N
+KN|Saint George Basseterre|Frigate Bay|17.29|-62.70|N
+LC|Anse la Raye|Anse la Raye|13.94|-61.04|S
+LC|Canaries|Canaries|13.90|-61.07|S
+LC|Castries|Castries|14.00|-61.01|SN
+LC|Choiseul|Choiseul|13.77|-61.05|SN
+LC|Dennery|Dennery|13.91|-60.89|SN
+LC|Gros Islet|Gros Islet|14.08|-60.95|SN
+LC|Laborie|Laborie|13.75|-60.99|SN
+LC|Micoud|Micoud|13.82|-60.90|SN
+LC|Soufrière|Soufrière|13.86|-61.06|SN
+LC|Vieux Fort|Vieux Fort|13.72|-60.95|SN
+LC|Castries|Bisee|14.02|-60.97|N
+LC|Castries|Ciceron|13.99|-61.01|N
+```
+
+### Naming caveats
+
+SI — All 212 municipalities are included as first-level local-government units, rather than the 12 statistical regions. Several municipal seats differ from their municipality names, including Brda–Dobrovo, Bloke–Nova vas and Žirovnica–Breznica.
+
+SB — Nine provinces plus Honiara Capital Territory. Honiara serves as Guadalcanal Province's administrative centre but is separately governed; Tandai is used as an in-province geographic reference.
+
+SO — Eighteen traditional regions, including the Somaliland-administered north. Somaliland's independence and the status of Sool and Sanaag are disputed; newer federal-member-state boundaries do not always coincide with these historical regions. Berbera is within the newer Sahil division used by Somaliland.
+
+ZA — Nine provinces. Bhisho is also Bisho; Mbombela was formerly Nelspruit; Mahikeng was formerly Mafikeng; Gqeberha was formerly Port Elizabeth. Large-city rankings distinguish named urban settlements from metropolitan municipalities.
+
+GS — No permanent civilian population. Grytviken and King Edward Point have temporary or rotating personnel, but the requested uninhabited-territory convention is applied.
+
+KR — Seventeen first-level divisions. Gangwon and Jeonbuk now have special self-governing provincial status; Jeju already held that status. South Jeolla's administrative seat is in Muan, and South Chungcheong's is in the Hongseong area.
+
+SS — Ten states plus Abyei, Greater Pibor and Ruweng administrative areas. Abyei's sovereignty and administration remain disputed with Sudan; conflict and displacement affect population estimates.
+
+ES — Seventeen autonomous communities plus Ceuta and Melilla. The Canary Islands have two capitals, Las Palmas de Gran Canaria and Santa Cruz de Tenerife. Ceuta and Melilla are Spanish autonomous cities on the North African coast.
+
+LK — Nine provinces. Colombo is the principal city and Western Province capital; Sri Jayawardenepura Kotte is the national legislative and administrative capital. Population comparisons depend on municipal versus continuous urban-area boundaries.
+
+BL — Saint Barthélemy is a single French overseas collectivity with Gustavia as its principal town; no separate first-level provinces or regions.
+
+SH — Three constituent territories: Saint Helena, Ascension Island and Tristan da Cunha. The additional N entries are villages or settlement areas rather than independently incorporated cities.
+
+KN — Fourteen parishes across Saint Kitts and Nevis. Basseterre is the federal capital, while Charlestown is Nevis's main town. Old Road Town belongs to Saint Thomas Middle Island parish.
+
+LC — Ten districts/quarters. Gros Islet and Castries are major population centres; Bisee and Ciceron are populated urban localities within the wider Castries area. Some sources use alternative population rankings based on district rather than settlement totals.
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island.
+- Round 12: NL — The Bottom, Oranjestad.
+- Round 13: MP — Agrihan; PW — Ngaramasch, Tobi, Dongosaru.
+- Round 14: PA — Gaigirgordub.
+- Round 15: RS — Pristina, Gjilan, Peja, Prizren. These are Kosovo cities and may require checking under ISO code XK rather than RS.
+- Round 16: 372 reference rows prepared across 13 countries; Overture business-data coverage is pending.
+- Special checks: Solomon Islands' small provincial settlements, Somalia's disputed regional boundaries, South Sudan's administrative areas, Saint Helena's remote settlements, and Slovenia's small municipal seats.
+- Population matching: City-proper, municipality and metropolitan-area definitions should be normalized before using N entries as strict completeness checks.
+
+
+---
+
+## Claude Code - 2026-11-08 21:04 UTC - 17_claude.md - attachments: none
+
+## Check of your message-16 list
+Round 16: 372 reference lines, 371 cities, 367 with business data (99 %).
+Not covered: - SB: 12/13 cities covered, 1,085 businesses near them; no data at: Tigoa
+Not covered: - SO: 18/19 cities covered, 4,841 businesses near them; no data at: Bu'ale
+Not covered: - SS: 12/14 cities covered, 1,537 businesses near them; no data at: Abyei, Pariang
+
+Same format again:
+
+
+## Message 17 of 19 - countries
+St. Martin (MF), St. Pierre & Miquelon (PM), St. Vincent & Grenadines (VC), Sudan (SD), Suriname (SR), Svalbard & Jan Mayen (SJ), Sweden (SE), Switzerland (CH), Syria (SY), Taiwan (TW), Tajikistan (TJ), Tanzania (TZ), Thailand (TH)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 21:11 UTC - saved as 17_chatgpt.md
+
+```
+MF|Saint Martin|Marigot|18.07|-63.08|SN
+MF|Saint Martin|Grand Case|18.10|-63.05|N
+MF|Saint Martin|Concordia|18.06|-63.08|N
+MF|Saint Martin|Sandy Ground|18.06|-63.10|N
+MF|Saint Martin|Quartier d'Orléans|18.07|-63.04|N
+MF|Saint Martin|Colombier|18.07|-63.06|N
+MF|Saint Martin|Agrément|18.08|-63.08|N
+MF|Saint Martin|Oyster Pond|18.06|-63.02|N
+MF|Saint Martin|Saint-James|18.06|-63.09|N
+PM|Saint-Pierre|Saint-Pierre|46.78|-56.18|SN
+PM|Miquelon-Langlade|Miquelon|47.10|-56.38|SN
+VC|Charlotte|Georgetown|13.29|-61.12|SN
+VC|Grenadines|Port Elizabeth|13.01|-61.24|SN
+VC|Saint Andrew|Layou|13.20|-61.27|SN
+VC|Saint David|Chateaubelair|13.29|-61.24|SN
+VC|Saint George|Kingstown|13.16|-61.22|SN
+VC|Saint Patrick|Barrouallie|13.24|-61.27|SN
+VC|Saint George|Calliaqua|13.13|-61.20|N
+VC|Charlotte|Biabou|13.20|-61.13|N
+VC|Saint George|Arnos Vale|13.14|-61.20|N
+VC|Charlotte|South Rivers|13.24|-61.12|N
+SD|Blue Nile|Ad Damazin|11.79|34.36|S
+SD|Central Darfur|Zalingei|12.91|23.47|S
+SD|East Darfur|Ed Daein|11.46|26.13|S
+SD|Gedaref|Gedaref|14.04|35.38|SN
+SD|Gezira|Wad Madani|14.40|33.52|SN
+SD|Kassala|Kassala|15.45|36.40|SN
+SD|Khartoum|Khartoum|15.59|32.53|SN
+SD|North Darfur|El Fasher|13.63|25.35|S
+SD|North Kordofan|El Obeid|13.18|30.22|SN
+SD|Northern|Dongola|19.17|30.48|S
+SD|Red Sea|Port Sudan|19.62|37.22|SN
+SD|River Nile|Ed Damer|17.59|33.96|S
+SD|Sennar|Singa|13.15|33.93|S
+SD|South Darfur|Nyala|12.05|24.88|SN
+SD|South Kordofan|Kadugli|11.01|29.72|S
+SD|West Darfur|El Geneina|13.45|22.45|S
+SD|West Kordofan|El Fula|11.73|28.35|S
+SD|White Nile|Rabak|13.18|32.74|S
+SD|Khartoum|Omdurman|15.64|32.48|N
+SD|Khartoum|Khartoum North|15.63|32.63|N
+SD|White Nile|Kosti|13.16|32.66|N
+SR|Brokopondo|Brokopondo|5.06|-54.98|S
+SR|Commewijne|Nieuw Amsterdam|5.89|-55.09|SN
+SR|Coronie|Totness|5.88|-56.33|S
+SR|Marowijne|Albina|5.50|-54.06|SN
+SR|Nickerie|Nieuw Nickerie|5.95|-56.99|SN
+SR|Para|Onverwacht|5.60|-55.19|S
+SR|Paramaribo|Paramaribo|5.85|-55.17|SN
+SR|Saramacca|Groningen|5.80|-55.47|SN
+SR|Sipaliwini|Apoera|5.19|-57.16|S
+SR|Wanica|Lelydorp|5.70|-55.23|SN
+SR|Marowijne|Moengo|5.62|-54.40|N
+SR|Commewijne|Mariënburg|5.87|-55.04|N
+SR|Nickerie|Wageningen|5.77|-56.69|N
+SR|Brokopondo|Brownsweg|5.02|-55.17|N
+SJ|Svalbard|Longyearbyen|78.22|15.65|SN
+SJ|Jan Mayen|Olonkinbyen|70.92|-8.72|S
+SJ|Svalbard|Barentsburg|78.06|14.23|N
+SJ|Svalbard|Ny-Ålesund|78.92|11.93|N
+SE|Blekinge|Karlskrona|56.16|15.59|S
+SE|Dalarna|Falun|60.61|15.63|S
+SE|Gotland|Visby|57.64|18.29|S
+SE|Gävleborg|Gävle|60.67|17.14|S
+SE|Halland|Halmstad|56.67|12.86|S
+SE|Jämtland|Östersund|63.18|14.64|S
+SE|Jönköping|Jönköping|57.78|14.16|SN
+SE|Kalmar|Kalmar|56.66|16.36|S
+SE|Kronoberg|Växjö|56.88|14.81|S
+SE|Norrbotten|Luleå|65.58|22.15|S
+SE|Skåne|Malmö|55.60|13.00|SN
+SE|Stockholm|Stockholm|59.33|18.07|SN
+SE|Södermanland|Nyköping|58.75|17.01|S
+SE|Uppsala|Uppsala|59.86|17.64|SN
+SE|Värmland|Karlstad|59.38|13.50|S
+SE|Västerbotten|Umeå|63.83|20.26|S
+SE|Västernorrland|Härnösand|62.63|17.94|S
+SE|Västmanland|Västerås|59.61|16.54|SN
+SE|Västra Götaland|Gothenburg|57.71|11.97|SN
+SE|Örebro|Örebro|59.27|15.21|SN
+SE|Östergötland|Linköping|58.41|15.63|SN
+SE|Skåne|Helsingborg|56.05|12.69|N
+SE|Östergötland|Norrköping|58.59|16.18|N
+CH|Aargau|Aarau|47.39|8.05|S
+CH|Appenzell Ausserrhoden|Herisau|47.39|9.28|S
+CH|Appenzell Innerrhoden|Appenzell|47.33|9.41|S
+CH|Basel-Landschaft|Liestal|47.48|7.73|S
+CH|Basel-Stadt|Basel|47.56|7.59|SN
+CH|Bern|Bern|46.95|7.45|SN
+CH|Fribourg|Fribourg|46.81|7.16|S
+CH|Geneva|Geneva|46.20|6.14|SN
+CH|Glarus|Glarus|47.04|9.07|S
+CH|Graubünden|Chur|46.85|9.53|S
+CH|Jura|Delémont|47.37|7.34|S
+CH|Lucerne|Lucerne|47.05|8.31|SN
+CH|Neuchâtel|Neuchâtel|46.99|6.93|S
+CH|Nidwalden|Stans|46.96|8.37|S
+CH|Obwalden|Sarnen|46.90|8.25|S
+CH|Schaffhausen|Schaffhausen|47.70|8.63|S
+CH|Schwyz|Schwyz|47.02|8.65|S
+CH|Solothurn|Solothurn|47.21|7.54|S
+CH|St. Gallen|St. Gallen|47.42|9.38|SN
+CH|Thurgau|Frauenfeld|47.56|8.90|S
+CH|Ticino|Bellinzona|46.19|9.02|S
+CH|Uri|Altdorf|46.88|8.64|S
+CH|Valais|Sion|46.23|7.36|S
+CH|Vaud|Lausanne|46.52|6.63|SN
+CH|Zug|Zug|47.17|8.52|S
+CH|Zurich|Zurich|47.38|8.54|SN
+CH|Zurich|Winterthur|47.50|8.73|N
+CH|Ticino|Lugano|46.00|8.95|N
+CH|Bern|Biel/Bienne|47.14|7.25|N
+SY|Aleppo|Aleppo|36.20|37.16|SN
+SY|Al-Hasakah|Al-Hasakah|36.50|40.75|SN
+SY|Ar-Raqqa|Raqqa|35.95|39.01|SN
+SY|As-Suwayda|As-Suwayda|32.71|36.57|S
+SY|Damascus|Damascus|33.51|36.29|SN
+SY|Daraa|Daraa|32.62|36.10|S
+SY|Deir ez-Zor|Deir ez-Zor|35.34|40.14|SN
+SY|Hama|Hama|35.13|36.76|SN
+SY|Homs|Homs|34.73|36.71|SN
+SY|Idlib|Idlib|35.93|36.63|S
+SY|Latakia|Latakia|35.52|35.78|SN
+SY|Quneitra|Baath City|33.17|35.87|S
+SY|Rif Dimashq|Douma|33.57|36.40|S
+SY|Tartus|Tartus|34.89|35.89|S
+SY|Al-Hasakah|Qamishli|37.05|41.23|N
+SY|Aleppo|Manbij|36.53|37.96|N
+TW|Changhua County|Changhua|24.07|120.54|SN
+TW|Chiayi City|Chiayi|23.48|120.45|SN
+TW|Chiayi County|Taibao|23.46|120.33|S
+TW|Hsinchu City|Hsinchu|24.80|120.97|SN
+TW|Hsinchu County|Zhubei|24.84|121.01|S
+TW|Hualien County|Hualien|23.98|121.60|S
+TW|Kaohsiung|Kaohsiung|22.63|120.30|SN
+TW|Keelung City|Keelung|25.13|121.74|SN
+TW|Kinmen County|Jincheng|24.43|118.32|S
+TW|Lienchiang County|Jieshou|26.15|119.94|S
+TW|Miaoli County|Miaoli|24.56|120.82|S
+TW|Nantou County|Nantou|23.91|120.69|S
+TW|New Taipei City|New Taipei City|25.01|121.46|SN
+TW|Penghu County|Magong|23.57|119.57|S
+TW|Pingtung County|Pingtung|22.67|120.49|S
+TW|Taichung|Taichung|24.15|120.67|SN
+TW|Tainan|Tainan|22.99|120.20|SN
+TW|Taipei|Taipei|25.03|121.57|SN
+TW|Taitung County|Taitung|22.76|121.14|S
+TW|Taoyuan|Taoyuan|24.99|121.30|SN
+TW|Yilan County|Yilan|24.76|121.75|S
+TW|Yunlin County|Douliu|23.71|120.54|S
+TJ|Districts of Republican Subordination|Vahdat|38.56|69.02|SN
+TJ|Dushanbe|Dushanbe|38.56|68.79|SN
+TJ|Gorno-Badakhshan|Khorugh|37.49|71.55|S
+TJ|Khatlon|Bokhtar|37.84|68.78|SN
+TJ|Sughd|Khujand|40.28|69.62|SN
+TJ|Khatlon|Kulob|37.91|69.78|N
+TJ|Sughd|Istaravshan|39.91|69.00|N
+TJ|Districts of Republican Subordination|Tursunzoda|38.51|68.23|N
+TJ|Sughd|Isfara|40.13|70.63|N
+TJ|Sughd|Konibodom|40.29|70.43|N
+TJ|Sughd|Panjakent|39.50|67.61|N
+TZ|Arusha|Arusha|-3.39|36.68|SN
+TZ|Dar es Salaam|Dar es Salaam|-6.79|39.28|SN
+TZ|Dodoma|Dodoma|-6.16|35.75|SN
+TZ|Geita|Geita|-2.87|32.23|SN
+TZ|Iringa|Iringa|-7.77|35.69|S
+TZ|Kagera|Bukoba|-1.33|31.81|S
+TZ|Kaskazini Pemba|Wete|-5.06|39.73|S
+TZ|Kaskazini Unguja|Mkokotoni|-5.88|39.26|S
+TZ|Katavi|Mpanda|-6.34|31.07|S
+TZ|Kigoma|Kigoma|-4.88|29.63|S
+TZ|Kilimanjaro|Moshi|-3.35|37.34|S
+TZ|Kusini Pemba|Chake Chake|-5.25|39.77|S
+TZ|Kusini Unguja|Koani|-6.13|39.28|S
+TZ|Lindi|Lindi|-10.00|39.72|S
+TZ|Manyara|Babati|-4.22|35.75|S
+TZ|Mara|Musoma|-1.50|33.80|S
+TZ|Mbeya|Mbeya|-8.91|33.46|SN
+TZ|Mjini Magharibi|Zanzibar City|-6.16|39.19|SN
+TZ|Morogoro|Morogoro|-6.82|37.66|SN
+TZ|Mtwara|Mtwara|-10.27|40.18|S
+TZ|Mwanza|Mwanza|-2.52|32.90|SN
+TZ|Njombe|Njombe|-9.33|34.77|S
+TZ|Pwani|Kibaha|-6.77|38.91|S
+TZ|Rukwa|Sumbawanga|-7.97|31.62|S
+TZ|Ruvuma|Songea|-10.68|35.65|S
+TZ|Shinyanga|Shinyanga|-3.66|33.42|S
+TZ|Simiyu|Bariadi|-2.79|33.99|S
+TZ|Singida|Singida|-4.82|34.74|S
+TZ|Songwe|Vwawa|-9.11|32.93|S
+TZ|Tabora|Tabora|-5.02|32.80|S
+TZ|Tanga|Tanga|-5.07|39.10|SN
+TZ|Shinyanga|Kahama|-3.83|32.60|N
+TH|Amnat Charoen|Amnat Charoen|15.86|104.63|S
+TH|Ang Thong|Ang Thong|14.59|100.46|S
+TH|Bangkok|Bangkok|13.75|100.50|SN
+TH|Bueng Kan|Bueng Kan|18.36|103.65|S
+TH|Buriram|Buriram|14.99|103.10|S
+TH|Chachoengsao|Chachoengsao|13.69|101.07|S
+TH|Chai Nat|Chai Nat|15.19|100.13|S
+TH|Chaiyaphum|Chaiyaphum|15.81|102.03|S
+TH|Chanthaburi|Chanthaburi|12.61|102.10|S
+TH|Chiang Mai|Chiang Mai|18.79|98.99|SN
+TH|Chiang Rai|Chiang Rai|19.91|99.83|S
+TH|Chonburi|Chonburi|13.36|100.98|SN
+TH|Chumphon|Chumphon|10.50|99.18|S
+TH|Kalasin|Kalasin|16.43|103.51|S
+TH|Kamphaeng Phet|Kamphaeng Phet|16.48|99.52|S
+TH|Kanchanaburi|Kanchanaburi|14.02|99.53|S
+TH|Khon Kaen|Khon Kaen|16.44|102.84|SN
+TH|Krabi|Krabi|8.06|98.92|S
+TH|Lampang|Lampang|18.29|99.49|S
+TH|Lamphun|Lamphun|18.58|99.01|S
+TH|Loei|Loei|17.49|101.73|S
+TH|Lopburi|Lopburi|14.80|100.65|SN
+TH|Mae Hong Son|Mae Hong Son|19.30|97.97|S
+TH|Maha Sarakham|Maha Sarakham|16.18|103.30|S
+TH|Mukdahan|Mukdahan|16.54|104.72|S
+TH|Nakhon Nayok|Nakhon Nayok|14.20|101.21|S
+TH|Nakhon Pathom|Nakhon Pathom|13.82|100.06|SN
+TH|Nakhon Phanom|Nakhon Phanom|17.41|104.78|S
+TH|Nakhon Ratchasima|Nakhon Ratchasima|14.98|102.10|SN
+TH|Nakhon Sawan|Nakhon Sawan|15.70|100.14|S
+TH|Nakhon Si Thammarat|Nakhon Si Thammarat|8.43|99.96|S
+TH|Nan|Nan|18.78|100.78|S
+TH|Narathiwat|Narathiwat|6.43|101.82|S
+TH|Nong Bua Lamphu|Nong Bua Lamphu|17.21|102.44|S
+TH|Nong Khai|Nong Khai|17.88|102.74|S
+TH|Nonthaburi|Nonthaburi|13.86|100.51|S
+TH|Pathum Thani|Pathum Thani|14.02|100.53|S
+TH|Pattani|Pattani|6.87|101.25|S
+TH|Phang Nga|Phang Nga|8.45|98.53|S
+TH|Phatthalung|Phatthalung|7.62|100.08|S
+TH|Phayao|Phayao|19.17|99.90|S
+TH|Phetchabun|Phetchabun|16.42|101.16|S
+TH|Phetchaburi|Phetchaburi|13.11|99.94|S
+TH|Phichit|Phichit|16.44|100.35|S
+TH|Phitsanulok|Phitsanulok|16.82|100.26|S
+TH|Phra Nakhon Si Ayutthaya|Ayutthaya|14.36|100.58|S
+TH|Phrae|Phrae|18.14|100.14|S
+TH|Phuket|Phuket|7.89|98.40|SN
+TH|Prachinburi|Prachinburi|14.05|101.37|S
+TH|Prachuap Khiri Khan|Prachuap Khiri Khan|11.81|99.80|S
+TH|Ranong|Ranong|9.97|98.63|S
+TH|Ratchaburi|Ratchaburi|13.54|99.82|S
+TH|Rayong|Rayong|12.68|101.28|S
+TH|Roi Et|Roi Et|16.05|103.65|S
+TH|Sa Kaeo|Sa Kaeo|13.81|102.07|S
+TH|Sakon Nakhon|Sakon Nakhon|17.16|104.15|S
+TH|Samut Prakan|Samut Prakan|13.60|100.60|S
+TH|Samut Sakhon|Samut Sakhon|13.55|100.27|S
+TH|Samut Songkhram|Samut Songkhram|13.41|100.00|S
+TH|Saraburi|Saraburi|14.53|100.91|S
+TH|Satun|Satun|6.62|100.07|S
+TH|Sing Buri|Sing Buri|14.89|100.40|S
+TH|Sisaket|Sisaket|15.12|104.33|S
+TH|Songkhla|Songkhla|7.20|100.60|S
+TH|Sukhothai|Sukhothai|17.01|99.82|S
+TH|Suphan Buri|Suphan Buri|14.47|100.12|S
+TH|Surat Thani|Surat Thani|9.14|99.33|S
+TH|Surin|Surin|14.88|103.49|S
+TH|Tak|Tak|16.87|99.13|S
+TH|Trang|Trang|7.56|99.61|S
+TH|Trat|Trat|12.24|102.52|S
+TH|Ubon Ratchathani|Ubon Ratchathani|15.24|104.85|S
+TH|Udon Thani|Udon Thani|17.42|102.79|S
+TH|Uthai Thani|Uthai Thani|15.38|100.02|S
+TH|Uttaradit|Uttaradit|17.62|100.10|S
+TH|Yala|Yala|6.54|101.28|S
+TH|Yasothon|Yasothon|15.79|104.15|S
+TH|Songkhla|Hat Yai|7.01|100.47|N
+TH|Chonburi|Pattaya|12.93|100.88|N
+```
+
+MF — French Saint Martin is one overseas collectivity, separate from Dutch Sint Maarten (SX). Marigot is its capital; Grand Case, Concordia and the other entries are populated neighborhoods rather than separate municipalities. Nine settlements are listed because only nine have usable population rankings.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://geodatakit.com\&sz=32)
+
+CSV, JSON & GeoJSON · GeoDataKit
+
+
+
+PM — Saint Pierre and Miquelon has two communes: Saint-Pierre and Miquelon-Langlade. Miquelon is the principal inhabited settlement of the latter; Langlade has no permanent population.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.saint-pierre-et-miquelon.gouv.fr\&sz=32)
+
+saint-pierre-et-miquelon.gouv.fr
+
+
+
+VC — Six parishes. Georgetown is the centre of Charlotte, Kingstown of Saint George, and Port Elizabeth of the Grenadines. Calliaqua, Arnos Vale and Biabou are included as additional populated settlements.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://geotaria.com\&sz=32)
+
+Geotaria
+
+
+
+SD — Eighteen states. Al Jazirah is also Gezira; Gedaref is also Al Qadarif; El Obeid is also Al-Ubayyid. Singa is the capital of Sennar State, distinct from Sennar town. Armed conflict since 2023 has caused extensive displacement, making historic population rankings unreliable as current resident counts.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://tran.sudanembassy-kw.com\&sz=32)
+
+tran.sudanembassy-kw\.com+1
+
+
+
+SR — Ten districts. Sipaliwini has no capital within the district and is administered from Paramaribo; Apoera is used solely as an in-district geographic reference. Nieuw Nickerie and Nieuw Amsterdam are also written with hyphens.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.opreisdoorsuriname.sr\&sz=32)
+
+Op reis door Suriname+1
+
+
+
+SJ — Svalbard and Jan Mayen are separate Arctic components grouped under one ISO code, not ordinary provinces. Longyearbyen is Svalbard's administrative centre; Olonkinbyen is a staffed station on Jan Mayen without a permanent civilian population. Barentsburg and Ny-Ålesund are small inhabited research or industrial settlements.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.regjeringen.no\&sz=32)
+
+Svalbard+1
+
+
+
+SE — Twenty-one counties (län). Gothenburg is Göteborg, Malmö retains its Swedish spelling, and Växjö is the seat of Kronoberg County. The ten N entries follow the 2025 municipality population ranking; municipality and continuous urban-area rankings differ.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.scb.se\&sz=32)
+
+Statistikmyndigheten SCB+1
+
+
+
+CH — Twenty-six cantons. Basel-Stadt and Basel-Landschaft are separate cantons; Appenzell Innerrhoden and Ausserrhoden are also separate. Graubünden is also Grisons; Valais is also Wallis; Biel/Bienne uses its bilingual name. N entries use the 2025 municipal population ranking.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.thelocal.ch\&sz=32)
+
+The Local Switzerland+1
+
+
+
+SY — Fourteen governorates. Rif Dimashq means Rural Damascus; Douma is its administrative centre. Quneitra's historic capital has been largely abandoned, so Baath City is used as the populated administrative reference; territorial control in the Golan Heights remains disputed. Recent estimates place Manbij among the ten largest urban settlements.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://en.wikipedia.org\&sz=32)
+
+Wikipedia+1
+
+
+
+TW — Twenty-two first-level local governments: six special municipalities, thirteen counties and three provincial cities. New Taipei City is represented by its Banqiao administrative centre; Jieshou is the administrative locality of Lienchiang County in the Matsu Islands. Taiwan's political status is disputed internationally.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://english.president.gov.tw\&sz=32)
+
+english.president.gov.tw
+
+
+
+TJ — Five first-level administrative territories. Bokhtar was formerly Qurghonteppa, and Gorno-Badakhshan is also abbreviated GBAO. The Districts of Republican Subordination are administered centrally from Dushanbe; Vahdat is used as a separate in-region reference so Dushanbe is not duplicated.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.adb.org\&sz=32)
+
+Asian Development Bank+1
+
+
+
+TZ — Thirty-one regions, including five in Zanzibar. Pwani is also called Coast Region; its headquarters is Kibaha. Songwe's headquarters is Vwawa, and the Zanzibar regions use the local names Kaskazini, Kusini and Mjini Magharibi. The ten N entries follow the 2022 census ranking, including Kahama and Geita.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://achpr.au.int\&sz=32)
+
+African Human Rights Commission+1
+
+
+
+TH — Seventy-six provinces plus Bangkok as a special administrative area. Phra Nakhon Si Ayutthaya is commonly shortened to Ayutthaya; Buriram is also Buri Ram; Sisaket is also Si Sa Ket. Pattaya is a special local administrative city inside Chonburi Province, not a separate province. The ten N entries use the 2026 UN urban-area ranking, which differs from municipal population rankings.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://mpdc.moc.go.th\&sz=32)
+
+mpdc.moc.go.th+1
+
+
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island.
+- Round 12: NL — The Bottom, Oranjestad.
+- Round 13: MP — Agrihan; PW — Ngaramasch, Tobi, Dongosaru.
+- Round 14: PA — Gaigirgordub.
+- Round 15: RS — Pristina, Gjilan, Peja, Prizren. Check against Kosovo data rather than Serbian coverage.
+- Round 16: SB — Tigoa; SO — Bu'ale; SS — Abyei, Pariang.
+- Round 17: Compare the new reference points against Overture business data; coverage has not yet been verified.
+- Special geographic checks: SJ — Olonkinbyen and Ny-Ålesund; SR — Apoera; VC — smaller Grenadine settlements; TW — Jieshou and offshore counties; TZ — smaller Zanzibar regional headquarters.
+- Population consistency: Sudan and Syria require conflict-adjusted population interpretation. Thailand, Sweden and Taiwan require consistent definitions of municipality, city proper and urban area before strict population-ranking validation.
+
+
+---
+
+## Claude Code - 2026-11-08 21:12 UTC - 18_claude.md - attachments: none
+
+## Check of your message-17 list
+Round 17: 272 reference lines, 272 cities, 272 with business data (100 %).
+
+Same format again:
+
+
+## Message 18 of 19 - countries
+Timor-Leste (TL), Togo (TG), Tokelau (TK), Tonga (TO), Trinidad & Tobago (TT), Tunisia (TN), Türkiye (TR), Turkmenistan (TM), Turks & Caicos Islands (TC), Tuvalu (TV), U.S. Outlying Islands (UM), U.S. Virgin Islands (VI), Uganda (UG)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 21:24 UTC - saved as 18_chatgpt.md
+
+```
+TL|Aileu|Aileu|-8.73|125.57|S
+TL|Ainaro|Ainaro|-8.99|125.51|SN
+TL|Atauro|Vila Maumeta|-8.27|125.61|S
+TL|Baucau|Baucau|-8.47|126.46|SN
+TL|Bobonaro|Maliana|-8.99|125.22|SN
+TL|Cova Lima|Suai|-9.31|125.26|SN
+TL|Dili|Dili|-8.56|125.58|SN
+TL|Ermera|Gleno|-8.72|125.44|SN
+TL|Lautém|Lospalos|-8.52|127.00|SN
+TL|Liquiçá|Liquiçá|-8.59|125.34|S
+TL|Manatuto|Manatuto|-8.51|126.01|SN
+TL|Manufahi|Same|-9.00|125.65|SN
+TL|Oecusse|Pante Macassar|-9.20|124.38|SN
+TL|Viqueque|Viqueque|-8.86|126.36|S
+TG|Centrale|Sokodé|8.98|1.13|SN
+TG|Grand Lomé Autonomous District|Lomé|6.13|1.22|SN
+TG|Kara|Kara|9.55|1.19|SN
+TG|Maritime|Tsévié|6.43|1.21|SN
+TG|Plateaux|Atakpamé|7.53|1.13|SN
+TG|Savanes|Dapaong|10.86|0.21|SN
+TG|Plateaux|Kpalimé|6.90|0.63|N
+TG|Plateaux|Anié|7.75|1.20|N
+TG|Savanes|Cinkassé|11.10|0.01|N
+TG|Plateaux|Notsé|6.95|1.17|N
+TK|Atafu|Atafu|-8.55|-172.50|SN
+TK|Fakaofo|Fakaofo|-9.37|-171.23|SN
+TK|Nukunonu|Nukunonu|-9.20|-171.85|SN
+TO|Eua|Ohonua|-21.34|-174.96|S
+TO|Ha'apai|Pangai|-19.81|-174.35|S
+TO|Niuas|Hihifo|-15.95|-173.77|S
+TO|Tongatapu|Nuku'alofa|-21.14|-175.20|SN
+TO|Vava'u|Neiafu|-18.65|-173.98|SN
+TO|Tongatapu|Haveluloto|-21.15|-175.21|N
+TO|Tongatapu|Tofoa-Koloua|-21.16|-175.23|N
+TO|Tongatapu|Vaini|-21.19|-175.18|N
+TO|Tongatapu|Ha'ateiho|-21.18|-175.23|N
+TO|Tongatapu|Popua|-21.15|-175.18|N
+TO|Tongatapu|Nukunuku|-21.13|-175.30|N
+TO|Tongatapu|Pea|-21.17|-175.24|N
+TO|Tongatapu|Lapaha|-21.18|-175.12|N
+TT|Arima|Arima|10.64|-61.28|SN
+TT|Chaguanas|Chaguanas|10.52|-61.41|SN
+TT|Couva-Tabaquite-Talparo|Couva|10.42|-61.45|SN
+TT|Diego Martin|Diego Martin|10.72|-61.56|SN
+TT|Mayaro-Rio Claro|Rio Claro|10.30|-61.18|S
+TT|Penal-Debe|Debe|10.20|-61.45|S
+TT|Point Fortin|Point Fortin|10.17|-61.68|SN
+TT|Port of Spain|Port of Spain|10.66|-61.52|SN
+TT|Princes Town|Princes Town|10.27|-61.38|SN
+TT|San Fernando|San Fernando|10.28|-61.47|SN
+TT|San Juan-Laventille|San Juan|10.65|-61.45|SN
+TT|Sangre Grande|Sangre Grande|10.59|-61.13|S
+TT|Siparia|Siparia|10.14|-61.50|S
+TT|Tobago|Scarborough|11.18|-60.74|S
+TT|Tunapuna-Piarco|Tunapuna|10.65|-61.39|SN
+TN|Ariana|Ariana|36.86|10.19|S
+TN|Béja|Béja|36.73|9.18|S
+TN|Ben Arous|Ben Arous|36.75|10.22|S
+TN|Bizerte|Bizerte|37.27|9.87|SN
+TN|Gabès|Gabès|33.88|10.10|S
+TN|Gafsa|Gafsa|34.43|8.78|S
+TN|Jendouba|Jendouba|36.50|8.78|S
+TN|Kairouan|Kairouan|35.68|10.10|SN
+TN|Kasserine|Kasserine|35.17|8.83|S
+TN|Kebili|Kebili|33.70|8.97|S
+TN|Kef|El Kef|36.17|8.70|S
+TN|Mahdia|Mahdia|35.50|11.06|S
+TN|Manouba|Manouba|36.81|10.10|S
+TN|Medenine|Medenine|33.35|10.50|S
+TN|Monastir|Monastir|35.78|10.83|S
+TN|Nabeul|Nabeul|36.46|10.73|S
+TN|Sfax|Sfax|34.74|10.76|SN
+TN|Sidi Bouzid|Sidi Bouzid|35.04|9.48|S
+TN|Siliana|Siliana|36.08|9.37|S
+TN|Sousse|Sousse|35.83|10.64|SN
+TN|Tataouine|Tataouine|32.93|10.45|S
+TN|Tozeur|Tozeur|33.92|8.13|S
+TN|Tunis|Tunis|36.81|10.18|SN
+TN|Zaghouan|Zaghouan|36.40|10.14|S
+TN|Ariana|La Soukra|36.88|10.25|N
+TN|Ariana|Raoued|36.95|10.19|N
+TN|Tunis|Sidi Hassine|36.75|10.11|N
+TN|Ben Arous|El Mourouj|36.73|10.21|N
+TN|Ariana|Mnihla|36.86|10.11|N
+TR|Adana|Adana|37.00|35.32|S
+TR|Adıyaman|Adıyaman|37.76|38.28|S
+TR|Afyonkarahisar|Afyonkarahisar|38.76|30.54|S
+TR|Ağrı|Ağrı|39.72|43.05|S
+TR|Aksaray|Aksaray|38.37|34.03|S
+TR|Amasya|Amasya|40.65|35.84|S
+TR|Ankara|Ankara|39.93|32.86|SN
+TR|Antalya|Antalya|36.90|30.70|SN
+TR|Ardahan|Ardahan|41.11|42.70|S
+TR|Artvin|Artvin|41.18|41.82|S
+TR|Aydın|Aydın|37.84|27.85|S
+TR|Balıkesir|Balıkesir|39.65|27.88|S
+TR|Bartın|Bartın|41.63|32.34|S
+TR|Batman|Batman|37.88|41.13|S
+TR|Bayburt|Bayburt|40.26|40.23|S
+TR|Bilecik|Bilecik|40.15|29.98|S
+TR|Bingöl|Bingöl|38.89|40.50|S
+TR|Bitlis|Bitlis|38.40|42.11|S
+TR|Bolu|Bolu|40.73|31.61|S
+TR|Burdur|Burdur|37.72|30.29|S
+TR|Bursa|Bursa|40.19|29.06|SN
+TR|Çanakkale|Çanakkale|40.15|26.41|S
+TR|Çankırı|Çankırı|40.60|33.62|S
+TR|Çorum|Çorum|40.55|34.96|S
+TR|Denizli|Denizli|37.78|29.09|S
+TR|Diyarbakır|Diyarbakır|37.91|40.23|S
+TR|Düzce|Düzce|40.84|31.16|S
+TR|Edirne|Edirne|41.68|26.56|S
+TR|Elazığ|Elazığ|38.67|39.22|S
+TR|Erzincan|Erzincan|39.75|39.49|S
+TR|Erzurum|Erzurum|39.90|41.27|S
+TR|Eskişehir|Eskişehir|39.77|30.52|SN
+TR|Gaziantep|Gaziantep|37.07|37.38|SN
+TR|Giresun|Giresun|40.92|38.39|S
+TR|Gümüşhane|Gümüşhane|40.46|39.48|S
+TR|Hakkâri|Hakkâri|37.58|43.74|S
+TR|Hatay|Antakya|36.20|36.16|S
+TR|Iğdır|Iğdır|39.92|44.04|S
+TR|Isparta|Isparta|37.76|30.55|S
+TR|İstanbul|Istanbul|41.01|28.98|SN
+TR|İzmir|Izmir|38.42|27.14|SN
+TR|Kahramanmaraş|Kahramanmaraş|37.58|36.94|S
+TR|Karabük|Karabük|41.20|32.62|S
+TR|Karaman|Karaman|37.18|33.22|S
+TR|Kars|Kars|40.60|43.09|S
+TR|Kastamonu|Kastamonu|41.39|33.78|S
+TR|Kayseri|Kayseri|38.72|35.49|SN
+TR|Kırıkkale|Kırıkkale|39.85|33.51|S
+TR|Kırklareli|Kırklareli|41.74|27.23|S
+TR|Kırşehir|Kırşehir|39.15|34.16|S
+TR|Kilis|Kilis|36.72|37.12|S
+TR|Kocaeli|İzmit|40.77|29.92|S
+TR|Konya|Konya|37.87|32.48|SN
+TR|Kütahya|Kütahya|39.42|29.98|S
+TR|Malatya|Malatya|38.35|38.31|S
+TR|Manisa|Manisa|38.61|27.43|S
+TR|Mardin|Mardin|37.31|40.74|S
+TR|Mersin|Mersin|36.80|34.63|S
+TR|Muğla|Muğla|37.22|28.36|S
+TR|Muş|Muş|38.74|41.49|S
+TR|Nevşehir|Nevşehir|38.62|34.71|S
+TR|Niğde|Niğde|37.97|34.68|S
+TR|Ordu|Ordu|40.98|37.88|S
+TR|Osmaniye|Osmaniye|37.07|36.25|S
+TR|Rize|Rize|41.02|40.52|S
+TR|Sakarya|Adapazarı|40.78|30.40|S
+TR|Samsun|Samsun|41.29|36.33|S
+TR|Şanlıurfa|Şanlıurfa|37.16|38.79|S
+TR|Siirt|Siirt|37.93|41.94|S
+TR|Sinop|Sinop|42.03|35.15|S
+TR|Şırnak|Şırnak|37.52|42.46|S
+TR|Sivas|Sivas|39.75|37.02|S
+TR|Tekirdağ|Tekirdağ|40.98|27.51|S
+TR|Tokat|Tokat|40.32|36.55|S
+TR|Trabzon|Trabzon|41.00|39.72|S
+TR|Tunceli|Tunceli|39.11|39.55|S
+TR|Uşak|Uşak|38.68|29.41|S
+TR|Van|Van|38.49|43.38|S
+TR|Yalova|Yalova|40.66|29.27|S
+TR|Yozgat|Yozgat|39.82|34.80|S
+TR|Zonguldak|Zonguldak|41.45|31.79|S
+TR|Ankara|Sincan|39.97|32.58|N
+TM|Ahal|Anau|37.89|58.52|S
+TM|Arkadag City|Arkadag|38.06|58.18|S
+TM|Ashgabat City|Ashgabat|37.96|58.33|SN
+TM|Balkan|Balkanabat|39.51|54.37|SN
+TM|Dashoguz|Dashoguz|41.83|59.97|SN
+TM|Lebap|Turkmenabat|39.07|63.58|SN
+TM|Mary|Mary|37.59|61.83|SN
+TM|Balkan|Turkmenbashi|40.02|52.96|N
+TM|Ahal|Tejen|37.38|60.50|N
+TM|Mary|Bayramaly|37.62|62.17|N
+TM|Dashoguz|Köneürgench|42.33|59.16|N
+TM|Ahal|Abadan|38.05|58.20|N
+TC|Grand Turk|Cockburn Town|21.46|-71.14|SN
+TC|Middle Caicos|Conch Bar|21.82|-71.82|S
+TC|North Caicos|Kew|21.92|-72.00|SN
+TC|Providenciales|Blue Hills|21.80|-72.27|SN
+TC|Salt Cay|Balfour Town|21.33|-71.20|S
+TC|South Caicos|Cockburn Harbour|21.49|-71.53|SN
+TC|Providenciales|Five Cays|21.77|-72.26|N
+TC|Providenciales|Wheeland|21.80|-72.32|N
+TC|Providenciales|The Bight|21.78|-72.20|N
+TC|Grand Turk|Palm Grove|21.48|-71.14|N
+TC|North Caicos|Bottle Creek|21.89|-71.92|N
+TC|North Caicos|Whitby|21.95|-71.97|N
+TV|Funafuti|Vaiaku|-8.53|179.19|SN
+TV|Nanumanga|Toga|-6.29|176.32|S
+TV|Nanumea|Lolua|-5.67|176.11|S
+TV|Nui|Tanrake|-7.25|177.15|S
+TV|Niutao|Kulia|-6.11|177.34|SN
+TV|Nukufetau|Savave|-8.02|178.31|S
+TV|Nukulaelae|Pepesala|-9.37|179.81|S
+TV|Vaitupu|Asau|-7.49|178.68|S
+TV|Funafuti|Fakaifou|-8.52|179.20|N
+TV|Funafuti|Lofeagai|-8.51|179.20|N
+TV|Funafuti|Alapi|-8.52|179.20|N
+TV|Funafuti|Senala|-8.52|179.20|N
+TV|Funafuti|Tekavatoetoe|-8.51|179.20|N
+TV|Funafuti|Teone|-8.50|179.20|N
+TV|Nukufetau|Aulotu|-8.02|178.31|N
+TV|Nui|Alamoni-Maiaki|-7.25|177.15|N
+UM|-|-|||none
+VI|Saint Croix|Christiansted|17.74|-64.71|SN
+VI|Saint John|Cruz Bay|18.32|-64.78|SN
+VI|Saint Thomas|Charlotte Amalie|18.34|-64.93|SN
+VI|Saint Thomas|Tutu|18.34|-64.89|N
+VI|Saint Thomas|Charlotte Amalie West|18.34|-64.96|N
+VI|Saint Thomas|Charlotte Amalie East|18.33|-64.92|N
+VI|Saint Croix|Frederiksted Southeast|17.70|-64.88|N
+VI|Saint John|Coral Bay|18.34|-64.72|N
+VI|Saint Croix|Frederiksted|17.71|-64.88|N
+VI|Saint Thomas|Red Hook|18.33|-64.85|N
+UG|Abim|Abim|2.70|33.66|S
+UG|Adjumani|Adjumani|3.37|31.79|S
+UG|Agago|Patongo|2.96|33.31|S
+UG|Alebtong|Alebtong|2.25|33.30|S
+UG|Amolatar|Amolatar|1.63|32.81|S
+UG|Amudat|Amudat|1.95|34.94|S
+UG|Amuria|Amuria|2.03|33.65|S
+UG|Amuru|Amuru|2.81|31.85|S
+UG|Apac|Apac|1.98|32.54|S
+UG|Arua District|Vurra|3.01|30.94|S
+UG|Budaka|Budaka|1.00|33.95|S
+UG|Bududa|Bududa|1.01|34.34|S
+UG|Bugiri|Bugiri|0.57|33.74|S
+UG|Bugweri|Busembatia|0.77|33.60|S
+UG|Buhweju|Nsiika|-0.29|30.30|S
+UG|Buikwe|Buikwe|0.34|33.00|S
+UG|Bukedea|Bukedea|1.35|34.04|S
+UG|Bukomansimbi|Bukomansimbi|-0.19|31.60|S
+UG|Bukwo|Bukwo|1.28|34.75|S
+UG|Bulambuli|Bulambuli|1.17|34.36|S
+UG|Buliisa|Buliisa|2.12|31.41|S
+UG|Bundibugyo|Bundibugyo|0.70|30.06|S
+UG|Bunyangabu|Kibiito|0.32|30.20|S
+UG|Bushenyi|Bushenyi|-0.54|30.18|S
+UG|Busia|Busia|0.47|34.09|S
+UG|Butaleja|Butaleja|0.91|33.95|S
+UG|Butambala|Gombe|-0.18|32.12|S
+UG|Butebo|Butebo|1.20|33.93|S
+UG|Buvuma|Kitamilo|0.23|33.27|S
+UG|Buyende|Buyende|1.15|33.15|S
+UG|Dokolo|Dokolo|1.92|33.17|S
+UG|Gomba|Kanoni|-0.26|31.80|S
+UG|Gulu District|Awach|2.87|32.44|S
+UG|Hoima District|Kigorobya|1.62|31.31|S
+UG|Ibanda|Ibanda|-0.13|30.49|S
+UG|Iganga|Iganga|0.61|33.48|S
+UG|Isingiro|Isingiro|-0.82|30.83|S
+UG|Jinja District|Buwenge|0.62|33.17|S
+UG|Kaabong|Kaabong|3.51|34.14|S
+UG|Kabale|Kabale|-1.25|29.99|S
+UG|Kabarole|Busoro|0.63|30.19|S
+UG|Kaberamaido|Kaberamaido|1.76|33.16|S
+UG|Kagadi|Kagadi|0.94|30.81|S
+UG|Kakumiro|Kakumiro|0.78|31.32|S
+UG|Kalaki|Kalaki|1.87|33.31|S
+UG|Kalangala|Kalangala|-0.32|32.29|S
+UG|Kaliro|Kaliro|0.90|33.50|S
+UG|Kalungu|Kalungu|-0.17|31.76|S
+UG|Kampala Capital City|Kampala|0.32|32.58|SN
+UG|Kamuli|Kamuli|0.95|33.12|S
+UG|Kamwenge|Kamwenge|0.19|30.45|S
+UG|Kanungu|Kanungu|-0.96|29.79|S
+UG|Kapchorwa|Kapchorwa|1.40|34.45|S
+UG|Kapelebyong|Kapelebyong|2.23|33.73|S
+UG|Karenga|Karenga|3.72|33.78|S
+UG|Kasese|Kasese|0.18|30.08|S
+UG|Kassanda|Kassanda|0.62|31.82|S
+UG|Katakwi|Katakwi|1.91|34.00|S
+UG|Kayunga|Kayunga|0.70|32.90|S
+UG|Kazo|Kazo|-0.05|30.78|S
+UG|Kibaale|Kibaale|0.78|31.06|S
+UG|Kiboga|Kiboga|0.92|31.77|S
+UG|Kibuku|Kibuku|1.02|33.82|S
+UG|Kikuube|Kikuube|1.60|31.17|S
+UG|Kiruhura|Kiruhura|-0.20|30.80|S
+UG|Kiryandongo|Kiryandongo|1.88|32.07|S
+UG|Kisoro|Kisoro|-1.29|29.68|S
+UG|Kitagwenda|Ntara|0.05|30.32|S
+UG|Kitgum|Kitgum|3.28|32.89|S
+UG|Koboko|Koboko|3.41|30.96|S
+UG|Kole|Kole|2.41|32.80|S
+UG|Kotido|Kotido|2.98|34.13|S
+UG|Kumi|Kumi|1.46|33.94|S
+UG|Kwania|Aduku|2.06|32.77|S
+UG|Kween|Binyiny|1.43|34.66|S
+UG|Kyankwanzi|Kyankwanzi|1.13|31.72|S
+UG|Kyegegwa|Kyegegwa|0.49|31.05|S
+UG|Kyenjojo|Kyenjojo|0.63|30.64|S
+UG|Kyotera|Kyotera|-0.62|31.52|S
+UG|Lamwo|Lamwo|3.54|32.80|S
+UG|Lira District|Erute|2.28|32.93|S
+UG|Luuka|Bulongo|0.78|33.30|S
+UG|Luwero|Luwero|0.85|32.47|S
+UG|Lwengo|Lwengo|-0.42|31.41|S
+UG|Lyantonde|Lyantonde|-0.40|31.16|S
+UG|Madi-Okollo|Rhino Camp|2.94|31.13|S
+UG|Manafwa|Manafwa|0.98|34.32|S
+UG|Maracha|Maracha|3.29|30.94|S
+UG|Masaka District|Bukakata|-0.32|32.06|S
+UG|Masindi|Masindi|1.69|31.71|S
+UG|Mayuge|Mayuge|0.46|33.50|S
+UG|Mbale District|Busiu|0.97|34.15|S
+UG|Mbarara District|Bwizibwera|-0.56|30.58|S
+UG|Mitooma|Mitooma|-0.57|30.06|S
+UG|Mityana|Mityana|0.40|32.04|S
+UG|Moroto|Moroto|2.53|34.67|S
+UG|Moyo|Moyo|3.65|31.72|S
+UG|Mpigi|Mpigi|0.23|32.32|S
+UG|Mubende|Mubende|0.56|31.39|S
+UG|Mukono|Mukono|0.35|32.76|SN
+UG|Nabilatuk|Nabilatuk|2.05|34.55|S
+UG|Nakapiripirit|Nakapiripirit|1.92|34.78|S
+UG|Nakaseke|Nakaseke|0.73|32.40|S
+UG|Nakasongola|Nakasongola|1.31|32.46|S
+UG|Namayingo|Namayingo|0.24|33.88|S
+UG|Namisindwa|Bupoto|0.85|34.35|S
+UG|Namutumba|Namutumba|0.83|33.69|S
+UG|Napak|Lokopo|2.28|34.22|S
+UG|Nebbi|Nebbi|2.48|31.09|S
+UG|Ngora|Ngora|1.49|33.77|S
+UG|Ntoroko|Kanara|1.08|30.54|S
+UG|Ntungamo|Ntungamo|-0.88|30.27|S
+UG|Nwoya|Anaka|2.64|31.98|S
+UG|Obongi|Obongi|3.37|31.58|S
+UG|Omoro|Lalogi|2.74|32.63|S
+UG|Otuke|Orum|2.63|33.32|S
+UG|Oyam|Oyam|2.25|32.38|S
+UG|Pakwach|Pakwach|2.46|31.50|S
+UG|Pader|Pader|2.80|33.14|S
+UG|Pallisa|Pallisa|1.15|33.71|S
+UG|Rakai|Rakai|-0.68|31.37|S
+UG|Rubanda|Rubanda|-1.18|29.87|S
+UG|Rubirizi|Rubirizi|-0.30|30.11|S
+UG|Rukiga|Muhanga|-1.13|30.11|S
+UG|Rukungiri|Rukungiri|-0.79|29.93|S
+UG|Rwampara|Kinoni|-0.52|30.67|S
+UG|Sembabule|Sembabule|-0.08|31.46|S
+UG|Serere|Serere|1.50|33.55|S
+UG|Sheema|Kabwohe|-0.58|30.38|S
+UG|Sironko|Sironko|1.24|34.25|S
+UG|Soroti District|Katine|1.78|33.69|S
+UG|Terego|Leju|3.10|31.17|S
+UG|Tororo|Tororo|0.69|34.18|S
+UG|Wakiso|Wakiso|0.40|32.46|S
+UG|Yumbe|Yumbe|3.47|31.25|S
+UG|Zombo|Zombo|2.51|30.90|S
+UG|Arua City|Arua|3.02|30.91|SN
+UG|Fort Portal City|Fort Portal|0.66|30.28|S
+UG|Gulu City|Gulu|2.77|32.30|S
+UG|Hoima City|Hoima|1.43|31.35|S
+UG|Jinja City|Jinja|0.42|33.20|SN
+UG|Lira City|Lira|2.25|32.90|S
+UG|Masaka City|Masaka|-0.34|31.74|SN
+UG|Mbale City|Mbale|1.08|34.18|SN
+UG|Mbarara City|Mbarara|-0.61|30.65|S
+UG|Soroti City|Soroti|1.71|33.61|S
+UG|Wakiso|Nansana|0.37|32.53|N
+UG|Wakiso|Kira|0.40|32.64|N
+UG|Wakiso|Makindye-Ssabagabo|0.22|32.57|N
+UG|Wakiso|Kyengera|0.30|32.45|N
+```
+
+### Naming caveats
+
+TL — Fourteen municipalities, including Atauro, established separately in 2022. Oecusse is the Special Administrative Region of Oe-Cusse Ambeno; Pante Macassar is also Pante Makasar. The ten N entries follow the 2022 census of urban settlements.
+
+TG — Five conventional regions plus the Autonomous District of Greater Lomé, treated as a sixth geographic administrative unit. The ten largest urban localities follow the 2022 census; Cinkassé is also Senkase, and Kara is also Lama-Kara.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://help.fews.net\&sz=32)
+
+FEWS NET Help Center+1
+
+
+
+TK — Three inhabited atolls, each with its own village administration. Tokelau has no single permanent national capital; government functions rotate among the atolls.
+
+TO — Five island divisions. Niuas is also called Ongo Niua; Hihifo on Niuatoputapu is used as its principal reference. N entries follow the 2021 village-level census rather than aggregating the Greater Nuku'alofa urban area.
+
+TT — Fourteen municipal corporations in Trinidad plus Tobago's separate administration. Diego Martin and Siparia became boroughs in 2023. Proposals announced in October 2026 would increase Trinidad's corporations to 17, but they are not yet treated as enacted boundaries.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.ttt.live\&sz=32)
+
+TTT News+1
+
+
+
+TN — Twenty-four governorates are retained as the practical mapping units. Five larger districts were introduced in September 2023, grouping those governorates, without replacing them as ordinary geographic subdivisions. El Kef is also Le Kef.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://9anoun.tn\&sz=32)
+
+9anoun 🇹🇳
+
+
+
+TR — Eighty-one provinces. Hatay's capital is Antakya; Kocaeli's is İzmit; Sakarya's is Adapazarı. Sincan is a major Ankara urban district and appears separately in the UN urban-settlement population ranking. İstanbul and İstanbul Province have overlapping metropolitan boundaries.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://turkishrepublic.org\&sz=32)
+
+turkishrepublic.org+1
+
+
+
+TM — Five welaýat provinces plus Ashgabat and Arkadag, both separately administered cities of state importance. Ahal's administrative centre is associated with Arkadag; Anau is used as an in-province geographic reference. Turkmenabat was formerly Chardzhou; Balkanabat was formerly Nebit-Dag.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://ift2026.com\&sz=32)
+
+ift2026.com
+
+
+
+TC — Six geographic districts. Cockburn Town is the capital on Grand Turk, whereas Cockburn Harbour is on South Caicos. Providenciales is an island containing several settlements, not a single conventional city; its populated localities are listed separately.
+
+TV — Eight island councils; Niulakita is administered with Niutao rather than being a ninth council. The ten N entries use 2022 census villages, including several neighborhoods of Fongafale. Several coordinates coincide when rounded to two decimals.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.geonames.org\&sz=32)
+
+GeoNames UI+1
+
+
+
+UM — No permanent civilian population across the U.S. Minor Outlying Islands. Some islands host rotating military, research or conservation personnel, but the uninhabited-territory convention is used.
+
+VI — Three principal island subdivisions: Saint Croix, Saint John and Saint Thomas. Population-ranked entries follow the 2020 census of towns and census-designated places, including Charlotte Amalie East/West and Frederiksted Southeast as separate localities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://wm-site-staging.cloudflare-47b.workers.dev\&sz=32)
+
+Worldometer
+
+
+
+UG — Uganda has 135 districts plus 11 cities, including Kampala, giving 146 district-equivalent local-government units. Districts surrounding separately administered cities use nearby in-district settlements as geographic references where possible. The ten largest N settlements follow the 2024 census, which ranks Nansana, Kira and Makindye-Ssabagabo among the largest urban centres.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://statistics.ubos.org\&sz=32)
+
+UBOS Dissemination Board+1
+
+
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island.
+- Round 12: NL — The Bottom, Oranjestad.
+- Round 13: MP — Agrihan; PW — Ngaramasch, Tobi, Dongosaru.
+- Round 14: PA — Gaigirgordub.
+- Round 15: RS — Pristina, Gjilan, Peja, Prizren. These are Kosovo localities requiring separate geographic classification.
+- Round 16: SB — Tigoa; SO — Bu'ale; SS — Abyei, Pariang.
+- Round 17: No outstanding coverage points; all 272 reference cities matched business data.
+- Round 18: New reference points await comparison with Overture business data.
+- Administrative checks: Confirm Uganda's rural district-headquarters locations, particularly districts separated from newly designated cities; verify Turkmenistan's Ahal–Arkadag administrative relationship; and monitor Trinidad and Tobago's proposed municipal restructuring.
+- Sparse-island checks: TK — Atafu, Fakaofo, Nukunonu; TC — Balfour Town and Conch Bar; TV — small island-council settlements. Some may legitimately have few or no Overture business records.
+- Population consistency: Türkiye, Tunisia, Trinidad and Tobago, and Uganda use different city-proper versus municipal or urban-agglomeration definitions. Keep those distinctions when interpreting N coverage.
+
+
+---
+
+## Claude Code - 2026-11-08 21:25 UTC - 19_claude.md - attachments: none
+
+## Check of your message-18 list
+Round 18: 367 reference lines, 366 cities, 356 with business data (97 %).
+Not covered: - TK: 1/3 cities covered, 2 businesses near them; no data at: Atafu, Fakaofo
+Not covered: - TM: 11/12 cities covered, 704 businesses near them; no data at: Tejen
+Not covered: - TV: 12/16 cities covered, 236 businesses near them; no data at: Kulia, Savave, Pepesala, Aulotu
+Not covered: - UG: 147/150 cities covered, 74,341 businesses near them; no data at: Amuru, Nabilatuk, Lalogi
+
+Last message - same format again:
+
+
+## Message 19 of 19 - countries
+Ukraine (UA), United Arab Emirates (AE), United Kingdom (GB), United States (US), Uruguay (UY), Uzbekistan (UZ), Vanuatu (VU), Vatican City (VA), Venezuela (VE), Vietnam (VN), Wallis & Futuna (WF), Western Sahara (EH), Yemen (YE), Zambia (ZM), Zimbabwe (ZW)
+
+For EACH country above give:
+1. every first-level administrative division (state / province / region / governorate ... as it is today),
+   with its capital or largest city (kind S);
+2. the 10 largest cities of the country by population (kind N) - fewer if the country has fewer.
+   A city can appear as both S and N; list it once with kind SN.
+Uninhabited territories: one line `CC|-|-|||none`.
+
+Output ONLY one code block, one line per city, pipe-separated, no header, no commentary inside it:
+`CC|state|city|lat|lon|kind`
+- CC = ISO code above; state and city in English (the name a map would show); lat / lon with 2 decimals.
+After the code block: one line per country with any naming caveat (renamed divisions, disputed areas),
+then the list of points still open.
+
+
+---
+
+## ChatGPT (Extra High) - 2026-11-08 21:40 UTC - saved as 19_chatgpt.md
+
+```
+UA|Autonomous Republic of Crimea|Simferopol|44.95|34.10|S
+UA|Cherkasy Oblast|Cherkasy|49.44|32.06|S
+UA|Chernihiv Oblast|Chernihiv|51.50|31.29|S
+UA|Chernivtsi Oblast|Chernivtsi|48.29|25.94|S
+UA|Dnipropetrovsk Oblast|Dnipro|48.46|35.05|SN
+UA|Donetsk Oblast|Donetsk|48.02|37.80|SN
+UA|Ivano-Frankivsk Oblast|Ivano-Frankivsk|48.92|24.71|S
+UA|Kharkiv Oblast|Kharkiv|49.99|36.23|SN
+UA|Kherson Oblast|Kherson|46.64|32.62|S
+UA|Khmelnytskyi Oblast|Khmelnytskyi|49.42|26.99|S
+UA|Kirovohrad Oblast|Kropyvnytskyi|48.51|32.26|S
+UA|Kyiv Oblast|Bila Tserkva|49.80|30.12|S
+UA|Kyiv City|Kyiv|50.45|30.52|SN
+UA|Luhansk Oblast|Luhansk|48.57|39.31|S
+UA|Lviv Oblast|Lviv|49.84|24.03|SN
+UA|Mykolaiv Oblast|Mykolaiv|46.98|31.99|SN
+UA|Odesa Oblast|Odesa|46.48|30.73|SN
+UA|Poltava Oblast|Poltava|49.59|34.55|S
+UA|Rivne Oblast|Rivne|50.62|26.25|S
+UA|Sevastopol City|Sevastopol|44.61|33.52|SN
+UA|Sumy Oblast|Sumy|50.91|34.80|S
+UA|Ternopil Oblast|Ternopil|49.55|25.60|S
+UA|Vinnytsia Oblast|Vinnytsia|49.23|28.47|S
+UA|Volyn Oblast|Lutsk|50.75|25.34|S
+UA|Zakarpattia Oblast|Uzhhorod|48.62|22.30|S
+UA|Zaporizhzhia Oblast|Zaporizhzhia|47.84|35.14|SN
+UA|Zhytomyr Oblast|Zhytomyr|50.25|28.66|S
+UA|Dnipropetrovsk Oblast|Kryvyi Rih|47.91|33.39|N
+AE|Abu Dhabi|Abu Dhabi|24.45|54.37|SN
+AE|Ajman|Ajman|25.41|55.45|SN
+AE|Dubai|Dubai|25.20|55.27|SN
+AE|Fujairah|Fujairah|25.12|56.33|SN
+AE|Ras Al Khaimah|Ras Al Khaimah|25.79|55.94|SN
+AE|Sharjah|Sharjah|25.35|55.39|SN
+AE|Umm Al Quwain|Umm Al Quwain|25.56|55.56|SN
+AE|Abu Dhabi|Al Ain|24.21|55.74|N
+AE|Sharjah|Khor Fakkan|25.33|56.34|N
+AE|Sharjah|Kalba|25.07|56.35|N
+GB|England|London|51.51|-0.13|SN
+GB|Northern Ireland|Belfast|54.60|-5.93|SN
+GB|Scotland|Edinburgh|55.95|-3.19|SN
+GB|Wales|Cardiff|51.48|-3.18|S
+GB|England|Birmingham|52.49|-1.89|N
+GB|Scotland|Glasgow|55.86|-4.25|N
+GB|England|Leeds|53.80|-1.55|N
+GB|England|Liverpool|53.41|-2.98|N
+GB|England|Sheffield|53.38|-1.47|N
+GB|England|Manchester|53.48|-2.24|N
+GB|England|Bristol|51.45|-2.59|N
+US|Alabama|Montgomery|32.37|-86.30|S
+US|Alaska|Juneau|58.30|-134.42|S
+US|Arizona|Phoenix|33.45|-112.07|SN
+US|Arkansas|Little Rock|34.75|-92.29|S
+US|California|Sacramento|38.58|-121.49|S
+US|Colorado|Denver|39.74|-104.99|S
+US|Connecticut|Hartford|41.76|-72.68|S
+US|Delaware|Dover|39.16|-75.52|S
+US|District of Columbia|Washington|38.91|-77.04|S
+US|Florida|Tallahassee|30.44|-84.28|S
+US|Georgia|Atlanta|33.75|-84.39|S
+US|Hawaii|Honolulu|21.31|-157.86|S
+US|Idaho|Boise|43.62|-116.20|S
+US|Illinois|Springfield|39.80|-89.65|S
+US|Indiana|Indianapolis|39.77|-86.16|S
+US|Iowa|Des Moines|41.59|-93.62|S
+US|Kansas|Topeka|39.05|-95.68|S
+US|Kentucky|Frankfort|38.20|-84.87|S
+US|Louisiana|Baton Rouge|30.45|-91.19|S
+US|Maine|Augusta|44.31|-69.78|S
+US|Maryland|Annapolis|38.98|-76.49|S
+US|Massachusetts|Boston|42.36|-71.06|S
+US|Michigan|Lansing|42.73|-84.56|S
+US|Minnesota|Saint Paul|44.95|-93.09|S
+US|Mississippi|Jackson|32.30|-90.18|S
+US|Missouri|Jefferson City|38.58|-92.17|S
+US|Montana|Helena|46.59|-112.04|S
+US|Nebraska|Lincoln|40.81|-96.68|S
+US|Nevada|Carson City|39.16|-119.77|S
+US|New Hampshire|Concord|43.21|-71.54|S
+US|New Jersey|Trenton|40.22|-74.76|S
+US|New Mexico|Santa Fe|35.69|-105.94|S
+US|New York|Albany|42.65|-73.76|S
+US|North Carolina|Raleigh|35.78|-78.64|S
+US|North Dakota|Bismarck|46.81|-100.78|S
+US|Ohio|Columbus|39.96|-83.00|S
+US|Oklahoma|Oklahoma City|35.47|-97.52|S
+US|Oregon|Salem|44.94|-123.03|S
+US|Pennsylvania|Harrisburg|40.27|-76.88|S
+US|Rhode Island|Providence|41.82|-71.41|S
+US|South Carolina|Columbia|34.00|-81.03|S
+US|South Dakota|Pierre|44.37|-100.35|S
+US|Tennessee|Nashville|36.16|-86.78|S
+US|Texas|Austin|30.27|-97.74|S
+US|Utah|Salt Lake City|40.76|-111.89|S
+US|Vermont|Montpelier|44.26|-72.58|S
+US|Virginia|Richmond|37.54|-77.44|S
+US|Washington|Olympia|47.04|-122.90|S
+US|West Virginia|Charleston|38.35|-81.63|S
+US|Wisconsin|Madison|43.07|-89.40|S
+US|Wyoming|Cheyenne|41.14|-104.82|S
+US|New York|New York City|40.71|-74.01|N
+US|California|Los Angeles|34.05|-118.24|N
+US|Illinois|Chicago|41.88|-87.63|N
+US|Texas|Houston|29.76|-95.37|N
+US|Pennsylvania|Philadelphia|39.95|-75.16|N
+US|Texas|San Antonio|29.42|-98.49|N
+US|California|San Diego|32.72|-117.16|N
+US|Texas|Dallas|32.78|-96.80|N
+US|Texas|Fort Worth|32.76|-97.33|N
+UY|Artigas|Artigas|-30.40|-56.47|SN
+UY|Canelones|Canelones|-34.52|-56.28|S
+UY|Cerro Largo|Melo|-32.37|-54.18|SN
+UY|Colonia|Colonia del Sacramento|-34.47|-57.84|S
+UY|Durazno|Durazno|-33.38|-56.52|S
+UY|Flores|Trinidad|-33.52|-56.90|S
+UY|Florida|Florida|-34.10|-56.21|S
+UY|Lavalleja|Minas|-34.38|-55.24|S
+UY|Maldonado|Maldonado|-34.90|-54.95|SN
+UY|Montevideo|Montevideo|-34.91|-56.19|SN
+UY|Paysandú|Paysandú|-32.32|-58.08|SN
+UY|Río Negro|Fray Bentos|-33.12|-58.31|S
+UY|Rivera|Rivera|-30.90|-55.55|SN
+UY|Rocha|Rocha|-34.48|-54.34|S
+UY|Salto|Salto|-31.39|-57.96|SN
+UY|San José|San José de Mayo|-34.34|-56.71|S
+UY|Soriano|Mercedes|-33.25|-58.03|S
+UY|Tacuarembó|Tacuarembó|-31.72|-55.98|SN
+UY|Treinta y Tres|Treinta y Tres|-33.23|-54.38|S
+UY|Canelones|Ciudad de la Costa|-34.82|-55.95|N
+UY|Canelones|Las Piedras|-34.73|-56.22|N
+UZ|Andijan Region|Andijan|40.78|72.34|SN
+UZ|Bukhara Region|Bukhara|39.77|64.43|SN
+UZ|Fergana Region|Fergana|40.39|71.79|SN
+UZ|Jizzakh Region|Jizzakh|40.12|67.84|S
+UZ|Karakalpakstan|Nukus|42.46|59.61|SN
+UZ|Kashkadarya Region|Qarshi|38.86|65.79|SN
+UZ|Khorezm Region|Urgench|41.55|60.63|S
+UZ|Namangan Region|Namangan|40.99|71.67|SN
+UZ|Navoi Region|Navoi|40.10|65.38|S
+UZ|Samarkand Region|Samarkand|39.65|66.97|SN
+UZ|Surkhandarya Region|Termez|37.22|67.28|S
+UZ|Syrdarya Region|Gulistan|40.49|68.78|S
+UZ|Tashkent Region|Nurafshon|41.04|69.36|S
+UZ|Tashkent City|Tashkent|41.30|69.27|SN
+UZ|Fergana Region|Kokand|40.53|70.94|N
+UZ|Fergana Region|Margilan|40.47|71.72|N
+VU|Malampa|Lakatoro|-16.10|167.42|SN
+VU|Penama|Saratamata|-15.29|167.99|S
+VU|Sanma|Luganville|-15.52|167.16|SN
+VU|Shefa|Port Vila|-17.74|168.31|SN
+VU|Tafea|Isangel|-19.54|169.28|SN
+VU|Torba|Sola|-13.88|167.55|SN
+VU|Malampa|Norsup|-16.07|167.40|N
+VU|Shefa|Mele|-17.69|168.26|N
+VU|Shefa|Erakor|-17.76|168.32|N
+VU|Shefa|Pango|-17.78|168.28|N
+VU|Sanma|Port Olry|-15.04|167.07|N
+VA|Vatican City|Vatican City|41.90|12.45|SN
+VE|Amazonas|Puerto Ayacucho|5.66|-67.62|S
+VE|Anzoátegui|Barcelona|10.13|-64.72|SN
+VE|Apure|San Fernando de Apure|7.89|-67.47|S
+VE|Aragua|Maracay|10.25|-67.60|SN
+VE|Barinas|Barinas|8.62|-70.21|S
+VE|Bolívar|Ciudad Bolívar|8.13|-63.54|S
+VE|Carabobo|Valencia|10.16|-68.01|SN
+VE|Cojedes|San Carlos|9.66|-68.58|S
+VE|Delta Amacuro|Tucupita|9.06|-62.05|S
+VE|Capital District|Caracas|10.49|-66.90|SN
+VE|Falcón|Coro|11.40|-69.67|S
+VE|Federal Dependencies|Gran Roque|11.95|-66.67|S
+VE|Guárico|San Juan de los Morros|9.91|-67.36|S
+VE|La Guaira|La Guaira|10.60|-66.93|S
+VE|Lara|Barquisimeto|10.07|-69.32|SN
+VE|Mérida|Mérida|8.59|-71.16|S
+VE|Miranda|Los Teques|10.34|-67.04|S
+VE|Monagas|Maturín|9.75|-63.18|SN
+VE|Nueva Esparta|La Asunción|11.03|-63.86|S
+VE|Portuguesa|Guanare|9.04|-69.75|S
+VE|Sucre|Cumaná|10.46|-64.17|SN
+VE|Táchira|San Cristóbal|7.77|-72.23|S
+VE|Trujillo|Trujillo|9.37|-70.43|S
+VE|Yaracuy|San Felipe|10.34|-68.74|S
+VE|Zulia|Maracaibo|10.64|-71.63|SN
+VE|Bolívar|Ciudad Guayana|8.35|-62.65|N
+VE|Miranda|Guarenas|10.47|-66.62|N
+VN|An Giang|Rach Gia|10.02|105.08|S
+VN|Bac Ninh|Bac Giang|21.28|106.19|S
+VN|Ca Mau|Ca Mau|9.18|105.15|S
+VN|Can Tho|Can Tho|10.05|105.78|SN
+VN|Cao Bang|Cao Bang|22.67|106.25|S
+VN|Da Nang|Da Nang|16.07|108.22|SN
+VN|Dak Lak|Buon Ma Thuot|12.67|108.05|S
+VN|Dien Bien|Dien Bien Phu|21.39|103.02|S
+VN|Dong Nai|Bien Hoa|10.95|106.82|S
+VN|Dong Thap|My Tho|10.36|106.36|SN
+VN|Gia Lai|Quy Nhon|13.78|109.22|S
+VN|Ha Tinh|Ha Tinh|18.36|105.90|S
+VN|Hai Phong|Hai Phong|20.86|106.68|SN
+VN|Hanoi|Hanoi|21.03|105.85|SN
+VN|Ho Chi Minh City|Ho Chi Minh City|10.82|106.63|SN
+VN|Hue|Hue|16.46|107.60|S
+VN|Hung Yen|Hung Yen|20.65|106.05|S
+VN|Khanh Hoa|Nha Trang|12.24|109.19|SN
+VN|Lai Chau|Lai Chau|22.40|103.46|S
+VN|Lam Dong|Da Lat|11.94|108.44|S
+VN|Lang Son|Lang Son|21.85|106.76|S
+VN|Lao Cai|Yen Bai|21.72|104.91|S
+VN|Nghe An|Vinh|18.67|105.69|S
+VN|Ninh Binh|Ninh Binh|20.25|105.97|S
+VN|Phu Tho|Viet Tri|21.31|105.40|S
+VN|Quang Ngai|Quang Ngai|15.12|108.80|S
+VN|Quang Ninh|Ha Long|20.95|107.08|S
+VN|Quang Tri|Dong Hoi|17.47|106.62|S
+VN|Son La|Son La|21.33|103.91|S
+VN|Tay Ninh|Tan An|10.54|106.41|S
+VN|Thai Nguyen|Thai Nguyen|21.59|105.85|S
+VN|Thanh Hoa|Thanh Hoa|19.81|105.78|S
+VN|Tuyen Quang|Tuyen Quang|21.82|105.21|S
+VN|Vinh Long|Vinh Long|10.25|105.97|S
+VN|An Giang|Long Xuyen|10.39|105.44|N
+VN|Ho Chi Minh City|Vung Tau|10.35|107.08|N
+VN|Tay Ninh|Tay Ninh|11.31|106.10|N
+WF|Alo|Ono|-14.31|-178.11|SN
+WF|Sigave|Leava|-14.29|-178.16|S
+WF|Uvea|Mata-Utu|-13.28|-176.17|SN
+WF|Uvea|Liku|-13.27|-176.17|N
+WF|Uvea|Utufua|-13.34|-176.19|N
+WF|Uvea|Falaleu|-13.29|-176.18|N
+WF|Uvea|Alele|-13.25|-176.18|N
+WF|Uvea|Mala'e|-13.24|-176.19|N
+WF|Uvea|Halalo|-13.35|-176.21|N
+WF|Uvea|Ahoa|-13.29|-176.24|N
+WF|Alo|Taoa|-14.31|-178.13|N
+EH|Laayoune-Sakia El Hamra|Laayoune|27.14|-13.19|SN
+EH|Dakhla-Oued Ed Dahab|Dakhla|23.68|-15.96|SN
+EH|Laayoune-Sakia El Hamra|Smara|26.74|-11.67|N
+EH|Laayoune-Sakia El Hamra|Boujdour|26.13|-14.49|N
+EH|Laayoune-Sakia El Hamra|El Marsa|27.10|-13.42|N
+EH|Laayoune-Sakia El Hamra|Meharrize|26.15|-11.07|N
+EH|Dakhla-Oued Ed Dahab|Tichla|21.58|-14.97|N
+EH|Dakhla-Oued Ed Dahab|El Aargub|23.61|-15.87|N
+EH|Dakhla-Oued Ed Dahab|Bir Ganduz|21.60|-16.45|N
+EH|Laayoune-Sakia El Hamra|Amgala|26.29|-11.14|N
+YE|Abyan|Zinjibar|13.13|45.38|S
+YE|Aden|Aden|12.78|45.04|SN
+YE|Al Bayda|Al Bayda|13.99|45.57|S
+YE|Al Dhale|Ad Dhale|13.70|44.73|S
+YE|Al Hudaydah|Al Hudaydah|14.80|42.95|SN
+YE|Al Jawf|Al Hazm|16.17|44.78|S
+YE|Al Mahrah|Al Ghaydah|16.21|52.18|S
+YE|Al Mahwit|Al Mahwit|15.47|43.54|S
+YE|Amran|Amran|15.66|43.94|SN
+YE|Dhamar|Dhamar|14.54|44.41|SN
+YE|Hadramawt|Mukalla|14.54|49.13|SN
+YE|Hajjah|Hajjah|15.69|43.60|S
+YE|Ibb|Ibb|13.97|44.18|SN
+YE|Lahij|Lahij|13.06|44.88|S
+YE|Marib|Marib|15.46|45.33|S
+YE|Raymah|Al Jabin|14.71|43.50|S
+YE|Saadah|Saadah|16.94|43.76|S
+YE|Sana'a Governorate|Sayyan|15.17|44.32|SN
+YE|Sana'a City|Sana'a|15.35|44.21|SN
+YE|Shabwah|Ataq|14.54|46.83|S
+YE|Socotra|Hadibu|12.65|54.02|S
+YE|Taiz|Taiz|13.58|44.02|SN
+YE|Al Hudaydah|Zabid|14.20|43.32|N
+ZM|Central|Kabwe|-14.44|28.45|SN
+ZM|Copperbelt|Ndola|-12.96|28.64|SN
+ZM|Eastern|Chipata|-13.63|32.65|SN
+ZM|Luapula|Mansa|-11.20|28.89|S
+ZM|Lusaka|Lusaka|-15.42|28.28|SN
+ZM|Muchinga|Chinsali|-10.54|32.08|S
+ZM|Northern|Kasama|-10.21|31.18|SN
+ZM|North-Western|Solwezi|-12.17|26.39|SN
+ZM|Southern|Choma|-16.81|26.98|S
+ZM|Western|Mongu|-15.25|23.13|S
+ZM|Copperbelt|Kitwe|-12.82|28.21|N
+ZM|Copperbelt|Chingola|-12.53|27.86|N
+ZM|Copperbelt|Luanshya|-13.14|28.42|N
+ZM|Southern|Livingstone|-17.85|25.86|N
+ZW|Bulawayo|Bulawayo|-20.15|28.59|SN
+ZW|Harare|Harare|-17.83|31.05|SN
+ZW|Manicaland|Mutare|-18.97|32.67|SN
+ZW|Mashonaland Central|Bindura|-17.30|31.33|S
+ZW|Mashonaland East|Marondera|-18.19|31.55|S
+ZW|Mashonaland West|Chinhoyi|-17.37|30.19|SN
+ZW|Masvingo|Masvingo|-20.07|30.83|S
+ZW|Matabeleland North|Lupane|-18.93|27.81|S
+ZW|Matabeleland South|Gwanda|-20.94|29.00|S
+ZW|Midlands|Gweru|-19.45|29.82|SN
+ZW|Harare|Chitungwiza|-18.02|31.07|N
+ZW|Harare|Epworth|-17.89|31.15|N
+ZW|Midlands|Kwekwe|-18.93|29.82|N
+ZW|Mashonaland West|Kadoma|-18.33|29.91|N
+ZW|Mashonaland East|Ruwa|-17.89|31.24|N
+```
+
+### Naming caveats
+
+UA — Ukraine has 24 oblasts, the Autonomous Republic of Crimea, and the special-status cities Kyiv and Sevastopol. Crimea, Sevastopol and other Russian-occupied Ukrainian territories remain internationally recognized as Ukrainian. Kyiv is the administrative centre of Kyiv Oblast but lies outside that oblast, so Bila Tserkva is used as its in-oblast geographic reference. Kropyvnytskyi was formerly Kirovohrad. Population rankings are historical because wartime displacement makes current comparisons unreliable.
+
+AE — Seven emirates. Ras Al Khaimah is also Ras al-Khaimah; Umm Al Quwain is also Umm al-Quwain. Khor Fakkan and Kalba belong to Sharjah despite their locations on the eastern coast.
+
+GB — Four constituent countries: England, Scotland, Wales and Northern Ireland. These are used as first-level reference units; their internal administrative systems differ. London is the UK capital; Edinburgh, Cardiff and Belfast are the respective national capitals. City-population rankings differ between built-up areas and local-authority boundaries.
+
+US — Fifty states plus Washington, D.C. The federal capital is separate from the 50 states. Puerto Rico, Guam, the US Virgin Islands and other territories have their own ISO entries. Fort Worth is tenth in the US Census Bureau's July 2025 city-population estimates, ahead of Jacksonville.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://cdn.www.census.gov\&sz=32)
+
+Census.gov
+
+
+
+UY — Nineteen departments. Ciudad de la Costa and Las Piedras are in Canelones Department. Maldonado and nearby Punta del Este form a larger urban area, but Maldonado is used as the city reference.
+
+UZ — Twelve regions, the autonomous Republic of Karakalpakstan and independently administered Tashkent City. Tashkent Region's administrative centre is Nurafshon. Qarshi is also Karshi; Kokand is also Qo'qon; Urgench is also Urganch.
+
+VU — Six provinces. Lakatoro is the administrative centre of Malampa, while nearby Norsup is another important settlement. Penama consists of Pentecost, Ambae and Maewo; Saratamata is its administrative centre. The additional N entries represent populated villages rather than ten conventional incorporated cities.
+
+VA — Vatican City is a single sovereign city-state, without separate first-level administrative divisions. Vatican City is therefore the only SN entry.
+
+VE — Twenty-three established states, the Capital District and Federal Dependencies are used. La Guaira was previously Vargas State. Gran Roque is a populated reference for the Federal Dependencies, not a conventional state capital. Venezuela also claims Guayana Esequiba, territory administered by Guyana; the disputed claim is excluded from these rows.
+
+VN — Thirty-four provincial-level jurisdictions following the July 2025 consolidation. By 2026, nine are centrally governed cities, including the newly designated Dong Nai, Quang Ninh and Bac Ninh. The merged Lao Cai administration is centred in Yen Bai, Quang Tri in Dong Hoi, and Tay Ninh in Tan An. Older map datasets may still use the pre-merger provincial names.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://en.baochinhphu.vn\&sz=32)
+
+en.baochinhphu.vn+1
+
+
+
+WF — Wallis and Futuna has three traditional administrative districts: Uvea on Wallis, and Alo and Sigave on Futuna. Mata-Utu is the territorial capital. The N entries are villages rather than conventional cities; names such as Mala'e can occur in more than one district.
+
+EH — Western Sahara has disputed sovereignty and no universally accepted first-level administrative system. Laayoune-Sakia El Hamra and Dakhla-Oued Ed Dahab are Moroccan administrative designations used here for geographic matching only. This does not imply recognition of Moroccan sovereignty over the territory. Population data for smaller settlements are sparse.
+
+YE — Twenty-two governorate-level units, including Socotra and separately administered Sana'a City. Sana'a Governorate surrounds, but excludes, Sana'a City; Sayyan is used as an in-governorate reference rather than a separate governorate capital. Hadramawt is also Hadhramaut, and Al Hudaydah is also Hodeidah. Population estimates are affected by prolonged conflict and displacement.
+
+ZM — Ten provinces. Southern Province's administrative centre is Choma, having moved from Livingstone. Muchinga's is Chinsali. Ndola is the Copperbelt provincial capital, while Kitwe is another major city in the same province.
+
+ZW — Eight provinces plus two metropolitan provinces, Harare and Bulawayo. Lupane is the administrative centre of Matabeleland North. Chitungwiza and Epworth are separate urban areas within Harare Province; Ruwa is in Mashonaland East.
+
+### Points still open
+
+- Round 11: FM — Tol; MH — Airuk, Jabat, Lib; MR — Guerou; MU — Vingt Cinq, Raphael Island. Seven unmatched points.
+- Round 12: NL — The Bottom, Oranjestad. Two unmatched points.
+- Round 13: MP — Agrihan; PW — Ngaramasch, Tobi, Dongosaru. Four unmatched points.
+- Round 14: PA — Gaigirgordub. One unmatched point.
+- Round 15: RS — Pristina, Gjilan, Peja, Prizren. Four unmatched points in Kosovo; check their country assignment separately.
+- Round 16: SB — Tigoa; SO — Bu'ale; SS — Abyei, Pariang. Four unmatched points.
+- Round 17: No unmatched points; all 272 reference cities had business data.
+- Round 18: TK — Atafu, Fakaofo; TM — Tejen; TV — Kulia, Savave, Pepesala, Aulotu; UG — Amuru, Nabilatuk, Lalogi. Ten unmatched points.
+- Round 19: 295 reference rows prepared across 15 ISO entries. Overture business-data coverage is pending.
+- Cumulative unresolved before Round 19: 32 reference points reported without business data across Rounds 11–18. These are not necessarily extraction failures; isolated settlements, coordinate precision, aliases and disputed country assignments may explain some.
+- Final validation priorities: Check Vietnam's merged provincial boundaries, Ukraine's occupied territories, Venezuela/Western Sahara territorial classifications, small settlements in Wallis and Futuna and Vanuatu, and Yemen's conflict-affected place records.
+- Population methodology: Top-ten N entries should be treated as geographic reference targets, not a uniform global population ranking, because countries use different municipal, urban-area and census definitions.

@@ -1,0 +1,14 @@
+Round 17: 272 reference lines, 272 cities, 272 with business data (100 %).
+- CH: 29/29 cities covered, 450,807 businesses near them
+- MF: 9/9 cities covered, 10,404 businesses near them
+- PM: 2/2 cities covered, 194 businesses near them
+- SD: 21/21 cities covered, 15,204 businesses near them
+- SE: 23/23 cities covered, 223,977 businesses near them
+- SJ: 4/4 cities covered, 233 businesses near them
+- SR: 14/14 cities covered, 12,317 businesses near them
+- SY: 16/16 cities covered, 16,369 businesses near them
+- TH: 79/79 cities covered, 1,113,416 businesses near them
+- TJ: 11/11 cities covered, 2,251 businesses near them
+- TW: 22/22 cities covered, 942,218 businesses near them
+- TZ: 32/32 cities covered, 22,397 businesses near them
+- VC: 10/10 cities covered, 4,726 businesses near them

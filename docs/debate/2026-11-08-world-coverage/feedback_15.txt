@@ -1,0 +1,5 @@
+## Check of your message-14 list
+Round 14: 386 reference lines, 386 cities, 385 with business data (100 %).
+Not covered: - PA: 16/17 cities covered, 50,653 businesses near them; no data at: Gaigirgordub
+
+Same format again:

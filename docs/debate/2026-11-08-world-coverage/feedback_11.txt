@@ -1,0 +1,13 @@
+## Check of the lists so far (businesses within 10 km or with that city name)
+Round 1: 263 reference lines, 260 cities, 259 with business data (100 %).
+Round 2: 251 reference lines, 251 cities, 250 with business data (100 %).
+Round 3: 192 reference lines, 190 cities, 190 with business data (100 %).
+Round 4: 221 reference lines, 221 cities, 221 with business data (100 %).
+Round 5: 223 reference lines, 223 cities, 219 with business data (98 %).
+Round 6: 238 reference lines, 238 cities, 235 with business data (99 %).
+Round 7: 160 reference lines, 159 cities, 159 with business data (100 %).
+Round 8: 230 reference lines, 229 cities, 229 with business data (100 %).
+Round 9: 349 reference lines, 349 cities, 349 with business data (100 %).
+Round 10: 238 reference lines, 238 cities, 234 with business data (98 %).
+
+Same format again:

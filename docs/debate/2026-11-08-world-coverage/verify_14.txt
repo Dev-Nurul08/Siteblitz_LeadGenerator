@@ -1,0 +1,14 @@
+Round 14: 386 reference lines, 386 cities, 385 with business data (100 %).
+- PA: 16/17 cities covered, 50,653 businesses near them; no data at: Gaigirgordub
+- PE: 27/27 cities covered, 381,874 businesses near them
+- PG: 23/23 cities covered, 3,733 businesses near them
+- PH: 90/90 cities covered, 1,507,392 businesses near them
+- PL: 18/18 cities covered, 401,776 businesses near them
+- PN: 1/1 cities covered, 2 businesses near them
+- PR: 78/78 cities covered, 356,090 businesses near them
+- PS: 18/18 cities covered, 37,578 businesses near them
+- PT: 24/24 cities covered, 376,110 businesses near them
+- PY: 25/25 cities covered, 313,841 businesses near them
+- QA: 13/13 cities covered, 57,452 businesses near them
+- RE: 10/10 cities covered, 35,411 businesses near them
+- RO: 42/42 cities covered, 283,411 businesses near them
