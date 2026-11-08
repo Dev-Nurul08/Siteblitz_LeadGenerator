@@ -79,3 +79,40 @@ async def test_unknown_city_raises_lookup_error(nominatim):
     answers["no state"] = []
     with pytest.raises(LookupError):
         await geocode.city_bbox("Nowhereville", "IN")
+
+
+@pytest.mark.asyncio
+async def test_other_cities_of_the_state_are_not_used(nominatim):
+    # "Tokyo" + state "Tokyo": Nominatim returned Hachioji, Chofu ... (cities inside Tokyo prefecture);
+    # without the state only the prefecture matched. Result: the prefecture, untrimmed (sources reject it).
+    calls, answers = nominatim
+    answers["with state"] = [_hit("city", [35.6, 35.72, 139.16, 139.43], lat=35.67, lon=139.32, name="八王子市, 東京都, 日本")
+                             | {"namedetails": {"name": "八王子市", "name:en": "Hachioji"}}]
+    answers["no state"] = [_hit("province", [20.21, 35.9, 135.85, 154.21], lat=35.68, lon=139.76, name="東京都, 日本")
+                           | {"namedetails": {"name": "東京都", "name:en": "Tokyo"}}]
+    west, east, south, north = await geocode.city_bbox("Tokyo", "JP", "Tokyo")
+    assert len(calls) == 2
+    assert geocode.resolved_place("Tokyo", "JP", "Tokyo")["name"] == "東京都, 日本"
+    assert east - west > geocode.MAX_BBOX_DEGREES
+
+
+@pytest.mark.asyncio
+async def test_name_found_in_any_language_or_old_name(nominatim):
+    calls, answers = nominatim
+    answers["with state"] = [
+        _hit("city", [1, 1.1, 1, 1.1], name="Other") | {"namedetails": {"name": "Other"}},
+        _hit("city", [24.5, 24.7, 73.6, 73.8], name="Thành phố Hồ Chí Minh")
+        | {"namedetails": {"name": "Thành phố Hồ Chí Minh", "name:en": "Ho Chi Minh City", "old_name": "Sài Gòn;Saigon"}},
+    ]
+    await geocode.city_bbox("saigon", "VN", "x")
+    assert len(calls) == 1
+    assert geocode.resolved_place("saigon", "VN", "x")["name"] == "Thành phố Hồ Chí Minh"
+
+
+@pytest.mark.asyncio
+async def test_state_cities_without_the_name_and_nothing_without_state_is_not_found(nominatim):
+    _, answers = nominatim
+    answers["with state"] = [_hit("city", [1, 1.1, 1, 1.1], name="Some Other Town")]
+    answers["no state"] = []
+    with pytest.raises(LookupError):
+        await geocode.city_bbox("Typo-ville", "IN", "Maharashtra")

@@ -12,7 +12,9 @@ seconds and covers the same ground as the Overture search.
 """
 
 import asyncio
+import re
 import time
+import unicodedata
 from typing import Optional
 
 import httpx
@@ -50,9 +52,30 @@ def _is_settlement(hit: dict) -> bool:
     return (hit.get("addresstype") or hit.get("type")) in SETTLEMENT_TYPES
 
 
-def _pick(hits: list[dict]) -> Optional[dict]:
-    """First settlement hit (Nominatim orders by importance), else None."""
-    return next((h for h in hits if _is_settlement(h)), None)
+def _norm(text: str) -> str:
+    """Case-, accent- and punctuation-free form: "Bogotá" == "bogota", "Pimpri-Chinchwad" == "pimpri chinchwad"."""
+    text = unicodedata.normalize("NFKD", text.casefold())
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    return re.sub(r"[\W_]+", " ", text).strip()
+
+
+def _names(hit: dict) -> set[str]:
+    """Every name Nominatim knows for the hit (local, English, old, alternative) plus its display name."""
+    names = {_norm(hit.get("display_name", "").split(",")[0])}
+    for value in (hit.get("namedetails") or {}).values():
+        names.update(_norm(v) for v in str(value).split(";"))
+    return names
+
+
+def _same_name(hit: dict, city: str) -> bool:
+    wanted = _norm(city)
+    names = _names(hit)
+    return wanted in names or (wanted.endswith(" city") and wanted[:-5] in names)
+
+
+def _pick(hits: list[dict], city: str) -> Optional[dict]:
+    """First settlement hit that carries the requested name (Nominatim orders by importance)."""
+    return next((h for h in hits if _is_settlement(h) and _same_name(h, city)), None)
 
 
 def _trim(west: float, east: float, south: float, north: float,
@@ -90,23 +113,26 @@ async def city_bbox(city: str, country_code: Optional[str],
     async with _lock:
         if key in _cache:
             return _cache[key]
-        params = {"city": city.strip(), "format": "jsonv2", "limit": 5}
+        params = {"city": city.strip(), "format": "jsonv2", "limit": 5, "namedetails": 1}
         if country_code:
             params["countrycodes"] = country_code.strip().lower()
         if state and state.strip():
             params["state"] = state.strip()
         hits = await _search(params)
-        hit = _pick(hits)
+        hit = _pick(hits, city)
         if hit is None and "state" in params:
-            # The state narrowed the match to a landmark or suburb; the city alone is better.
+            # With the state, Nominatim returned a landmark, a suburb or other cities of that state
+            # ("Tokyo" + state "Tokyo" gave Hachioji); the city name alone is better.
+            # If the name alone finds nothing, the state's other cities are not used.
             params.pop("state")
-            retry = await _search(params)
-            hit = _pick(retry)
-            hits = hits or retry
+            hits = await _search(params)
+            hit = _pick(hits, city)
         if hit is None:
             if not hits:
                 raise LookupError(f"City '{city}' was not found in country '{country_code or 'any'}'.")
-            hit = hits[0]
+            # No settlement carries the name: the first settlement, else the best hit (a state or
+            # province hit is then rejected by the sources' size limit, never trimmed).
+            hit = next((h for h in hits if _is_settlement(h)), hits[0])
         south, north, west, east = (float(v) for v in hit["boundingbox"])
         full_km = [round((east - west) * 111), round((north - south) * 111)]
         trimmed = False
