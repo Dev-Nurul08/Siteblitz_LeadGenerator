@@ -37,7 +37,11 @@ Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 27
 - Discovery still runs inside the HTTP request; Overpass public endpoint sometimes rate-limits
   (job #2 in today's screenshots = PARTIAL, 1 error) — phase 3 adds retries/background jobs.
 - UI not redesigned yet — phase 4, waits for `go` on `docs/spec/ui-redesign.md`.
-- Not pushed if the push step below failed — check `git status` / the final chat message.
+- **Branch NOT pushed.** `git push -u origin phase-01-pipeline-repair` was blocked by the Claude OS guard hook
+  (its own check `git log … --not --remotes=origin` failed). Run the push yourself, then open a PR into `main`
+  on https://github.com/Dev-Nurul08/Siteblitz_LeadGenerator.
+- Debate driver files (`SESSION.md`, `tab.json`, `shots/`, `stop-awake`) are left untracked on purpose
+  (ChatGPT account screenshots and driver state).
 
 ## Next session starts here
 - Phase 2: Website Intelligence Engine, exactly as `docs/spec/website-intelligence.md` (after `go`).
