@@ -15,6 +15,7 @@ import argparse
 import csv
 import io
 import json
+import sys
 import time
 from collections import Counter
 from pathlib import Path
@@ -42,6 +43,8 @@ def completeness(api: str, job_id: int) -> dict:
 
 
 def main() -> None:
+    # Progress lines name cities like "Wrocław"; a redirected Windows stdout is cp1252.
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
     ap = argparse.ArgumentParser()
     ap.add_argument("cities")
     ap.add_argument("results")
