@@ -24,7 +24,8 @@ const SOURCES = [
   { id: 'google', name: 'Google Places', note: 'Not available yet — needs an API key and a licensing check', disabled: true },
   { id: 'csv', name: 'CSV file', note: 'Your own list · UTF-8, up to 15 MB / 5,000 rows' },
 ]
-const CHECK_BATCH = 25
+// 100 = the API's batch limit; checks inside a batch run concurrently (~40 s per 100).
+const CHECK_BATCH = 100
 
 function FlowDiagram() {
   const [paused, setPaused] = useState(false)
@@ -103,7 +104,7 @@ export default function FindPage({ entrance }) {
     let done = 0
     for (;;) {
       if (stopChecks.current || !alive.current) break
-      setChecking({ done, remaining: null, running: true })
+      setChecking((c) => ({ done, remaining: c ? c.remaining : null, running: true }))
       let res
       try { res = await api.intelligence.assessBatch({ job_id: jobId, limit: CHECK_BATCH, include_franchises: form.franchises }) }
       catch { break }
