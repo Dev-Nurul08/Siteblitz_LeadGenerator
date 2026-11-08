@@ -380,3 +380,16 @@ async def public_unsubscribe(
         source="UNSUBSCRIBE_LINK",
     )
     return {"message": "Successfully unsubscribed. You will receive no further messages.", "email": email}
+
+
+@router.get("/unsubscribe")
+async def public_unsubscribe_link(
+    email: str = Query(..., min_length=3),
+    reason: Optional[str] = Query("Unsubscribed via link"),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """
+    Same as POST /unsubscribe, for the link inside every message: a clicked link is a GET,
+    and a GET-only click returning 405 would silently ignore the opt-out.
+    """
+    return await public_unsubscribe(email=email, reason=reason, session=session)

@@ -301,10 +301,11 @@ export default function DiscoveryPage() {
                   {result.status === 'FAILED' ? '❌ Job Failed' : '✓ Job Complete'} — Job #{result.job_id}
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                  {/* POST /discovery/run returns { found, new, duplicate, errors } (discovery_service.py stats) */}
                   {[
-                    { label: 'New', value: result.records_new, color: 'var(--color-accent-success)' },
-                    { label: 'Duplicate', value: result.records_duplicate, color: 'var(--color-accent-warning)' },
-                    { label: 'Errors', value: result.records_error, color: 'var(--color-accent-danger)' },
+                    { label: 'New', value: result.new, color: 'var(--color-accent-success)' },
+                    { label: 'Duplicate', value: result.duplicate, color: 'var(--color-accent-warning)' },
+                    { label: 'Errors', value: result.errors, color: 'var(--color-accent-danger)' },
                   ].map(({ label, value, color }) => (
                     <div key={label} style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: '1.3rem', fontWeight: 800, color }}>{value ?? 0}</div>

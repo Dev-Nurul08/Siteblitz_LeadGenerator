@@ -10,6 +10,7 @@ from typing import Any, Dict, List, Optional
 
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from backend.app.engines.conversion.replies import ReplyIntentClassifier
 from backend.app.engines.conversion.scheduler import CampaignScheduler
@@ -82,14 +83,23 @@ class CampaignService:
         if not campaign:
             return {"error": f"Campaign #{campaign_id} not found."}
 
-        # Select leads with valid pitches
+        # Leads already scheduled in this campaign must not be enrolled (and emailed) twice.
+        already_enrolled = select(OutreachMessage.lead_id).where(
+            OutreachMessage.campaign_id == campaign_id
+        )
+
+        # Select leads with valid pitches.
+        # The scheduler reads lead.contact and lead.business; async SQLAlchemy cannot lazy-load
+        # them (MissingGreenlet), so they are loaded with the query.
         stmt = (
             select(QualifiedLead)
             .join(Contact, QualifiedLead.contact_id == Contact.id)
             .join(Business, QualifiedLead.business_id == Business.id)
+            .options(selectinload(QualifiedLead.contact), selectinload(QualifiedLead.business))
             .where(
                 QualifiedLead.lead_status.in_([LeadStatus.READY_FOR_OUTREACH, LeadStatus.QUALIFIED]),
                 QualifiedLead.personalized_pitch.isnot(None),
+                QualifiedLead.id.not_in(already_enrolled),
             )
         )
 

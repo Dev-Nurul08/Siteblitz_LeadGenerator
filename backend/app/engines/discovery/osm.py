@@ -10,6 +10,7 @@ Attribution: © OpenStreetMap contributors
 Docs: https://wiki.openstreetmap.org/wiki/Overpass_API
 """
 
+import re
 from typing import Optional
 
 import httpx
@@ -25,6 +26,20 @@ logger = structlog.get_logger(__name__)
 
 # Overpass API endpoint
 OVERPASS_API_URL = "https://overpass-api.de/api/interpreter"
+
+# overpass-api.de answers HTTP 406 to generic client User-Agents (verified 2026-11-08 with
+# httpx's default "python-httpx/x.y"), so every request must identify the tool.
+OVERPASS_USER_AGENT = "SiteBlitzLeadGenerator/0.2 (internal business research tool)"
+
+
+def _ql_escape(value: str) -> str:
+    """Escape user text for use inside a double-quoted Overpass QL string."""
+    return value.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def _ql_regex_escape(value: str) -> str:
+    """Escape user text for use as a literal inside an Overpass QL (POSIX ERE) regex string."""
+    return _ql_escape(re.sub(r"([.^$*+?()\[\]{}|\\])", r"\\\1", value))
 
 # OSM amenity/shop tags that map to business categories
 OSM_BUSINESS_TAGS = {
@@ -88,16 +103,34 @@ def _build_overpass_query(
 
     Supports either named area (city/country) or coordinate+radius search.
     """
-    # Determine search area
+    # Determine search area.
+    # City areas in OSM never carry the ISO3166-1 tag (only countries do), so a city is
+    # found as an administrative boundary *inside* the country and converted to an area.
+    area_setup = ""
     if latitude is not None and longitude is not None and radius_km:
         radius_m = int(radius_km * 1000)
-        area_filter = f"(around:{radius_m},{latitude},{longitude})"
+        area_filter = f"(around:{radius_m},{float(latitude)},{float(longitude)})"
     elif city and country_code:
-        area_filter = f'(area["name"="{city}"]["ISO3166-1"="{country_code}"]->.searchArea)'
+        cc = _ql_escape(country_code.strip().upper())
+        city_re = _ql_regex_escape(city.strip())
+        area_filter = "(area.searchArea)"
+        area_setup = (
+            f'area["ISO3166-1"="{cc}"]["admin_level"="2"]->.country;\n'
+            f'rel(area.country)["boundary"="administrative"]'
+            f'[~"^name(:en)?$"~"^{city_re}$",i];\n'
+            f"map_to_area->.searchArea;"
+        )
     elif city:
-        area_filter = f'(area["name"="{city}"]->.searchArea)'
+        area_filter = "(area.searchArea)"
+        area_setup = (
+            f'area["name"="{_ql_escape(city.strip())}"]["boundary"="administrative"]->.searchArea;'
+        )
     elif country_code:
-        area_filter = f'(area["ISO3166-1"="{country_code}"]->.searchArea)'
+        area_filter = "(area.searchArea)"
+        area_setup = (
+            f'area["ISO3166-1"="{_ql_escape(country_code.strip().upper())}"]'
+            f'["admin_level"="2"]->.searchArea;'
+        )
     else:
         raise ValueError("Must provide either coordinates+radius or city/country")
 
@@ -113,11 +146,11 @@ def _build_overpass_query(
     timeout = 90 if not category else 60
     query = f"""
 [out:json][timeout:{timeout}];
-{'' if latitude is not None else area_filter.replace('(', '').replace(')', '') + ';'}
+{area_setup}
 (
 {tag_queries}
 );
-out center {max_results};
+out center {int(max_results)};
 """
     return query.strip()
 
@@ -142,13 +175,14 @@ def _build_category_queries(
 
     if not queries:
         # Fallback: search as name
+        name_re = _ql_regex_escape(category)
         if is_coord_search:
             queries.append(
-                f'  nwr["name"~"{category}",i]{area_filter};'
+                f'  nwr["name"~"{name_re}",i]{area_filter};'
             )
         else:
             queries.append(
-                f'  nwr["name"~"{category}",i](area.searchArea);'
+                f'  nwr["name"~"{name_re}",i](area.searchArea);'
             )
 
     return "\n".join(queries)
@@ -244,7 +278,10 @@ class OSMAdapter(BaseSourceAdapter):
                 response = await client.post(
                     OVERPASS_API_URL,
                     data={"data": query},
-                    headers={"Accept": "application/json"},
+                    headers={
+                        "Accept": "application/json",
+                        "User-Agent": OVERPASS_USER_AGENT,
+                    },
                 )
                 response.raise_for_status()
                 data = response.json()

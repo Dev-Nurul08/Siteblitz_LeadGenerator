@@ -1,0 +1,150 @@
+"""
+End-to-end API tests for the discovery → opportunity → contact → qualification → campaign
+pipeline, run against a throw-away SQLite database through the real FastAPI app.
+
+The unit tests mock every engine; these tests exist because the 2026-11-08 audit found
+crashes (MissingGreenlet, 405 on unsubscribe, silent CSV data loss) that only appear when
+the real routes, services and database run together. Network access is stubbed so the
+tests are deterministic: website fetches, contact-page crawls and DNS lookups.
+"""
+
+import pytest
+from fastapi.testclient import TestClient
+
+import backend.app.database as database
+from backend.app.config import get_settings
+from backend.app.engines.enrichment.discovery import ContactDiscoveryEngine
+from backend.app.engines.enrichment.verifier import EmailVerifier, VerificationResult
+from backend.app.engines.opportunity.resolver import ResolutionResult, WebsiteResolver
+from backend.app.models.business import WebsiteStatus
+from backend.app.models.contact import EmailVerificationStatus
+
+CSV_A = (
+    "name,address,city,country,phone,email,website,category\n"
+    "Shah Dental Care,12 Lake Rd,Austin,US,+1 512 555 0101,priya.shah@shahdental-test.com,"
+    "https://shahdental-test.com,dentist\n"
+    "Lakeview Bakery,40 Hill St,Austin,US,+1 512 555 0102,,,bakery\n"
+)
+CSV_B = "name,city,country,phone\nRiverside Salon,Austin,US,+1 512 555 0199\n"
+
+HTML = (
+    "<html><head><title>Shah Dental Care Austin</title></head>"
+    "<body><h1>Shah Dental Care</h1><p>Call us to visit.</p></body></html>"
+)
+
+
+@pytest.fixture
+def client(tmp_path, monkeypatch):
+    """Real app on a fresh SQLite file, with all outbound network calls stubbed."""
+    monkeypatch.setenv("DATABASE_URL", f"sqlite+aiosqlite:///{tmp_path / 'pipeline.db'}")
+    get_settings.cache_clear()
+    # The engine/session factories are module-level singletons; reset them so this test
+    # binds to its own database file instead of any engine created earlier in the run.
+    monkeypatch.setattr(database, "_async_engine", None)
+    monkeypatch.setattr(database, "_async_session_factory", None)
+
+    async def fake_resolve(self, url):
+        return ResolutionResult(
+            original_url=url,
+            final_url=url,
+            is_reachable=True,
+            http_status=200,
+            has_ssl=True,
+            load_time_seconds=0.4,
+            status=WebsiteStatus.FOUND,
+            html_content=HTML,
+            headers={},
+        )
+
+    async def fake_crawl(self, base_url):
+        return []
+
+    def fake_verify(self, email):
+        return VerificationResult(
+            email=email,
+            status=EmailVerificationStatus.VERIFIED,
+            is_valid_syntax=True,
+            is_disposable=False,
+            is_role_based=False,
+            has_valid_mx=True,
+            verification_score=0.95,
+            domain=email.split("@")[-1],
+            mx_records=["mx.test"],
+            details={},
+        )
+
+    monkeypatch.setattr(WebsiteResolver, "resolve", fake_resolve)
+    monkeypatch.setattr(ContactDiscoveryEngine, "_crawl_contact_pages", fake_crawl)
+    monkeypatch.setattr(EmailVerifier, "verify", fake_verify)
+
+    from backend.app.main import app
+
+    with TestClient(app) as test_client:
+        yield test_client
+    get_settings.cache_clear()
+
+
+def _import(client, name, content):
+    response = client.post(
+        "/api/v1/discovery/import-csv", files={"file": (name, content, "text/csv")}
+    )
+    assert response.status_code == 200, response.text
+    return response.json()
+
+
+def test_each_csv_file_imports_its_own_rows_and_reimport_is_duplicate(client):
+    first = _import(client, "a.csv", CSV_A)
+    assert (first["new"], first["duplicate"]) == (2, 0)
+
+    second = _import(client, "b.csv", CSV_B)
+    assert (second["new"], second["duplicate"]) == (1, 0)
+
+    again = _import(client, "a.csv", CSV_A)
+    assert (again["new"], again["duplicate"]) == (0, 2)
+
+    names = {b["name"] for b in client.get("/api/v1/businesses").json()["items"]}
+    assert names == {"Shah Dental Care", "Lakeview Bakery", "Riverside Salon"}
+
+
+def test_full_pipeline_qualify_enroll_once_and_unsubscribe_by_link(client):
+    _import(client, "a.csv", CSV_A)
+    items = client.get("/api/v1/businesses", params={"search": "Shah"}).json()["items"]
+    business_id = items[0]["id"]
+
+    evaluated = client.post(f"/api/v1/opportunities/evaluate-business/{business_id}")
+    assert evaluated.status_code == 200, evaluated.text
+
+    enriched = client.post(f"/api/v1/contacts/enrich-business/{business_id}")
+    assert enriched.status_code == 200, enriched.text
+    assert enriched.json()["contacts_count"] >= 1
+
+    # Used to fail with HTTP 500 (MissingGreenlet) for any business with a city/category.
+    qualified = client.post(f"/api/v1/qualification/qualify-business/{business_id}")
+    assert qualified.status_code == 200, qualified.text
+    lead = qualified.json()
+    assert lead["personalized_pitch"]
+
+    approved = client.patch(
+        f"/api/v1/qualification/leads/{lead['lead_id']}/status",
+        json={"status": "READY_FOR_OUTREACH"},
+    )
+    assert approved.status_code == 200, approved.text
+
+    campaign = client.post("/api/v1/campaigns", json={"name": "Austin dentists"}).json()
+
+    # Used to fail with MissingGreenlet; a second call used to duplicate every message.
+    first_enroll = client.post(f"/api/v1/campaigns/{campaign['id']}/enroll")
+    assert first_enroll.status_code == 200, first_enroll.text
+    assert first_enroll.json()["enrolled_count"] == 1
+
+    second_enroll = client.post(f"/api/v1/campaigns/{campaign['id']}/enroll")
+    assert second_enroll.status_code == 200, second_enroll.text
+    assert second_enroll.json()["enrolled_count"] == 0
+
+    # A clicked unsubscribe link is a GET; it used to return 405 and drop the opt-out.
+    unsubscribed = client.get(
+        "/api/v1/qualification/unsubscribe", params={"email": lead["contact_email"]}
+    )
+    assert unsubscribed.status_code == 200, unsubscribed.text
+    opt_outs = client.get("/api/v1/qualification/opt-outs").json()["items"]
+    assert lead["contact_email"] in {o["email"] for o in opt_outs}

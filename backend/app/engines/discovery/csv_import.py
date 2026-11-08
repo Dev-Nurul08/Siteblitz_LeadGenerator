@@ -8,6 +8,7 @@ License: MANUAL_OR_OPT_IN — data provenance is user's responsibility.
 """
 
 import csv
+import hashlib
 import io
 from typing import Optional
 
@@ -232,8 +233,24 @@ class CSVImportAdapter(BaseSourceAdapter):
 
         country = get_field("country") or default_country
 
+        # The id must identify the business, not its position in the file: a row-number id
+        # made row 1 of every later upload collide with row 1 of the first one, so new files
+        # were silently counted as duplicates. Same content => same id => a true duplicate.
+        identity = "|".join(
+            (value or "").strip().lower()
+            for value in (
+                name,
+                get_field("address"),
+                get_field("city"),
+                country,
+                get_field("phone"),
+                get_field("website"),
+            )
+        )
+        row_key = hashlib.sha1(identity.encode("utf-8")).hexdigest()[:20]
+
         return DiscoveredBusiness(
-            source_external_id=f"csv:row:{row_number}",
+            source_external_id=f"csv:row:{row_key}",
             raw_data=dict(row),
             name=name,
             address_line_1=get_field("address"),
