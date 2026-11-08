@@ -49,3 +49,7 @@ logs/
 
 # Docker
 docker-compose.override.yml
+
+# Screenshots that show real businesses' names / phones / emails (kept local, not published)
+docs/screenshots/phase-1b/
+docs/screenshots/ui/

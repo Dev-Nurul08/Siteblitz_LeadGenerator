@@ -134,6 +134,10 @@ h3 { font-size: 16px; line-height: 24px; font-weight: 500; margin: 0; }
 /* The map stays in view while the form and the live status scroll. */
 .grid-find > :last-child { position: sticky; top: calc(var(--header) + var(--s4)); }
 .stack { display: flex; flex-direction: column; gap: var(--s5); }
+/* Grid and flex children may shrink below their content (long URLs, tables) instead of
+   widening the page — the phone layout overflowed by 15 px without this. */
+.grid-find > *, .outreach-grid > *, .draft-grid > *, .stack > * { min-width: 0; }
+.scroll-x { overflow-x: auto; }
 .row { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
 .label { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--ink-3); }
 

@@ -141,7 +141,7 @@ function Workspace({ id, onChanged }) {
       {blocked && <div className="banner banner-error" role="status"><Ban size={16} />On the do-not-contact list — every action is off.</div>}
       <section className="panel" aria-labelledby="routes-h">
         <div className="panel-head"><h2 id="routes-h">{b.name}</h2><TierChip tier={detail.assessment?.tier} /></div>
-        <table className="data" style={{ fontSize: 14 }}><tbody>
+        <div className="scroll-x"><table className="data" style={{ fontSize: 14 }}><tbody>
           <tr><td><Phone size={16} /> Phone</td><td className="mono">{b.phone || '—'}</td>
             <td>{b.phone && !blocked && <a className="btn btn-sm" href={`tel:${b.phone}`}>Call</a>} {digits && !blocked && <a className="btn btn-sm" href={`https://wa.me/${digits}`} target="_blank" rel="noreferrer noopener"><MessageCircle size={16} />Open chat</a>}</td></tr>
           <tr><td><Mail size={16} /> Email</td><td className="mono">{b.email || '—'}</td>
@@ -150,7 +150,7 @@ function Workspace({ id, onChanged }) {
             <tr key={k}><td>{k}</td><td className="mono" style={{ overflowWrap: 'anywhere' }}>{url}</td>
               <td>{!blocked && <a className="btn btn-sm" href={url} target="_blank" rel="noreferrer noopener"><ExternalLink size={16} />Open profile</a>}</td></tr>
           ))}
-        </tbody></table>
+        </tbody></table></div>
         <p className="hint" style={{ marginBottom: 0 }}>WhatsApp: business messages need the person's opt-in, so chats are opened by you, by hand — never sent automatically.</p>
       </section>
 
