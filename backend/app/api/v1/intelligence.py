@@ -13,8 +13,8 @@ from sqlalchemy.orm import selectinload
 
 from backend.app.database import get_db_session
 from backend.app.models.business import Business, BusinessSourceLink, BusinessStatus
-from backend.app.models.intelligence import FounderLabel, LeadAssessment, LeadTier, WebsiteVerdict
-from backend.app.models.source import SourceRecord
+from backend.app.models.intelligence import ContactLog, FounderLabel, LeadAssessment, LeadTier, WebsiteVerdict
+from backend.app.models.source import SourceJob, SourceRecord
 from backend.app.schemas.types import HttpUrl, Opt, OptionalText
 from backend.app.services.intelligence_service import IntelligenceService
 
@@ -185,9 +185,11 @@ async def stats(session: AsyncSession = Depends(get_db_session)):
         .group_by(LeadAssessment.label))).all()}
     assessed = sum(by_tier.values())
     needs_review = by_tier.get("REVIEW", 0)
+    contacted = (await session.execute(select(func.count(func.distinct(ContactLog.business_id))))).scalar() or 0
+    jobs = (await session.execute(select(func.count(SourceJob.id)))).scalar() or 0
     return {"businesses": businesses, "assessed": assessed, "unassessed": max(businesses - assessed, 0),
             "by_tier": by_tier, "needs_review": needs_review, "labels": labels,
-            "labeled": sum(labels.values())}
+            "labeled": sum(labels.values()), "contacted": contacted, "jobs": jobs}
 
 
 @router.get("/business/{business_id}")
