@@ -7,7 +7,8 @@ from backend.app.engines.discovery import geocode
 
 def _hit(addresstype, bbox, lat=0.0, lon=0.0, name="x"):
     # Nominatim boundingbox order: south, north, west, east (strings)
-    return {"addresstype": addresstype, "boundingbox": [str(v) for v in bbox],
+    category = "landuse" if addresstype in ("commercial", "retail") else "boundary"
+    return {"addresstype": addresstype, "category": category, "boundingbox": [str(v) for v in bbox],
             "lat": str(lat), "lon": str(lon), "display_name": name}
 
 
@@ -116,3 +117,24 @@ async def test_state_cities_without_the_name_and_nothing_without_state_is_not_fo
     answers["no state"] = []
     with pytest.raises(LookupError):
         await geocode.city_bbox("Typo-ville", "IN", "Maharashtra")
+
+
+@pytest.mark.asyncio
+async def test_a_city_beats_a_village_of_the_same_name(nominatim):
+    _, answers = nominatim
+    answers["with state"] = [
+        _hit("village", [20.6, 20.61, 79.4, 79.41], name="Nanded, Nagbhir Taluka, Chandrapur"),
+        _hit("city", [19.1, 19.2, 77.2, 77.4], name="Nanded, Nanded District"),
+    ]
+    await geocode.city_bbox("Nanded", "IN", "Maharashtra")
+    assert geocode.resolved_place("Nanded", "IN", "Maharashtra")["name"] == "Nanded, Nanded District"
+
+
+@pytest.mark.asyncio
+async def test_only_a_landmark_is_not_found(nominatim):
+    _, answers = nominatim
+    office = _hit("commercial", [15.35, 15.351, 75.13, 75.131], name="Hubli Dharwad Municipal Corporation Offices")
+    answers["with state"] = [office]
+    answers["no state"] = [office]
+    with pytest.raises(LookupError, match="closest match: Hubli Dharwad Municipal"):
+        await geocode.city_bbox("Hubli-Dharwad", "IN", "Karnataka")

@@ -48,8 +48,22 @@ def resolved_place(city: str, country_code: Optional[str], state: Optional[str] 
     return _resolved.get(_key(city, country_code, state))
 
 
+# Among hits that carry the requested name, a city beats a village of the same name.
+# Why: "Nanded" (Maharashtra) resolved to a 1 km village in Chandrapur district, not Nanded city.
+_SETTLEMENT_ORDER = {"city": 0, "municipality": 1, "town": 2, "village": 3}
+
+
+def _kind(hit: dict) -> Optional[str]:
+    return hit.get("addresstype") or hit.get("type")
+
+
 def _is_settlement(hit: dict) -> bool:
-    return (hit.get("addresstype") or hit.get("type")) in SETTLEMENT_TYPES
+    return _kind(hit) in SETTLEMENT_TYPES
+
+
+def _is_area(hit: dict) -> bool:
+    """A place or an administrative area (suburb, district, state ...), not a building or a landmark."""
+    return hit.get("category") in ("place", "boundary")
 
 
 def _norm(text: str) -> str:
@@ -74,8 +88,9 @@ def _same_name(hit: dict, city: str) -> bool:
 
 
 def _pick(hits: list[dict], city: str) -> Optional[dict]:
-    """First settlement hit that carries the requested name (Nominatim orders by importance)."""
-    return next((h for h in hits if _is_settlement(h) and _same_name(h, city)), None)
+    """The largest settlement kind that carries the requested name; Nominatim's order breaks ties."""
+    named = [h for h in hits if _is_settlement(h) and _same_name(h, city)]
+    return min(named, key=lambda h: _SETTLEMENT_ORDER[_kind(h)]) if named else None
 
 
 def _trim(west: float, east: float, south: float, north: float,
@@ -130,9 +145,16 @@ async def city_bbox(city: str, country_code: Optional[str],
         if hit is None:
             if not hits:
                 raise LookupError(f"City '{city}' was not found in country '{country_code or 'any'}'.")
-            # No settlement carries the name: the first settlement, else the best hit (a state or
-            # province hit is then rejected by the sources' size limit, never trimmed).
-            hit = next((h for h in hits if _is_settlement(h)), hits[0])
+            # No settlement carries the name: the first settlement, else the first area (a suburb is
+            # searched as is; a state or province is rejected by the sources' size limit, never
+            # trimmed). A building or landmark alone is not a place to search: "Hubli-Dharwad"
+            # matched only the municipal offices (a 0 km box).
+            hit = next((h for h in hits if _is_settlement(h)), None) or next((h for h in hits if _is_area(h)), None)
+            if hit is None:
+                raise LookupError(
+                    f"City '{city}' was not found in country '{country_code or 'any'}' "
+                    f"(closest match: {hits[0].get('display_name', '')[:80]})."
+                )
         south, north, west, east = (float(v) for v in hit["boundingbox"])
         full_km = [round((east - west) * 111), round((north - south) * 111)]
         trimmed = False
