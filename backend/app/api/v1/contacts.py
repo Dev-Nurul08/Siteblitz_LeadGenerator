@@ -34,7 +34,7 @@ async def list_contacts(
     role_level: Optional[RoleLevel] = Query(None),
     email_status: Optional[EmailVerificationStatus] = Query(None),
     min_score: Optional[float] = Query(None, ge=0.0, le=1.0),
-    search: Optional[str] = Query(None, description="Search by email or name"),
+    search: Optional[str] = Query(None, max_length=500, description="Search by email or name"),
     session: AsyncSession = Depends(get_db_session),
 ):
     """

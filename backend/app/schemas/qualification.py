@@ -7,6 +7,8 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
+from backend.app.schemas.types import Domain, Email, Opt, OptionalText, Text
+
 from backend.app.models.compliance import (
     LeadStatus,
     LegalBasis,
@@ -59,8 +61,10 @@ class LeadListResponse(BaseModel):
 class LeadStatusUpdateRequest(BaseModel):
     """Operator status transition request."""
 
+    model_config = {"extra": "forbid"}
+
     status: LeadStatus
-    notes: Optional[str] = None
+    notes: OptionalText() = None
 
 
 class LeadStatsResponse(BaseModel):
@@ -76,10 +80,13 @@ class LeadStatsResponse(BaseModel):
 class OptOutCreateRequest(BaseModel):
     """Add recipient to suppression registry."""
 
-    email: str = Field(..., min_length=3, max_length=255)
-    domain: Optional[str] = None
-    reason: str = "User requested unsubscribe"
-    source: str = "MANUAL"
+    model_config = {"extra": "forbid"}
+
+    # opt_outs.email / domain / reason are String(255); source is String(100)
+    email: Email
+    domain: Opt(Domain) = None
+    reason: Text(255, min_length=1) = "User requested unsubscribe"
+    source: Text(100, min_length=1) = "MANUAL"
 
 
 class OptOutResponse(BaseModel):

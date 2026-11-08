@@ -2,7 +2,9 @@
 API v1 — Discovery execution routes.
 """
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from typing import Literal, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,6 +14,10 @@ from backend.app.schemas.business import DiscoveryRequest, DiscoveryStatusRespon
 from backend.app.services.discovery_service import DiscoveryService
 
 router = APIRouter(prefix="/discovery", tags=["Discovery"])
+
+# Largest useful CSV: an import keeps at most 5,000 rows (DiscoveryRequest.max_results limit) and
+# one business row is at most ~3 KB at the DB column sizes (name 500, address 500, website 1000 …).
+MAX_CSV_BYTES = 15_000_000
 
 
 @router.post("/run")
@@ -48,8 +54,8 @@ async def run_discovery(
 @router.post("/import-csv")
 async def import_csv(
     file: UploadFile = File(...),
-    country_code: str = Form(None),
-    delimiter: str = Form(","),
+    country_code: Optional[str] = Form(None, pattern="^[A-Za-z]{2}$"),
+    delimiter: Literal[",", ";", "\t", "|"] = Form(","),
     session: AsyncSession = Depends(get_db_session),
 ):
     """
@@ -58,19 +64,35 @@ async def import_csv(
     The CSV should have headers that match common field names
     (name, address, city, country, phone, email, website, category).
     """
-    if not file.filename.endswith((".csv", ".txt")):
+    if not (file.filename or "").lower().endswith((".csv", ".txt")):
         raise HTTPException(
             status_code=400,
             detail="Only CSV files are supported",
         )
 
-    content = await file.read()
-    csv_content = content.decode("utf-8-sig")  # Handle BOM
+    # Read at most one byte past the limit so a huge upload is rejected without loading it all.
+    content = await file.read(MAX_CSV_BYTES + 1)
+    if len(content) > MAX_CSV_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"CSV file is larger than {MAX_CSV_BYTES // 1_000_000} MB",
+        )
+    try:
+        csv_content = content.decode("utf-8-sig")  # Handle BOM
+    except UnicodeDecodeError:
+        raise HTTPException(
+            status_code=400,
+            detail="CSV must be UTF-8 encoded (in Excel: Save As → CSV UTF-8)",
+        )
+    if "\x00" in csv_content:
+        raise HTTPException(status_code=400, detail="File is not a text CSV")
 
     service = DiscoveryService(session)
     result = await service.run_discovery(
         source_slug="csv_import",
-        country_code=country_code,
+        country_code=country_code.upper() if country_code else None,
+        # Without this the service default (500) silently dropped every row after row 500.
+        max_results=5000,
         query_params={
             "csv_content": csv_content,
             "delimiter": delimiter,
@@ -115,7 +137,7 @@ async def get_job_status(
 
 @router.get("/jobs", response_model=list[DiscoveryStatusResponse])
 async def list_jobs(
-    limit: int = 20,
+    limit: int = Query(20, ge=1, le=100),
     session: AsyncSession = Depends(get_db_session),
 ):
     """List recent discovery jobs."""

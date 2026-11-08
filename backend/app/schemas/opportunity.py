@@ -4,7 +4,7 @@ Pydantic schemas for Opportunities and Website Audits (Phase 2).
 
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from backend.app.models.opportunity import (
     OpportunityPriority,
@@ -72,9 +72,12 @@ class OpportunityResponse(BaseModel):
 class OpportunityUpdate(BaseModel):
     """Update opportunity status, priority, or score."""
 
+    model_config = ConfigDict(extra="forbid")
+
     status: Optional[OpportunityStatus] = None
     priority: Optional[OpportunityPriority] = None
-    score: Optional[float] = None
+    # opportunities.score is documented as 0 to 100 (models/opportunity.py)
+    score: Optional[float] = Field(None, ge=0, le=100)
 
 
 class OpportunityListResponse(BaseModel):

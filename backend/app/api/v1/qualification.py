@@ -7,13 +7,14 @@ AI personalized pitch previews, and global suppression / opt-out management.
 
 from datetime import datetime, timezone
 import math
-from typing import Optional
+from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.database import get_db_session
+from backend.app.schemas.types import Email
 from backend.app.models.business import Business, BusinessLocation
 from backend.app.models.compliance import (
     ComplianceEvaluation,
@@ -43,8 +44,8 @@ async def list_qualified_leads(
     page_size: int = Query(25, ge=1, le=100),
     status: Optional[LeadStatus] = Query(None),
     min_score: Optional[float] = Query(None, ge=0.0, le=100.0),
-    country: Optional[str] = Query(None),
-    search: Optional[str] = Query(None),
+    country: Optional[str] = Query(None, pattern="^[A-Za-z]{2}$", description="ISO 3166-1 alpha-2 country code"),
+    search: Optional[str] = Query(None, max_length=500),
     session: AsyncSession = Depends(get_db_session),
 ):
     """
@@ -292,7 +293,7 @@ async def batch_qualify(
 async def list_opt_outs(
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=100),
-    search: Optional[str] = Query(None),
+    search: Optional[str] = Query(None, max_length=500),
     session: AsyncSession = Depends(get_db_session),
 ):
     """
@@ -366,8 +367,8 @@ async def create_opt_out(
 
 @router.post("/unsubscribe")
 async def public_unsubscribe(
-    email: str = Query(..., min_length=3),
-    reason: Optional[str] = Query("Unsubscribed via link"),
+    email: Annotated[Email, Query()],
+    reason: Optional[str] = Query("Unsubscribed via link", max_length=255),
     session: AsyncSession = Depends(get_db_session),
 ):
     """
@@ -384,8 +385,8 @@ async def public_unsubscribe(
 
 @router.get("/unsubscribe")
 async def public_unsubscribe_link(
-    email: str = Query(..., min_length=3),
-    reason: Optional[str] = Query("Unsubscribed via link"),
+    email: Annotated[Email, Query()],
+    reason: Optional[str] = Query("Unsubscribed via link", max_length=255),
     session: AsyncSession = Depends(get_db_session),
 ):
     """

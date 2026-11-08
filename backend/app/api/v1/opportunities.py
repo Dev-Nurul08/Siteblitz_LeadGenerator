@@ -39,7 +39,7 @@ async def list_opportunities(
     priority: Optional[OpportunityPriority] = Query(None),
     status: Optional[OpportunityStatus] = Query(None),
     min_score: Optional[float] = Query(None, ge=0, le=100),
-    country: Optional[str] = Query(None),
+    country: Optional[str] = Query(None, pattern="^[A-Za-z]{2}$", description="ISO 3166-1 alpha-2 country code"),
     session: AsyncSession = Depends(get_db_session),
 ):
     """

@@ -31,11 +31,11 @@ router = APIRouter(prefix="/businesses", tags=["Businesses"])
 async def list_businesses(
     page: int = Query(1, ge=1),
     page_size: int = Query(25, ge=1, le=100),
-    country: Optional[str] = Query(None, description="Filter by country code"),
+    country: Optional[str] = Query(None, pattern="^[A-Za-z]{2}$", description="ISO 3166-1 alpha-2 country code"),
     status: Optional[BusinessStatus] = Query(None),
     website_status: Optional[WebsiteStatus] = Query(None),
-    category: Optional[str] = Query(None, description="Filter by category"),
-    search: Optional[str] = Query(None, description="Search by name"),
+    category: Optional[str] = Query(None, max_length=200, description="Filter by category"),
+    search: Optional[str] = Query(None, max_length=500, description="Search by name"),
     session: AsyncSession = Depends(get_db_session),
 ):
     """

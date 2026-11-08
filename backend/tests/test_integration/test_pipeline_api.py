@@ -161,3 +161,98 @@ def test_same_name_in_different_cities_is_not_merged(client):
     result = _import(client, "sweets.csv", csv_text)
     # Rows 1 and 2 are different shops; row 3 is the Pune shop again with another number.
     assert (result["new"], result["duplicate"]) == (2, 1)
+
+
+# ─── Input validation & sanitization (every request model / query / upload) ─────────────
+
+
+def _first_business_id(client):
+    _import(client, "a.csv", CSV_A)
+    return client.get("/api/v1/businesses").json()["items"][0]["id"]
+
+
+@pytest.mark.parametrize("payload", [
+    {"website_url": "javascript:alert(1)"},
+    {"website_url": "data:text/html,<script>x</script>"},
+    {"email": "not-an-email"},
+    {"phone": "<script>alert(1)</script>"},
+    {"country_code": "IND"},
+    {"name": ""},
+    {"normalized_name": "hijack"},  # unknown / internal field
+])
+def test_business_update_rejects_bad_input(client, payload):
+    business_id = _first_business_id(client)
+    response = client.patch(f"/api/v1/businesses/{business_id}", json=payload)
+    assert response.status_code == 422, response.text
+
+
+def test_business_update_sanitizes_text(client):
+    business_id = _first_business_id(client)
+    response = client.patch(
+        f"/api/v1/businesses/{business_id}",
+        json={"name": "  Shah\x00 Dental\x07  ", "email": " Info@ShahDental-Test.com ",
+              "website_url": "shahdental-test.com", "country_code": "in", "phone": ""},
+    )
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert body["name"] == "Shah Dental"
+    assert body["email"] == "info@shahdental-test.com"
+    assert body["website_url"] == "https://shahdental-test.com"
+    assert body["country_code"] == "IN"
+    assert body["phone"] is None
+
+
+@pytest.mark.parametrize("payload", [
+    {"source_slug": "openstreetmap", "city": "Pune", "query_params": {"sparql": "SELECT *"}},
+    {"source_slug": "openstreetmap", "city": "Pune", "query_params": {"csv_content": "a,b"}},
+    {"source_slug": "overture", "city": "Pune", "query_params": {"min_confidence": 3}},
+    {"source_slug": "csv_import", "query_params": {}},
+    {"source_slug": "openstreetmap", "latitude": 18.5},
+    {"source_slug": "openstreetmap", "country_code": "india", "city": "Pune"},
+    {"source_slug": "../../etc", "city": "Pune"},
+    {"source_slug": "openstreetmap", "city": "Pune", "max_results": 0},
+    {"source_slug": "openstreetmap", "city": "Pune", "unexpected": 1},
+])
+def test_discovery_run_rejects_bad_input(client, payload):
+    assert client.post("/api/v1/discovery/run", json=payload).status_code == 422
+
+
+def test_source_create_only_accepts_built_in_adapters(client):
+    response = client.post("/api/v1/sources", json={
+        "name": "Evil", "slug": "evil", "license_type": "OPEN_LICENSE",
+        "adapter_class": "os.system",
+    })
+    assert response.status_code == 422
+
+
+def test_csv_upload_guards(client):
+    bad_delimiter = client.post("/api/v1/discovery/import-csv", data={"delimiter": "xx"},
+                                files={"file": ("a.csv", CSV_A, "text/csv")})
+    assert bad_delimiter.status_code == 422
+    not_utf8 = client.post("/api/v1/discovery/import-csv",
+                           files={"file": ("a.csv", "name\nCaf\xe9".encode("latin-1"), "text/csv")})
+    assert not_utf8.status_code == 400
+    wrong_type = client.post("/api/v1/discovery/import-csv",
+                             files={"file": ("a.exe", b"MZ", "application/octet-stream")})
+    assert wrong_type.status_code == 400
+
+
+def test_csv_import_keeps_more_than_500_rows(client):
+    rows = "\n".join(f"Shop {i},Austin,US,+1 512 555 {i:04d}" for i in range(600))
+    result = _import(client, "big.csv", "name,city,country,phone\n" + rows + "\n")
+    assert result["new"] == 600  # used to stop silently at 500
+
+
+@pytest.mark.parametrize("method,url,kwargs", [
+    ("get", "/api/v1/businesses?country=IND", {}),
+    ("get", "/api/v1/opportunities?country=12", {}),
+    ("get", "/api/v1/qualification/unsubscribe?email=not-an-email", {}),
+    ("get", "/api/v1/discovery/jobs?limit=100000", {}),
+    ("patch", "/api/v1/opportunities/1", {"json": {"score": 150}}),
+    ("post", "/api/v1/qualification/opt-outs", {"json": {"email": "nope"}}),
+    ("post", "/api/v1/campaigns", {"json": {"name": "x" * 300}}),
+    ("post", "/api/v1/campaigns", {"json": {"name": "Pune", "target_service_category": "SPAM"}}),
+    ("patch", "/api/v1/campaigns/pipeline/crm/1", {"json": {"stage": "WON", "estimated_value": -5}}),
+])
+def test_other_endpoints_reject_bad_input(client, method, url, kwargs):
+    assert getattr(client, method)(url, **kwargs).status_code == 422
