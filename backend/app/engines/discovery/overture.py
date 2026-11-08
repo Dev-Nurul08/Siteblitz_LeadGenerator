@@ -24,7 +24,7 @@ import structlog
 
 from backend.app.config import get_settings
 from backend.app.engines.discovery.categories import category_regex, name_regex
-from backend.app.engines.discovery.geocode import city_bbox
+from backend.app.engines.discovery.geocode import MAX_BBOX_DEGREES, city_bbox
 from backend.app.engines.discovery.base import (
     AdapterResult,
     BaseSourceAdapter,
@@ -34,9 +34,8 @@ from backend.app.engines.discovery.base import (
 logger = structlog.get_logger(__name__)
 
 
-# A city bounding box larger than this (in degrees, ≈ 110 km per degree) means the name matched a
-# state or a whole district; scanning it would download gigabytes, so the job asks for a city.
-MAX_BBOX_DEGREES = 1.5
+# MAX_BBOX_DEGREES (geocode.py): a box larger than this (≈ 110 km per degree) means the name matched
+# a state or a whole district; scanning it would download gigabytes, so the job asks for a city.
 
 SOCIAL_HOSTS = {
     "facebook.com": "facebook",
