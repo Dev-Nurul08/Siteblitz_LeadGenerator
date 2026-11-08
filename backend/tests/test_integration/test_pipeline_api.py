@@ -444,3 +444,13 @@ def test_dead_listed_domain_is_explained_and_can_be_rechecked(client, monkeypatc
     assert again["assessed"] == 1
     detail = client.get(f"/api/v1/intelligence/business/{clinic}").json()
     assert len([c for c in detail["checks"] if c["type"] == "SITE_FETCH"]) == 2
+
+
+def test_same_email_same_city_is_one_business(client):
+    csv_text = (
+        "name,city,country,email\n"
+        "Cosmo Dentist,Delhi,IN,Cosmodontist@gmail.com\n"
+        "Dr Gupta Cosmo Dental Clinic,Delhi,IN,cosmodontist@gmail.com\n"
+    )
+    result = _import(client, "emails.csv", csv_text)
+    assert (result["new"], result["duplicate"]) == (1, 1)

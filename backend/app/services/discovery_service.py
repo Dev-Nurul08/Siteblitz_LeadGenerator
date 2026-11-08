@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import structlog
-from sqlalchemy import select, and_
+from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -326,14 +326,23 @@ class DiscoveryService:
     async def _find_by_phone(self, discovered: DiscoveredBusiness,
                              country: Optional[str]) -> Optional[Business]:
         """
-        Same phone number (last 10 digits) in the same city / within 5 km = the same business,
+        Same phone number (last 10 digits) or same email in the same city / within 5 km = the same
+        business,
         even when the sources spell the name differently ("Cafe Nirvana" vs "Nirvana Cafe").
         Needed once several sources are merged in one search.
         """
         digits = re.sub(r"\D", "", discovered.phone or "")
-        if len(digits) < 10:
+        email = (discovered.email or "").strip().lower()
+        conditions = []
+        if len(digits) >= 10:
+            conditions.append(Business.phone.like(f"%{digits[-10:]}"))
+        # Same email = same business too (city test 2026-11-08: one dentist listed twice under
+        # two names with the same Gmail address and different phone formats).
+        if "@" in email:
+            conditions.append(func.lower(Business.email) == email)
+        if not conditions:
             return None
-        stmt = (select(Business).where(Business.phone.like(f"%{digits[-10:]}"))
+        stmt = (select(Business).where(or_(*conditions))
                 .options(selectinload(Business.locations)))
         if country:
             stmt = stmt.where(Business.country_code == country)
