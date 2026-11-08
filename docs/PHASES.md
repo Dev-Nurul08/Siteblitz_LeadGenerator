@@ -5,7 +5,11 @@ Legend: ✅ done · 🔨 in progress · ⛔ blocked · ⬜ not started · 🔒 w
 | # | Phase | Status | Owner session | Depends on | Demo criterion |
 |---|-------|--------|---------------|------------|----------------|
 | 1 | Pipeline repair (install, OSM city search, CSV ids, async crashes, unsubscribe GET) | ✅ | 2026-11-08 audit session | — | `docs/spec/phase-01-pipeline-repair.md` all boxes; 138/138 tests; live Pune/Hyderabad/Munich discovery returns businesses |
-| 2 | Website Intelligence Engine (verdicts, evidence table, SKIP rules, need score, tiers) | 🔒 | — | 1 | `docs/spec/website-intelligence.md` acceptance list |
+| 1b | Overture Places source (lifts the 29-row OSM ceiling), location-aware dedup, job error reasons + definitions | ✅ | 2026-11-08 session, 2nd request | 1 | Udaipur cafés: OSM 29 → Overture 246 found / 225 new; 146 tests |
+| 1c | Validate + sanitize every request body, query param and CSV upload; adapter import allow-list | ✅ | same | 1 | 29 new 422/400 tests; 175 tests |
+| 1d | SSRF guard on every server-side website fetch (incl. redirects) | ✅ | same | 1 | internal/metadata addresses blocked; 183 tests |
+| 1e | Export CSV / PDF (filters + per job), "View businesses" per job | ✅ | same | 1 | CSV + PDF downloaded through the UI for job #9; 185 tests |
+| 2 | Website Intelligence Engine (verdicts, evidence table, SKIP rules — use Overture `brand` too —, need score, tiers) | 🔒 | — | 1 | `docs/spec/website-intelligence.md` acceptance list |
 | 3 | Background jobs + SSRF guard + Alembic for all tables + SQLite WAL default | ⬜ | — | 1 | Start a discovery, restart the API mid-run, job resumes with no duplicate businesses |
 | 4a | UI contract: `docs/contracts/ui-api.md` (verdicts, checks, labels, tiers, 3 indicators in the API) | ⬜ | — | 2 | Every field the new screens read exists in an API response |
 | 4b | UI-1: design tokens + app shell/stepper + Find screen (taste skill) | 🔒 | — | 3, 4a | `docs/spec/ui-redesign.md` criteria for Find + shell, 5 states screenshotted |
@@ -18,7 +22,7 @@ Legend: ✅ done · 🔨 in progress · ⛔ blocked · ⬜ not started · 🔒 w
 | 9 | Later: moment-of-need triggers, evidence-based micro-proposals, outcome learning | ⬜ | — | 6 | Defined after pilot results |
 
 ## Now
-Phase 1 — done on branch `phase-01-pipeline-repair` (2026-11-08).
+Phases 1, 1b–1e — done on branch `phase-01-pipeline-repair` (2026-11-08). UI redesign spec revised for an award-level, motion-led direction — waiting for `go`.
 
 ## Next 3
 Phase 2 (needs `go` on `docs/spec/website-intelligence.md`), Phase 3, Phase 4a → 4b (needs `go` on `docs/spec/ui-redesign.md`).

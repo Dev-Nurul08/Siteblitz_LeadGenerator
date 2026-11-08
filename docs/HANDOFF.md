@@ -1,53 +1,50 @@
-# HANDOFF — SiteBlitz Lead Generator — Phase 1 (pipeline repair) + audit
+# HANDOFF — SiteBlitz Lead Generator — Phases 1, 1b–1e
 
-Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 2705aca)
+Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 2705aca) · **not pushed**
 
-## Done
-- Full audit of every file, verified by running the code: `docs/AUDIT-2026-11-08.md`.
-- ChatGPT review round (2 rounds, all agenda points agreed/rejected):
-  `docs/debate/2026-11-08-lead-generator-audit-website-need-logic-ui-flow/RESULT.md`.
-- Phase 1 fixes, all acceptance boxes in `docs/spec/phase-01-pipeline-repair.md` verified:
-  - `pip install -e ".[dev]"` exits 0 in a fresh venv; app imports.
-  - Live OSM discovery works again (Pune restaurants 20 new, Hyderabad dentists 16 new,
-    Munich cafes 20 new; through the old UI: Nagpur dentists 36 new, card = API numbers).
-  - CSV: each file imports its own rows; re-import = duplicates.
-  - Qualify (was HTTP 500) and Enroll (would crash) work; enrol twice = 0 the second time.
-  - `GET /api/v1/qualification/unsubscribe` works (was 405).
-  - 138/138 tests pass (136 old + 2 new real-API integration tests).
-- Complete target flow diagram: `docs/flow/siteblitz-flow.mmd` (+ viewer `docs/flow/index.html`).
-- Spec drafts waiting for approval: `docs/spec/website-intelligence.md` (phase 2),
-  `docs/spec/ui-redesign.md` (phase 4).
+## Done (all verified, 185/185 tests)
+- Phase 1 — pipeline repair (install, OSM city search, CSV ids, async crashes, unsubscribe GET).
+- Phase 1b — **Overture Places** source: Udaipur cafés 29 (OSM) → 246 found / 225 new (live, via UI).
+  Location-aware dedup (no more merging same-name shops in different cities). Job cards show the
+  source's error reason and a definitions box.
+- Phase 1c — every request body, query param and CSV upload validated + sanitized (422/400, never 500);
+  `adapter_class` allow-list (blocked arbitrary module import); CSV imports keep up to 5,000 rows
+  (stopped silently at 500); short CSV rows no longer rejected.
+- Phase 1d — SSRF guard on all server-side website fetches incl. redirect hops.
+- Phase 1e — Export CSV / PDF (Businesses header + every job card), "View businesses" per job.
+- Docs: `docs/AUDIT-2026-11-08.md`, `docs/USER-GUIDE.md` (order of steps, every term, why 29, exports),
+  flow `docs/flow/siteblitz-flow.mmd` + viewer `docs/flow/index.html`, ChatGPT review `docs/debate/…/RESULT.md`.
 
-## Files changed
-- `pyproject.toml` — valid build backend; dnspython + aiosqlite core deps; package discovery limited to `backend*`.
-- `backend/app/engines/discovery/osm.py` — User-Agent; city = admin relation inside country → area; QL escaping.
-- `backend/app/engines/discovery/csv_import.py` — external id = hash of identity fields.
-- `backend/app/services/qualification_service.py` — eager-load locations/categories.
-- `backend/app/services/campaign_service.py` — eager-load contact/business; skip already-enrolled leads.
-- `backend/app/api/v1/qualification.py` — GET unsubscribe.
-- `frontend/src/pages/DiscoveryPage.jsx` — result card reads `new/duplicate/errors`.
-- `backend/tests/test_integration/test_pipeline_api.py` — new end-to-end API tests.
+## Files changed (since main)
+- Backend: `pyproject.toml`, `config.py`, `main.py`, `engines/discovery/{osm,overture,csv_import,registry}.py`,
+  `engines/opportunity/resolver.py`, `engines/enrichment/discovery.py`, `services/{discovery,qualification,campaign,export}_service.py`,
+  `schemas/{types,business,source,campaign,qualification,opportunity,contact}.py`, `api/v1/{businesses,discovery,sources,contacts,opportunities,qualification}.py`.
+- Frontend: `services/api.js`, `pages/{DiscoveryPage,BusinessesPage}.jsx`.
+- Tests: `tests/test_integration/test_pipeline_api.py`, `tests/test_discovery/test_overture.py`, `tests/test_opportunity/test_ssrf_guard.py`.
 
 ## Decisions made this session
-- See `docs/DECISIONS.md` (2026-11-08 block).
+- See `docs/DECISIONS.md` (two 2026-11-08 blocks).
 
 ## Known broken / deliberately skipped
-- Website-need logic still the old one (false HOT leads) — phase 2, waits for `go` on its spec.
-- Fabricated `info@domain` contacts, fake pitch claims, fake sender, fake SENT — phase 5.
-- Discovery still runs inside the HTTP request; Overpass public endpoint sometimes rate-limits
-  (job #2 in today's screenshots = PARTIAL, 1 error) — phase 3 adds retries/background jobs.
-- UI not redesigned yet — phase 4, waits for `go` on `docs/spec/ui-redesign.md`.
-- **Branch NOT pushed.** `git push -u origin phase-01-pipeline-repair` was blocked by the Claude OS guard hook
-  (its own check `git log … --not --remotes=origin` failed). Run the push yourself, then open a PR into `main`
-  on https://github.com/Dev-Nurul08/Siteblitz_LeadGenerator.
-- Debate driver files (`SESSION.md`, `tab.json`, `shots/`, `stop-awake`) are left untracked on purpose
-  (ChatGPT account screenshots and driver state).
+- **UI not redesigned.** Revised award-level, motion-led spec waits for `go`: `docs/spec/ui-redesign.md`.
+- Website-need logic is still the old one (false HOT leads) — phase 2, waits for `go` on `docs/spec/website-intelligence.md`.
+- Fabricated `info@` contacts / pitch claims / fake SENT — phase 5.
+- **The API has no authentication**; `docker-compose.yml` publishes port 8000 on all interfaces. Keep it on
+  127.0.0.1 until an auth phase exists.
+- Discovery still runs inside the HTTP request (Overture ≈ 20 s, OSM up to 90 s) — phase 3.
+- Overture release folder is pinned (`OVERTURE_RELEASE=2026-10-21.0`); when Overture deletes it, reads fail
+  with a message telling you to update it.
+- `npx oxlint` cannot run on this PC (native binding missing); `npm run build` passes.
+- Screenshots with real business contacts (`docs/screenshots/phase-1b/`) and debate driver files are untracked on purpose.
+- **Push blocked earlier by the Claude OS guard hook** — run `git push -u origin phase-01-pipeline-repair` yourself,
+  then open a PR into `main` on https://github.com/Dev-Nurul08/Siteblitz_LeadGenerator.
 
 ## Next session starts here
-- Phase 2: Website Intelligence Engine, exactly as `docs/spec/website-intelligence.md` (after `go`).
+- Phase 4b (UI-1: tokens + shell + Find with the live map) after `go` on `docs/spec/ui-redesign.md`,
+  or Phase 2 after `go` on `docs/spec/website-intelligence.md`.
 - First commands (PowerShell, repo root):
-  `python -m venv .venv` · `.venv\Scripts\python -m pip install -e ".[dev]"` ·
-  (this PC only, Smart App Control) `$env:DISABLE_SQLALCHEMY_CEXT="1"; .venv\Scripts\python -m pip install --force-reinstall --no-deps --no-binary sqlalchemy sqlalchemy` ·
-  `.venv\Scripts\python -m pytest -q`
-- Run locally without Postgres: `$env:DATABASE_URL="sqlite+aiosqlite:///./dev.db"; .venv\Scripts\python -m uvicorn backend.app.main:app --port 8000`, then `cd frontend; npm install; npm run dev` → http://localhost:5173
-- Watch out for: Overpass rate limits when running several searches back to back (wait ~60 s).
+  `.venv\Scripts\python -m pip install -e ".[dev]"` ·
+  (this PC only) `$env:DISABLE_SQLALCHEMY_CEXT="1"; .venv\Scripts\python -m pip install --force-reinstall --no-deps --no-binary sqlalchemy sqlalchemy` ·
+  `.venv\Scripts\python -m pytest -q` (expect 185 passed)
+- Run: see `docs/USER-GUIDE.md` §0.
+- Watch out for: Overpass and Nominatim rate limits when running many searches back to back.

@@ -23,3 +23,17 @@
 - **Phase-1 bug fixes were built before spec approval** because the founder's request explicitly
   authorised fixing broken APIs and the fixes add no new values — they restore what the code already
   promised. Website-need logic and UI redesign wait for spec-lock approval.
+
+## 2026-11-08 — second request (why 29, validation, export)
+- **Overture Maps Places is the default discovery source.** Why: OSM's Udaipur data really has only 29 named
+  cafés; Overture (CDLA-Permissive-2.0 / Apache-2.0, Meta + Microsoft + Foursquare) has 246, with phones for
+  83 % of places and social links for 87 %. Read with DuckDB from the public S3 GeoParquet by city bounding box
+  (one Nominatim lookup per job). Release folder pinned in `OVERTURE_RELEASE` (update monthly).
+- **Two records are merged only at "same city" or "within 5 km" confidence (≥ 0.70)**, not "same name in the
+  same country" (0.60). Why: different shops with common names were being lost.
+- **Every input limit comes from the DB column size or an existing rule** (ISO alpha-2, verifier email regex);
+  free-form `query_params` are an allow-list (`min_confidence`); `adapter_class` is an allow-list. Why: no
+  invented numbers; arbitrary module import was possible through POST /sources.
+- **CSV upload cap 15 MB** = 5,000 rows (existing max_results limit) × ~3 KB max row at DB column sizes.
+- **Exports:** CSV = all stored columns, formula-prefixed cells neutralised (OWASP CSV injection); PDF via
+  fpdf2 (pure Python). Exports with real business contacts are not committed to git.

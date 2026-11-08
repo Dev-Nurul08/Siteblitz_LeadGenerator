@@ -34,15 +34,16 @@ flowchart LR
     direction TB
     F1(["You pick: country · city · category<br/>include franchises? default off"]):::step
     F2["Search job starts<br/>runs in background · live progress"]:::proc
-    SRC_OSM[("OpenStreetMap<br/>free · stored")]:::source
+    SRC_OV[("Overture Places · default<br/>Meta · Microsoft · Foursquare<br/>phones + social links")]:::source
+    SRC_OSM[("OpenStreetMap<br/>free · thin in small cities")]:::source
     SRC_CSV[("CSV upload<br/>your own lists")]:::source
     F3["Clean name, address, phone<br/>merge only same name + same place"]:::proc
     F4{"Any businesses<br/>found?"}:::decision
     F5["Show the exact source error<br/>rate limit · city not found · no data<br/>+ Retry search"]:::error
-    F6["Businesses saved<br/>See N businesses →"]:::proc
+    F6["Businesses saved<br/>View businesses · Export CSV / PDF"]:::proc
     F1 --> F2
-    F2 --> SRC_OSM & SRC_CSV
-    SRC_OSM & SRC_CSV --> F3 --> F4
+    F2 --> SRC_OV & SRC_OSM & SRC_CSV
+    SRC_OV & SRC_OSM & SRC_CSV --> F3 --> F4
     F4 -- "no" --> F5
     F4 -- "yes" --> F6
   end
