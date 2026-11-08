@@ -1,7 +1,6 @@
-# SiteBlitz Lead Generator — how to use it (current version, 2026-11-08)
+# SiteBlitz Lead Generator — how to use it (redesigned app, 2026-11-08)
 
-Written for: the founder / sales operator. This describes the app **as it works today** (old
-screens, repaired backend). The redesigned 4-step screens are specified in `docs/spec/ui-redesign.md`.
+Written for: the founder / sales operator.
 
 ## 0. Start it
 ```powershell
@@ -12,64 +11,50 @@ $env:DATABASE_URL = "sqlite+aiosqlite:///./dev.db"
 cd frontend; npm run dev        # open http://localhost:5173
 ```
 
-## 1. The order to work in
-| Step | Screen (sidebar) | What you do | What you get |
-|---|---|---|---|
-| 1 | **Run Discovery** | Pick a source (use **Overture Places**), country, city, category, max results → Start | A *job* with Found / New / Dup / Errors |
-| 2 | Run Discovery → job card → **View businesses** | Look at what that job found | The Businesses list filtered to that job |
-| 3 | **Businesses** → **Export CSV / Export PDF** | Download what the filters show (or use the job card buttons) | `siteblitz-businesses-job9-….csv/.pdf` |
-| 4 | **Businesses** → click a row → Run audit (or **Opportunities** → batch) | Website check of each business | Website status + opportunities ⚠ see note |
-| 5 | **Contacts** | Find email contacts | ⚠ see note |
-| 6 | **Compliance & Leads** | Qualify | Lead score + draft pitch ⚠ see note |
-| 7 | **Campaigns & CRM** | Enrol, "dispatch" | ⚠ nothing is really sent |
+## 1. The order — the four steps across the top of the app
+| Step | What you do | What happens |
+|---|---|---|
+| **01 Find** | Pick a source (**Overture Places** is the default), country, city, kind of business → **Start search** | A search job runs (~20 s). The businesses land on the map. Then every website is checked automatically, 25 at a time (~35 s per 25); dots recolour as verdicts arrive. **Stop checking** pauses it; Review can continue later. |
+| **02 Review** | Open any business (click, Enter, or J / K) | The drawer shows every check the system ran, with time. You can search Google for it, record "I found no website" or "Save website", confirm it is open (after a call) or closed, and mark the verdict **Correct / Wrong / Not sure** (keys 1 2 3). |
+| **03 Hot leads** | Pick a tier (Hot / Warm / Cold / Review / Skip) and open a lead | The score builds from its reasons (+60 website gap, +10 activity …). "Before it can be Hot" lists what is still missing. |
+| **04 Outreach** | Open a lead | Contact routes (Call, WhatsApp chat opened by hand, copy email, open profile), a draft written only from stored facts (hover a fact to see which sentence uses it), **Copy draft** after you tick "I checked every fact", and **Log contact**. Sending from the app is off on purpose. |
+| Settings | — | Live status of every source; the do-not-contact list. |
 
-⚠ Steps 4–7 still run the **old logic** that the audit found unreliable (any business without a
-website field becomes "CRITICAL", invented `info@` contacts, fabricated pitch claims, simulated
-sending). They are rebuilt in phases 2 and 5 (`docs/PHASES.md`). Until then, use steps 1–3 to get
-lists, and judge websites yourself.
+## 2. Extract and see the data
+- **See:** Find → Past searches → **View businesses** (opens Review filtered to that search), or click a dot on the map.
+- **Extract:** **Export CSV** (every column incl. Facebook / Instagram links) or **Export PDF** on every search row and in the Current search panel.
 
-## 2. What every word on a discovery job means
+## 3. What a verdict means
+| Verdict | Meaning | Lead? |
+|---|---|---|
+| No website found | No website in any source, guessed domains do not exist or are other businesses | Yes |
+| Social media only | Only Facebook / Instagram / WhatsApp / Linktree found | Yes |
+| Website down | The listed website failed twice, at least 6 h apart | Yes |
+| Needs review | Checks were blocked or conflicting (e.g. the site failed once) | Your call |
+| Has own website | A website of its own opened (a Google Maps link or a directory page does **not** count) | No |
+| Skipped | Chain/brand, bank, ATM, fuel, school, hospital, worship place, closed | Never |
+| Not checked yet | The website checks have not run | — |
+
+## 4. How a lead becomes Hot (approved spec `docs/spec/website-intelligence.md`)
+Score = website gap (no site 60 · social only 55 · site down 50 · weak own site up to 35)
+\+ business problem (max 20) + activity (max 10) + service fit (dentist / salon 10, other listed categories 7, else 4).
+**Hot = 80+ AND** high evidence confidence (needs your recorded search) **AND** activity ≥ 7 (you confirmed it is
+open) **AND** a phone or email. Without your search the best a lead can reach is Warm.
+
+**Important calibration finding (2026-11-08):** with these approved weights a *social-media-only* business that
+has a phone tops out at 55 + 0 + 10 + 10 = **75 → Warm**. Only "no website found" dentists/salons can reach 80.
+In the Udaipur dentist test, 40 of 70 were social-only, so they all stay Warm. See the open question in
+`docs/HANDOFF.md`.
+
+## 5. Terms on a search (job)
 | Word | Meaning |
 |---|---|
-| **Job** | One search: one source, one city/area, one category. Each click on Start = one job. |
-| **Found** | Businesses the source returned for that search. |
-| **New** | Saved for the first time. These are added to Businesses. |
-| **Dup** (duplicate) | Already saved before — the same source record, or the same name in the same city / within 5 km (from any source). Not added again, but linked to the job, so "View businesses" still shows them. |
-| **Errors** | Problems the source reported (rate limit, city not found, area too large…). The reason is shown in red on the job. |
-| **Completed** | Finished with no errors. |
-| **Partial** | Finished, but the source reported an error (often 0 results + the reason). |
-| **Failed** | The job crashed; the error text is on the card. |
+| Found | Businesses the source returned |
+| New | Saved for the first time |
+| Duplicates | Already saved (same source record, or same name in the same city / within 5 km) — not added again, but still part of "View businesses" for that search |
+| Errors | The source's own problem (rate limit, city not found …), shown in red |
+| Done / Partial / Failed | No errors / finished with a source error / crashed |
 
-Website status (Businesses list):
-| Value | Meaning |
-|---|---|
-| `UNKNOWN` | No website link in the source data yet — **not** proof that there is no website. |
-| `SOCIAL_ONLY` | Only social links (Facebook / Instagram / WhatsApp / Linktree …) were found. |
-| `FOUND` | A website link exists (not yet checked). After an audit it may become `BROKEN` / `UNDER_CONSTRUCTION`. |
-| `NOT_FOUND` | Audit could not find the site (404/410). |
-
-## 3. Which source to use
-| Source | Use for | Data you get | Limits |
-|---|---|---|---|
-| **Overture Places** (default) | Any city | name, address, phone (83 % of places in the Udaipur test), website, Facebook/Instagram links, email sometimes | Needs a city name or coordinates; ~20 s per search; data from Meta/Microsoft/Foursquare, some categories are noisy |
-| OpenStreetMap | Cross-check, free map data | name, address, few phones (3.8 % in Udaipur) | Volunteer-mapped: small cities have few businesses |
-| CSV import | Your own lists | whatever columns you have (name required) | UTF-8 CSV, max 15 MB / 5,000 rows per file |
-
-## 4. Why OpenStreetMap gave "29" (analysis 2026-11-08)
-Your job #8 searched **cafe** in **Udaipur** on OpenStreetMap and returned 29. A direct check of the
-OpenStreetMap database shows that is *all* it has: 35 `amenity=cafe` objects in every area named
-Udaipur, 29 of them with a name (unnamed ones are skipped). Nothing was lost by the tool. The same
-search on Overture Places finds **246** cafés (job #9: 225 new + 21 already known); Overture has
-14,807 places in Udaipur, 12,919 with a social link and 7,718 with a social link but **no website**.
-Other things fixed on the way: same-name shops in different cities were merged into one; CSV
-imports stopped silently at 500 rows; CSV rows with missing trailing columns were rejected.
-
-## 5. Exports
-- CSV: every column (id, name, category, industry, address, city, state, postal code, country,
-  phone, email, website, website status, facebook, instagram, linkedin, tiktok, youtube, twitter,
-  whatsapp, linktree, latitude, longitude, status, discovered at). Opens in Excel with Indian
-  characters intact. Cells that start with `= + - @` get a leading `'` so Excel cannot run them as
-  formulas (phone numbers therefore show as text — correct).
-- PDF: landscape A4 summary (name, category, city, phone, email, website/social, status).
-- The export always matches the current filters (country, website status, category, search, job).
-- Exported files contain businesses' contact data — keep them private.
+## 6. Why OpenStreetMap gave "29"
+OpenStreetMap really has only 29 named cafés in Udaipur (35 in total). Overture Places has 246 for the same
+search, with phones for 83 % of places and social links for 87 %. Nothing was lost by the tool.

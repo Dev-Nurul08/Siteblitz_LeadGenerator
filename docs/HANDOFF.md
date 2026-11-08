@@ -1,50 +1,44 @@
-# HANDOFF — SiteBlitz Lead Generator — Phases 1, 1b–1e
+# HANDOFF — SiteBlitz Lead Generator — Phases 1, 1b–1e, 2, 4a–4d
 
 Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 2705aca) · **not pushed**
 
-## Done (all verified, 185/185 tests)
-- Phase 1 — pipeline repair (install, OSM city search, CSV ids, async crashes, unsubscribe GET).
-- Phase 1b — **Overture Places** source: Udaipur cafés 29 (OSM) → 246 found / 225 new (live, via UI).
-  Location-aware dedup (no more merging same-name shops in different cities). Job cards show the
-  source's error reason and a definitions box.
-- Phase 1c — every request body, query param and CSV upload validated + sanitized (422/400, never 500);
-  `adapter_class` allow-list (blocked arbitrary module import); CSV imports keep up to 5,000 rows
-  (stopped silently at 500); short CSV rows no longer rejected.
-- Phase 1d — SSRF guard on all server-side website fetches incl. redirect hops.
-- Phase 1e — Export CSV / PDF (Businesses header + every job card), "View businesses" per job.
-- Docs: `docs/AUDIT-2026-11-08.md`, `docs/USER-GUIDE.md` (order of steps, every term, why 29, exports),
-  flow `docs/flow/siteblitz-flow.mmd` + viewer `docs/flow/index.html`, ChatGPT review `docs/debate/…/RESULT.md`.
-
-## Files changed (since main)
-- Backend: `pyproject.toml`, `config.py`, `main.py`, `engines/discovery/{osm,overture,csv_import,registry}.py`,
-  `engines/opportunity/resolver.py`, `engines/enrichment/discovery.py`, `services/{discovery,qualification,campaign,export}_service.py`,
-  `schemas/{types,business,source,campaign,qualification,opportunity,contact}.py`, `api/v1/{businesses,discovery,sources,contacts,opportunities,qualification}.py`.
-- Frontend: `services/api.js`, `pages/{DiscoveryPage,BusinessesPage}.jsx`.
-- Tests: `tests/test_integration/test_pipeline_api.py`, `tests/test_discovery/test_overture.py`, `tests/test_opportunity/test_ssrf_guard.py`.
+## Done (verified)
+- Backend: 201/201 tests (pipeline repair, Overture source, input validation, SSRF guard, CSV/PDF export,
+  website intelligence: verdicts + evidence checks + need score + tiers + labels + contact log).
+- New UI (spec v2, approved): Find (live map, businesses land with a ring, automatic website checks),
+  Review (evidence drawer, labels, J/K/1/2/3), Hot leads (score builds from reasons), Outreach (fact-linked
+  draft, copy only after "I checked every fact", sending honestly off, contact log, do-not-contact), Settings
+  (live source health, do-not-contact list).
+- Verified in Chrome: 5 screens × populated / empty / error / loading at 1280, populated at 390, no horizontal
+  overflow at 1280 / 390 / 320, axe colour-contrast 0 violations on all screens, 2 px orange focus ring,
+  reduced motion (drawer transform none, spinner off), no emoji, no hex outside `:root`, initial JS 129 KB gzip
+  with MapLibre (290 KB gzip) lazy. Screenshots: `docs/screenshots/ui/` (local only — they show real businesses).
+- Live run: Udaipur dentists on Overture → 75 found / 70 new; checks → 40 social-only, 15 own site, 14 needs
+  review, 1 skipped.
 
 ## Decisions made this session
-- See `docs/DECISIONS.md` (two 2026-11-08 blocks).
+- See `docs/DECISIONS.md` (three 2026-11-08 blocks).
 
 ## Known broken / deliberately skipped
-- **UI not redesigned.** Revised award-level, motion-led spec waits for `go`: `docs/spec/ui-redesign.md`.
-- Website-need logic is still the old one (false HOT leads) — phase 2, waits for `go` on `docs/spec/website-intelligence.md`.
-- Fabricated `info@` contacts / pitch claims / fake SENT — phase 5.
-- **The API has no authentication**; `docker-compose.yml` publishes port 8000 on all interfaces. Keep it on
-  127.0.0.1 until an auth phase exists.
-- Discovery still runs inside the HTTP request (Overture ≈ 20 s, OSM up to 90 s) — phase 3.
-- Overture release folder is pinned (`OVERTURE_RELEASE=2026-10-21.0`); when Overture deletes it, reads fail
-  with a message telling you to update it.
+- **Open founder decision:** a social-only business with a phone tops out at 75 (Warm) under the approved
+  weights — see DECISIONS.md "Open (founder)". Nothing changed until you choose (a) or (b).
+- Old Contacts / Qualification / Campaigns **APIs** still contain the fabricated `info@` contact, template
+  pitches and fake SENT (removed from the UI) — phase 5.
+- Discovery + checks still run inside HTTP requests (no background worker yet) — phase 3. Leaving Find while
+  checks run stops them; Review → "Check websites for 25 businesses" continues.
+- The API has no authentication; keep it on 127.0.0.1.
 - `npx oxlint` cannot run on this PC (native binding missing); `npm run build` passes.
-- Screenshots with real business contacts (`docs/screenshots/phase-1b/`) and debate driver files are untracked on purpose.
-- **Push blocked earlier by the Claude OS guard hook** — run `git push -u origin phase-01-pipeline-repair` yourself,
-  then open a PR into `main` on https://github.com/Dev-Nurul08/Siteblitz_LeadGenerator.
+- `ui_shots.db` (local, git-ignored) holds two demo HOT leads + a demo label used only for screenshots;
+  `dev_preview.db` is untouched by those demo actions.
+- **Not pushed** — the Claude OS guard hook blocked `git push` earlier. Run:
+  `git push -u origin phase-01-pipeline-repair`, then open a PR into `main`.
 
 ## Next session starts here
-- Phase 4b (UI-1: tokens + shell + Find with the live map) after `go` on `docs/spec/ui-redesign.md`,
-  or Phase 2 after `go` on `docs/spec/website-intelligence.md`.
+- Answer the calibration question (a / b), then phase 3 (background jobs) or phase 5 (remove old fabricated APIs).
 - First commands (PowerShell, repo root):
   `.venv\Scripts\python -m pip install -e ".[dev]"` ·
   (this PC only) `$env:DISABLE_SQLALCHEMY_CEXT="1"; .venv\Scripts\python -m pip install --force-reinstall --no-deps --no-binary sqlalchemy sqlalchemy` ·
-  `.venv\Scripts\python -m pytest -q` (expect 185 passed)
-- Run: see `docs/USER-GUIDE.md` §0.
-- Watch out for: Overpass and Nominatim rate limits when running many searches back to back.
+  `.venv\Scripts\python -m pytest -q` (expect 201 passed) · `cd frontend; npm install; npm run build`
+- Run: `docs/USER-GUIDE.md` §0.
+- Watch out for: Overpass / Nominatim rate limits; OpenFreeMap tiles are free "as-is" (map shows an error
+  state with Retry if they fail; every list still works).

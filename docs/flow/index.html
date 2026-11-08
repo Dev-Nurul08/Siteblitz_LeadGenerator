@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,400..600&display=swap" rel="stylesheet" />
 <title>SiteBlitz Lead Generator — complete flow</title>
 <!-- Generated from siteblitz-flow.mmd by build_viewer.py — edit the .mmd, then rebuild. -->
 <style>
   :root {
-    --bg: #f4f4f1;
-    --surface: #ffffff;
-    --border: #dededa;
-    --text: #17181a;
-    --text-2: #45474b;
-    --accent: #1a4be0;
-    --hot: #b8360f;
-    --lead: #e1f3e7;
-    --warm: #fdeedd;
-    --notlead: #fce6e9;
-    --review: #fbf0d2;
-    --bad: #b42318;
-    --neutral: #efefeb;
-    --font: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+    --bg: #18191b;
+    --surface: #222427;
+    --border: #34373b;
+    --text: #eff0f1;
+    --text-2: #c4c6ca;
+    --accent: #ff4a1f;
+    --hot: #ff4a1f;
+    --lead: #183324;
+    --warm: #3a2719;
+    --notlead: #2e3034;
+    --review: #352b10;
+    --bad: #ff8a9b;
+    --neutral: #2a2c30;
+    --font: 'Mona Sans', 'Segoe UI', system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); }
@@ -97,22 +97,23 @@ title: SiteBlitz Lead Generator — complete flow (target design, agreed 2026-11
 config:
   theme: base
   themeVariables:
-    fontFamily: "IBM Plex Sans, Segoe UI, system-ui, sans-serif"
+    darkMode: true
+    fontFamily: "Mona Sans, Segoe UI, system-ui, sans-serif"
     fontSize: "15px"
-    background: "#f4f4f1"
-    mainBkg: "#ffffff"
-    textColor: "#17181a"
-    titleColor: "#17181a"
-    primaryColor: "#ffffff"
-    primaryTextColor: "#17181a"
-    primaryBorderColor: "#8a8b8e"
-    secondaryColor: "#ecf1fd"
-    tertiaryColor: "#f4f4f1"
-    nodeBorder: "#8a8b8e"
-    lineColor: "#66686c"
-    edgeLabelBackground: "#ffffff"
-    clusterBkg: "#ffffff"
-    clusterBorder: "#dededa"
+    background: "#18191b"
+    mainBkg: "#222427"
+    textColor: "#eff0f1"
+    titleColor: "#eff0f1"
+    primaryColor: "#222427"
+    primaryTextColor: "#eff0f1"
+    primaryBorderColor: "#6b6e74"
+    secondaryColor: "#2a2c30"
+    tertiaryColor: "#18191b"
+    nodeBorder: "#6b6e74"
+    lineColor: "#9c9ea3"
+    edgeLabelBackground: "#18191b"
+    clusterBkg: "#1d1f22"
+    clusterBorder: "#34373b"
   flowchart:
     curve: basis
     nodeSpacing: 38
@@ -202,20 +203,20 @@ flowchart LR
   S2 -- "verdicts + your labels" --> S3
   S3 -- "Hot leads" --> S4
 
-  %% ── styles: palette = docs/spec/ui-redesign.md rows 2–7 (all text ≥ 4.5:1 on its fill) ──
-  classDef step fill:#1a4be0,stroke:#163fba,stroke-width:1px,color:#ffffff
-  classDef proc fill:#ffffff,stroke:#8a8b8e,stroke-width:1px,color:#17181a
-  classDef check fill:#ffffff,stroke:#dededa,stroke-width:1px,color:#45474b
-  classDef source fill:#efefeb,stroke:#8a8b8e,stroke-width:1px,color:#17181a
-  classDef decision fill:#fbf0d2,stroke:#b07a00,stroke-width:1px,color:#6b4500
-  classDef lead fill:#e1f3e7,stroke:#1f8a4c,stroke-width:1px,color:#15603a
-  classDef notlead fill:#fce6e9,stroke:#c4314b,stroke-width:1px,color:#a1182f
-  classDef review fill:#fbf0d2,stroke:#b07a00,stroke-width:1px,stroke-dasharray:4 3,color:#7a4f00
-  classDef hot fill:#b8360f,stroke:#b8360f,stroke-width:1px,color:#ffffff
-  classDef warm fill:#fdeedd,stroke:#9a3f05,stroke-width:1px,color:#9a3f05
-  classDef cold fill:#e7eef5,stroke:#33526e,stroke-width:1px,color:#33526e
-  classDef skip fill:#f4f4f1,stroke:#8a8b8e,stroke-width:1px,stroke-dasharray:4 3,color:#45474b
-  classDef error fill:#fce6e9,stroke:#b42318,stroke-width:1px,color:#b42318
+  %% ── styles: palette = docs/spec/ui-redesign.md v2 rows 2–7 (all text ≥ 4.5:1 on its fill) ──
+  classDef step fill:#ff4a1f,stroke:#ff6a45,stroke-width:1px,color:#18191b
+  classDef proc fill:#222427,stroke:#6b6e74,stroke-width:1px,color:#eff0f1
+  classDef check fill:#222427,stroke:#34373b,stroke-width:1px,color:#c4c6ca
+  classDef source fill:#2a2c30,stroke:#6b6e74,stroke-width:1px,color:#eff0f1
+  classDef decision fill:#352b10,stroke:#f5b83d,stroke-width:1px,color:#f5c451
+  classDef lead fill:#183324,stroke:#4fd18b,stroke-width:1px,color:#7ee2a8
+  classDef notlead fill:#2e3034,stroke:#8d9097,stroke-width:2px,color:#c4c6ca
+  classDef review fill:#352b10,stroke:#f5b83d,stroke-width:1px,stroke-dasharray:4 3,color:#f5c451
+  classDef hot fill:#ff4a1f,stroke:#ff4a1f,stroke-width:1px,color:#18191b
+  classDef warm fill:#3a2719,stroke:#ffb27a,stroke-width:1px,color:#ffb27a
+  classDef cold fill:#1d2a36,stroke:#9ec3e6,stroke-width:1px,color:#9ec3e6
+  classDef skip fill:#18191b,stroke:#6b6e74,stroke-width:1px,stroke-dasharray:4 3,color:#9c9ea3
+  classDef error fill:#3d1d24,stroke:#ff8a9b,stroke-width:1px,color:#ff8a9b
 </script>
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";

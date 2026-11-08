@@ -37,3 +37,16 @@
 - **CSV upload cap 15 MB** = 5,000 rows (existing max_results limit) × ~3 KB max row at DB column sizes.
 - **Exports:** CSV = all stored columns, formula-prefixed cells neutralised (OWASP CSV injection); PDF via
   fpdf2 (pure Python). Exports with real business contacts are not committed to git.
+
+## 2026-11-08 — third request ("go … complete everything")
+- **Both specs approved by the founder's "go"**: website intelligence (phase 2) and the UI redesign v2
+  (dark graphite + safety orange, Mona Sans + Geist Mono, motion + MapLibre + NumberFlow + Lucide).
+- **Website checks run concurrently per batch** (25 businesses ≈ 35 s instead of minutes); the DB writes stay sequential.
+- **Google links (g.co, google.com, business.site) and directories (Justdial, Practo, Zomato…) are listings, not
+  websites** — found live: "Dr Shweta's … Clinic" was "Has own website" because its website field was a g.co link.
+- **The old Dashboard / Businesses / Opportunities / Contacts / Compliance / Campaigns screens were removed**
+  from the UI; their APIs remain but are not used by the app (the Contacts API still fabricates `info@` — phase 5).
+- **Screenshots containing real businesses' contact data are not committed** (`.gitignore`).
+- **Open (founder):** social-only + phone can never be Hot under the approved weights (max 75). Options:
+  (a) keep — only no-website businesses are Hot; (b) count "its listed web address is a social profile" as the
+  10-point business-problem signal (social-only + phone + confirmed open + dentist = 85 → Hot).

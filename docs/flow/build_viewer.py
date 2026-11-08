@@ -9,22 +9,22 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 
-# Same palette as docs/spec/ui-redesign.md (rows "colour tokens") — keep the two in sync.
+# Same palette as docs/spec/ui-redesign.md v2 rows 2–7 — keep the two in sync.
 PALETTE = {
-    "__BG__": "#f4f4f1",
-    "__SURFACE__": "#ffffff",
-    "__BORDER__": "#dededa",
-    "__TEXT__": "#17181a",
-    "__TEXT2__": "#45474b",
-    "__ACCENT__": "#1a4be0",
-    "__HOT__": "#b8360f",
-    "__LEAD__": "#e1f3e7",
-    "__WARM__": "#fdeedd",
-    "__NOTLEAD__": "#fce6e9",
-    "__REVIEW__": "#fbf0d2",
-    "__BAD__": "#b42318",
-    "__NEUTRAL__": "#efefeb",
-    "__FONT__": "'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif",
+    "__BG__": "#18191b",
+    "__SURFACE__": "#222427",
+    "__BORDER__": "#34373b",
+    "__TEXT__": "#eff0f1",
+    "__TEXT2__": "#c4c6ca",
+    "__ACCENT__": "#ff4a1f",
+    "__HOT__": "#ff4a1f",
+    "__LEAD__": "#183324",
+    "__WARM__": "#3a2719",
+    "__NOTLEAD__": "#2e3034",
+    "__REVIEW__": "#352b10",
+    "__BAD__": "#ff8a9b",
+    "__NEUTRAL__": "#2a2c30",
+    "__FONT__": "'Mona Sans', 'Segoe UI', system-ui, sans-serif",
 }
 
 
