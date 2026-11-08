@@ -142,6 +142,14 @@ async def city_bbox(city: str, country_code: Optional[str],
             params.pop("state")
             hits = await _search(params)
             hit = _pick(hits, city)
+        if hit is None and not hits:
+            # The structured "city" search knows only places tagged as settlements. Some cities are
+            # mapped only as their district ("Thrissur", Kerala: no city object, district 104 x 68 km),
+            # which free text finds. Only an area or settlement is used from it, never a landmark.
+            free = {k: v for k, v in params.items() if k != "city"}
+            free["q"] = city.strip()
+            hits = await _search(free)
+            hit = _pick(hits, city)
         if hit is None:
             if not hits:
                 raise LookupError(f"City '{city}' was not found in country '{country_code or 'any'}'.")

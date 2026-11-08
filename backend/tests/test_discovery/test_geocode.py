@@ -20,6 +20,8 @@ def nominatim(monkeypatch):
 
     async def fake_search(params):
         calls.append(dict(params))
+        if "q" in params:
+            return answers.get("free text", [])
         return answers["with state" if "state" in params else "no state"]
 
     monkeypatch.setattr(geocode, "_search", fake_search)
@@ -138,3 +140,16 @@ async def test_only_a_landmark_is_not_found(nominatim):
     answers["no state"] = [office]
     with pytest.raises(LookupError, match="closest match: Hubli Dharwad Municipal"):
         await geocode.city_bbox("Hubli-Dharwad", "IN", "Karnataka")
+
+
+@pytest.mark.asyncio
+async def test_city_mapped_only_as_its_district_is_found_by_free_text(nominatim):
+    calls, answers = nominatim
+    answers["with state"] = []
+    answers["no state"] = []
+    answers["free text"] = [_hit("state_district", [10.17, 10.78, 75.96, 76.9], lat=10.52, lon=76.21,
+                                 name="Thrissur, Kerala, India")]
+    west, east, south, north = await geocode.city_bbox("Thrissur", "IN", "Kerala")
+    assert calls[-1]["q"] == "Thrissur" and "city" not in calls[-1]
+    assert geocode.resolved_place("Thrissur", "IN", "Kerala")["type"] == "state_district"
+    assert east - west == pytest.approx(0.94)   # under the limit: searched as is, not trimmed
