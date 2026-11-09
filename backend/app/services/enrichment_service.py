@@ -1,6 +1,6 @@
 """
 Enrichment Service — coordinates contact discovery, verification,
-classification, and database persistence.
+classification, and database persistence (Phase 3).
 """
 
 from datetime import datetime, timezone
@@ -77,6 +77,15 @@ class EnrichmentService:
             )
             existing = (await self.session.execute(existing_stmt)).scalar_one_or_none()
 
+            verification_payload = {
+                **ver_res.details,
+                "suggested_correction": ver_res.suggested_correction,
+                "mx_records": ver_res.mx_records,
+                "mail_provider": ver_res.mail_provider,
+                "department": class_res.department,
+                "seniority_score": class_res.seniority_score,
+            }
+
             if existing:
                 existing.email_status = ver_res.status
                 existing.verification_score = ver_res.verification_score
@@ -85,6 +94,7 @@ class EnrichmentService:
                 existing.is_disposable = ver_res.is_disposable
                 existing.verified_at = datetime.now(timezone.utc)
                 existing.role_level = class_res.role_level
+                existing.verification_details = verification_payload
                 if class_res.first_name and not existing.first_name:
                     existing.first_name = class_res.first_name
                     existing.last_name = class_res.last_name
@@ -108,18 +118,27 @@ class EnrichmentService:
                     linkedin_url=cand.linkedin_url,
                     source_method=cand.source_method,
                     source_url=cand.source_url,
-                    verification_details=ver_res.details,
+                    verification_details=verification_payload,
                     verified_at=datetime.now(timezone.utc),
                 )
                 self.session.add(contact_record)
+
+            # Auto-update business primary email/phone if business is missing them
+            if not business.email and ver_res.has_valid_mx:
+                business.email = cand.email.lower()
+            if not business.phone and cand.phone:
+                business.phone = cand.phone
 
             persisted_contacts.append(
                 {
                     "email": cand.email.lower(),
                     "name": class_res.full_name,
+                    "job_title": class_res.job_title,
                     "role_level": class_res.role_level.value,
+                    "department": class_res.department,
                     "status": ver_res.status.value,
                     "score": ver_res.verification_score,
+                    "mail_provider": ver_res.mail_provider,
                 }
             )
 
@@ -158,4 +177,43 @@ class EnrichmentService:
         return {
             "enriched_count": len(results),
             "results": results,
+        }
+
+    async def discover_domain_contacts(self, domain_or_url: str) -> dict:
+        """
+        On-demand domain contact discovery and verification without saving to DB.
+        """
+        temp_biz = Business(
+            name=domain_or_url,
+            normalized_name=domain_or_url.lower(),
+            website_url=domain_or_url,
+        )
+
+        candidates = await self.discovery.discover_contacts(temp_biz)
+        verified = []
+        for cand in candidates:
+            ver = self.verifier.verify(cand.email)
+            cls = self.classifier.classify_contact(cand.full_name, cand.job_title, cand.email)
+            verified.append({
+                "email": cand.email,
+                "name": cls.full_name,
+                "first_name": cls.first_name,
+                "last_name": cls.last_name,
+                "job_title": cls.job_title,
+                "role_level": cls.role_level.value,
+                "department": cls.department,
+                "status": ver.status.value,
+                "score": ver.verification_score,
+                "has_valid_mx": ver.has_valid_mx,
+                "is_role_based": ver.is_role_based,
+                "is_free_email": ver.is_free_email,
+                "mail_provider": ver.mail_provider,
+                "suggested_correction": ver.suggested_correction,
+                "source_method": cand.source_method,
+            })
+
+        return {
+            "query": domain_or_url,
+            "contacts_found": len(verified),
+            "contacts": verified,
         }

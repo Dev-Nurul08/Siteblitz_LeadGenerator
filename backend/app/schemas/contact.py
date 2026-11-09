@@ -4,7 +4,7 @@ Pydantic schemas for Contact Enrichment and Email Verification (Phase 3).
 
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict
 
 from backend.app.models.contact import EmailVerificationStatus, RoleLevel
 from backend.app.schemas.types import Text
@@ -30,6 +30,7 @@ class ContactResponse(BaseModel):
     linkedin_url: Optional[str] = None
     source_method: str
     source_url: Optional[str] = None
+    verification_details: Optional[dict] = None
     verified_at: Optional[datetime] = None
     created_at: datetime
 
@@ -77,10 +78,44 @@ class VerifyEmailResponse(BaseModel):
     is_valid_syntax: bool
     is_disposable: bool
     is_role_based: bool
+    is_free_email: bool = False
     has_valid_mx: bool
     verification_score: float
     domain: str
-    mx_records: list[str]
+    mx_records: list[str] = []
+    mail_provider: Optional[str] = None
+    suggested_correction: Optional[str] = None
+
+
+class VerifyPhoneRequest(BaseModel):
+    """Request to validate and format a business phone number."""
+
+    phone: str
+    country_code: str = "US"
+
+
+class VerifyPhoneResponse(BaseModel):
+    """Result of phone verification and formatting."""
+
+    raw_phone: str
+    formatted_phone: Optional[str] = None
+    is_valid: bool
+    country_code: Optional[str] = None
+    phone_type: str = "UNKNOWN"
+
+
+class DomainContactSearchRequest(BaseModel):
+    """Request to discover contacts on-demand for any domain/website."""
+
+    domain_or_url: str
+
+
+class DomainContactSearchResponse(BaseModel):
+    """On-demand discovery of contacts for a domain."""
+
+    query: str
+    contacts_found: int
+    contacts: list[dict] = []
 
 
 class ContactStatsResponse(BaseModel):

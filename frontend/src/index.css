@@ -332,3 +332,34 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
   *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
   .spinner { animation: none; }
 }
+
+
+/* ─── Lead Radar & Matrix Grid Compatibility ──────────────────── */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: var(--s3);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  line-height: 1.4;
+}
+.badge-primary { background: var(--accent-tint); color: var(--accent-text); border-color: var(--accent); }
+.badge-success { background: var(--lead-bg); color: var(--lead); border-color: var(--lead); }
+.badge-warning { background: var(--review-bg); color: var(--review); border-color: var(--review); }
+.badge-danger { background: var(--error-bg); color: var(--error); border-color: var(--error); }
+.badge-ghost { background: var(--surface-2); color: var(--ink-2); }
+.bg-base-100 { background: var(--surface); }
+.bg-base-200 { background: var(--surface-2); }
+.text-primary { color: var(--accent-text); }
+.text-success { color: var(--lead); }
+.text-warning { color: var(--review); }
+.text-danger { color: var(--error); }
+.border-base { border-color: var(--line); }

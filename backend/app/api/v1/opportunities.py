@@ -20,6 +20,8 @@ from backend.app.models.opportunity import (
     WebsiteAudit,
 )
 from backend.app.schemas.opportunity import (
+    AuditUrlRequest,
+    AuditUrlResponse,
     OpportunityListResponse,
     OpportunityResponse,
     OpportunityStatsResponse,
@@ -274,3 +276,89 @@ async def get_business_audits(
     )
     audits = (await session.execute(stmt)).scalars().all()
     return audits
+
+
+@router.post("/audit-url", response_model=AuditUrlResponse)
+async def audit_url_on_demand(
+    request: AuditUrlRequest,
+):
+    """
+    On-demand real-time website audit and opportunity identification for any URL.
+    Does not require a pre-existing business record in the database.
+    """
+    from backend.app.engines.opportunity.resolver import WebsiteResolver
+    from backend.app.engines.opportunity.auditor import WebsiteAuditor
+    from backend.app.engines.opportunity.detector import OpportunityDetector
+    from backend.app.engines.opportunity.scorer import OpportunityScorer
+
+    resolver = WebsiteResolver()
+    auditor = WebsiteAuditor()
+    detector = OpportunityDetector()
+    scorer = OpportunityScorer()
+
+    resolution = await resolver.resolve(request.url)
+    audit = None
+    if resolution.is_reachable and resolution.html_content:
+        audit = auditor.audit_html(
+            url=resolution.final_url or request.url,
+            html_content=resolution.html_content,
+            headers=resolution.headers,
+            original_url=resolution.original_url,
+            final_url=resolution.final_url,
+        )
+
+    # Synthetic business container for evaluation
+    name = request.business_name or (request.url.split("//")[-1].split("/")[0])
+    temp_biz = Business(
+        name=name,
+        normalized_name=name.lower(),
+        country_code=request.country_code or "US",
+        website_url=resolution.final_url or request.url,
+        website_status=resolution.status,
+    )
+
+    detected_needs = detector.detect_opportunities(
+        business=temp_biz,
+        audit=audit,
+        resolution=resolution,
+        business_categories=request.categories,
+    )
+
+    scored_opps = []
+    for need in detected_needs:
+        scored = scorer.score_need(need, temp_biz, request.categories)
+        scored_opps.append({
+            "service_category": need.service_category.value,
+            "title": need.title,
+            "summary": need.summary,
+            "score": scored.score,
+            "priority": scored.priority.value,
+            "confidence": scored.confidence,
+            "estimated_value_low": scored.estimated_value_low,
+            "estimated_value_high": scored.estimated_value_high,
+            "recommended_action": scored.recommended_action,
+            "roi_summary": scored.roi_summary,
+            "pitch_angles": need.pitch_angles,
+            "evidence": need.evidence,
+        })
+
+    return AuditUrlResponse(
+        url=request.url,
+        final_url=resolution.final_url,
+        is_reachable=resolution.is_reachable,
+        status=resolution.status.value,
+        load_time_seconds=resolution.load_time_seconds,
+        has_ssl=resolution.has_ssl,
+        is_mobile_responsive=audit.is_mobile_responsive if audit else False,
+        detected_cms=audit.detected_cms if audit else None,
+        detected_frameworks=audit.detected_frameworks if audit else [],
+        has_ecommerce=audit.has_ecommerce if audit else False,
+        has_online_booking=audit.has_online_booking if audit else False,
+        has_analytics=audit.has_analytics if audit else False,
+        emails_found=audit.emails_found if audit else [],
+        phones_found=audit.phones_found if audit else [],
+        social_links_found=audit.social_links_found if audit else {},
+        audit_summary=audit.raw_technologies if audit else {},
+        opportunities=scored_opps,
+    )
+

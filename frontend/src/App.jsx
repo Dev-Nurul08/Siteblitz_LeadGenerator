@@ -2,7 +2,7 @@
 // route transitions (row 18), progress line signature, reduced motion (row 19).
 import { Fragment, lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'motion/react'
-import { Flame, ListChecks, Search, Send, Settings } from 'lucide-react'
+import { Crosshair, Flame, ListChecks, Search, Send, Settings } from 'lucide-react'
 import api from './services/api'
 import { STEPS, useRoute } from './lib/router'
 import { Ticker } from './components/ui'
@@ -14,7 +14,16 @@ const ReviewPage = lazy(() => import('./pages/ReviewPage'))
 const HotLeadsPage = lazy(() => import('./pages/HotLeadsPage'))
 const OutreachPage = lazy(() => import('./pages/OutreachPage'))
 const SettingsPage = lazy(() => import('./pages/SettingsPage'))
-const PAGES = { find: FindPage, review: ReviewPage, leads: HotLeadsPage, outreach: OutreachPage, settings: SettingsPage }
+const LeadRadarPage = lazy(() => import('./pages/LeadRadarPage'))
+
+const PAGES = {
+  find: FindPage,
+  review: ReviewPage,
+  leads: HotLeadsPage,
+  outreach: OutreachPage,
+  settings: SettingsPage,
+  radar: LeadRadarPage,
+}
 const STEP_ICONS = { find: Search, review: ListChecks, leads: Flame, outreach: Send }
 
 function useStats() {
@@ -49,8 +58,10 @@ function Connector({ index, done }) {
 
 function Header({ route, stats }) {
   const counts = {
-    find: stats?.jobs, review: (stats?.needs_review ?? 0) + (stats?.unassessed ?? 0),
-    leads: stats?.by_tier?.HOT ?? 0, outreach: stats?.contacted ?? 0,
+    find: stats?.jobs,
+    review: (stats?.needs_review ?? 0) + (stats?.unassessed ?? 0),
+    leads: stats?.by_tier?.HOT ?? 0,
+    outreach: stats?.contacted ?? 0,
   }
   const produced = [counts.find > 0, (stats?.assessed ?? 0) > 0, counts.leads > 0]
   return (
@@ -78,6 +89,9 @@ function Header({ route, stats }) {
           ))}
         </ol>
         <div className="header-end">
+          <a className="btn btn-sm" href="#/radar" aria-current={route === 'radar' ? 'page' : undefined}>
+            <Crosshair size={16} strokeWidth={1.75} aria-hidden="true" /><span className="label-text">Lead Radar</span>
+          </a>
           <a className="btn btn-sm" href="#/settings" aria-current={route === 'settings' ? 'page' : undefined}>
             <Settings size={16} strokeWidth={1.75} aria-hidden="true" /><span className="label-text">Settings</span>
           </a>
@@ -101,7 +115,7 @@ export default function App() {
   const { route, params } = useRoute()
   const stats = useStats()
   const reduce = useReducedMotion()
-  const Page = PAGES[route]
+  const Page = PAGES[route] || PAGES.find
   useEffect(() => { refreshStats() }, [route])
   return (
     <MotionConfig reducedMotion="user">

@@ -44,6 +44,7 @@ from backend.app.models.campaign import (
     OutreachMessage,
     ReplyIntent,
 )
+from backend.app.models.lead_radar import LeadRadarEvaluation
 
 __all__ = [
     "Source",
@@ -79,4 +80,5 @@ __all__ = [
     "DealStage",
     "ReplyIntent",
     "EventType",
+    "LeadRadarEvaluation",
 ]

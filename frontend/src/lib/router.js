@@ -7,7 +7,7 @@ export const STEPS = [
   { id: 'leads', index: '03', label: 'Hot leads' },
   { id: 'outreach', index: '04', label: 'Outreach' },
 ]
-const ROUTES = ['find', 'review', 'leads', 'outreach', 'settings']
+const ROUTES = ['find', 'review', 'leads', 'outreach', 'settings', 'radar']
 
 function parse() {
   const raw = window.location.hash.replace(/^#\/?/, '')

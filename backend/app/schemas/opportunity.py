@@ -38,6 +38,8 @@ class WebsiteAuditResponse(BaseModel):
     emails_found: Optional[dict] = None
     phones_found: Optional[dict] = None
     social_links_found: Optional[dict] = None
+    raw_audit_data: Optional[dict] = None
+    audit_error: Optional[str] = None
     audited_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
@@ -98,3 +100,35 @@ class OpportunityStatsResponse(BaseModel):
     by_priority: dict[str, int]
     by_status: dict[str, int]
     average_score: float
+
+
+class AuditUrlRequest(BaseModel):
+    """Request to perform an on-demand audit on any URL."""
+
+    url: str
+    business_name: Optional[str] = None
+    categories: list[str] = []
+    country_code: Optional[str] = None
+
+
+class AuditUrlResponse(BaseModel):
+    """Immediate audit and detected opportunities for any provided URL."""
+
+    url: str
+    final_url: Optional[str] = None
+    is_reachable: bool
+    status: str
+    load_time_seconds: Optional[float] = None
+    has_ssl: bool
+    is_mobile_responsive: bool
+    detected_cms: Optional[str] = None
+    detected_frameworks: list[str] = []
+    has_ecommerce: bool
+    has_online_booking: bool
+    has_analytics: bool
+    emails_found: list[str] = []
+    phones_found: list[str] = []
+    social_links_found: dict[str, str] = {}
+    audit_summary: dict = {}
+    opportunities: list[dict] = []
+

@@ -217,6 +217,36 @@ export const api = {
     getFunnel: async () => request('/api/v1/campaigns/analytics/funnel'),
   },
 
+  leadRadar: {
+    evaluate: async (data) => request('/api/v1/lead-radar/evaluate', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    absenceCertificate: async (data) => request('/api/v1/lead-radar/absence-certificate', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    revenueEstimate: async (data) => request('/api/v1/lead-radar/revenue-estimate', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    mumbaiFunnel: async (data = {}) => request('/api/v1/lead-radar/mumbai-funnel', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    cityBaselines: async () => request('/api/v1/lead-radar/regions/baselines'),
+    cityBaseline: async (city) => request(`/api/v1/lead-radar/regions/baselines/${encodeURIComponent(city)}`),
+    regionalProfiles: async () => request('/api/v1/lead-radar/regions/profiles'),
+    evaluations: async (params = {}) => {
+      const q = new URLSearchParams()
+      if (params.segment) q.set('segment', params.segment)
+      if (params.recipe) q.set('recipe', params.recipe)
+      if (params.limit) q.set('limit', params.limit)
+      const queryStr = q.toString()
+      return request(`/api/v1/lead-radar/evaluations${queryStr ? `?${queryStr}` : ''}`)
+    },
+  },
+
   // Map points + live source health (redesign v2)
   points: async (params = {}) => request(`/api/v1/businesses/points?${qs(params)}`),
   sourceHealth: async (slug) => request(`/api/v1/discovery/source-health/${slug}`),

@@ -28,8 +28,14 @@ from backend.app.engines.discovery.base import (
 
 logger = structlog.get_logger(__name__)
 
-# Overpass API endpoint
-OVERPASS_API_URL = "https://overpass-api.de/api/interpreter"
+# Public Overpass endpoints, tried in this order (list from the Lead-Radar work on main).
+# A single server can refuse one machine for hours (overpass-api.de did during the city test).
+OVERPASS_ENDPOINTS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
+]
+OVERPASS_API_URL = OVERPASS_ENDPOINTS[0]
 
 # overpass-api.de answers HTTP 406 to generic client User-Agents (verified 2026-11-08 with
 # httpx's default "python-httpx/x.y"), so every request must identify the tool.
@@ -301,18 +307,26 @@ class OSMAdapter(BaseSourceAdapter):
             await self._rate_limit()
 
             # Execute query
-            # The public Overpass server answers 429/502/503/504 when busy; those are retried
-            # (3 tries) after waiting one rate-limit interval per try (OSM_OVERPASS_RPM → 6 s).
+            # A public Overpass server answers 429/502/503/504 when busy, or refuses the connection.
+            # Each of the 3 tries goes to the next endpoint; a busy answer also waits one rate-limit
+            # interval per try (OSM_OVERPASS_RPM → 6 s) so the servers are not hammered.
             async with _overpass_gate(), httpx.AsyncClient(timeout=120.0) as client:
                 for attempt in range(3):
-                    response = await client.post(
-                        OVERPASS_API_URL,
-                        data={"data": query},
-                        headers={
-                            "Accept": "application/json",
-                            "User-Agent": OVERPASS_USER_AGENT,
-                        },
-                    )
+                    endpoint = OVERPASS_ENDPOINTS[attempt % len(OVERPASS_ENDPOINTS)]
+                    try:
+                        response = await client.post(
+                            endpoint,
+                            data={"data": query},
+                            headers={
+                                "Accept": "application/json",
+                                "User-Agent": OVERPASS_USER_AGENT,
+                            },
+                        )
+                    except httpx.ConnectError as exc:
+                        if attempt == 2:
+                            raise
+                        logger.info("overpass_connect_failed_next_endpoint", endpoint=endpoint, error=str(exc))
+                        continue
                     if response.status_code not in (429, 502, 503, 504) or attempt == 2:
                         break
                     logger.info("overpass_busy_retry", status=response.status_code, attempt=attempt + 1)

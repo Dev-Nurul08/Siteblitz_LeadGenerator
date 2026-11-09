@@ -123,7 +123,7 @@ class WikidataAdapter(BaseSourceAdapter):
     def __init__(
         self,
         rate_limit_rpm: int = 30,
-        timeout_seconds: float = 25.0,
+        timeout_seconds: float = 45.0,
         user_agent: str = "SiteBlitzLeadIntelligence/1.0 (info@siteblitz.com)",
     ):
         super().__init__(rate_limit_rpm=rate_limit_rpm)
