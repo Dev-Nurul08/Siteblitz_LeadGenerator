@@ -1,0 +1,32 @@
+[
+ {
+  "city": "Pune",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Pimpri-Chinchwad",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Beijing",
+  "country_code": "CN",
+  "admin": "Beijing"
+ },
+ {
+  "city": "Shenzhen",
+  "country_code": "CN",
+  "admin": "Guangdong"
+ },
+ {
+  "city": "Shanghai",
+  "country_code": "CN",
+  "admin": "Shanghai"
+ },
+ {
+  "city": "Tokyo",
+  "country_code": "JP",
+  "admin": "Tokyo"
+ }
+]

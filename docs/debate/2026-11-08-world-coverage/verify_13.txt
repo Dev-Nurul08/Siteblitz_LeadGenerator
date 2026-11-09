@@ -1,0 +1,14 @@
+Round 13: 278 reference lines, 278 cities, 274 with business data (99 %).
+- KP: 15/15 cities covered, 195 businesses near them
+- MK: 80/80 cities covered, 249,820 businesses near them
+- MP: 12/13 cities covered, 9,509 businesses near them; no data at: Agrihan
+- NE: 12/12 cities covered, 1,365 businesses near them
+- NF: 2/2 cities covered, 368 businesses near them
+- NG: 40/40 cities covered, 133,700 businesses near them
+- NI: 19/19 cities covered, 50,113 businesses near them
+- NO: 18/18 cities covered, 151,123 businesses near them
+- NU: 14/14 cities covered, 384 businesses near them
+- NZ: 18/18 cities covered, 109,808 businesses near them
+- OM: 16/16 cities covered, 17,561 businesses near them
+- PK: 12/12 cities covered, 127,014 businesses near them
+- PW: 16/19 cities covered, 1,803 businesses near them; no data at: Ngaramasch, Tobi, Dongosaru

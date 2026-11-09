@@ -1,0 +1,876 @@
+[
+ {
+  "city": "Paris",
+  "country_code": "FR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 285,
+  "duplicate": 15,
+  "available": 4087,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Paris, Île-de-France, France métropolitaine, France",
+   "type": "city",
+   "bbox_km": [
+    27,
+    10
+   ]
+  },
+  "businesses": 285,
+  "phone_pct": 99,
+  "email_pct": 21,
+  "website_pct": 91,
+  "social_pct": 34,
+  "social_no_website_pct": 3,
+  "seconds": 118
+ },
+ {
+  "city": "Marseille",
+  "country_code": "FR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 246,
+  "duplicate": 54,
+  "available": 866,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Marseille, Bouches-du-Rhône, Provence-Alpes-Côte d'Azur, France métropolitaine, France",
+   "type": "city",
+   "bbox_km": [
+    34,
+    25
+   ]
+  },
+  "businesses": 246,
+  "phone_pct": 96,
+  "email_pct": 10,
+  "website_pct": 39,
+  "social_pct": 21,
+  "social_no_website_pct": 7,
+  "seconds": 67
+ },
+ {
+  "city": "Lyon",
+  "country_code": "FR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 252,
+  "duplicate": 48,
+  "available": 716,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "Lyon, Métropole de Lyon, Rhône, Auvergne-Rhône-Alpes, France métropolitaine, France",
+   "type": "city",
+   "bbox_km": [
+    14,
+    11
+   ]
+  },
+  "businesses": 252,
+  "phone_pct": 90,
+  "email_pct": 7,
+  "website_pct": 40,
+  "social_pct": 13,
+  "social_no_website_pct": 4,
+  "seconds": 72
+ },
+ {
+  "city": "Johannesburg",
+  "country_code": "ZA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 275,
+  "duplicate": 25,
+  "available": 450,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Johannesburg, City of Johannesburg Metropolitan Municipality, Gauteng, 2001, South Africa",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 275,
+  "phone_pct": 99,
+  "email_pct": 71,
+  "website_pct": 68,
+  "social_pct": 94,
+  "social_no_website_pct": 29,
+  "seconds": 77
+ },
+ {
+  "city": "Cape Town",
+  "country_code": "ZA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 281,
+  "new": 249,
+  "duplicate": 32,
+  "available": 281,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Cape Town, City of Cape Town, Western Cape, 8001, South Africa",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 249,
+  "phone_pct": 97,
+  "email_pct": 70,
+  "website_pct": 63,
+  "social_pct": 97,
+  "social_no_website_pct": 37,
+  "seconds": 58
+ },
+ {
+  "city": "Durban",
+  "country_code": "ZA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 222,
+  "new": 211,
+  "duplicate": 11,
+  "available": 222,
+  "errors": 0,
+  "error": "",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "Durban, eThekwini Metropolitan Municipality, KwaZulu-Natal, 4057, South Africa",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 211,
+  "phone_pct": 99,
+  "email_pct": 60,
+  "website_pct": 44,
+  "social_pct": 94,
+  "social_no_website_pct": 52,
+  "seconds": 106
+ },
+ {
+  "city": "Roma",
+  "country_code": "IT",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 297,
+  "duplicate": 3,
+  "available": 4255,
+  "errors": 0,
+  "error": "",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Roma, Roma Capitale, Lazio, Italia",
+   "type": "city",
+   "bbox_km": [
+    69,
+    54
+   ]
+  },
+  "businesses": 297,
+  "phone_pct": 100,
+  "email_pct": 26,
+  "website_pct": 87,
+  "social_pct": 29,
+  "social_no_website_pct": 4,
+  "seconds": 157
+ },
+ {
+  "city": "Milano",
+  "country_code": "IT",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 296,
+  "duplicate": 4,
+  "available": 2108,
+  "errors": 0,
+  "error": "",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Milano, Rodano, Milano, Lombardia, Italia",
+   "type": "city",
+   "bbox_km": [
+    26,
+    17
+   ]
+  },
+  "businesses": 296,
+  "phone_pct": 100,
+  "email_pct": 34,
+  "website_pct": 89,
+  "social_pct": 38,
+  "social_no_website_pct": 4,
+  "seconds": 110
+ },
+ {
+  "city": "Napoli",
+  "country_code": "IT",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 293,
+  "duplicate": 7,
+  "available": 1104,
+  "errors": 0,
+  "error": "",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Napoli, Campania, Italia",
+   "type": "city",
+   "bbox_km": [
+    25,
+    14
+   ]
+  },
+  "businesses": 293,
+  "phone_pct": 99,
+  "email_pct": 35,
+  "website_pct": 71,
+  "social_pct": 42,
+  "social_no_website_pct": 11,
+  "seconds": 94
+ },
+ {
+  "city": "Nairobi",
+  "country_code": "KE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 269,
+  "duplicate": 31,
+  "available": 338,
+  "errors": 0,
+  "error": "",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "Nairobi, Kenya",
+   "type": "city",
+   "bbox_km": [
+    49,
+    32
+   ]
+  },
+  "businesses": 269,
+  "phone_pct": 97,
+  "email_pct": 73,
+  "website_pct": 60,
+  "social_pct": 95,
+  "social_no_website_pct": 39,
+  "seconds": 99
+ },
+ {
+  "city": "Mombasa",
+  "country_code": "KE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 23,
+  "new": 20,
+  "duplicate": 3,
+  "available": 23,
+  "errors": 0,
+  "error": "",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "Mombasa, Tononoka ward, Mvita, Mombasa, 80100, Kenya",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 20,
+  "phone_pct": 95,
+  "email_pct": 85,
+  "website_pct": 45,
+  "social_pct": 100,
+  "social_no_website_pct": 55,
+  "seconds": 74
+ },
+ {
+  "city": "Nakuru",
+  "country_code": "KE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 9,
+  "new": 8,
+  "duplicate": 1,
+  "available": 9,
+  "errors": 0,
+  "error": "",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "Nakuru, Nakuru West, Nakuru, 20100, Kenya",
+   "type": "city",
+   "bbox_km": [
+    16,
+    11
+   ]
+  },
+  "businesses": 8,
+  "phone_pct": 100,
+  "email_pct": 62,
+  "website_pct": 62,
+  "social_pct": 88,
+  "social_no_website_pct": 38,
+  "seconds": 64
+ },
+ {
+  "city": "Yangon",
+  "country_code": "MM",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 283,
+  "duplicate": 17,
+  "available": 463,
+  "errors": 0,
+  "error": "",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "ရန်ကုန်မြို့, ရန်ကုန်တိုင်းဒေသကြီး, မြန်မာ",
+   "type": "city",
+   "bbox_km": [
+    42,
+    55
+   ]
+  },
+  "businesses": 283,
+  "phone_pct": 96,
+  "email_pct": 60,
+  "website_pct": 21,
+  "social_pct": 100,
+  "social_no_website_pct": 79,
+  "seconds": 79
+ },
+ {
+  "city": "Mandalay",
+  "country_code": "MM",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 96,
+  "new": 91,
+  "duplicate": 5,
+  "available": 96,
+  "errors": 0,
+  "error": "",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "မန္တလေး, မန္တလေးမြို့, မန္တလေးတိုင်း, 05012, မြန်မာ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 91,
+  "phone_pct": 89,
+  "email_pct": 42,
+  "website_pct": 11,
+  "social_pct": 100,
+  "social_no_website_pct": 89,
+  "seconds": 94
+ },
+ {
+  "city": "Naypyidaw",
+  "country_code": "MM",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 13,
+  "new": 13,
+  "duplicate": 0,
+  "available": 13,
+  "errors": 0,
+  "error": "",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "နေပြည်တော်, ဇမ္ဗူသီရိမြို့နယ်, ပျဉ်းမနားခရိုင်, နေပြည်တော် ပြည်ထောင်စုနယ်မြေ, 15011, မြန်မာ",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 13,
+  "phone_pct": 85,
+  "email_pct": 38,
+  "website_pct": 15,
+  "social_pct": 100,
+  "social_no_website_pct": 85,
+  "seconds": 75
+ },
+ {
+  "city": "Bogotá",
+  "country_code": "CO",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 271,
+  "duplicate": 29,
+  "available": 2196,
+  "errors": 0,
+  "error": "",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "Bogotá ciudad, Bogotá, Distrito Capital, RAP (Especial) Central, Colombia",
+   "type": "city",
+   "bbox_km": [
+    24,
+    41
+   ]
+  },
+  "businesses": 271,
+  "phone_pct": 99,
+  "email_pct": 77,
+  "website_pct": 63,
+  "social_pct": 96,
+  "social_no_website_pct": 36,
+  "seconds": 109
+ },
+ {
+  "city": "Medellín",
+  "country_code": "CO",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 284,
+  "duplicate": 16,
+  "available": 1254,
+  "errors": 0,
+  "error": "",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "Medellín, Valle de Aburrá, Antioquia, RAP del Agua y la Montaña, 0500, Colombia",
+   "type": "city",
+   "bbox_km": [
+    27,
+    24
+   ]
+  },
+  "businesses": 284,
+  "phone_pct": 95,
+  "email_pct": 83,
+  "website_pct": 51,
+  "social_pct": 98,
+  "social_no_website_pct": 49,
+  "seconds": 62
+ },
+ {
+  "city": "Cali",
+  "country_code": "CO",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 275,
+  "duplicate": 25,
+  "available": 1053,
+  "errors": 0,
+  "error": "",
+  "job_id": 18,
+  "resolved_place": {
+   "name": "Cali ciudad, Cali, Sur, Valle del Cauca, RAP Pacífico, Colombia",
+   "type": "city",
+   "bbox_km": [
+    15,
+    19
+   ]
+  },
+  "businesses": 275,
+  "phone_pct": 96,
+  "email_pct": 83,
+  "website_pct": 55,
+  "social_pct": 98,
+  "social_no_website_pct": 45,
+  "seconds": 57
+ },
+ {
+  "city": "Omdurman",
+  "country_code": "SD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 33,
+  "new": 32,
+  "duplicate": 1,
+  "available": 33,
+  "errors": 0,
+  "error": "",
+  "job_id": 19,
+  "resolved_place": {
+   "name": "امدرمان, ولاية الخرطوم, 14417, السودان",
+   "type": "city",
+   "bbox_km": [
+    26,
+    31
+   ]
+  },
+  "businesses": 32,
+  "phone_pct": 88,
+  "email_pct": 66,
+  "website_pct": 22,
+  "social_pct": 100,
+  "social_no_website_pct": 78,
+  "seconds": 62
+ },
+ {
+  "city": "Khartoum",
+  "country_code": "SD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 76,
+  "new": 60,
+  "duplicate": 16,
+  "available": 76,
+  "errors": 0,
+  "error": "",
+  "job_id": 20,
+  "resolved_place": {
+   "name": "الخرطوم, ولاية الخرطوم, السودان",
+   "type": "city",
+   "bbox_km": [
+    28,
+    25
+   ]
+  },
+  "businesses": 76,
+  "phone_pct": 88,
+  "email_pct": 57,
+  "website_pct": 13,
+  "social_pct": 100,
+  "social_no_website_pct": 87,
+  "seconds": 76
+ },
+ {
+  "city": "Khartoum North",
+  "country_code": "SD",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 15,
+  "new": 11,
+  "duplicate": 4,
+  "available": 15,
+  "errors": 0,
+  "error": "",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "بحري, ولاية الخرطوم, السودان",
+   "type": "city",
+   "bbox_km": [
+    15,
+    15
+   ]
+  },
+  "businesses": 15,
+  "phone_pct": 87,
+  "email_pct": 60,
+  "website_pct": 7,
+  "social_pct": 100,
+  "social_no_website_pct": 93,
+  "seconds": 66
+ },
+ {
+  "city": "Kampala",
+  "country_code": "UG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 154,
+  "new": 144,
+  "duplicate": 10,
+  "available": 154,
+  "errors": 0,
+  "error": "",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "Kampala, Central Region, Uganda",
+   "type": "city",
+   "bbox_km": [
+    18,
+    21
+   ]
+  },
+  "businesses": 144,
+  "phone_pct": 97,
+  "email_pct": 76,
+  "website_pct": 44,
+  "social_pct": 99,
+  "social_no_website_pct": 56,
+  "seconds": 83
+ },
+ {
+  "city": "Nansana",
+  "country_code": "UG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 157,
+  "new": 3,
+  "duplicate": 154,
+  "available": 157,
+  "errors": 0,
+  "error": "",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "Nansana, Wakiso, Central Region, Uganda",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 147,
+  "phone_pct": 97,
+  "email_pct": 76,
+  "website_pct": 44,
+  "social_pct": 99,
+  "social_no_website_pct": 56,
+  "seconds": 81
+ },
+ {
+  "city": "Kira",
+  "country_code": "UG",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 157,
+  "new": 3,
+  "duplicate": 154,
+  "available": 157,
+  "errors": 0,
+  "error": "",
+  "job_id": 24,
+  "resolved_place": {
+   "name": "Kira, Wakiso, Central Region, Uganda",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 149,
+  "phone_pct": 96,
+  "email_pct": 74,
+  "website_pct": 44,
+  "social_pct": 99,
+  "social_no_website_pct": 56,
+  "seconds": 103
+ },
+ {
+  "city": "Seoul",
+  "country_code": "KR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 294,
+  "duplicate": 6,
+  "available": 1230,
+  "errors": 0,
+  "error": "",
+  "job_id": 25,
+  "resolved_place": {
+   "name": "서울특별시, 대한민국",
+   "type": "city",
+   "bbox_km": [
+    47,
+    30
+   ]
+  },
+  "businesses": 294,
+  "phone_pct": 96,
+  "email_pct": 47,
+  "website_pct": 89,
+  "social_pct": 95,
+  "social_no_website_pct": 10,
+  "seconds": 262
+ },
+ {
+  "city": "Busan",
+  "country_code": "KR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 200,
+  "new": 195,
+  "duplicate": 5,
+  "available": 200,
+  "errors": 0,
+  "error": "",
+  "job_id": 26,
+  "resolved_place": {
+   "name": "부산광역시, 대한민국",
+   "type": "city",
+   "bbox_km": [
+    81,
+    74
+   ]
+  },
+  "businesses": 195,
+  "phone_pct": 94,
+  "email_pct": 24,
+  "website_pct": 53,
+  "social_pct": 96,
+  "social_no_website_pct": 47,
+  "seconds": 84
+ },
+ {
+  "city": "Incheon",
+  "country_code": "KR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 225,
+  "new": 206,
+  "duplicate": 19,
+  "available": 225,
+  "errors": 0,
+  "error": "",
+  "job_id": 27,
+  "resolved_place": {
+   "name": "인천광역시, 대한민국",
+   "type": "city",
+   "bbox_km": [
+    93,
+    133
+   ],
+   "trimmed_from_km": [
+    269,
+    133
+   ]
+  },
+  "businesses": 222,
+  "phone_pct": 94,
+  "email_pct": 15,
+  "website_pct": 51,
+  "social_pct": 94,
+  "social_no_website_pct": 49,
+  "seconds": 132
+ },
+ {
+  "city": "Algiers",
+  "country_code": "DZ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 296,
+  "duplicate": 4,
+  "available": 441,
+  "errors": 0,
+  "error": "",
+  "job_id": 28,
+  "resolved_place": {
+   "name": "Alger ⴷⵣⴰⵢⴻⵔ الجزائر, Daïra Sidi M'Hamed, الجزائر ⴷⵣⴰⵢⴻⵔ, 16000, ⵍⵣⵣⴰⵢⴻⵔ الجزائر",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 296,
+  "phone_pct": 98,
+  "email_pct": 72,
+  "website_pct": 27,
+  "social_pct": 100,
+  "social_no_website_pct": 73,
+  "seconds": 117
+ },
+ {
+  "city": "Oran",
+  "country_code": "DZ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 117,
+  "new": 115,
+  "duplicate": 2,
+  "available": 117,
+  "errors": 0,
+  "error": "",
+  "job_id": 29,
+  "resolved_place": {
+   "name": "Oran, Daïra Oran, وهران Oran ⵡⴻⵀⵔⴰⵏ, 31000, ⵍⵣⵣⴰⵢⴻⵔ الجزائر",
+   "type": "city",
+   "bbox_km": [
+    20,
+    14
+   ]
+  },
+  "businesses": 115,
+  "phone_pct": 98,
+  "email_pct": 70,
+  "website_pct": 24,
+  "social_pct": 100,
+  "social_no_website_pct": 76,
+  "seconds": 92
+ },
+ {
+  "city": "Constantine",
+  "country_code": "DZ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 53,
+  "new": 51,
+  "duplicate": 2,
+  "available": 53,
+  "errors": 0,
+  "error": "",
+  "job_id": 30,
+  "resolved_place": {
+   "name": "Constantine ⵇⵙⴻⵟⵉⵏⴰ قسنطينة, دائرة قسنطينة ⴰⴷⴷⴰⵢⵔⵜ ⵏ ⵇⵙⵏⵟⵉⵏⴰ, قسنطينة ⵇⵙⵏⵟⵉⵏⴰ, 25000, ⵍⵣⵣⴰⵢⴻⵔ الجزائر",
+   "type": "city",
+   "bbox_km": [
+    26,
+    21
+   ]
+  },
+  "businesses": 51,
+  "phone_pct": 98,
+  "email_pct": 71,
+  "website_pct": 14,
+  "social_pct": 100,
+  "social_no_website_pct": 86,
+  "seconds": 108
+ }
+]

@@ -1,6 +1,6 @@
 """SQLAlchemy models package."""
 
-from backend.app.models.source import Source, SourceJob, SourceRecord
+from backend.app.models.source import Source, SourceJob, SourceJobSighting, SourceRecord
 from backend.app.models.business import (
     Business,
     BusinessCategory,

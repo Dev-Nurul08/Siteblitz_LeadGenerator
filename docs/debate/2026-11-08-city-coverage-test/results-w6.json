@@ -1,0 +1,872 @@
+[
+ {
+  "city": "Baghdad",
+  "country_code": "IQ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 284,
+  "duplicate": 16,
+  "available": 729,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "بغداد, بلدية المنطقة الخضراء, قضاء الزوراء, محافظة بغداد, العراق",
+   "type": "city",
+   "bbox_km": [
+    43,
+    34
+   ]
+  },
+  "businesses": 284,
+  "phone_pct": 94,
+  "email_pct": 45,
+  "website_pct": 17,
+  "social_pct": 100,
+  "social_no_website_pct": 83,
+  "seconds": 98
+ },
+ {
+  "city": "Mosul",
+  "country_code": "IQ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 84,
+  "new": 81,
+  "duplicate": 3,
+  "available": 84,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "الموصل, ناحية مرکز قضاء الموصل, قضاء الموصل, محافظة نینوى, 14447, العراق",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 81,
+  "phone_pct": 91,
+  "email_pct": 28,
+  "website_pct": 10,
+  "social_pct": 100,
+  "social_no_website_pct": 90,
+  "seconds": 72
+ },
+ {
+  "city": "Basra",
+  "country_code": "IQ",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 93,
+  "new": 81,
+  "duplicate": 12,
+  "available": 93,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "البصرة, ناحية مرکز قضاء البصرة, قضاء البصرة, محافظة البصرة, 61001, العراق",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 81,
+  "phone_pct": 95,
+  "email_pct": 33,
+  "website_pct": 6,
+  "social_pct": 100,
+  "social_no_website_pct": 94,
+  "seconds": 71
+ },
+ {
+  "city": "Madrid",
+  "country_code": "ES",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 283,
+  "duplicate": 17,
+  "available": 4363,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Madrid, Comunidad de Madrid, España",
+   "type": "city",
+   "bbox_km": [
+    41,
+    37
+   ]
+  },
+  "businesses": 283,
+  "phone_pct": 100,
+  "email_pct": 18,
+  "website_pct": 97,
+  "social_pct": 22,
+  "social_no_website_pct": 0,
+  "seconds": 140
+ },
+ {
+  "city": "Barcelona",
+  "country_code": "ES",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 283,
+  "duplicate": 17,
+  "available": 2037,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Barcelona, Barcelonès, Barcelona, Catalunya, España",
+   "type": "city",
+   "bbox_km": [
+    20,
+    17
+   ]
+  },
+  "businesses": 283,
+  "phone_pct": 100,
+  "email_pct": 27,
+  "website_pct": 92,
+  "social_pct": 30,
+  "social_no_website_pct": 2,
+  "seconds": 137
+ },
+ {
+  "city": "Valencia",
+  "country_code": "ES",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 285,
+  "duplicate": 15,
+  "available": 1170,
+  "errors": 0,
+  "error": "",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "València, Comarca de València, València / Valencia, Comunitat Valenciana, España",
+   "type": "city",
+   "bbox_km": [
+    18,
+    32
+   ]
+  },
+  "businesses": 285,
+  "phone_pct": 100,
+  "email_pct": 38,
+  "website_pct": 85,
+  "social_pct": 42,
+  "social_no_website_pct": 4,
+  "seconds": 94
+ },
+ {
+  "city": "Buenos Aires",
+  "country_code": "AR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 291,
+  "duplicate": 9,
+  "available": 1385,
+  "errors": 0,
+  "error": "",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Buenos Aires, Comuna 1, Ciudad Autónoma de Buenos Aires, Argentina",
+   "type": "city",
+   "bbox_km": [
+    22,
+    20
+   ]
+  },
+  "businesses": 291,
+  "phone_pct": 97,
+  "email_pct": 76,
+  "website_pct": 64,
+  "social_pct": 99,
+  "social_no_website_pct": 36,
+  "seconds": 138
+ },
+ {
+  "city": "Córdoba",
+  "country_code": "AR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 282,
+  "duplicate": 18,
+  "available": 660,
+  "errors": 0,
+  "error": "",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Córdoba, Municipio de Córdoba, Pedanía Capital, Departamento Capital, Córdoba, X5000, Argentina",
+   "type": "city",
+   "bbox_km": [
+    28,
+    24
+   ]
+  },
+  "businesses": 282,
+  "phone_pct": 98,
+  "email_pct": 66,
+  "website_pct": 36,
+  "social_pct": 99,
+  "social_no_website_pct": 64,
+  "seconds": 127
+ },
+ {
+  "city": "Rosario",
+  "country_code": "AR",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 233,
+  "new": 214,
+  "duplicate": 19,
+  "available": 233,
+  "errors": 0,
+  "error": "",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Rosario, Municipio de Rosario, Gran Rosario, Departamento Rosario, Santa Fe, S2000, Argentina",
+   "type": "city",
+   "bbox_km": [
+    19,
+    18
+   ]
+  },
+  "businesses": 214,
+  "phone_pct": 93,
+  "email_pct": 70,
+  "website_pct": 36,
+  "social_pct": 100,
+  "social_no_website_pct": 64,
+  "seconds": 113
+ },
+ {
+  "city": "Sana'a",
+  "country_code": "YE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 118,
+  "new": 116,
+  "duplicate": 2,
+  "available": 118,
+  "errors": 0,
+  "error": "",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "صنعاء, مدينة صنعاء, مديرية التحرير, أمانة العاصمة, اليمن",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 116,
+  "phone_pct": 98,
+  "email_pct": 59,
+  "website_pct": 23,
+  "social_pct": 100,
+  "social_no_website_pct": 77,
+  "seconds": 99
+ },
+ {
+  "city": "Aden",
+  "country_code": "YE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 18,
+  "new": 18,
+  "duplicate": 0,
+  "available": 18,
+  "errors": 0,
+  "error": "",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "مدينة عدن, محافظة عدن, اليمن",
+   "type": "city",
+   "bbox_km": [
+    21,
+    21
+   ]
+  },
+  "businesses": 18,
+  "phone_pct": 100,
+  "email_pct": 28,
+  "website_pct": 22,
+  "social_pct": 100,
+  "social_no_website_pct": 78,
+  "seconds": 59
+ },
+ {
+  "city": "Taiz",
+  "country_code": "YE",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 4,
+  "new": 4,
+  "duplicate": 0,
+  "available": 4,
+  "errors": 0,
+  "error": "",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "تعز, مديرية القاهرة, محافظة تعز, اليمن",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 4,
+  "phone_pct": 100,
+  "email_pct": 75,
+  "website_pct": 50,
+  "social_pct": 100,
+  "social_no_website_pct": 50,
+  "seconds": 67
+ },
+ {
+  "city": "Toronto",
+  "country_code": "CA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 300,
+  "duplicate": 0,
+  "available": 2496,
+  "errors": 0,
+  "error": "",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "Toronto, Ontario, Canada",
+   "type": "city",
+   "bbox_km": [
+    58,
+    31
+   ]
+  },
+  "businesses": 300,
+  "phone_pct": 100,
+  "email_pct": 91,
+  "website_pct": 100,
+  "social_pct": 99,
+  "social_no_website_pct": 0,
+  "seconds": 151
+ },
+ {
+  "city": "Montréal",
+  "country_code": "CA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 292,
+  "duplicate": 8,
+  "available": 1340,
+  "errors": 0,
+  "error": "",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, Canada",
+   "type": "city",
+   "bbox_km": [
+    55,
+    33
+   ]
+  },
+  "businesses": 292,
+  "phone_pct": 100,
+  "email_pct": 89,
+  "website_pct": 99,
+  "social_pct": 98,
+  "social_no_website_pct": 1,
+  "seconds": 197
+ },
+ {
+  "city": "Calgary",
+  "country_code": "CA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 294,
+  "duplicate": 6,
+  "available": 899,
+  "errors": 0,
+  "error": "",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "Calgary, Alberta, Canada",
+   "type": "city",
+   "bbox_km": [
+    51,
+    41
+   ]
+  },
+  "businesses": 294,
+  "phone_pct": 100,
+  "email_pct": 94,
+  "website_pct": 99,
+  "social_pct": 99,
+  "social_no_website_pct": 1,
+  "seconds": 165
+ },
+ {
+  "city": "Luanda",
+  "country_code": "AO",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 46,
+  "new": 44,
+  "duplicate": 2,
+  "available": 46,
+  "errors": 0,
+  "error": "",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "Luanda, Angola",
+   "type": "city",
+   "bbox_km": [
+    15,
+    18
+   ]
+  },
+  "businesses": 44,
+  "phone_pct": 98,
+  "email_pct": 73,
+  "website_pct": 23,
+  "social_pct": 100,
+  "social_no_website_pct": 77,
+  "seconds": 73
+ },
+ {
+  "city": "Lubango",
+  "country_code": "AO",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "Lubango, Huíla, Angola",
+   "type": "city",
+   "bbox_km": [
+    111,
+    89
+   ]
+  },
+  "seconds": 71
+ },
+ {
+  "city": "Huambo",
+  "country_code": "AO",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 18,
+  "resolved_place": {
+   "name": "Huambo, Angola",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "seconds": 45
+ },
+ {
+  "city": "Kyiv",
+  "country_code": "UA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 276,
+  "duplicate": 24,
+  "available": 1047,
+  "errors": 0,
+  "error": "",
+  "job_id": 19,
+  "resolved_place": {
+   "name": "Київ, Україна",
+   "type": "city",
+   "bbox_km": [
+    66,
+    42
+   ]
+  },
+  "businesses": 276,
+  "phone_pct": 99,
+  "email_pct": 83,
+  "website_pct": 88,
+  "social_pct": 99,
+  "social_no_website_pct": 12,
+  "seconds": 106
+ },
+ {
+  "city": "Kharkiv",
+  "country_code": "UA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 212,
+  "new": 201,
+  "duplicate": 11,
+  "available": 212,
+  "errors": 0,
+  "error": "",
+  "job_id": 20,
+  "resolved_place": {
+   "name": "Харків, Харківська міська громада, Харківський район, Харківська область, Україна",
+   "type": "city",
+   "bbox_km": [
+    39,
+    25
+   ]
+  },
+  "businesses": 201,
+  "phone_pct": 95,
+  "email_pct": 59,
+  "website_pct": 57,
+  "social_pct": 100,
+  "social_no_website_pct": 43,
+  "seconds": 109
+ },
+ {
+  "city": "Odesa",
+  "country_code": "UA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 214,
+  "new": 201,
+  "duplicate": 13,
+  "available": 214,
+  "errors": 0,
+  "error": "",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "Одеса, Одеська міська громада, Одеський район, Одеська область, Україна",
+   "type": "city",
+   "bbox_km": [
+    24,
+    32
+   ]
+  },
+  "businesses": 201,
+  "phone_pct": 88,
+  "email_pct": 56,
+  "website_pct": 47,
+  "social_pct": 99,
+  "social_no_website_pct": 53,
+  "seconds": 92
+ },
+ {
+  "city": "Casablanca",
+  "country_code": "MA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 282,
+  "duplicate": 18,
+  "available": 379,
+  "errors": 0,
+  "error": "",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "Casablanca ⵜⴰⴷⴷⴰⵔⵜ ⵜⵓⵎⵍⵉⵍⵜ الدار البيضاء, Pachalik de Casablanca باشوية الدار البيضاء, Préfecture de Casablanca عمالة الدار البيضاء, Casablanca-Settat ⵜⴰⴷⴷⴰⵔⵜ ⵜⵓⵎⵍⵉⵍⵜ-ⵙⵟⵟⴰⵜ الدار البيضاء-سطات, Maroc ⵍ",
+   "type": "city",
+   "bbox_km": [
+    33,
+    16
+   ]
+  },
+  "businesses": 282,
+  "phone_pct": 98,
+  "email_pct": 75,
+  "website_pct": 50,
+  "social_pct": 97,
+  "social_no_website_pct": 49,
+  "seconds": 128
+ },
+ {
+  "city": "Tangier",
+  "country_code": "MA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 127,
+  "new": 121,
+  "duplicate": 6,
+  "available": 127,
+  "errors": 0,
+  "error": "",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "Tanger طنجة, Pachalik de Tanger باشوية طنجة, Préfecture de Tanger-Assilah عمالة طنجة-أصيلة, Tanger-Tétouan-Al Hoceïma ⵟⴰⵏⵊ-ⵟⵉⵜⴰⵡⵉⵏ-ⵍⵃⵓⵙⵉⵎⴰ طنجة تطوان الحسيمة, Maroc ⵍⵎⵖⵔⵉⴱ المغرب",
+   "type": "city",
+   "bbox_km": [
+    26,
+    14
+   ]
+  },
+  "businesses": 121,
+  "phone_pct": 99,
+  "email_pct": 77,
+  "website_pct": 35,
+  "social_pct": 100,
+  "social_no_website_pct": 65,
+  "seconds": 93
+ },
+ {
+  "city": "Fès",
+  "country_code": "MA",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 43,
+  "new": 40,
+  "duplicate": 3,
+  "available": 43,
+  "errors": 0,
+  "error": "",
+  "job_id": 24,
+  "resolved_place": {
+   "name": "Fès ⴼⴰⵙ فاس, Pachalik du Fes باشوية فاس, Préfecture de Fès عمالة فاس, Fès-Meknès ⴼⴰⵙ-ⵎⴽⵏⴰⵙ فاس-مكناس, Maroc ⵍⵎⵖⵔⵉⴱ المغرب",
+   "type": "city",
+   "bbox_km": [
+    16,
+    11
+   ]
+  },
+  "businesses": 40,
+  "phone_pct": 95,
+  "email_pct": 62,
+  "website_pct": 35,
+  "social_pct": 100,
+  "social_no_website_pct": 65,
+  "seconds": 76
+ },
+ {
+  "city": "Warsaw",
+  "country_code": "PL",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 290,
+  "duplicate": 10,
+  "available": 840,
+  "errors": 0,
+  "error": "",
+  "job_id": 25,
+  "resolved_place": {
+   "name": "Warszawa, województwo mazowieckie, Polska",
+   "type": "city",
+   "bbox_km": [
+    47,
+    30
+   ]
+  },
+  "businesses": 290,
+  "phone_pct": 100,
+  "email_pct": 85,
+  "website_pct": 94,
+  "social_pct": 97,
+  "social_no_website_pct": 6,
+  "seconds": 133
+ },
+ {
+  "city": "Kraków",
+  "country_code": "PL",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 288,
+  "duplicate": 12,
+  "available": 348,
+  "errors": 0,
+  "error": "",
+  "job_id": 26,
+  "resolved_place": {
+   "name": "Kraków, województwo małopolskie, Polska",
+   "type": "city",
+   "bbox_km": [
+    47,
+    18
+   ]
+  },
+  "businesses": 288,
+  "phone_pct": 98,
+  "email_pct": 79,
+  "website_pct": 86,
+  "social_pct": 93,
+  "social_no_website_pct": 13,
+  "seconds": 126
+ },
+ {
+  "city": "Wrocław",
+  "country_code": "PL",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": null,
+  "errors": 1,
+  "error": "'charmap' codec can't encode character '\\u0142' in position 143: character maps to <undefined>",
+  "job_id": 27,
+  "resolved_place": {
+   "name": "Wrocław, województwo dolnośląskie, Polska",
+   "type": "city",
+   "bbox_km": [
+    41,
+    19
+   ]
+  },
+  "seconds": 3
+ },
+ {
+  "city": "Tashkent",
+  "country_code": "UZ",
+  "admin": "Tashkent City",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 129,
+  "new": 120,
+  "duplicate": 9,
+  "available": 129,
+  "errors": 0,
+  "error": "",
+  "job_id": 28,
+  "resolved_place": {
+   "name": "Toshkent, 100000, Oʻzbekiston",
+   "type": "city",
+   "bbox_km": [
+    45,
+    29
+   ]
+  },
+  "businesses": 120,
+  "phone_pct": 94,
+  "email_pct": 48,
+  "website_pct": 46,
+  "social_pct": 99,
+  "social_no_website_pct": 54,
+  "countries": {
+   "UZ": 120
+  },
+  "seconds": 45
+ },
+ {
+  "city": "Namangan",
+  "country_code": "UZ",
+  "admin": "Namangan Region",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 2,
+  "new": 2,
+  "duplicate": 0,
+  "available": 2,
+  "errors": 0,
+  "error": "",
+  "job_id": 29,
+  "resolved_place": {
+   "name": "Namangan shahri, Namangan Viloyati, Oʻzbekiston",
+   "type": "city",
+   "bbox_km": [
+    26,
+    21
+   ]
+  },
+  "businesses": 2,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "countries": {
+   "UZ": 2
+  },
+  "seconds": 32
+ },
+ {
+  "city": "Samarkand",
+  "country_code": "UZ",
+  "admin": "Samarkand Region",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 6,
+  "new": 6,
+  "duplicate": 0,
+  "available": 6,
+  "errors": 0,
+  "error": "",
+  "job_id": 30,
+  "resolved_place": {
+   "name": "Samarqand shahri, Samarqand Viloyati, 140000, Oʻzbekiston",
+   "type": "city",
+   "bbox_km": [
+    28,
+    12
+   ]
+  },
+  "businesses": 6,
+  "phone_pct": 83,
+  "email_pct": 83,
+  "website_pct": 33,
+  "social_pct": 100,
+  "social_no_website_pct": 67,
+  "countries": {
+   "UZ": 6
+  },
+  "seconds": 38
+ }
+]

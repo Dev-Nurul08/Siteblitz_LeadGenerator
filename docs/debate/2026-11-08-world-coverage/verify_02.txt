@@ -1,0 +1,14 @@
+Round 2: 251 reference lines, 251 cities, 250 with business data (100 %).
+- AT: 12/12 cities covered, 231,339 businesses near them
+- AU: 12/12 cities covered, 431,868 businesses near them
+- AZ: 78/78 cities covered, 51,346 businesses near them
+- BB: 14/14 cities covered, 32,111 businesses near them
+- BD: 11/11 cities covered, 166,877 businesses near them
+- BE: 10/10 cities covered, 434,788 businesses near them
+- BH: 10/10 cities covered, 94,818 businesses near them
+- BJ: 17/17 cities covered, 11,085 businesses near them
+- BM: 11/11 cities covered, 20,270 businesses near them
+- BS: 33/34 cities covered, 13,861 businesses near them; no data at: Moxey Town
+- BT: 21/21 cities covered, 2,831 businesses near them
+- BY: 10/10 cities covered, 38,295 businesses near them
+- BZ: 11/11 cities covered, 8,260 businesses near them

@@ -1,0 +1,152 @@
+[
+ {
+  "city": "Shanghai",
+  "country_code": "CN",
+  "admin": "Shanghai"
+ },
+ {
+  "city": "Beijing",
+  "country_code": "CN",
+  "admin": "Beijing"
+ },
+ {
+  "city": "Shenzhen",
+  "country_code": "CN",
+  "admin": "Guangdong"
+ },
+ {
+  "city": "New York City",
+  "country_code": "US",
+  "admin": "New York"
+ },
+ {
+  "city": "Los Angeles",
+  "country_code": "US",
+  "admin": "California"
+ },
+ {
+  "city": "Chicago",
+  "country_code": "US",
+  "admin": "Illinois"
+ },
+ {
+  "city": "Jakarta",
+  "country_code": "ID",
+  "admin": "Jakarta"
+ },
+ {
+  "city": "Surabaya",
+  "country_code": "ID",
+  "admin": "East Java"
+ },
+ {
+  "city": "Bekasi",
+  "country_code": "ID",
+  "admin": "West Java"
+ },
+ {
+  "city": "Karachi",
+  "country_code": "PK",
+  "admin": "Sindh"
+ },
+ {
+  "city": "Lahore",
+  "country_code": "PK",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Faisalabad",
+  "country_code": "PK",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Lagos",
+  "country_code": "NG",
+  "admin": "Lagos"
+ },
+ {
+  "city": "Kano",
+  "country_code": "NG",
+  "admin": "Kano"
+ },
+ {
+  "city": "Ibadan",
+  "country_code": "NG",
+  "admin": "Oyo"
+ },
+ {
+  "city": "São Paulo",
+  "country_code": "BR",
+  "admin": "São Paulo"
+ },
+ {
+  "city": "Rio de Janeiro",
+  "country_code": "BR",
+  "admin": "Rio de Janeiro"
+ },
+ {
+  "city": "Brasília",
+  "country_code": "BR",
+  "admin": "Distrito Federal"
+ },
+ {
+  "city": "Moscow",
+  "country_code": "RU",
+  "admin": "Moscow"
+ },
+ {
+  "city": "Saint Petersburg",
+  "country_code": "RU",
+  "admin": "Saint Petersburg"
+ },
+ {
+  "city": "Novosibirsk",
+  "country_code": "RU",
+  "admin": "Novosibirsk Oblast"
+ },
+ {
+  "city": "Addis Ababa",
+  "country_code": "ET",
+  "admin": "Addis Ababa"
+ },
+ {
+  "city": "Mekelle",
+  "country_code": "ET",
+  "admin": "Tigray"
+ },
+ {
+  "city": "Dire Dawa",
+  "country_code": "ET",
+  "admin": "Dire Dawa"
+ },
+ {
+  "city": "Mexico City",
+  "country_code": "MX",
+  "admin": "Mexico City"
+ },
+ {
+  "city": "Tijuana",
+  "country_code": "MX",
+  "admin": "Baja California"
+ },
+ {
+  "city": "Ecatepec de Morelos",
+  "country_code": "MX",
+  "admin": "State of Mexico"
+ },
+ {
+  "city": "Tokyo",
+  "country_code": "JP",
+  "admin": "Tokyo"
+ },
+ {
+  "city": "Yokohama",
+  "country_code": "JP",
+  "admin": "Kanagawa"
+ },
+ {
+  "city": "Osaka",
+  "country_code": "JP",
+  "admin": "Osaka"
+ }
+]

@@ -1,0 +1,182 @@
+[
+ {
+  "city": "Mathura",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Kollam",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Avadi",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Kadapa",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Rajamahendravaram",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Bilaspur",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Kamarhati",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Shahjahanpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Vijayapura",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Rampur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Shivamogga",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Chandrapur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Junagadh",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Thrissur",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Alwar",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Bardhaman",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Kulti",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Kakinada",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Nizamabad",
+  "country_code": "IN",
+  "admin": "Telangana"
+ },
+ {
+  "city": "Parbhani",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Tumakuru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Hisar",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Ozhukarai",
+  "country_code": "IN",
+  "admin": "Puducherry"
+ },
+ {
+  "city": "Bihar Sharif",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Darbhanga",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Kishoreganj",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Dhamsona",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Lakshmipur",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Maijdee",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Sherpur",
+  "country_code": "BD",
+  "admin": "Mymensingh"
+ },
+ {
+  "city": "Firozkoh",
+  "country_code": "AF",
+  "admin": "Ghor"
+ },
+ {
+  "city": "Tarinkot",
+  "country_code": "AF",
+  "admin": "Uruzgan"
+ },
+ {
+  "city": "Spin Boldak",
+  "country_code": "AF",
+  "admin": "Kandahar"
+ },
+ {
+  "city": "Maimana",
+  "country_code": "AF",
+  "admin": "Faryab"
+ },
+ {
+  "city": "Gardez",
+  "country_code": "AF",
+  "admin": "Paktia"
+ },
+ {
+  "city": "Bamyan",
+  "country_code": "AF",
+  "admin": "Bamyan"
+ }
+]

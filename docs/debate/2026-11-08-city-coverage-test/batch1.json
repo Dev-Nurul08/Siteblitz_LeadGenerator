@@ -1,0 +1,477 @@
+[
+ {
+  "city": "Mumbai",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Delhi",
+  "country_code": "IN",
+  "admin": "Delhi"
+ },
+ {
+  "city": "Bengaluru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Hyderabad",
+  "country_code": "IN",
+  "admin": "Telangana"
+ },
+ {
+  "city": "Chennai",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Ahmedabad",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Kolkata",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Surat",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Pune",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Jaipur",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Lucknow",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Kanpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Nagpur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Indore",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Thane",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Bhopal",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Visakhapatnam",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Pimpri-Chinchwad",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Patna",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Vadodara",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Ghaziabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Ludhiana",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Agra",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Nashik",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Faridabad",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Meerut",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Rajkot",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Kalyan-Dombivli",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Vasai-Virar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Varanasi",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Srinagar",
+  "country_code": "IN",
+  "admin": "Jammu and Kashmir"
+ },
+ {
+  "city": "Chhatrapati Sambhaji Nagar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Dhanbad",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Amritsar",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Navi Mumbai",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Prayagraj",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Howrah",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Ranchi",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Jabalpur",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Gwalior",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Coimbatore",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Vijayawada",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Jodhpur",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Madurai",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Raipur",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Kota",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Chandigarh",
+  "country_code": "IN",
+  "admin": "Chandigarh"
+ },
+ {
+  "city": "Guwahati",
+  "country_code": "IN",
+  "admin": "Assam"
+ },
+ {
+  "city": "Solapur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Hubballi-Dharwad",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Dhaka",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Chattogram",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Gazipur",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Narayanganj",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Khulna",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Rangpur",
+  "country_code": "BD",
+  "admin": "Rangpur"
+ },
+ {
+  "city": "Mymensingh",
+  "country_code": "BD",
+  "admin": "Mymensingh"
+ },
+ {
+  "city": "Rajshahi",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Sylhet",
+  "country_code": "BD",
+  "admin": "Sylhet"
+ },
+ {
+  "city": "Bogura",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Cumilla",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Barishal",
+  "country_code": "BD",
+  "admin": "Barishal"
+ },
+ {
+  "city": "Savar",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Brahmanbaria",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Sreepur",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Kaliakair",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Faridpur",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Feni",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Kushtia",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Tangail",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Dinajpur",
+  "country_code": "BD",
+  "admin": "Rangpur"
+ },
+ {
+  "city": "Jashore",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Chandpur",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Chapai Nawabganj",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Tarabo",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Kabul",
+  "country_code": "AF",
+  "admin": "Kabul"
+ },
+ {
+  "city": "Kandahar",
+  "country_code": "AF",
+  "admin": "Kandahar"
+ },
+ {
+  "city": "Herat",
+  "country_code": "AF",
+  "admin": "Herat"
+ },
+ {
+  "city": "Mazar-i-Sharif",
+  "country_code": "AF",
+  "admin": "Balkh"
+ },
+ {
+  "city": "Kunduz",
+  "country_code": "AF",
+  "admin": "Kunduz"
+ },
+ {
+  "city": "Jalalabad",
+  "country_code": "AF",
+  "admin": "Nangarhar"
+ },
+ {
+  "city": "Taloqan",
+  "country_code": "AF",
+  "admin": "Takhar"
+ },
+ {
+  "city": "Pul-e-Khumri",
+  "country_code": "AF",
+  "admin": "Baghlan"
+ },
+ {
+  "city": "Charikar",
+  "country_code": "AF",
+  "admin": "Parwan"
+ },
+ {
+  "city": "Baghlan",
+  "country_code": "AF",
+  "admin": "Baghlan"
+ },
+ {
+  "city": "Sheberghan",
+  "country_code": "AF",
+  "admin": "Jowzjan"
+ },
+ {
+  "city": "Ghazni",
+  "country_code": "AF",
+  "admin": "Ghazni"
+ },
+ {
+  "city": "Lashkargah",
+  "country_code": "AF",
+  "admin": "Helmand"
+ },
+ {
+  "city": "Khost",
+  "country_code": "AF",
+  "admin": "Khost"
+ },
+ {
+  "city": "Mihtarlam",
+  "country_code": "AF",
+  "admin": "Laghman"
+ },
+ {
+  "city": "Balkh",
+  "country_code": "AF",
+  "admin": "Balkh"
+ },
+ {
+  "city": "Farah",
+  "country_code": "AF",
+  "admin": "Farah"
+ },
+ {
+  "city": "Sar-e-Pol",
+  "country_code": "AF",
+  "admin": "Sar-e-Pul"
+ },
+ {
+  "city": "Pul-i-Alam",
+  "country_code": "AF",
+  "admin": "Logar"
+ },
+ {
+  "city": "Aybak",
+  "country_code": "AF",
+  "admin": "Samangan"
+ }
+]

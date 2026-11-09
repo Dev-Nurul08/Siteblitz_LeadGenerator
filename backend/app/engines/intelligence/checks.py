@@ -160,6 +160,13 @@ async def site_fetch_check(url: str, resolver: WebsiteResolver) -> Check:
     if status in (401, 403, 429):
         return Check(None, CheckType.SITE_FETCH, "protected", target=url, detail=detail)
     if status is None or status >= 500 or status in (404, 410):
+        if status is None:
+            host = urlparse(url if "://" in url else f"https://{url}").hostname or ""
+            if host and await _resolves(host) is False:
+                # Seen 2026-11-08: 32 of 39 failed fetches were domains with no DNS record at all
+                # (expired / never registered) — say so instead of "could not connect".
+                detail["note"] = ("Domain has no DNS record — the listed website is gone "
+                                  "(confirmed by a second check at least 6 h later)")
         return Check(None, CheckType.SITE_FETCH, "failed", target=url, detail=detail)
     html = (result.html_content or "")
     if any(token in html[:4000].lower() for token in PARKED_TOKENS):

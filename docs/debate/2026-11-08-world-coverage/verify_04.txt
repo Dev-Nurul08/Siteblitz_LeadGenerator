@@ -1,0 +1,14 @@
+Round 4: 221 reference lines, 221 cities, 221 with business data (100 %).
+- BQ: 7/7 cities covered, 2,155 businesses near them
+- CA: 19/19 cities covered, 471,187 businesses near them
+- CC: 2/2 cities covered, 62 businesses near them
+- CF: 12/12 cities covered, 414 businesses near them
+- CG: 19/19 cities covered, 3,261 businesses near them
+- CL: 22/22 cities covered, 485,306 businesses near them
+- CN: 35/35 cities covered, 60,803 businesses near them
+- CO: 33/33 cities covered, 464,990 businesses near them
+- CV: 23/23 cities covered, 4,915 businesses near them
+- CX: 5/5 cities covered, 317 businesses near them
+- KM: 10/10 cities covered, 853 businesses near them
+- KY: 10/10 cities covered, 17,975 businesses near them
+- TD: 24/24 cities covered, 902 businesses near them

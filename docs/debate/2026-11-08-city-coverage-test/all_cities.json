@@ -1,0 +1,1832 @@
+[
+ {
+  "city": "Mumbai",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Delhi",
+  "country_code": "IN",
+  "admin": "Delhi"
+ },
+ {
+  "city": "Bengaluru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Hyderabad",
+  "country_code": "IN",
+  "admin": "Telangana"
+ },
+ {
+  "city": "Chennai",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Ahmedabad",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Kolkata",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Surat",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Pune",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Jaipur",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Lucknow",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Kanpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Nagpur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Indore",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Thane",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Bhopal",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Visakhapatnam",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Pimpri-Chinchwad",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Patna",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Vadodara",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Ghaziabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Ludhiana",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Agra",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Nashik",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Faridabad",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Meerut",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Rajkot",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Kalyan-Dombivli",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Vasai-Virar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Varanasi",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Srinagar",
+  "country_code": "IN",
+  "admin": "Jammu and Kashmir"
+ },
+ {
+  "city": "Chhatrapati Sambhaji Nagar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Dhanbad",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Amritsar",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Navi Mumbai",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Prayagraj",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Howrah",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Ranchi",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Jabalpur",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Gwalior",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Coimbatore",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Vijayawada",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Jodhpur",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Madurai",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Raipur",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Kota",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Chandigarh",
+  "country_code": "IN",
+  "admin": "Chandigarh"
+ },
+ {
+  "city": "Guwahati",
+  "country_code": "IN",
+  "admin": "Assam"
+ },
+ {
+  "city": "Solapur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Hubballi-Dharwad",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Dhaka",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Chattogram",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Gazipur",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Narayanganj",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Khulna",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Rangpur",
+  "country_code": "BD",
+  "admin": "Rangpur"
+ },
+ {
+  "city": "Mymensingh",
+  "country_code": "BD",
+  "admin": "Mymensingh"
+ },
+ {
+  "city": "Rajshahi",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Sylhet",
+  "country_code": "BD",
+  "admin": "Sylhet"
+ },
+ {
+  "city": "Bogura",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Cumilla",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Barishal",
+  "country_code": "BD",
+  "admin": "Barishal"
+ },
+ {
+  "city": "Savar",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Brahmanbaria",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Sreepur",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Kaliakair",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Faridpur",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Feni",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Kushtia",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Tangail",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Dinajpur",
+  "country_code": "BD",
+  "admin": "Rangpur"
+ },
+ {
+  "city": "Jashore",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Chandpur",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Chapai Nawabganj",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Tarabo",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Kabul",
+  "country_code": "AF",
+  "admin": "Kabul"
+ },
+ {
+  "city": "Kandahar",
+  "country_code": "AF",
+  "admin": "Kandahar"
+ },
+ {
+  "city": "Herat",
+  "country_code": "AF",
+  "admin": "Herat"
+ },
+ {
+  "city": "Mazar-i-Sharif",
+  "country_code": "AF",
+  "admin": "Balkh"
+ },
+ {
+  "city": "Kunduz",
+  "country_code": "AF",
+  "admin": "Kunduz"
+ },
+ {
+  "city": "Jalalabad",
+  "country_code": "AF",
+  "admin": "Nangarhar"
+ },
+ {
+  "city": "Taloqan",
+  "country_code": "AF",
+  "admin": "Takhar"
+ },
+ {
+  "city": "Pul-e-Khumri",
+  "country_code": "AF",
+  "admin": "Baghlan"
+ },
+ {
+  "city": "Charikar",
+  "country_code": "AF",
+  "admin": "Parwan"
+ },
+ {
+  "city": "Baghlan",
+  "country_code": "AF",
+  "admin": "Baghlan"
+ },
+ {
+  "city": "Sheberghan",
+  "country_code": "AF",
+  "admin": "Jowzjan"
+ },
+ {
+  "city": "Ghazni",
+  "country_code": "AF",
+  "admin": "Ghazni"
+ },
+ {
+  "city": "Lashkargah",
+  "country_code": "AF",
+  "admin": "Helmand"
+ },
+ {
+  "city": "Khost",
+  "country_code": "AF",
+  "admin": "Khost"
+ },
+ {
+  "city": "Mihtarlam",
+  "country_code": "AF",
+  "admin": "Laghman"
+ },
+ {
+  "city": "Balkh",
+  "country_code": "AF",
+  "admin": "Balkh"
+ },
+ {
+  "city": "Farah",
+  "country_code": "AF",
+  "admin": "Farah"
+ },
+ {
+  "city": "Sar-e-Pol",
+  "country_code": "AF",
+  "admin": "Sar-e-Pul"
+ },
+ {
+  "city": "Pul-i-Alam",
+  "country_code": "AF",
+  "admin": "Logar"
+ },
+ {
+  "city": "Aybak",
+  "country_code": "AF",
+  "admin": "Samangan"
+ },
+ {
+  "city": "Tiruchirappalli",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Bareilly",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Moradabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Mysuru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Tiruppur",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Gurugram",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Aligarh",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Jalandhar",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Bhubaneswar",
+  "country_code": "IN",
+  "admin": "Odisha"
+ },
+ {
+  "city": "Salem",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Mira-Bhayandar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Warangal",
+  "country_code": "IN",
+  "admin": "Telangana"
+ },
+ {
+  "city": "Thiruvananthapuram",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Guntur",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Bhiwandi",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Saharanpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Gorakhpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Bikaner",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Amravati",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Noida",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Jamshedpur",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Bhilai",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Cuttack",
+  "country_code": "IN",
+  "admin": "Odisha"
+ },
+ {
+  "city": "Firozabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Kochi",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Nellore",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Bhavnagar",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Dehradun",
+  "country_code": "IN",
+  "admin": "Uttarakhand"
+ },
+ {
+  "city": "Durgapur",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Asansol",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Nanded",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Kolhapur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Ajmer",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Kalaburagi",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Jamnagar",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Ujjain",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Loni",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Siliguri",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Jhansi",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Ulhasnagar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Jammu",
+  "country_code": "IN",
+  "admin": "Jammu and Kashmir"
+ },
+ {
+  "city": "Sangli-Miraj-Kupwad",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Mangaluru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Erode",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Belagavi",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Ambattur",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Tirunelveli",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Malegaon",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Gaya",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Jalgaon",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Shanghai",
+  "country_code": "CN",
+  "admin": "Shanghai"
+ },
+ {
+  "city": "Beijing",
+  "country_code": "CN",
+  "admin": "Beijing"
+ },
+ {
+  "city": "Shenzhen",
+  "country_code": "CN",
+  "admin": "Guangdong"
+ },
+ {
+  "city": "New York City",
+  "country_code": "US",
+  "admin": "New York"
+ },
+ {
+  "city": "Los Angeles",
+  "country_code": "US",
+  "admin": "California"
+ },
+ {
+  "city": "Chicago",
+  "country_code": "US",
+  "admin": "Illinois"
+ },
+ {
+  "city": "Jakarta",
+  "country_code": "ID",
+  "admin": "Jakarta"
+ },
+ {
+  "city": "Surabaya",
+  "country_code": "ID",
+  "admin": "East Java"
+ },
+ {
+  "city": "Bekasi",
+  "country_code": "ID",
+  "admin": "West Java"
+ },
+ {
+  "city": "Karachi",
+  "country_code": "PK",
+  "admin": "Sindh"
+ },
+ {
+  "city": "Lahore",
+  "country_code": "PK",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Faisalabad",
+  "country_code": "PK",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Lagos",
+  "country_code": "NG",
+  "admin": "Lagos"
+ },
+ {
+  "city": "Kano",
+  "country_code": "NG",
+  "admin": "Kano"
+ },
+ {
+  "city": "Ibadan",
+  "country_code": "NG",
+  "admin": "Oyo"
+ },
+ {
+  "city": "São Paulo",
+  "country_code": "BR",
+  "admin": "São Paulo"
+ },
+ {
+  "city": "Rio de Janeiro",
+  "country_code": "BR",
+  "admin": "Rio de Janeiro"
+ },
+ {
+  "city": "Brasília",
+  "country_code": "BR",
+  "admin": "Distrito Federal"
+ },
+ {
+  "city": "Moscow",
+  "country_code": "RU",
+  "admin": "Moscow"
+ },
+ {
+  "city": "Saint Petersburg",
+  "country_code": "RU",
+  "admin": "Saint Petersburg"
+ },
+ {
+  "city": "Novosibirsk",
+  "country_code": "RU",
+  "admin": "Novosibirsk Oblast"
+ },
+ {
+  "city": "Addis Ababa",
+  "country_code": "ET",
+  "admin": "Addis Ababa"
+ },
+ {
+  "city": "Mekelle",
+  "country_code": "ET",
+  "admin": "Tigray"
+ },
+ {
+  "city": "Dire Dawa",
+  "country_code": "ET",
+  "admin": "Dire Dawa"
+ },
+ {
+  "city": "Mexico City",
+  "country_code": "MX",
+  "admin": "Mexico City"
+ },
+ {
+  "city": "Tijuana",
+  "country_code": "MX",
+  "admin": "Baja California"
+ },
+ {
+  "city": "Ecatepec de Morelos",
+  "country_code": "MX",
+  "admin": "State of Mexico"
+ },
+ {
+  "city": "Tokyo",
+  "country_code": "JP",
+  "admin": "Tokyo"
+ },
+ {
+  "city": "Yokohama",
+  "country_code": "JP",
+  "admin": "Kanagawa"
+ },
+ {
+  "city": "Osaka",
+  "country_code": "JP",
+  "admin": "Osaka"
+ },
+ {
+  "city": "Cairo",
+  "country_code": "EG",
+  "admin": "Cairo Governorate"
+ },
+ {
+  "city": "Alexandria",
+  "country_code": "EG",
+  "admin": "Alexandria Governorate"
+ },
+ {
+  "city": "Giza",
+  "country_code": "EG",
+  "admin": "Giza Governorate"
+ },
+ {
+  "city": "Quezon City",
+  "country_code": "PH",
+  "admin": "Metro Manila"
+ },
+ {
+  "city": "Manila",
+  "country_code": "PH",
+  "admin": "Metro Manila"
+ },
+ {
+  "city": "Davao City",
+  "country_code": "PH",
+  "admin": "Davao Region"
+ },
+ {
+  "city": "Kinshasa",
+  "country_code": "CD",
+  "admin": "Kinshasa"
+ },
+ {
+  "city": "Lubumbashi",
+  "country_code": "CD",
+  "admin": "Haut-Katanga"
+ },
+ {
+  "city": "Mbuji-Mayi",
+  "country_code": "CD",
+  "admin": "Kasaï-Oriental"
+ },
+ {
+  "city": "Ho Chi Minh City",
+  "country_code": "VN",
+  "admin": "Ho Chi Minh City"
+ },
+ {
+  "city": "Hanoi",
+  "country_code": "VN",
+  "admin": "Hanoi"
+ },
+ {
+  "city": "Hai Phong",
+  "country_code": "VN",
+  "admin": "Hai Phong"
+ },
+ {
+  "city": "Tehran",
+  "country_code": "IR",
+  "admin": "Tehran"
+ },
+ {
+  "city": "Mashhad",
+  "country_code": "IR",
+  "admin": "Razavi Khorasan"
+ },
+ {
+  "city": "Isfahan",
+  "country_code": "IR",
+  "admin": "Isfahan"
+ },
+ {
+  "city": "Istanbul",
+  "country_code": "TR",
+  "admin": "Istanbul"
+ },
+ {
+  "city": "Ankara",
+  "country_code": "TR",
+  "admin": "Ankara"
+ },
+ {
+  "city": "Izmir",
+  "country_code": "TR",
+  "admin": "Izmir"
+ },
+ {
+  "city": "Berlin",
+  "country_code": "DE",
+  "admin": "Berlin"
+ },
+ {
+  "city": "Hamburg",
+  "country_code": "DE",
+  "admin": "Hamburg"
+ },
+ {
+  "city": "Munich",
+  "country_code": "DE",
+  "admin": "Bavaria"
+ },
+ {
+  "city": "Dar es Salaam",
+  "country_code": "TZ",
+  "admin": "Dar es Salaam Region"
+ },
+ {
+  "city": "Dodoma",
+  "country_code": "TZ",
+  "admin": "Dodoma Region"
+ },
+ {
+  "city": "Arusha",
+  "country_code": "TZ",
+  "admin": "Arusha Region"
+ },
+ {
+  "city": "Bangkok",
+  "country_code": "TH",
+  "admin": "Bangkok"
+ },
+ {
+  "city": "Nonthaburi",
+  "country_code": "TH",
+  "admin": "Nonthaburi"
+ },
+ {
+  "city": "Pak Kret",
+  "country_code": "TH",
+  "admin": "Nonthaburi"
+ },
+ {
+  "city": "London",
+  "country_code": "GB",
+  "admin": "England"
+ },
+ {
+  "city": "Birmingham",
+  "country_code": "GB",
+  "admin": "England"
+ },
+ {
+  "city": "Glasgow",
+  "country_code": "GB",
+  "admin": "Scotland"
+ },
+ {
+  "city": "Paris",
+  "country_code": "FR",
+  "admin": "Île-de-France"
+ },
+ {
+  "city": "Marseille",
+  "country_code": "FR",
+  "admin": "Provence-Alpes-Côte d'Azur"
+ },
+ {
+  "city": "Lyon",
+  "country_code": "FR",
+  "admin": "Auvergne-Rhône-Alpes"
+ },
+ {
+  "city": "Johannesburg",
+  "country_code": "ZA",
+  "admin": "Gauteng"
+ },
+ {
+  "city": "Cape Town",
+  "country_code": "ZA",
+  "admin": "Western Cape"
+ },
+ {
+  "city": "Durban",
+  "country_code": "ZA",
+  "admin": "KwaZulu-Natal"
+ },
+ {
+  "city": "Roma",
+  "country_code": "IT",
+  "admin": "Lazio"
+ },
+ {
+  "city": "Milano",
+  "country_code": "IT",
+  "admin": "Lombardia"
+ },
+ {
+  "city": "Napoli",
+  "country_code": "IT",
+  "admin": "Campania"
+ },
+ {
+  "city": "Nairobi",
+  "country_code": "KE",
+  "admin": "Nairobi County"
+ },
+ {
+  "city": "Mombasa",
+  "country_code": "KE",
+  "admin": "Mombasa County"
+ },
+ {
+  "city": "Nakuru",
+  "country_code": "KE",
+  "admin": "Nakuru County"
+ },
+ {
+  "city": "Yangon",
+  "country_code": "MM",
+  "admin": "Yangon Region"
+ },
+ {
+  "city": "Mandalay",
+  "country_code": "MM",
+  "admin": "Mandalay Region"
+ },
+ {
+  "city": "Naypyidaw",
+  "country_code": "MM",
+  "admin": "Naypyidaw Union Territory"
+ },
+ {
+  "city": "Bogotá",
+  "country_code": "CO",
+  "admin": "Bogotá D.C."
+ },
+ {
+  "city": "Medellín",
+  "country_code": "CO",
+  "admin": "Antioquia"
+ },
+ {
+  "city": "Cali",
+  "country_code": "CO",
+  "admin": "Valle del Cauca"
+ },
+ {
+  "city": "Omdurman",
+  "country_code": "SD",
+  "admin": "Khartoum"
+ },
+ {
+  "city": "Khartoum",
+  "country_code": "SD",
+  "admin": "Khartoum"
+ },
+ {
+  "city": "Khartoum North",
+  "country_code": "SD",
+  "admin": "Khartoum"
+ },
+ {
+  "city": "Kampala",
+  "country_code": "UG",
+  "admin": "Central Region"
+ },
+ {
+  "city": "Nansana",
+  "country_code": "UG",
+  "admin": "Central Region"
+ },
+ {
+  "city": "Kira",
+  "country_code": "UG",
+  "admin": "Central Region"
+ },
+ {
+  "city": "Seoul",
+  "country_code": "KR",
+  "admin": "Seoul"
+ },
+ {
+  "city": "Busan",
+  "country_code": "KR",
+  "admin": "Busan"
+ },
+ {
+  "city": "Incheon",
+  "country_code": "KR",
+  "admin": "Incheon"
+ },
+ {
+  "city": "Algiers",
+  "country_code": "DZ",
+  "admin": "Algiers"
+ },
+ {
+  "city": "Oran",
+  "country_code": "DZ",
+  "admin": "Oran"
+ },
+ {
+  "city": "Constantine",
+  "country_code": "DZ",
+  "admin": "Constantine"
+ },
+ {
+  "city": "Baghdad",
+  "country_code": "IQ",
+  "admin": "Baghdad Governorate"
+ },
+ {
+  "city": "Mosul",
+  "country_code": "IQ",
+  "admin": "Nineveh Governorate"
+ },
+ {
+  "city": "Basra",
+  "country_code": "IQ",
+  "admin": "Basra Governorate"
+ },
+ {
+  "city": "Madrid",
+  "country_code": "ES",
+  "admin": "Community of Madrid"
+ },
+ {
+  "city": "Barcelona",
+  "country_code": "ES",
+  "admin": "Catalonia"
+ },
+ {
+  "city": "Valencia",
+  "country_code": "ES",
+  "admin": "Valencian Community"
+ },
+ {
+  "city": "Buenos Aires",
+  "country_code": "AR",
+  "admin": "Autonomous City of Buenos Aires"
+ },
+ {
+  "city": "Córdoba",
+  "country_code": "AR",
+  "admin": "Córdoba Province"
+ },
+ {
+  "city": "Rosario",
+  "country_code": "AR",
+  "admin": "Santa Fe Province"
+ },
+ {
+  "city": "Sana'a",
+  "country_code": "YE",
+  "admin": "Amanat Al Asimah"
+ },
+ {
+  "city": "Aden",
+  "country_code": "YE",
+  "admin": "Aden Governorate"
+ },
+ {
+  "city": "Taiz",
+  "country_code": "YE",
+  "admin": "Taiz Governorate"
+ },
+ {
+  "city": "Toronto",
+  "country_code": "CA",
+  "admin": "Ontario"
+ },
+ {
+  "city": "Montréal",
+  "country_code": "CA",
+  "admin": "Quebec"
+ },
+ {
+  "city": "Calgary",
+  "country_code": "CA",
+  "admin": "Alberta"
+ },
+ {
+  "city": "Luanda",
+  "country_code": "AO",
+  "admin": "Luanda Province"
+ },
+ {
+  "city": "Lubango",
+  "country_code": "AO",
+  "admin": "Huíla"
+ },
+ {
+  "city": "Huambo",
+  "country_code": "AO",
+  "admin": "Huambo Province"
+ },
+ {
+  "city": "Kyiv",
+  "country_code": "UA",
+  "admin": "Kyiv City"
+ },
+ {
+  "city": "Kharkiv",
+  "country_code": "UA",
+  "admin": "Kharkiv Oblast"
+ },
+ {
+  "city": "Odesa",
+  "country_code": "UA",
+  "admin": "Odesa Oblast"
+ },
+ {
+  "city": "Casablanca",
+  "country_code": "MA",
+  "admin": "Casablanca-Settat"
+ },
+ {
+  "city": "Tangier",
+  "country_code": "MA",
+  "admin": "Tanger-Tétouan-Al Hoceïma"
+ },
+ {
+  "city": "Fès",
+  "country_code": "MA",
+  "admin": "Fès-Meknès"
+ },
+ {
+  "city": "Warsaw",
+  "country_code": "PL",
+  "admin": "Masovian Voivodeship"
+ },
+ {
+  "city": "Kraków",
+  "country_code": "PL",
+  "admin": "Lesser Poland Voivodeship"
+ },
+ {
+  "city": "Wrocław",
+  "country_code": "PL",
+  "admin": "Lower Silesian Voivodeship"
+ },
+ {
+  "city": "Tashkent",
+  "country_code": "UZ",
+  "admin": "Tashkent City"
+ },
+ {
+  "city": "Namangan",
+  "country_code": "UZ",
+  "admin": "Namangan Region"
+ },
+ {
+  "city": "Samarkand",
+  "country_code": "UZ",
+  "admin": "Samarkand Region"
+ },
+ {
+  "city": "Maputo",
+  "country_code": "MZ",
+  "admin": "Maputo City"
+ },
+ {
+  "city": "Matola",
+  "country_code": "MZ",
+  "admin": "Maputo Province"
+ },
+ {
+  "city": "Nampula",
+  "country_code": "MZ",
+  "admin": "Nampula Province"
+ },
+ {
+  "city": "Kuala Lumpur",
+  "country_code": "MY",
+  "admin": "Kuala Lumpur"
+ },
+ {
+  "city": "Kajang",
+  "country_code": "MY",
+  "admin": "Selangor"
+ },
+ {
+  "city": "Seberang Perai",
+  "country_code": "MY",
+  "admin": "Penang"
+ },
+ {
+  "city": "Accra",
+  "country_code": "GH",
+  "admin": "Greater Accra Region"
+ },
+ {
+  "city": "Kumasi",
+  "country_code": "GH",
+  "admin": "Ashanti Region"
+ },
+ {
+  "city": "Tamale",
+  "country_code": "GH",
+  "admin": "Northern Region"
+ },
+ {
+  "city": "Riyadh",
+  "country_code": "SA",
+  "admin": "Riyadh Region"
+ },
+ {
+  "city": "Jeddah",
+  "country_code": "SA",
+  "admin": "Makkah Region"
+ },
+ {
+  "city": "Mecca",
+  "country_code": "SA",
+  "admin": "Makkah Region"
+ },
+ {
+  "city": "Lima",
+  "country_code": "PE",
+  "admin": "Lima Province"
+ },
+ {
+  "city": "Callao",
+  "country_code": "PE",
+  "admin": "Callao"
+ },
+ {
+  "city": "Arequipa",
+  "country_code": "PE",
+  "admin": "Arequipa"
+ },
+ {
+  "city": "Antananarivo",
+  "country_code": "MG",
+  "admin": "Analamanga"
+ },
+ {
+  "city": "Toamasina",
+  "country_code": "MG",
+  "admin": "Atsinanana"
+ },
+ {
+  "city": "Antsirabe",
+  "country_code": "MG",
+  "admin": "Vakinankaratra"
+ },
+ {
+  "city": "Abidjan",
+  "country_code": "CI",
+  "admin": "Abidjan"
+ },
+ {
+  "city": "Bouaké",
+  "country_code": "CI",
+  "admin": "Gbêkê"
+ },
+ {
+  "city": "Korhogo",
+  "country_code": "CI",
+  "admin": "Poro"
+ },
+ {
+  "city": "Douala",
+  "country_code": "CM",
+  "admin": "Littoral"
+ },
+ {
+  "city": "Yaoundé",
+  "country_code": "CM",
+  "admin": "Centre"
+ },
+ {
+  "city": "Bamenda",
+  "country_code": "CM",
+  "admin": "Northwest Region"
+ },
+ {
+  "city": "Kathmandu",
+  "country_code": "NP",
+  "admin": "Bagmati Province"
+ },
+ {
+  "city": "Pokhara",
+  "country_code": "NP",
+  "admin": "Gandaki Province"
+ },
+ {
+  "city": "Bharatpur",
+  "country_code": "NP",
+  "admin": "Bagmati Province"
+ },
+ {
+  "city": "Niamey",
+  "country_code": "NE",
+  "admin": "Niamey"
+ },
+ {
+  "city": "Maradi",
+  "country_code": "NE",
+  "admin": "Maradi Region"
+ },
+ {
+  "city": "Zinder",
+  "country_code": "NE",
+  "admin": "Zinder Region"
+ },
+ {
+  "city": "Udaipur",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Maheshtala",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Davanagere",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Kozhikode",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Kurnool",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Akola",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Rajpur Sonarpur",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Bokaro",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Ballari",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Patiala",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "South Dum Dum",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Rajarhat-Gopalpur",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Agartala",
+  "country_code": "IN",
+  "admin": "Tripura"
+ },
+ {
+  "city": "Bhagalpur",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Muzaffarnagar",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Bhatpara",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Latur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Panihati",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Dhule",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Rohtak",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Korba",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Bhilwara",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Brahmapur",
+  "country_code": "IN",
+  "admin": "Odisha"
+ },
+ {
+  "city": "Muzaffarpur",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Ahilyanagar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Mathura",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Kollam",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Avadi",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Kadapa",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Rajamahendravaram",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Bilaspur",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Kamarhati",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Shahjahanpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Vijayapura",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Rampur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Shivamogga",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Chandrapur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Junagadh",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Thrissur",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Alwar",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Bardhaman",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Kulti",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Kakinada",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Nizamabad",
+  "country_code": "IN",
+  "admin": "Telangana"
+ },
+ {
+  "city": "Parbhani",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Tumakuru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Hisar",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Ozhukarai",
+  "country_code": "IN",
+  "admin": "Puducherry"
+ },
+ {
+  "city": "Bihar Sharif",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Darbhanga",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Cox's Bazar",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Sirajganj",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Narsingdi",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Naogaon",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Pabna",
+  "country_code": "BD",
+  "admin": "Rajshahi"
+ },
+ {
+  "city": "Jamalpur",
+  "country_code": "BD",
+  "admin": "Mymensingh"
+ },
+ {
+  "city": "Bhairab",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Saidpur",
+  "country_code": "BD",
+  "admin": "Rangpur"
+ },
+ {
+  "city": "Jhenaidah",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Satkhira",
+  "country_code": "BD",
+  "admin": "Khulna"
+ },
+ {
+  "city": "Kishoreganj",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Dhamsona",
+  "country_code": "BD",
+  "admin": "Dhaka"
+ },
+ {
+  "city": "Lakshmipur",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Maijdee",
+  "country_code": "BD",
+  "admin": "Chattogram"
+ },
+ {
+  "city": "Sherpur",
+  "country_code": "BD",
+  "admin": "Mymensingh"
+ },
+ {
+  "city": "Firozkoh",
+  "country_code": "AF",
+  "admin": "Ghor"
+ },
+ {
+  "city": "Tarinkot",
+  "country_code": "AF",
+  "admin": "Uruzgan"
+ },
+ {
+  "city": "Spin Boldak",
+  "country_code": "AF",
+  "admin": "Kandahar"
+ },
+ {
+  "city": "Maimana",
+  "country_code": "AF",
+  "admin": "Faryab"
+ },
+ {
+  "city": "Gardez",
+  "country_code": "AF",
+  "admin": "Paktia"
+ },
+ {
+  "city": "Bamyan",
+  "country_code": "AF",
+  "admin": "Bamyan"
+ }
+]

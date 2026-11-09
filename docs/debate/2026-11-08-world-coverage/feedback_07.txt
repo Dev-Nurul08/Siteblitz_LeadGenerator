@@ -1,0 +1,6 @@
+## Check of your message-6 list (businesses within 10 km or with that city name)
+Round 6: 238 reference lines, 238 cities, 235 with business data (99 %).
+Not covered: - FI: 20/21 cities covered, 170,732 businesses near them; no data at: Mariehamn
+Not covered: - FK: 6/8 cities covered, 163 businesses near them; no data at: North Arm, Port Howard
+
+Same format again:

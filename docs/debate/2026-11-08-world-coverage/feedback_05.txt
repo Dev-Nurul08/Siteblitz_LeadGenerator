@@ -1,0 +1,9 @@
+## Check of your lists so far (businesses in our data within 10 km of each city, or with that city name)
+Round 1: 263 reference lines, 260 cities, 259 with business data (100 %).
+Round 2: 251 reference lines, 251 cities, 250 with business data (100 %).
+Round 3: 192 reference lines, 190 cities, 190 with business data (100 %).
+Round 4: 221 reference lines, 221 cities, 221 with business data (100 %).
+Not covered: - AS: 11/12 cities covered, 4,958 businesses near them; no data at: Taulaga
+Not covered: - BS: 33/34 cities covered, 13,861 businesses near them; no data at: Moxey Town
+
+Thank you - same format again:

@@ -5,16 +5,18 @@ deduplication, and database persistence.
 This is the main entry point for Phase 1 business discovery.
 """
 
+import re
 from datetime import datetime, timezone
 from typing import Optional
 
 import structlog
-from sqlalchemy import select, and_
+from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from backend.app.engines.discovery.base import AdapterResult, BaseSourceAdapter, DiscoveredBusiness
-from backend.app.engines.discovery.normalizer import BusinessNormalizer
+from backend.app.engines.discovery.normalizer import BusinessNormalizer, _haversine_distance
+from backend.app.engines.discovery.geocode import resolved_place
 from backend.app.engines.discovery.registry import SourceAdapterRegistry
 from backend.app.models.business import (
     Business,
@@ -30,10 +32,33 @@ from backend.app.models.source import (
     JobStatus,
     Source,
     SourceJob,
+    SourceJobSighting,
     SourceRecord,
 )
 
 logger = structlog.get_logger(__name__)
+
+
+# Words that say what kind of business it is, not which one — never enough to call two names the same.
+_GENERIC_NAME_WORDS = {
+    "the", "and", "for", "dr", "drs", "clinic", "clinics", "dental", "dentist", "dentists", "care",
+    "centre", "center", "hospital", "multispeciality", "speciality", "specialty", "super", "advanced",
+    "smile", "smiles", "tooth", "teeth", "salon", "beauty", "parlour", "parlor", "hair", "studio",
+    "unisex", "spa", "cafe", "coffee", "restaurant", "restro", "lounge", "shop", "store", "point",
+    "house", "india", "pvt", "ltd", "health", "family", "new", "best", "city", "plus",
+}
+
+
+def _share_distinctive_word(name1: str, name2: str) -> bool:
+    """
+    True when the distinctive words of one name are all in the other ("Cosmo Dentist" ⊂
+    "Dr Gupta Cosmo Dental Clinic"). Branches differ by an extra word each ("Clove Dental Andheri"
+    vs "Clove Dental Bandra") and are kept apart.
+    """
+    words = lambda n: {w for w in BusinessNormalizer.normalize_name(n).split()
+                       if len(w) >= 4 and w not in _GENERIC_NAME_WORDS}
+    a, b = words(name1), words(name2)
+    return bool(a & b) and (a <= b or b <= a)
 
 
 class DiscoveryService:
@@ -131,6 +156,10 @@ class DiscoveryService:
 
             if result.has_more:
                 job.last_cursor = result.next_cursor
+            # How many matching businesses the source has in the area (before max_results), so the
+            # UI can say "500 of 3,780". Stored in the job's JSON params: no schema change needed.
+            if result.total_available is not None:
+                job.query_params = {**(job.query_params or {}), "available": result.total_available}
 
             await self.session.flush()
 
@@ -139,6 +168,9 @@ class DiscoveryService:
                 "source": source_slug,
                 "status": job.status.value,
                 **stats,
+                "available": result.total_available,
+                # What the city name resolved to (Nominatim), so a wrong place is visible.
+                "resolved_place": resolved_place(city, country_code, region) if city else None,
                 # The Discovery result card shows this under the counts.
                 **({"error": job.error_message} if job.error_message else {}),
             }
@@ -229,29 +261,34 @@ class DiscoveryService:
         for discovered in result.businesses:
             stats["found"] += 1
             try:
-                # Save raw source record
-                source_record = await self._save_source_record(
-                    source, job, discovered
-                )
-                if not source_record:
-                    stats["duplicate"] += 1
-                    continue
-
-                # Check for existing business (deduplication)
-                existing = await self._find_existing_business(discovered)
-                if existing:
-                    # Link to existing business
-                    await self._link_business_to_source(
-                        existing, source_record, method="dedup_match"
+                # Each record runs in its own SAVEPOINT: one bad record is rolled back and logged
+                # instead of poisoning the session and failing the whole job (seen 2026-11-08:
+                # 4,286 Pune salons lost to one duplicate category row).
+                async with self.session.begin_nested():
+                    # Save raw source record
+                    source_record = await self._save_source_record(
+                        source, job, discovered
                     )
-                    stats["duplicate"] += 1
-                else:
-                    # Create new business
-                    business = await self._create_business(discovered, source_record)
-                    stats["new"] += 1
+                    if not source_record:
+                        stats["duplicate"] += 1
+                        continue
 
-                # Mark source record as processed
-                source_record.is_processed = True
+                    # Check for existing business (deduplication)
+                    existing = await self._find_existing_business(discovered)
+                    if existing:
+                        # Link to existing business
+                        await self._link_business_to_source(
+                            existing, source_record, method="dedup_match"
+                        )
+                        stats["duplicate"] += 1
+                    else:
+                        # Create new business
+                        await self._create_business(discovered, source_record)
+                        stats["new"] += 1
+
+                    # Mark source record as processed
+                    source_record.is_processed = True
+                    await self.session.flush()
 
             except Exception as e:
                 logger.error(
@@ -288,7 +325,18 @@ class DiscoveryService:
         existing = result.scalar_one_or_none()
 
         if existing:
-            return None  # Already have this record
+            # Already saved by an earlier job: remember that this job found it too, so the
+            # job's business list includes it (see SourceJobSighting).
+            if existing.job_id != job.id:
+                seen = await self.session.execute(
+                    select(SourceJobSighting.id).where(
+                        SourceJobSighting.job_id == job.id,
+                        SourceJobSighting.source_record_id == existing.id,
+                    )
+                )
+                if seen.scalar_one_or_none() is None:
+                    self.session.add(SourceJobSighting(job_id=job.id, source_record_id=existing.id))
+            return None
 
         record = SourceRecord(
             source_id=source.id,
@@ -310,15 +358,59 @@ class DiscoveryService:
         await self.session.flush()
         return record
 
+    async def _find_by_phone(self, discovered: DiscoveredBusiness,
+                             country: Optional[str]) -> Optional[Business]:
+        """
+        Same phone number (last 10 digits) or same email in the same city / within 5 km = the same
+        business,
+        even when the sources spell the name differently ("Cafe Nirvana" vs "Nirvana Cafe").
+        Needed once several sources are merged in one search.
+        """
+        digits = re.sub(r"\D", "", discovered.phone or "")
+        email = (discovered.email or "").strip().lower()
+        conditions = []
+        if len(digits) >= 10:
+            conditions.append(Business.phone.like(f"%{digits[-10:]}"))
+        # Same email = same business too (city test 2026-11-08: one dentist listed twice under
+        # two names with the same Gmail address and different phone formats).
+        if "@" in email:
+            conditions.append(func.lower(Business.email) == email)
+        if not conditions:
+            return None
+        stmt = (select(Business).where(or_(*conditions))
+                .options(selectinload(Business.locations)))
+        if country:
+            stmt = stmt.where(Business.country_code == country)
+        for candidate in (await self.session.execute(stmt)).scalars().all():
+            location = candidate.locations[0] if candidate.locations else None
+            same_city = bool(location and location.city and discovered.city
+                             and location.city.strip().lower() == discovered.city.strip().lower())
+            distance = (_haversine_distance(location.latitude, location.longitude,
+                                            discovered.latitude, discovered.longitude)
+                        if location and location.latitude is not None and discovered.latitude is not None
+                        else None)
+            if not (same_city or (distance is not None and distance < 5.0)):
+                continue
+            # A shared phone / email alone can be a chain's head office: two branches of one clinic
+            # are two sales opportunities. Merge only with a second sign — the same spot (≤ 0.5 km)
+            # or one name's distinctive words contained in the other's (see _share_distinctive_word).
+            if (distance is not None and distance <= 0.5) or _share_distinctive_word(
+                    discovered.name, candidate.name):
+                return candidate
+        return None
+
     async def _find_existing_business(
         self, discovered: DiscoveredBusiness
     ) -> Optional[Business]:
-        """Check if a business already exists using name + location matching."""
+        """Check if a business already exists using phone, then name + location matching."""
         normalized_name = self.normalizer.normalize_name(discovered.name)
         if not normalized_name:
             return None
 
         country = self.normalizer.normalize_country_code(discovered.country_code)
+        by_phone = await self._find_by_phone(discovered, country)
+        if by_phone:
+            return by_phone
 
         # Query candidates by normalized name, with their locations: without the stored city /
         # coordinates every same-name business in the country looked like a duplicate, so two
@@ -405,8 +497,14 @@ class DiscoveryService:
             self.session.add(location)
 
         # Add categories
+        seen_categories: set[str] = set()
         for idx, cat in enumerate(discovered.categories):
             industry, normalized, source_cat = self.normalizer.normalize_category(cat)
+            # amenity=clinic + healthcare=clinic both normalise to "clinic"; a second row would
+            # break the (business, category) unique key and used to fail the whole job.
+            if normalized.lower() in seen_categories:
+                continue
+            seen_categories.add(normalized.lower())
             source_original = (
                 discovered.source_categories[idx]
                 if idx < len(discovered.source_categories)

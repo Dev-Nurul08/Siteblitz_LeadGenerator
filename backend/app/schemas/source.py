@@ -15,6 +15,7 @@ from backend.app.schemas.types import HttpUrl, Opt, OptionalText, Slug, Text
 KNOWN_ADAPTER_CLASSES = Literal[
     "backend.app.engines.discovery.osm.OSMAdapter",
     "backend.app.engines.discovery.overture.OvertureAdapter",
+    "backend.app.engines.discovery.combined.CombinedAdapter",
     "backend.app.engines.discovery.csv_import.CSVImportAdapter",
     "backend.app.engines.discovery.wikidata.WikidataAdapter",
 ]

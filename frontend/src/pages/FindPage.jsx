@@ -12,18 +12,29 @@ import { ease, ms } from '../motion'
 
 const MapView = lazy(() => import('../components/MapView'))
 
-// Same country list the old Discovery page offered; any ISO code can be typed in "Other".
-const COUNTRIES = [['IN', 'India'], ['GB', 'United Kingdom'], ['US', 'United States'], ['AU', 'Australia'],
-  ['CA', 'Canada'], ['DE', 'Germany'], ['FR', 'France'], ['AE', 'United Arab Emirates'], ['SG', 'Singapore'], ['NZ', 'New Zealand']]
+// Every ISO 3166-1 alpha-2 country (the backend accepts any two-letter code). The list used to have
+// 10 countries, so Bangladesh or Afghanistan could not be searched from this screen.
+// Names come from the browser (Intl.DisplayNames), sorted by name.
+const ISO_CODES = ('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW '
+  + 'BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO '
+  + 'FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO '
+  + 'JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS '
+  + 'MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU '
+  + 'RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA '
+  + 'UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW').split(' ')
+const regionName = new Intl.DisplayNames(['en'], { type: 'region' })
+const COUNTRIES = ISO_CODES.map((code) => [code, regionName.of(code)]).sort((a, b) => a[1].localeCompare(b[1]))
 const CATEGORIES = ['dentist', 'salon', 'hairdresser', 'cafe', 'restaurant', 'gym', 'clinic', 'hotel', 'school',
   'lawyer', 'accountant', 'estate_agent', 'car_repair', 'plumber', 'electrician', 'bakery', 'shop']
 const SOURCES = [
-  { id: 'overture', name: 'Overture Places (default)', note: 'Free · map position, phone and social links for most businesses' },
+  { id: 'all_sources', name: 'All sources (default)', note: 'Overture Places + OpenStreetMap together, duplicates merged — the most businesses per search' },
+  { id: 'overture', name: 'Overture Places', note: 'Free · map position, phone and social links for most businesses' },
   { id: 'openstreetmap', name: 'OpenStreetMap', note: 'Free · volunteer-mapped, thin in small cities' },
   { id: 'google', name: 'Google Places', note: 'Not available yet — needs an API key and a licensing check', disabled: true },
   { id: 'csv', name: 'CSV file', note: 'Your own list · UTF-8, up to 15 MB / 5,000 rows' },
 ]
-const CHECK_BATCH = 25
+// 100 = the API's batch limit; checks inside a batch run concurrently (~40 s per 100).
+const CHECK_BATCH = 100
 
 function FlowDiagram() {
   const [paused, setPaused] = useState(false)
@@ -70,7 +81,7 @@ function ExportLinks({ jobId }) {
 }
 
 export default function FindPage({ entrance }) {
-  const [form, setForm] = useState({ source: 'overture', country: 'IN', city: '', category: '', max: 500, franchises: false })
+  const [form, setForm] = useState({ source: 'all_sources', country: 'IN', city: '', category: '', max: 500, franchises: false })
   const [csvFile, setCsvFile] = useState(null)
   const [jobs, setJobs] = useState(null)
   const [jobsError, setJobsError] = useState(null)
@@ -102,7 +113,7 @@ export default function FindPage({ entrance }) {
     let done = 0
     for (;;) {
       if (stopChecks.current || !alive.current) break
-      setChecking({ done, remaining: null, running: true })
+      setChecking((c) => ({ done, remaining: c ? c.remaining : null, running: true }))
       let res
       try { res = await api.intelligence.assessBatch({ job_id: jobId, limit: CHECK_BATCH, include_franchises: form.franchises }) }
       catch { break }
@@ -182,7 +193,7 @@ export default function FindPage({ entrance }) {
                 <div className="field">
                   <label className="label" htmlFor="max">Max results</label>
                   <select id="max" className="input" value={form.max} onChange={set('max')}>
-                    {[50, 100, 200, 500, 1000].map((n) => <option key={n} value={n}>{n}</option>)}
+                    {[50, 100, 200, 500, 1000, 2000, 5000].map((n) => <option key={n} value={n}>{n}</option>)}
                   </select>
                 </div>
               </>
@@ -214,6 +225,19 @@ export default function FindPage({ entrance }) {
                     <span key={label} className={`dotstep ${phaseIndex >= i ? 'on' : ''}`}><i />{label}{i < 2 && <span aria-hidden="true"> —</span>}</span>
                   ))}
                 </div>
+                {job && job.available != null && (
+                  <p className="ink2" style={{ margin: '0 0 8px', fontSize: 14 }}>
+                    The sources have <span className="num">{num(job.available)}</span> matching businesses here; this search took{' '}
+                    <span className="num">{num(job.found)}</span>{job.available > job.found ? ' — raise Max results to get more.' : ' — all of them.'}
+                  </p>
+                )}
+                {job?.resolved_place && (
+                  // What the city name resolved to, so a wrong match (a landmark, another state) is visible.
+                  <p className="muted" style={{ margin: '0 0 8px', fontSize: 13 }}>
+                    Searched area: {job.resolved_place.name} · <span className="num">{job.resolved_place.bbox_km?.join(' × ')}</span> km
+                    {job.resolved_place.trimmed_from_km && <> — the city's boundary is <span className="num">{job.resolved_place.trimmed_from_km.join(' × ')}</span> km, so its centre was searched</>}
+                  </p>
+                )}
                 <div className="tickers">
                   {[['Found', job?.found], ['New', job?.new], ['Duplicates', job?.duplicate], ['Errors', job?.errors]].map(([label, value]) => (
                     <div className="ticker" key={label}><div className="label">{label}</div><div className="stat"><Ticker value={value ?? 0} /></div></div>
@@ -277,7 +301,7 @@ export default function FindPage({ entrance }) {
                       {j.error_message && <div className="mono" style={{ fontSize: 13, color: 'var(--error)' }}>{j.error_message}</div>}</td>
                     <td className="hide-sm">{j.source_name}</td>
                     <td><JobChip status={j.status} /></td>
-                    <td className="num">{num(j.records_found)}</td>
+                    <td className="num">{num(j.records_found)}{j.available != null && j.available > j.records_found && <div className="muted" style={{ fontSize: 13 }}>of {num(j.available)}</div>}</td>
                     <td className="num">{num(j.records_new)}</td>
                     <td className="num hide-sm">{num(j.records_duplicate)}</td>
                     <td className="num hide-sm">{num(j.records_error)}</td>

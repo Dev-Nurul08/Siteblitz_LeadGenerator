@@ -1,0 +1,5 @@
+## Check of your message-12 list
+Round 12: 233 reference lines, 233 cities, 231 with business data (99 %).
+Not covered: - NL: 20/22 cities covered, 537,748 businesses near them; no data at: The Bottom, Oranjestad
+
+Same format again:

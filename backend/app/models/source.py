@@ -268,3 +268,31 @@ class SourceRecord(Base):
             f"<SourceRecord(id={self.id}, source_id={self.source_id}, "
             f"external_id='{self.external_id}')>"
         )
+
+
+class SourceJobSighting(Base):
+    """A source record that a later discovery job found again.
+
+    SourceRecord.job_id is the job that first saved a record. A repeat search of the same area
+    (or of a neighbouring city whose box overlaps) gets the same records back and counts them as
+    duplicates; without this row the repeat job's business list, map, export and website checks
+    left them out. Seen 2026-11-08: Pimpri-Chinchwad found 300 dentists, 281 were already saved
+    from Pune, and the job's "View businesses" showed 19.
+    """
+
+    __tablename__ = "source_job_sightings"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    job_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("source_jobs.id", ondelete="CASCADE"), nullable=False
+    )
+    source_record_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("source_records.id", ondelete="CASCADE"), nullable=False
+    )
+    seen_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    __table_args__ = (
+        Index("ix_source_job_sightings_job_record", "job_id", "source_record_id", unique=True),
+    )

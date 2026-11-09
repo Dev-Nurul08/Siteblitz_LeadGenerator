@@ -1,0 +1,4 @@
+## Check of your message-7 list (businesses within 10 km or with that city name)
+Round 7: 160 reference lines, 159 cities, 159 with business data (100 %).
+
+Same format again:

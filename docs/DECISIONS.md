@@ -50,3 +50,44 @@
 - **Open (founder):** social-only + phone can never be Hot under the approved weights (max 75). Options:
   (a) keep — only no-website businesses are Hot; (b) count "its listed web address is a social profile" as the
   10-point business-problem signal (social-only + phone + confirmed open + dentist = 85 → Hot).
+
+## 2026-11-08 — fourth request ("as much data per run as I targeted")
+- **Default source = All sources (Overture + OpenStreetMap in one job).** Overlap is merged by source id,
+  phone (last 10 digits, same city / ≤ 5 km) and name + place.
+- **Category = whole word-parts of the category fields OR keywords in the business name** (categories.py).
+  Fixes `%dent%` → student_union and `%tax%` → taxi; adds 27–54 % real matches.
+- **OpenStreetMap searches the geocoded city box**, not the named boundary (the "Udaipur" boundary matched the
+  whole district + same-named villages and timed out).
+- **Each discovery record runs in a SAVEPOINT** (SQLite needs SQLAlchemy's BEGIN recipe, enabled in database.py).
+- **Not done, needs a decision:** (1) treat "listed domain has no DNS record, confirmed by a second resolver" as
+  Website down immediately instead of waiting 6 h (changes approved spec row 6); (2) widen the area beyond the
+  city when it has fewer businesses than asked (measured gain small: Udaipur dentists 102 → 112 at 3× area).
+
+## 2026-11-08 — fifth request (city test: India, Bangladesh, Afghanistan + top 50 countries, 10 ChatGPT rounds)
+- **Geocoder takes the first settlement hit** (city / town / village / municipality) of 5, retries without the
+  state when the state-qualified lookup only finds a landmark, and trims a city boundary larger than 1.5° to the
+  1.5° square around the city's point (inside the boundary; the job and the Find screen show it). Found live:
+  Beijing → a 1 × 2 km business district, Ho Chi Minh City → a TV station building, Shenzhen → rejected; all 0.
+  After: Shenzhen 0 → 522 available. A state or district hit is still rejected, never trimmed.
+- **A repeat search lists what it found again** (`source_job_sightings`). Before: a job whose records an earlier
+  job had saved showed nothing under "View businesses", the map, export and website checks (Pimpri-Chinchwad:
+  300 found, 19 listed, because its box overlaps Pune's).
+- **Find screen offers all 249 ISO countries** (it had 10 — Bangladesh and Afghanistan could not be chosen).
+- **Public Overpass stopped answering this machine** after three test processes ran at once (connection refused
+  for 40+ cities). The test continued with Overture only. Per-process Overpass lock is a global queue only while
+  one API process runs.
+- **Open (founder):** production OpenStreetMap data from Geofabrik country extracts processed locally (ChatGPT R5:
+  ≈ $24–96 / month, 3–5 developer days) instead of public Overpass — proposed as phase 11.
+- **Open (founder + counsel):** Overture's Places guide says joining Places with OSM "may need to carry the Open
+  Database License (ODbL) if it is a derivative database". "All sources" joins them. Internal use only today;
+  get advice before any merged list leaves the company.
+- **Overture results are limited to the chosen country** (address country). Measured in six boxes, 7,834 dentist
+  places: none lacks an address country, so the filter is complete there. Shenzhen 522 → 43 CN; Tijuana −377 US.
+- **Geocoder uses a settlement only when it carries the requested name** (any language, old or alternative name);
+  a city beats a same-named village (Nanded); a name that only matches a building is "not found"; a province-only
+  name (Tokyo) is rejected — ChatGPT R6 and Claude agreed not to search a province's admin centre automatically
+  (Buenos Aires province → La Plata). Ward names work (Shinjuku 485).
+- **Open (founder):** Foursquare Open Source Places (Apache 2.0; names, phone, email, website, socials) as a third
+  source for countries where Overture is thin (Iran, China). Needs a free Places Portal account + access token
+  created by the founder; the paid Foursquare API terms forbid lead generation, the open dataset does not.
+  Proposed as phase 12 (incremental-coverage test first: keep it only if it adds ≥ 20 % verified unique businesses).

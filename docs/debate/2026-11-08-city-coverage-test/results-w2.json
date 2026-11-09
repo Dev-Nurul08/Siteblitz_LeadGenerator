@@ -1,0 +1,1446 @@
+[
+ {
+  "city": "Tiruchirappalli",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 65,
+  "new": 60,
+  "duplicate": 5,
+  "available": 65,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Tiruchirappalli, Tamil Nadu, India",
+   "type": "administrative",
+   "bbox_km": [
+    11,
+    13
+   ]
+  },
+  "businesses": 60,
+  "phone_pct": 82,
+  "email_pct": 60,
+  "website_pct": 37,
+  "social_pct": 87,
+  "social_no_website_pct": 57,
+  "seconds": 42
+ },
+ {
+  "city": "Bareilly",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 98,
+  "new": 92,
+  "duplicate": 6,
+  "available": 98,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Bareilly, Uttar Pradesh, 243001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 92,
+  "phone_pct": 84,
+  "email_pct": 53,
+  "website_pct": 35,
+  "social_pct": 96,
+  "social_no_website_pct": 63,
+  "seconds": 62
+ },
+ {
+  "city": "Moradabad",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 69,
+  "new": 64,
+  "duplicate": 5,
+  "available": 69,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "Moradabad, Uttar Pradesh, 244001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 64,
+  "phone_pct": 80,
+  "email_pct": 61,
+  "website_pct": 25,
+  "social_pct": 91,
+  "social_no_website_pct": 69,
+  "seconds": 62
+ },
+ {
+  "city": "Mysuru",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 91,
+  "new": 86,
+  "duplicate": 5,
+  "available": 91,
+  "errors": 1,
+  "error": "OpenStreetMap: busy — skipped after 66 s; Overture results kept",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Mysuru, Mysuru taluk, Mysuru District, Karnataka, 570001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 86,
+  "phone_pct": 91,
+  "email_pct": 55,
+  "website_pct": 48,
+  "social_pct": 94,
+  "social_no_website_pct": 52,
+  "seconds": 70
+ },
+ {
+  "city": "Tiruppur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 59,
+  "new": 57,
+  "duplicate": 2,
+  "available": 59,
+  "errors": 1,
+  "error": "OpenStreetMap: busy — skipped after 66 s; Overture results kept",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Tiruppur, Tiruppur South, Tiruppur, Tamil Nadu, 638600, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 57,
+  "phone_pct": 86,
+  "email_pct": 74,
+  "website_pct": 37,
+  "social_pct": 96,
+  "social_no_website_pct": 61,
+  "seconds": 69
+ },
+ {
+  "city": "Gurugram",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 277,
+  "duplicate": 23,
+  "available": 927,
+  "errors": 1,
+  "error": "OpenStreetMap: busy — skipped after 66 s; Overture results kept",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "Gurugram, Haryana, India",
+   "type": "administrative",
+   "bbox_km": [
+    66,
+    38
+   ]
+  },
+  "businesses": 277,
+  "phone_pct": 99,
+  "email_pct": 75,
+  "website_pct": 79,
+  "social_pct": 87,
+  "social_no_website_pct": 20,
+  "seconds": 74
+ },
+ {
+  "city": "Aligarh",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 66,
+  "new": 62,
+  "duplicate": 4,
+  "available": 66,
+  "errors": 1,
+  "error": "OpenStreetMap: busy — skipped after 66 s; Overture results kept",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Aligarh, Koil, Aligarh, Uttar Pradesh, 202001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 62,
+  "phone_pct": 90,
+  "email_pct": 53,
+  "website_pct": 35,
+  "social_pct": 95,
+  "social_no_website_pct": 65,
+  "seconds": 69
+ },
+ {
+  "city": "Jalandhar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 171,
+  "new": 155,
+  "duplicate": 16,
+  "available": 171,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Jalandhar, Jalandhar I Tahsil, Jalandhar, Punjab, 144001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 155,
+  "phone_pct": 97,
+  "email_pct": 61,
+  "website_pct": 43,
+  "social_pct": 96,
+  "social_no_website_pct": 57,
+  "seconds": 33
+ },
+ {
+  "city": "Bhubaneswar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 187,
+  "new": 173,
+  "duplicate": 14,
+  "available": 187,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Bhubaneswar, Bhubaneswar Municipal Corporation, Bhubaneswar (M.Corp.), Khordha, Odisha, 751001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 173,
+  "phone_pct": 96,
+  "email_pct": 71,
+  "website_pct": 51,
+  "social_pct": 97,
+  "social_no_website_pct": 48,
+  "seconds": 44
+ },
+ {
+  "city": "Salem",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 75,
+  "new": 72,
+  "duplicate": 3,
+  "available": 75,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "Salem, Tamil Nadu, 636001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 72,
+  "phone_pct": 94,
+  "email_pct": 68,
+  "website_pct": 35,
+  "social_pct": 97,
+  "social_no_website_pct": 64,
+  "seconds": 42
+ },
+ {
+  "city": "Mira-Bhayandar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 250,
+  "new": 237,
+  "duplicate": 13,
+  "available": 250,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "Mira-Bhayander, Thane Subdistrict, Thane, Maharashtra, India",
+   "type": "administrative",
+   "bbox_km": [
+    18,
+    11
+   ]
+  },
+  "businesses": 237,
+  "phone_pct": 95,
+  "email_pct": 69,
+  "website_pct": 49,
+  "social_pct": 92,
+  "social_no_website_pct": 49,
+  "seconds": 54
+ },
+ {
+  "city": "Warangal",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 45,
+  "new": 41,
+  "duplicate": 4,
+  "available": 45,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "Warangal, Warangal mandal, Warangal, Telangana, 506002, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 41,
+  "phone_pct": 95,
+  "email_pct": 51,
+  "website_pct": 41,
+  "social_pct": 95,
+  "social_no_website_pct": 59,
+  "seconds": 36
+ },
+ {
+  "city": "Thiruvananthapuram",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 269,
+  "new": 248,
+  "duplicate": 21,
+  "available": 269,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "Thiruvananthapuram, Kerala, 695001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 248,
+  "phone_pct": 95,
+  "email_pct": 66,
+  "website_pct": 42,
+  "social_pct": 98,
+  "social_no_website_pct": 57,
+  "seconds": 52
+ },
+ {
+  "city": "Guntur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 91,
+  "new": 82,
+  "duplicate": 9,
+  "available": 91,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "Guntur, Guntur Mandal, Guntur District, Andhra Pradesh, 522001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 82,
+  "phone_pct": 96,
+  "email_pct": 60,
+  "website_pct": 49,
+  "social_pct": 89,
+  "social_no_website_pct": 51,
+  "seconds": 42
+ },
+ {
+  "city": "Bhiwandi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 26,
+  "new": 24,
+  "duplicate": 2,
+  "available": 26,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "Bhiwandi, Bhiwandi Subdistrict, Thane, Maharashtra, 421302, India",
+   "type": "city",
+   "bbox_km": [
+    5,
+    4
+   ]
+  },
+  "businesses": 24,
+  "phone_pct": 83,
+  "email_pct": 67,
+  "website_pct": 29,
+  "social_pct": 92,
+  "social_no_website_pct": 71,
+  "seconds": 51
+ },
+ {
+  "city": "Saharanpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 50,
+  "new": 49,
+  "duplicate": 1,
+  "available": 50,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "Saharanpur, Uttar Pradesh, 247001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 49,
+  "phone_pct": 86,
+  "email_pct": 63,
+  "website_pct": 29,
+  "social_pct": 96,
+  "social_no_website_pct": 71,
+  "seconds": 52
+ },
+ {
+  "city": "Gorakhpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 104,
+  "new": 95,
+  "duplicate": 9,
+  "available": 104,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "Gorakhpur, Uttar Pradesh, 273001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 95,
+  "phone_pct": 95,
+  "email_pct": 55,
+  "website_pct": 33,
+  "social_pct": 96,
+  "social_no_website_pct": 66,
+  "seconds": 44
+ },
+ {
+  "city": "Bikaner",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 29,
+  "new": 25,
+  "duplicate": 4,
+  "available": 29,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 18,
+  "resolved_place": {
+   "name": "Bikaner, Bikaner Tehsil, Bikaner, Rajasthan, 334001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 25,
+  "phone_pct": 100,
+  "email_pct": 64,
+  "website_pct": 16,
+  "social_pct": 100,
+  "social_no_website_pct": 84,
+  "seconds": 49
+ },
+ {
+  "city": "Amravati",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 52,
+  "new": 51,
+  "duplicate": 1,
+  "available": 52,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 19,
+  "resolved_place": {
+   "name": "Amravati, Maharashtra, 444600, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 51,
+  "phone_pct": 90,
+  "email_pct": 65,
+  "website_pct": 27,
+  "social_pct": 100,
+  "social_no_website_pct": 73,
+  "seconds": 36
+ },
+ {
+  "city": "Noida",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 252,
+  "duplicate": 48,
+  "available": 703,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 20,
+  "resolved_place": {
+   "name": "Noida, Dadri, Gautam Buddha Nagar, Uttar Pradesh, India",
+   "type": "administrative",
+   "bbox_km": [
+    24,
+    26
+   ]
+  },
+  "businesses": 252,
+  "phone_pct": 95,
+  "email_pct": 59,
+  "website_pct": 77,
+  "social_pct": 69,
+  "social_no_website_pct": 19,
+  "seconds": 62
+ },
+ {
+  "city": "Jamshedpur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 84,
+  "new": 77,
+  "duplicate": 7,
+  "available": 84,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "Jamshedpur, Golmuri-Cum-Jugsalai, East Singhbhum, Jharkhand, 831001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 77,
+  "phone_pct": 94,
+  "email_pct": 58,
+  "website_pct": 36,
+  "social_pct": 97,
+  "social_no_website_pct": 64,
+  "seconds": 38
+ },
+ {
+  "city": "Bhilai",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 75,
+  "new": 69,
+  "duplicate": 6,
+  "available": 75,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "Bhilai, Durg Tahsil, Durg, Chhattisgarh, 490023, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 69,
+  "phone_pct": 90,
+  "email_pct": 49,
+  "website_pct": 30,
+  "social_pct": 96,
+  "social_no_website_pct": 68,
+  "seconds": 66
+ },
+ {
+  "city": "Cuttack",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 98,
+  "new": 45,
+  "duplicate": 53,
+  "available": 98,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "Cuttack, Cuttack (M.Corp.) P.S, Cuttack, Odisha, 753001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 45,
+  "phone_pct": 80,
+  "email_pct": 58,
+  "website_pct": 56,
+  "social_pct": 87,
+  "social_no_website_pct": 44,
+  "seconds": 43
+ },
+ {
+  "city": "Firozabad",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 12,
+  "new": 12,
+  "duplicate": 0,
+  "available": 12,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 24,
+  "resolved_place": {
+   "name": "Firozabad, Uttar Pradesh, 283203, India",
+   "type": "town",
+   "bbox_km": [
+    9,
+    9
+   ]
+  },
+  "businesses": 12,
+  "phone_pct": 83,
+  "email_pct": 33,
+  "website_pct": 8,
+  "social_pct": 100,
+  "social_no_website_pct": 92,
+  "seconds": 31
+ },
+ {
+  "city": "Kochi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 300,
+  "new": 283,
+  "duplicate": 17,
+  "available": 354,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 25,
+  "resolved_place": {
+   "name": "Kochi, Ernakulam, Kerala, 682001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 283,
+  "phone_pct": 96,
+  "email_pct": 70,
+  "website_pct": 63,
+  "social_pct": 92,
+  "social_no_website_pct": 35,
+  "seconds": 71
+ },
+ {
+  "city": "Nellore",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 60,
+  "new": 54,
+  "duplicate": 6,
+  "available": 60,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 26,
+  "resolved_place": {
+   "name": "Nellore, Nellore Mandal, Sri Potti Sri Ramulu Nellore District, Andhra Pradesh, 524001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 54,
+  "phone_pct": 93,
+  "email_pct": 52,
+  "website_pct": 43,
+  "social_pct": 89,
+  "social_no_website_pct": 56,
+  "seconds": 41
+ },
+ {
+  "city": "Bhavnagar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 46,
+  "new": 43,
+  "duplicate": 3,
+  "available": 46,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 27,
+  "resolved_place": {
+   "name": "Bhavnagar, Bhavnagar Taluka, Bhavnagar, Gujarat, 364001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 43,
+  "phone_pct": 93,
+  "email_pct": 60,
+  "website_pct": 33,
+  "social_pct": 98,
+  "social_no_website_pct": 67,
+  "seconds": 36
+ },
+ {
+  "city": "Dehradun",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 196,
+  "new": 180,
+  "duplicate": 16,
+  "available": 196,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 28,
+  "resolved_place": {
+   "name": "Dehradun, Uttarakhand, 248001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 180,
+  "phone_pct": 93,
+  "email_pct": 48,
+  "website_pct": 56,
+  "social_pct": 78,
+  "social_no_website_pct": 42,
+  "seconds": 59
+ },
+ {
+  "city": "Durgapur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 47,
+  "new": 43,
+  "duplicate": 4,
+  "available": 47,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 29,
+  "resolved_place": {
+   "name": "Durgapur, Faridpur Durgapur, Paschim Bardhaman, West Bengal, 713200, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 43,
+  "phone_pct": 91,
+  "email_pct": 74,
+  "website_pct": 33,
+  "social_pct": 98,
+  "social_no_website_pct": 67,
+  "seconds": 31
+ },
+ {
+  "city": "Asansol",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 21,
+  "new": 20,
+  "duplicate": 1,
+  "available": 21,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 30,
+  "resolved_place": {
+   "name": "Asansol, Asansol Kulti Township, Paschim Bardhaman, West Bengal, India",
+   "type": "residential",
+   "bbox_km": [
+    10,
+    8
+   ]
+  },
+  "businesses": 20,
+  "phone_pct": 90,
+  "email_pct": 65,
+  "website_pct": 40,
+  "social_pct": 95,
+  "social_no_website_pct": 60,
+  "seconds": 28
+ },
+ {
+  "city": "Nanded",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 31,
+  "resolved_place": {
+   "name": "Nanded, Lakhandur Taluka, Bhandara, Maharashtra, India",
+   "type": "administrative",
+   "bbox_km": [
+    2,
+    3
+   ]
+  },
+  "seconds": 46
+ },
+ {
+  "city": "Kolhapur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 83,
+  "new": 75,
+  "duplicate": 8,
+  "available": 83,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 32,
+  "resolved_place": {
+   "name": "Kolhapur, Karvir, Kolhapur, Maharashtra, 416003, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 75,
+  "phone_pct": 96,
+  "email_pct": 61,
+  "website_pct": 41,
+  "social_pct": 95,
+  "social_no_website_pct": 56,
+  "seconds": 40
+ },
+ {
+  "city": "Ajmer",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 38,
+  "new": 37,
+  "duplicate": 1,
+  "available": 38,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 33,
+  "resolved_place": {
+   "name": "Ajmer, Ajmer Tehsil, Ajmer, Rajasthan, India",
+   "type": "city",
+   "bbox_km": [
+    11,
+    14
+   ]
+  },
+  "businesses": 37,
+  "phone_pct": 92,
+  "email_pct": 62,
+  "website_pct": 41,
+  "social_pct": 95,
+  "social_no_website_pct": 59,
+  "seconds": 39
+ },
+ {
+  "city": "Kalaburagi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 39,
+  "new": 34,
+  "duplicate": 5,
+  "available": 39,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 34,
+  "resolved_place": {
+   "name": "Kalaburagi, Kalaburagi taluku, Kalaburagi, Karnataka, 585101, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 34,
+  "phone_pct": 85,
+  "email_pct": 47,
+  "website_pct": 32,
+  "social_pct": 100,
+  "social_no_website_pct": 68,
+  "seconds": 59
+ },
+ {
+  "city": "Jamnagar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 68,
+  "new": 61,
+  "duplicate": 7,
+  "available": 68,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 35,
+  "resolved_place": {
+   "name": "Jamnagar, Jamnagar City Taluka, Jamnagar, Gujarat, 361001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 61,
+  "phone_pct": 97,
+  "email_pct": 61,
+  "website_pct": 33,
+  "social_pct": 97,
+  "social_no_website_pct": 66,
+  "seconds": 42
+ },
+ {
+  "city": "Ujjain",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 46,
+  "new": 42,
+  "duplicate": 4,
+  "available": 46,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 36,
+  "resolved_place": {
+   "name": "Ujjain, Ujjain NagarTahsil, Ujjain, Madhya Pradesh, 456001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 42,
+  "phone_pct": 95,
+  "email_pct": 71,
+  "website_pct": 19,
+  "social_pct": 98,
+  "social_no_website_pct": 81,
+  "seconds": 55
+ },
+ {
+  "city": "Loni",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 57,
+  "new": 48,
+  "duplicate": 9,
+  "available": 57,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 37,
+  "resolved_place": {
+   "name": "Loni, Ghaziabad, Uttar Pradesh, 110094, India",
+   "type": "town",
+   "bbox_km": [
+    9,
+    9
+   ]
+  },
+  "businesses": 49,
+  "phone_pct": 90,
+  "email_pct": 57,
+  "website_pct": 35,
+  "social_pct": 96,
+  "social_no_website_pct": 65,
+  "seconds": 39
+ },
+ {
+  "city": "Siliguri",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 104,
+  "new": 96,
+  "duplicate": 8,
+  "available": 104,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 38,
+  "resolved_place": {
+   "name": "Siliguri, Matigara block, Darjeeling, West Bengal, India",
+   "type": "city",
+   "bbox_km": [
+    8,
+    12
+   ]
+  },
+  "businesses": 96,
+  "phone_pct": 92,
+  "email_pct": 68,
+  "website_pct": 50,
+  "social_pct": 92,
+  "social_no_website_pct": 50,
+  "seconds": 46
+ },
+ {
+  "city": "Jhansi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 42,
+  "new": 39,
+  "duplicate": 3,
+  "available": 42,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 39,
+  "resolved_place": {
+   "name": "Jhansi, Uttar Pradesh, India",
+   "type": "residential",
+   "bbox_km": [
+    15,
+    8
+   ]
+  },
+  "businesses": 39,
+  "phone_pct": 95,
+  "email_pct": 51,
+  "website_pct": 28,
+  "social_pct": 92,
+  "social_no_website_pct": 69,
+  "seconds": 36
+ },
+ {
+  "city": "Ulhasnagar",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 48,
+  "new": 46,
+  "duplicate": 2,
+  "available": 48,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 40,
+  "resolved_place": {
+   "name": "Ulhasnagar, Ulhasnagar Subdistrict, Thane, Maharashtra, India",
+   "type": "administrative",
+   "bbox_km": [
+    4,
+    7
+   ]
+  },
+  "businesses": 46,
+  "phone_pct": 87,
+  "email_pct": 50,
+  "website_pct": 39,
+  "social_pct": 93,
+  "social_no_website_pct": 61,
+  "seconds": 49
+ },
+ {
+  "city": "Jammu",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 112,
+  "new": 102,
+  "duplicate": 10,
+  "available": 112,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 41,
+  "resolved_place": {
+   "name": "Jammu, Jammu district, Jammu and Kashmir, 180001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 102,
+  "phone_pct": 94,
+  "email_pct": 63,
+  "website_pct": 42,
+  "social_pct": 93,
+  "social_no_website_pct": 56,
+  "seconds": 36
+ },
+ {
+  "city": "Sangli-Miraj-Kupwad",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 74,
+  "new": 67,
+  "duplicate": 7,
+  "available": 74,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 42,
+  "resolved_place": {
+   "name": "Sangli, Miraj, Sangli, Maharashtra, 416416, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 67,
+  "phone_pct": 91,
+  "email_pct": 55,
+  "website_pct": 25,
+  "social_pct": 97,
+  "social_no_website_pct": 73,
+  "seconds": 45
+ },
+ {
+  "city": "Mangaluru",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 80,
+  "new": 78,
+  "duplicate": 2,
+  "available": 80,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 43,
+  "resolved_place": {
+   "name": "Mangaluru, Mangaluru taluk, Dakshina Kannada, Karnataka, 575001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 78,
+  "phone_pct": 91,
+  "email_pct": 53,
+  "website_pct": 41,
+  "social_pct": 96,
+  "social_no_website_pct": 59,
+  "seconds": 48
+ },
+ {
+  "city": "Erode",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 58,
+  "new": 54,
+  "duplicate": 4,
+  "available": 58,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 44,
+  "resolved_place": {
+   "name": "Erode, Tamil Nadu, 638001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 54,
+  "phone_pct": 89,
+  "email_pct": 57,
+  "website_pct": 37,
+  "social_pct": 96,
+  "social_no_website_pct": 61,
+  "seconds": 58
+ },
+ {
+  "city": "Belagavi",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 49,
+  "new": 46,
+  "duplicate": 3,
+  "available": 49,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 45,
+  "resolved_place": {
+   "name": "Belagavi, Belagavi taluku, Belagavi, Karnataka, 590001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 46,
+  "phone_pct": 89,
+  "email_pct": 59,
+  "website_pct": 35,
+  "social_pct": 100,
+  "social_no_website_pct": 65,
+  "seconds": 57
+ },
+ {
+  "city": "Ambattur",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 143,
+  "new": 132,
+  "duplicate": 11,
+  "available": 143,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 46,
+  "resolved_place": {
+   "name": "Zone 7 Ambattur, Chennai, Chennai Metropolitan Area, Ambattur, Chennai District, Tamil Nadu, India",
+   "type": "administrative",
+   "bbox_km": [
+    7,
+    8
+   ]
+  },
+  "businesses": 132,
+  "phone_pct": 92,
+  "email_pct": 66,
+  "website_pct": 48,
+  "social_pct": 91,
+  "social_no_website_pct": 50,
+  "seconds": 61
+ },
+ {
+  "city": "Tirunelveli",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 50,
+  "new": 44,
+  "duplicate": 6,
+  "available": 50,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 47,
+  "resolved_place": {
+   "name": "Tirunelveli, Tamil Nadu, 627001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 44,
+  "phone_pct": 82,
+  "email_pct": 59,
+  "website_pct": 55,
+  "social_pct": 91,
+  "social_no_website_pct": 45,
+  "seconds": 41
+ },
+ {
+  "city": "Malegaon",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 12,
+  "new": 12,
+  "duplicate": 0,
+  "available": 12,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 48,
+  "resolved_place": {
+   "name": "Malegaon, Malegaon Taluka, Nashik, Maharashtra, 423200, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 12,
+  "phone_pct": 83,
+  "email_pct": 75,
+  "website_pct": 25,
+  "social_pct": 100,
+  "social_no_website_pct": 75,
+  "seconds": 30
+ },
+ {
+  "city": "Gaya",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 50,
+  "new": 46,
+  "duplicate": 4,
+  "available": 50,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 49,
+  "resolved_place": {
+   "name": "Gaya, Gaya Town C.D.Block, Gaya, Bihar, 823001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 46,
+  "phone_pct": 87,
+  "email_pct": 61,
+  "website_pct": 24,
+  "social_pct": 93,
+  "social_no_website_pct": 76,
+  "seconds": 45
+ },
+ {
+  "city": "Jalgaon",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "PARTIAL",
+  "found": 21,
+  "new": 21,
+  "duplicate": 0,
+  "available": 21,
+  "errors": 1,
+  "error": "OpenStreetMap: Unexpected error: All connection attempts failed",
+  "job_id": 50,
+  "resolved_place": {
+   "name": "Jalgaon, Maharashtra, 425001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 21,
+  "phone_pct": 90,
+  "email_pct": 81,
+  "website_pct": 33,
+  "social_pct": 95,
+  "social_no_website_pct": 67,
+  "seconds": 63
+ }
+]

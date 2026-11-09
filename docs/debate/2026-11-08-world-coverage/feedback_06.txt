@@ -1,0 +1,5 @@
+## Check of your message-5 list (businesses within 10 km or with that city name)
+Round 5: 223 reference lines, 223 cities, 219 with business data (98 %).
+Not covered: - CK: 16/20 cities covered, 3,082 businesses near them; no data at: Kimiangatau, Palmerston, Roto, Rakahanga
+
+Same format again:

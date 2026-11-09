@@ -4,7 +4,7 @@ Database connection and session management.
 Provides both async (for FastAPI) and sync (for Alembic/workers) engines.
 """
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
@@ -39,7 +39,25 @@ def get_async_engine():
             settings.DATABASE_URL,
             **kwargs,
         )
+        if settings.DATABASE_URL.startswith("sqlite"):
+            _enable_sqlite_savepoints(_async_engine.sync_engine)
     return _async_engine
+
+
+def _enable_sqlite_savepoints(sync_engine) -> None:
+    """
+    SQLite's Python driver manages transactions itself, which silently breaks SAVEPOINT
+    (session.begin_nested). The discovery service relies on savepoints so one bad record cannot
+    fail a whole job, so let SQLAlchemy emit BEGIN itself (documented SQLAlchemy recipe).
+    """
+
+    @event.listens_for(sync_engine, "connect")
+    def _no_driver_transactions(dbapi_connection, connection_record):
+        dbapi_connection.isolation_level = None
+
+    @event.listens_for(sync_engine, "begin")
+    def _emit_begin(conn):
+        conn.exec_driver_sql("BEGIN")
 
 
 def get_async_session_factory():

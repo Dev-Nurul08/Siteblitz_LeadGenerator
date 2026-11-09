@@ -72,13 +72,21 @@ class TestOSMAdapter:
         )
         assert "around:5000" in query
 
-    def test_overpass_query_with_city_country(self):
+    def test_overpass_query_with_city_center_coordinates(self):
         """Query with lat/lon coordinates should produce valid Overpass query."""
         query = _build_overpass_query(
             latitude=51.5074, longitude=-0.1278, radius_km=5.0
         )
         assert "around:5000" in query
         assert "51.5074" in query
+
+    def test_overpass_query_with_city_country(self):
+        """Query with city+country (geocoder unreachable fallback) should use area filter."""
+        query = _build_overpass_query(
+            country_code="GB", city="London"
+        )
+        assert "London" in query
+        assert "GB" in query
 
     def test_overpass_query_with_category(self):
         """Query with category should filter by tag."""
@@ -88,9 +96,9 @@ class TestOSMAdapter:
         )
         assert "restaurant" in query
 
-    def test_overpass_query_requires_coords(self):
-        """Query without coordinates should raise TypeError."""
-        with pytest.raises(TypeError):
+    def test_overpass_query_requires_area(self):
+        """Query without coordinates, box or city/country should raise."""
+        with pytest.raises(ValueError, match="Must provide"):
             _build_overpass_query()
 
     def test_rate_limit_configured(self):
@@ -98,6 +106,29 @@ class TestOSMAdapter:
         adapter = OSMAdapter()
         assert adapter._rate_limit_rpm == 10
         assert adapter._min_interval == 6.0  # 60/10 = 6 seconds
+
+    @pytest.mark.asyncio
+    async def test_refused_endpoint_falls_back_to_next(self):
+        """A refused connection on one Overpass server tries the next one in the list."""
+        from unittest.mock import AsyncMock, MagicMock, patch
+
+        import httpx
+
+        from backend.app.engines.discovery.osm import OVERPASS_ENDPOINTS
+
+        ok = MagicMock(status_code=200)
+        ok.json.return_value = {"elements": [
+            {"type": "node", "id": 7, "lat": 51.5, "lon": -0.1, "tags": {"name": "Smile Dental", "amenity": "dentist"}},
+        ]}
+        ok.raise_for_status.return_value = None
+        post = AsyncMock(side_effect=[httpx.ConnectError("refused"), ok])
+        adapter = OSMAdapter()
+        adapter._min_interval = 0
+        with patch.object(httpx.AsyncClient, "post", post):
+            result = await adapter.discover(latitude=51.5, longitude=-0.1, radius_km=1.0)
+        assert [c.args[0] for c in post.call_args_list] == OVERPASS_ENDPOINTS[:2]
+        assert [b.name for b in result.businesses] == ["Smile Dental"]
+        assert result.errors == []
 
 
 class TestCSVImportAdapter:

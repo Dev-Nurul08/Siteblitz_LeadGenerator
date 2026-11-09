@@ -1,0 +1,252 @@
+[
+ {
+  "city": "Tiruchirappalli",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Bareilly",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Moradabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Mysuru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Tiruppur",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Gurugram",
+  "country_code": "IN",
+  "admin": "Haryana"
+ },
+ {
+  "city": "Aligarh",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Jalandhar",
+  "country_code": "IN",
+  "admin": "Punjab"
+ },
+ {
+  "city": "Bhubaneswar",
+  "country_code": "IN",
+  "admin": "Odisha"
+ },
+ {
+  "city": "Salem",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Mira-Bhayandar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Warangal",
+  "country_code": "IN",
+  "admin": "Telangana"
+ },
+ {
+  "city": "Thiruvananthapuram",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Guntur",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Bhiwandi",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Saharanpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Gorakhpur",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Bikaner",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Amravati",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Noida",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Jamshedpur",
+  "country_code": "IN",
+  "admin": "Jharkhand"
+ },
+ {
+  "city": "Bhilai",
+  "country_code": "IN",
+  "admin": "Chhattisgarh"
+ },
+ {
+  "city": "Cuttack",
+  "country_code": "IN",
+  "admin": "Odisha"
+ },
+ {
+  "city": "Firozabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Kochi",
+  "country_code": "IN",
+  "admin": "Kerala"
+ },
+ {
+  "city": "Nellore",
+  "country_code": "IN",
+  "admin": "Andhra Pradesh"
+ },
+ {
+  "city": "Bhavnagar",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Dehradun",
+  "country_code": "IN",
+  "admin": "Uttarakhand"
+ },
+ {
+  "city": "Durgapur",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Asansol",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Nanded",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Kolhapur",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Ajmer",
+  "country_code": "IN",
+  "admin": "Rajasthan"
+ },
+ {
+  "city": "Kalaburagi",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Jamnagar",
+  "country_code": "IN",
+  "admin": "Gujarat"
+ },
+ {
+  "city": "Ujjain",
+  "country_code": "IN",
+  "admin": "Madhya Pradesh"
+ },
+ {
+  "city": "Loni",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Siliguri",
+  "country_code": "IN",
+  "admin": "West Bengal"
+ },
+ {
+  "city": "Jhansi",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh"
+ },
+ {
+  "city": "Ulhasnagar",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Jammu",
+  "country_code": "IN",
+  "admin": "Jammu and Kashmir"
+ },
+ {
+  "city": "Sangli-Miraj-Kupwad",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Mangaluru",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Erode",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Belagavi",
+  "country_code": "IN",
+  "admin": "Karnataka"
+ },
+ {
+  "city": "Ambattur",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Tirunelveli",
+  "country_code": "IN",
+  "admin": "Tamil Nadu"
+ },
+ {
+  "city": "Malegaon",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ },
+ {
+  "city": "Gaya",
+  "country_code": "IN",
+  "admin": "Bihar"
+ },
+ {
+  "city": "Jalgaon",
+  "country_code": "IN",
+  "admin": "Maharashtra"
+ }
+]

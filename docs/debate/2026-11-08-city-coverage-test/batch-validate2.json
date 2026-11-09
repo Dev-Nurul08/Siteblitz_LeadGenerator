@@ -1,0 +1,22 @@
+[
+ {
+  "city": "Shenzhen",
+  "country_code": "CN",
+  "admin": "Guangdong"
+ },
+ {
+  "city": "Tokyo",
+  "country_code": "JP",
+  "admin": "Tokyo"
+ },
+ {
+  "city": "Tijuana",
+  "country_code": "MX",
+  "admin": "Baja California"
+ },
+ {
+  "city": "Shinjuku",
+  "country_code": "JP",
+  "admin": "Tokyo"
+ }
+]

@@ -23,6 +23,8 @@ import httpx
 import structlog
 
 from backend.app.config import get_settings
+from backend.app.engines.discovery.categories import category_regex, name_regex
+from backend.app.engines.discovery.geocode import MAX_BBOX_DEGREES, city_bbox
 from backend.app.engines.discovery.base import (
     AdapterResult,
     BaseSourceAdapter,
@@ -31,30 +33,9 @@ from backend.app.engines.discovery.base import (
 
 logger = structlog.get_logger(__name__)
 
-NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-USER_AGENT = "SiteBlitzLeadGenerator/0.2 (internal business research tool)"
 
-# A city bounding box larger than this (in degrees, ≈ 110 km per degree) means the name matched a
-# state or a whole district; scanning it would download gigabytes, so the job asks for a city.
-MAX_BBOX_DEGREES = 1.5
-
-# Category words used in the UI → fragments of Overture `basic_category` / `taxonomy` values.
-CATEGORY_SYNONYMS: dict[str, list[str]] = {
-    "cafe": ["cafe", "coffee"],
-    "salon": ["salon", "beauty", "hair"],
-    "hairdresser": ["hair", "salon"],
-    "gym": ["gym", "fitness"],
-    "dentist": ["dent"],
-    "clinic": ["clinic", "medical", "doctor"],
-    "lawyer": ["lawyer", "legal", "attorney"],
-    "accountant": ["accountant", "accounting", "tax"],
-    "estate_agent": ["real_estate"],
-    "car_repair": ["auto_repair", "car_repair", "automotive"],
-    "plumber": ["plumb"],
-    "electrician": ["electric"],
-    "hotel": ["hotel", "resort", "guest_house", "hostel"],
-    "school": ["school", "education", "tutor", "coaching"],
-}
+# MAX_BBOX_DEGREES (geocode.py): a box larger than this (≈ 110 km per degree) means the name matched
+# a state or a whole district; scanning it would download gigabytes, so the job asks for a city.
 
 SOCIAL_HOSTS = {
     "facebook.com": "facebook",
@@ -87,36 +68,38 @@ def social_platform(url: Optional[str]) -> Optional[str]:
     return None
 
 
-def category_patterns(category: Optional[str]) -> list[str]:
-    """ILIKE patterns for a UI category word (empty list = all categories)."""
-    if not category or not category.strip():
-        return []
-    key = category.strip().lower().replace(" ", "_")
-    fragments = CATEGORY_SYNONYMS.get(key, [key])
-    return [f"%{fragment}%" for fragment in fragments]
-
-
-def build_query(release: str, n_patterns: int) -> str:
+def build_query(release: str, with_category: bool, with_country: bool = False) -> str:
     """
-    SQL for one bounding box. Every user-controlled value is a `?` parameter; only the
-    release folder (from settings) and the number of placeholders are formatted in.
+    SQL for one bounding box. Every user-controlled value is a `?` parameter; only the release
+    folder (from settings) is formatted in. A category matches on the category fields by whole
+    word-parts OR on the business name (see categories.py for why both).
+    `total_available` = every match in the area before LIMIT, so the UI can say "500 of 3,780".
+    With a country, a place whose address names another country is left out; a place without an
+    address country is kept. Why: the Shenzhen box includes Hong Kong, and 462 of 500 "Shenzhen, CN"
+    results were Hong Kong businesses (2026-11-08); border cities (Tijuana / San Diego) do the same.
     """
     source = f"s3://overturemaps-us-west-2/release/{release}/theme=places/type=place/*"
+    country_clause = ""
+    if with_country:
+        country_clause = "AND (addresses[1].country IS NULL OR upper(addresses[1].country) = ?)"
     category_clause = ""
-    if n_patterns:
-        ors = " OR ".join(["(basic_category ILIKE ? OR taxonomy.primary ILIKE ?)"] * n_patterns)
-        category_clause = f"AND ({ors})"
+    if with_category:
+        category_clause = """AND (regexp_matches(coalesce(basic_category, ''), ?)
+               OR regexp_matches(coalesce(taxonomy.primary, ''), ?)
+               OR regexp_matches(lower(names.primary), ?))"""
     return f"""
         SELECT id, names.primary AS name, confidence, operating_status, basic_category,
                taxonomy.primary AS taxonomy_primary, websites, socials, phones, emails,
                addresses, brand.names.primary AS brand_name, brand.wikidata AS brand_wikidata,
                (bbox.xmin + bbox.xmax) / 2 AS lon, (bbox.ymin + bbox.ymax) / 2 AS lat,
-               list_transform(sources, lambda s: s.dataset) AS datasets
+               list_transform(sources, lambda s: s.dataset) AS datasets,
+               count(*) OVER () AS total_available
         FROM read_parquet('{source}', hive_partitioning = 1)
         WHERE bbox.xmin BETWEEN ? AND ? AND bbox.ymin BETWEEN ? AND ?
           AND names.primary IS NOT NULL
           AND coalesce(operating_status, '') <> 'permanently_closed'
           AND confidence >= ?
+          {country_clause}
           {category_clause}
         ORDER BY confidence DESC
         LIMIT ?
@@ -206,22 +189,10 @@ class OvertureAdapter(BaseSourceAdapter):
             "adapter_class": "backend.app.engines.discovery.overture.OvertureAdapter",
         }
 
-    async def _city_bbox(self, city: str, country_code: Optional[str]) -> tuple[float, float, float, float]:
-        """(west, east, south, north) of a city via one Nominatim lookup (1 request per job)."""
-        params = {"city": city, "format": "jsonv2", "limit": 1}
-        if country_code:
-            params["countrycodes"] = country_code.lower()
-        await self._rate_limit()
-        async with httpx.AsyncClient(timeout=20.0) as client:
-            response = await client.get(
-                NOMINATIM_URL, params=params, headers={"User-Agent": USER_AGENT}
-            )
-            response.raise_for_status()
-            hits = response.json()
-        if not hits:
-            raise LookupError(f"City '{city}' was not found in country '{country_code or 'any'}'.")
-        south, north, west, east = (float(v) for v in hits[0]["boundingbox"])
-        return west, east, south, north
+    async def _city_bbox(self, city: str, country_code: Optional[str],
+                         state: Optional[str] = None) -> tuple[float, float, float, float]:
+        """(west, east, south, north) of a city — shared, cached Nominatim lookup (geocode.py)."""
+        return await city_bbox(city, country_code, state)
 
     def _run_query(self, sql: str, params: list) -> list[dict[str, Any]]:
         """Blocking DuckDB read of the public Parquet files (called in a worker thread)."""
@@ -262,7 +233,7 @@ class OvertureAdapter(BaseSourceAdapter):
                 d = radius_km / 111.0
                 west, east, south, north = longitude - d, longitude + d, latitude - d, latitude + d
             elif city and city.strip():
-                west, east, south, north = await self._city_bbox(city.strip(), country_code)
+                west, east, south, north = await self._city_bbox(city.strip(), country_code, region)
             else:
                 raise ValueError(
                     "Overture needs a city or coordinates + radius (a whole country is too large)."
@@ -274,11 +245,14 @@ class OvertureAdapter(BaseSourceAdapter):
                     "(a district or state). Enter a city name or use coordinates + radius."
                 )
 
-            patterns = category_patterns(category)
-            sql = build_query(settings.OVERTURE_RELEASE, len(patterns))
+            cat_re, name_re = category_regex(category), name_regex(category)
+            country = (country_code or "").strip().upper() or None
+            sql = build_query(settings.OVERTURE_RELEASE, cat_re is not None, country is not None)
             params: list = [west, east, south, north, min_confidence]
-            for pattern in patterns:
-                params += [pattern, pattern]
+            if country:
+                params.append(country)
+            if cat_re:
+                params += [cat_re, cat_re, name_re]
             params.append(int(max_results))
 
             logger.info("overture_discovery_start", city=city, category=category,
@@ -295,7 +269,7 @@ class OvertureAdapter(BaseSourceAdapter):
                         "parse_error", f"Failed to parse Overture row: {exc}",
                         details={"id": row.get("id")},
                     ))
-            result.total_available = len(rows)
+            result.total_available = int(rows[0]["total_available"]) if rows else 0
 
         except LookupError as exc:
             result.errors.append(self._create_error("city_not_found", str(exc)))

@@ -1,0 +1,673 @@
+[
+ {
+  "city": "Puli Khumri",
+  "country_code": "AF",
+  "admin": "Baghlan",
+  "category": "dentist",
+  "expect": "Puli Khumri city, Baghlan Province, Afghanistan; OSM node 312781022, not Puli Khumri District",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "پل خمری, ولسوالی پل خمری, ولایت بغلان, 3601, افغانستان",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "countries": {
+   "AF": 1
+  },
+  "seconds": 83
+ },
+ {
+  "city": "Lashkar Gah",
+  "country_code": "AF",
+  "admin": "Helmand",
+  "category": "dentist",
+  "expect": "Lashkar Gah city, Helmand Province, Afghanistan; OSM node 312368833, not Lashkargah District",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 0,
+  "new": 0,
+  "duplicate": 0,
+  "available": 0,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "لښکرګاه, لښکرگاه ولسوالۍ, هلمند ولايت, 3901, افغانستان",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "seconds": 56
+ },
+ {
+  "city": "Butterworth",
+  "country_code": "MY",
+  "admin": "Penang",
+  "category": "dentist",
+  "expect": "Butterworth city, Penang, Malaysia; OSM node 205623582, not all Seberang Perai",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 34,
+  "new": 32,
+  "duplicate": 2,
+  "available": 34,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "Bandar Butterworth, Seberang Perai Utara, Seberang Perai, Pulau Pinang, Malaysia",
+   "type": "city",
+   "bbox_km": [
+    5,
+    7
+   ]
+  },
+  "businesses": 32,
+  "phone_pct": 94,
+  "email_pct": 47,
+  "website_pct": 19,
+  "social_pct": 100,
+  "social_no_website_pct": 81,
+  "countries": {
+   "MY": 32
+  },
+  "seconds": 63
+ },
+ {
+  "city": "Aurangabad",
+  "country_code": "IN",
+  "admin": "Maharashtra",
+  "category": "dentist",
+  "expect": "Chhatrapati Sambhajinagar (formerly Aurangabad), Maharashtra, India; not Aurangabad, Bihar",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 167,
+  "new": 154,
+  "duplicate": 13,
+  "available": 167,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "Chhatrapati Sambhajinagar, Maharashtra, 431002, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 154,
+  "phone_pct": 94,
+  "email_pct": 63,
+  "website_pct": 34,
+  "social_pct": 96,
+  "social_no_website_pct": 66,
+  "countries": {
+   "IN": 154
+  },
+  "seconds": 118
+ },
+ {
+  "city": "Allahabad",
+  "country_code": "IN",
+  "admin": "Uttar Pradesh",
+  "category": "dentist",
+  "expect": "Prayagraj (formerly Allahabad) city, Uttar Pradesh, India",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 160,
+  "new": 143,
+  "duplicate": 17,
+  "available": 160,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "Prayagraj, Allahabad, Prayagraj, Uttar Pradesh, 211001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 143,
+  "phone_pct": 94,
+  "email_pct": 67,
+  "website_pct": 41,
+  "social_pct": 99,
+  "social_no_website_pct": 59,
+  "countries": {
+   "IN": 143
+  },
+  "seconds": 90
+ },
+ {
+  "city": "Ahmednagar",
+  "country_code": "IN",
+  "admin": "Maharashtra",
+  "category": "dentist",
+  "expect": "Ahilyanagar (formerly Ahmednagar) city, Maharashtra, India",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 44,
+  "new": 43,
+  "duplicate": 1,
+  "available": 44,
+  "errors": 0,
+  "error": "",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "Ahilyanagar, Nagar Subdistrict, Ahilyanagar District, Maharashtra, 414001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 43,
+  "phone_pct": 84,
+  "email_pct": 44,
+  "website_pct": 21,
+  "social_pct": 100,
+  "social_no_website_pct": 79,
+  "countries": {
+   "IN": 43
+  },
+  "seconds": 98
+ },
+ {
+  "city": "Gurgaon",
+  "country_code": "IN",
+  "admin": "Haryana",
+  "category": "dentist",
+  "expect": "Gurugram (formerly Gurgaon) city, Haryana, India",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 282,
+  "duplicate": 18,
+  "available": 927,
+  "errors": 0,
+  "error": "",
+  "job_id": 7,
+  "resolved_place": {
+   "name": "Gurugram, Haryana, India",
+   "type": "city",
+   "bbox_km": [
+    66,
+    38
+   ]
+  },
+  "businesses": 282,
+  "phone_pct": 99,
+  "email_pct": 74,
+  "website_pct": 79,
+  "social_pct": 86,
+  "social_no_website_pct": 20,
+  "countries": {
+   "IN": 282
+  },
+  "seconds": 126
+ },
+ {
+  "city": "Bilaspur",
+  "country_code": "IN",
+  "admin": "Chhattisgarh",
+  "category": "dentist",
+  "expect": "Bilaspur city, Chhattisgarh, India; not Bilaspur, Himachal Pradesh",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 101,
+  "new": 93,
+  "duplicate": 8,
+  "available": 101,
+  "errors": 0,
+  "error": "",
+  "job_id": 8,
+  "resolved_place": {
+   "name": "Bilaspur, Bilaspur Tahsil, Bilaspur, Chhattisgarh, 495004, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 93,
+  "phone_pct": 94,
+  "email_pct": 72,
+  "website_pct": 39,
+  "social_pct": 98,
+  "social_no_website_pct": 61,
+  "countries": {
+   "IN": 93
+  },
+  "seconds": 80
+ },
+ {
+  "city": "Bilaspur",
+  "country_code": "IN",
+  "admin": "Himachal Pradesh",
+  "category": "dentist",
+  "expect": "Bilaspur town, Himachal Pradesh, India; not Bilaspur, Chhattisgarh",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 32,
+  "new": 30,
+  "duplicate": 2,
+  "available": 32,
+  "errors": 0,
+  "error": "",
+  "job_id": 9,
+  "resolved_place": {
+   "name": "Bilaspur, Himachal Pradesh, India",
+   "type": "town",
+   "bbox_km": [
+    59,
+    43
+   ]
+  },
+  "businesses": 30,
+  "phone_pct": 97,
+  "email_pct": 77,
+  "website_pct": 40,
+  "social_pct": 97,
+  "social_no_website_pct": 60,
+  "countries": {
+   "IN": 30
+  },
+  "seconds": 64
+ },
+ {
+  "city": "Springfield",
+  "country_code": "US",
+  "admin": "Illinois",
+  "category": "dentist",
+  "expect": "Springfield city, Illinois, United States; capital of Illinois",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 98,
+  "new": 85,
+  "duplicate": 13,
+  "available": 98,
+  "errors": 0,
+  "error": "",
+  "job_id": 10,
+  "resolved_place": {
+   "name": "Springfield, Sangamon County, Illinois, United States",
+   "type": "city",
+   "bbox_km": [
+    23,
+    24
+   ]
+  },
+  "businesses": 85,
+  "phone_pct": 95,
+  "email_pct": 47,
+  "website_pct": 87,
+  "social_pct": 62,
+  "social_no_website_pct": 4,
+  "countries": {
+   "US": 85
+  },
+  "seconds": 55
+ },
+ {
+  "city": "Springfield",
+  "country_code": "US",
+  "admin": "Massachusetts",
+  "category": "dentist",
+  "expect": "Springfield city, Massachusetts, United States; not Springfield, Illinois",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 108,
+  "new": 90,
+  "duplicate": 18,
+  "available": 108,
+  "errors": 0,
+  "error": "",
+  "job_id": 11,
+  "resolved_place": {
+   "name": "Springfield, Hampden County, Massachusetts, United States",
+   "type": "city",
+   "bbox_km": [
+    17,
+    11
+   ]
+  },
+  "businesses": 90,
+  "phone_pct": 98,
+  "email_pct": 42,
+  "website_pct": 86,
+  "social_pct": 60,
+  "social_no_website_pct": 3,
+  "countries": {
+   "US": 90
+  },
+  "seconds": 52
+ },
+ {
+  "city": "Portland",
+  "country_code": "US",
+  "admin": "Maine",
+  "category": "dentist",
+  "expect": "Portland city, Maine, United States; not Portland, Oregon",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 138,
+  "new": 108,
+  "duplicate": 30,
+  "available": 138,
+  "errors": 0,
+  "error": "",
+  "job_id": 12,
+  "resolved_place": {
+   "name": "Portland, Cumberland County, Maine, United States",
+   "type": "city",
+   "bbox_km": [
+    41,
+    20
+   ]
+  },
+  "businesses": 108,
+  "phone_pct": 94,
+  "email_pct": 53,
+  "website_pct": 87,
+  "social_pct": 60,
+  "social_no_website_pct": 4,
+  "countries": {
+   "US": 108
+  },
+  "seconds": 85
+ },
+ {
+  "city": "Portland",
+  "country_code": "US",
+  "admin": "Oregon",
+  "category": "dentist",
+  "expect": "Portland city, Oregon, United States; not Portland, Maine",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 282,
+  "duplicate": 18,
+  "available": 1018,
+  "errors": 0,
+  "error": "",
+  "job_id": 13,
+  "resolved_place": {
+   "name": "Portland, Multnomah County, Oregon, United States",
+   "type": "city",
+   "bbox_km": [
+    40,
+    24
+   ]
+  },
+  "businesses": 282,
+  "phone_pct": 91,
+  "email_pct": 62,
+  "website_pct": 88,
+  "social_pct": 73,
+  "social_no_website_pct": 5,
+  "countries": {
+   "US": 282
+  },
+  "seconds": 102
+ },
+ {
+  "city": "Riyadh",
+  "country_code": "SA",
+  "admin": "Riyadh Region",
+  "category": "dentist",
+  "expect": "Riyadh city, Saudi Arabia; not the full Riyadh Region",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 278,
+  "duplicate": 22,
+  "available": 337,
+  "errors": 0,
+  "error": "",
+  "job_id": 14,
+  "resolved_place": {
+   "name": "الرياض, محافظة الرياض, منطقة الرياض, 12643, السعودية",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 278,
+  "phone_pct": 84,
+  "email_pct": 44,
+  "website_pct": 46,
+  "social_pct": 95,
+  "social_no_website_pct": 54,
+  "countries": {
+   "SA": 278
+  },
+  "seconds": 65
+ },
+ {
+  "city": "Nairobi",
+  "country_code": "KE",
+  "admin": "Nairobi County",
+  "category": "dentist",
+  "expect": "Nairobi city, Kenya; not an unrelated county or administrative feature",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 269,
+  "duplicate": 31,
+  "available": 338,
+  "errors": 0,
+  "error": "",
+  "job_id": 15,
+  "resolved_place": {
+   "name": "Nairobi, Kenya",
+   "type": "city",
+   "bbox_km": [
+    49,
+    32
+   ]
+  },
+  "businesses": 269,
+  "phone_pct": 97,
+  "email_pct": 73,
+  "website_pct": 60,
+  "social_pct": 95,
+  "social_no_website_pct": 39,
+  "countries": {
+   "KE": 269
+  },
+  "seconds": 72
+ },
+ {
+  "city": "Tijuana",
+  "country_code": "MX",
+  "admin": "Baja California",
+  "category": "dentist",
+  "expect": "Tijuana city, Baja California, Mexico; exclude San Diego businesses across the international border",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 289,
+  "duplicate": 11,
+  "available": 2303,
+  "errors": 0,
+  "error": "",
+  "job_id": 16,
+  "resolved_place": {
+   "name": "Tijuana, Municipio de Tijuana, Baja California, 22000, México",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 289,
+  "phone_pct": 100,
+  "email_pct": 86,
+  "website_pct": 63,
+  "social_pct": 99,
+  "social_no_website_pct": 37,
+  "countries": {
+   "MX": 289
+  },
+  "seconds": 118
+ },
+ {
+  "city": "San Diego",
+  "country_code": "US",
+  "admin": "California",
+  "category": "dentist",
+  "expect": "San Diego city, California, United States; exclude Mexican businesses across the international border",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 296,
+  "duplicate": 4,
+  "available": 2285,
+  "errors": 0,
+  "error": "",
+  "job_id": 17,
+  "resolved_place": {
+   "name": "San Diego, San Diego County, California, United States",
+   "type": "city",
+   "bbox_km": [
+    45,
+    64
+   ]
+  },
+  "businesses": 296,
+  "phone_pct": 98,
+  "email_pct": 70,
+  "website_pct": 96,
+  "social_pct": 79,
+  "social_no_website_pct": 3,
+  "countries": {
+   "US": 296
+  },
+  "seconds": 138
+ },
+ {
+  "city": "Goma",
+  "country_code": "CD",
+  "admin": "Nord-Kivu",
+  "category": "dentist",
+  "expect": "Goma city, North Kivu, DR Congo; not Gisenyi in Rwanda across the border",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 21,
+  "resolved_place": {
+   "name": "Goma, Nord-Kivu, République démocratique du Congo",
+   "type": "city",
+   "bbox_km": [
+    16,
+    12
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 0,
+  "website_pct": 100,
+  "social_pct": 0,
+  "social_no_website_pct": 0,
+  "countries": {
+   "CD": 1
+  },
+  "seconds": 39
+ },
+ {
+  "city": "Zaranj",
+  "country_code": "AF",
+  "admin": "Nimruz",
+  "category": "dentist",
+  "expect": "Zaranj city, Nimruz Province, Afghanistan; exclude Iranian places across the border",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 1,
+  "new": 1,
+  "duplicate": 0,
+  "available": 1,
+  "errors": 0,
+  "error": "",
+  "job_id": 22,
+  "resolved_place": {
+   "name": "زرنج, ولسوالی زرنج, ولایت نیمروز, افغانستان",
+   "type": "town",
+   "bbox_km": [
+    9,
+    9
+   ]
+  },
+  "businesses": 1,
+  "phone_pct": 100,
+  "email_pct": 100,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "countries": {
+   "AF": 1
+  },
+  "seconds": 34
+ },
+ {
+  "city": "Abadan",
+  "country_code": "IR",
+  "admin": "Khuzestan",
+  "category": "dentist",
+  "expect": "Abadan city, Khuzestan Province, Iran; not Iraqi places across the Shatt al-Arab border",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 3,
+  "new": 3,
+  "duplicate": 0,
+  "available": 3,
+  "errors": 0,
+  "error": "",
+  "job_id": 23,
+  "resolved_place": {
+   "name": "آبادان, بخش مرکزی شهرستان آبادان, شهرستان آبادان, استان خوزستان, ایران",
+   "type": "city",
+   "bbox_km": [
+    16,
+    12
+   ]
+  },
+  "businesses": 3,
+  "phone_pct": 100,
+  "email_pct": 33,
+  "website_pct": 0,
+  "social_pct": 100,
+  "social_no_website_pct": 100,
+  "countries": {
+   "IR": 3
+  },
+  "seconds": 43
+ }
+]

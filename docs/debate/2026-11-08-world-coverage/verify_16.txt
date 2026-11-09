@@ -1,0 +1,13 @@
+Round 16: 372 reference lines, 371 cities, 367 with business data (99 %).
+- BL: 1/1 cities covered, 517 businesses near them
+- ES: 22/22 cities covered, 786,528 businesses near them
+- KN: 18/18 cities covered, 11,143 businesses near them
+- KR: 19/19 cities covered, 306,089 businesses near them
+- LC: 12/12 cities covered, 10,243 businesses near them
+- LK: 15/15 cities covered, 167,296 businesses near them
+- SB: 12/13 cities covered, 1,085 businesses near them; no data at: Tigoa
+- SH: 10/10 cities covered, 502 businesses near them
+- SI: 212/212 cities covered, 302,481 businesses near them
+- SO: 18/19 cities covered, 4,841 businesses near them; no data at: Bu'ale
+- SS: 12/14 cities covered, 1,537 businesses near them; no data at: Abyei, Pariang
+- ZA: 16/16 cities covered, 241,639 businesses near them

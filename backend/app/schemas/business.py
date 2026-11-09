@@ -164,6 +164,7 @@ class DiscoveryStatusResponse(BaseModel):
     country_code: Optional[str] = None
     city: Optional[str] = None
     category: Optional[str] = None
+    available: Optional[int] = None  # matches in the area before max_results
     records_found: int
     records_new: int
     records_duplicate: int

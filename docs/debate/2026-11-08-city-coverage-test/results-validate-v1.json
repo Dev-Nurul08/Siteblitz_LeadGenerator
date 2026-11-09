@@ -1,0 +1,184 @@
+[
+ {
+  "city": "Pune",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 288,
+  "duplicate": 12,
+  "available": 1717,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Pune, Pune City Subdistrict, Pune, Maharashtra, 411001, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 288,
+  "phone_pct": 99,
+  "email_pct": 79,
+  "website_pct": 76,
+  "social_pct": 88,
+  "social_no_website_pct": 23,
+  "seconds": 94
+ },
+ {
+  "city": "Pimpri-Chinchwad",
+  "country_code": "IN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 18,
+  "duplicate": 282,
+  "available": 1563,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411089, India",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 287,
+  "phone_pct": 99,
+  "email_pct": 82,
+  "website_pct": 77,
+  "social_pct": 90,
+  "social_no_website_pct": 22,
+  "seconds": 97
+ },
+ {
+  "city": "Beijing",
+  "country_code": "CN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 7,
+  "new": 7,
+  "duplicate": 0,
+  "available": 7,
+  "errors": 0,
+  "error": "",
+  "job_id": 3,
+  "resolved_place": {
+   "name": "北京市, 中国",
+   "type": "city",
+   "bbox_km": [
+    166,
+    165
+   ],
+   "trimmed_from_km": [
+    258,
+    210
+   ]
+  },
+  "businesses": 7,
+  "phone_pct": 71,
+  "email_pct": 14,
+  "website_pct": 57,
+  "social_pct": 57,
+  "social_no_website_pct": 29,
+  "seconds": 41
+ },
+ {
+  "city": "Shenzhen",
+  "country_code": "CN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 293,
+  "duplicate": 7,
+  "available": 522,
+  "errors": 0,
+  "error": "",
+  "job_id": 4,
+  "resolved_place": {
+   "name": "深圳市, 广东省, 中国",
+   "type": "city",
+   "bbox_km": [
+    125,
+    133
+   ],
+   "trimmed_from_km": [
+    190,
+    133
+   ]
+  },
+  "businesses": 293,
+  "phone_pct": 93,
+  "email_pct": 43,
+  "website_pct": 52,
+  "social_pct": 95,
+  "social_no_website_pct": 48,
+  "seconds": 147
+ },
+ {
+  "city": "Shanghai",
+  "country_code": "CN",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 13,
+  "new": 13,
+  "duplicate": 0,
+  "available": 13,
+  "errors": 0,
+  "error": "",
+  "job_id": 5,
+  "resolved_place": {
+   "name": "上海市, 黄浦区, 上海市, 200001, 中国",
+   "type": "city",
+   "bbox_km": [
+    36,
+    36
+   ]
+  },
+  "businesses": 13,
+  "phone_pct": 100,
+  "email_pct": 69,
+  "website_pct": 100,
+  "social_pct": 69,
+  "social_no_website_pct": 0,
+  "seconds": 110
+ },
+ {
+  "city": "Tokyo",
+  "country_code": "JP",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 261,
+  "new": 256,
+  "duplicate": 5,
+  "available": 261,
+  "errors": 0,
+  "error": "",
+  "job_id": 6,
+  "resolved_place": {
+   "name": "八王子市, 東京都, 日本",
+   "type": "city",
+   "bbox_km": [
+    30,
+    13
+   ]
+  },
+  "businesses": 256,
+  "phone_pct": 98,
+  "email_pct": 5,
+  "website_pct": 92,
+  "social_pct": 51,
+  "social_no_website_pct": 8,
+  "seconds": 64
+ }
+]

@@ -1,0 +1,14 @@
+Round 12: 233 reference lines, 233 cities, 231 with business data (99 %).
+- MA: 15/15 cities covered, 87,802 businesses near them
+- MC: 9/9 cities covered, 22,959 businesses near them
+- MD: 40/40 cities covered, 59,580 businesses near them
+- ME: 25/25 cities covered, 32,498 businesses near them
+- MM: 17/17 cities covered, 56,763 businesses near them
+- MN: 23/23 cities covered, 20,195 businesses near them
+- MS: 12/12 cities covered, 1,092 businesses near them
+- MZ: 12/12 cities covered, 14,876 businesses near them
+- NA: 18/18 cities covered, 9,322 businesses near them
+- NC: 11/11 cities covered, 7,304 businesses near them
+- NL: 20/22 cities covered, 537,748 businesses near them; no data at: The Bottom, Oranjestad
+- NP: 14/14 cities covered, 109,324 businesses near them
+- NR: 15/15 cities covered, 570 businesses near them

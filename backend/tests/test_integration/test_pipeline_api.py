@@ -106,6 +106,26 @@ def test_each_csv_file_imports_its_own_rows_and_reimport_is_duplicate(client):
     assert names == {"Shah Dental Care", "Lakeview Bakery", "Riverside Salon"}
 
 
+def test_a_repeat_search_still_lists_the_businesses_it_found(client):
+    # The second job finds the same records again (all duplicates). Its business list, map,
+    # export and website checks used to be empty for it.
+    _import(client, "a.csv", CSV_A)
+    again = _import(client, "a.csv", CSV_A)
+    assert (again["new"], again["duplicate"]) == (0, 2)
+    job = again["job_id"]
+
+    listed = client.get("/api/v1/businesses", params={"job_id": job}).json()
+    assert {b["name"] for b in listed["items"]} == {"Shah Dental Care", "Lakeview Bakery"}
+    # the CSV rows have no coordinates, so the map has 2 businesses and no pins
+    assert client.get("/api/v1/businesses/points", params={"job_id": job}).json()["total"] == 2
+    csv_rows = client.get("/api/v1/businesses/export", params={"format": "csv", "job_id": job}).text.strip().splitlines()
+    assert len(csv_rows) == 3  # header + 2
+
+    # A third run of the same file adds no second sighting row (unique per job + record)
+    third = _import(client, "a.csv", CSV_A)
+    assert client.get("/api/v1/businesses", params={"job_id": third["job_id"]}).json()["total"] == 2
+
+
 def test_full_pipeline_qualify_enroll_once_and_unsubscribe_by_link(client):
     _import(client, "a.csv", CSV_A)
     items = client.get("/api/v1/businesses", params={"search": "Shah"}).json()["items"]
@@ -381,3 +401,88 @@ def test_contact_log_do_not_contact_blocks_readiness(client, no_guessed_domains)
     assert body["assessment"]["outreach_readiness"] == "BLOCKED"
     assert client.post(f"/api/v1/intelligence/business/{salon}/contact-log",
                        json={"channel": "fax", "outcome": "other"}).status_code == 422
+
+
+def test_same_phone_same_city_is_one_business_even_with_another_name(client):
+    csv_text = (
+        "name,city,country,phone\n"
+        "Cafe Nirvana,Udaipur,IN,+91 76652 95252\n"
+        "Nirvana Cafe & Lounge,Udaipur,IN,076652 95252\n"   # same number, other spelling
+        "Cafe Nirvana,Jaipur,IN,+91 76652 95252\n"          # same number, other city: kept
+    )
+    result = _import(client, "phones.csv", csv_text)
+    assert (result["new"], result["duplicate"]) == (2, 1)
+
+
+def test_one_bad_record_does_not_fail_the_job(client, monkeypatch):
+    from backend.app.services.discovery_service import DiscoveryService
+
+    original = DiscoveryService._create_business
+
+    async def flaky(self, discovered, source_record):
+        if discovered.name == "Broken Row":
+            raise RuntimeError("simulated bad record")
+        return await original(self, discovered, source_record)
+
+    monkeypatch.setattr(DiscoveryService, "_create_business", flaky)
+    csv_text = "name,city,country\nGood One,Pune,IN\nBroken Row,Pune,IN\nGood Two,Pune,IN\n"
+    result = _import(client, "flaky.csv", csv_text)
+    assert result["status"] in ("COMPLETED", "PARTIAL")
+    assert (result["new"], result["errors"]) == (2, 1)
+    names = {b["name"] for b in client.get("/api/v1/businesses").json()["items"]}
+    assert names == {"Good One", "Good Two"}
+
+
+def test_duplicate_categories_on_one_record_are_merged(client, monkeypatch):
+    from backend.app.engines.discovery.csv_import import CSVImportAdapter
+    from backend.app.engines.discovery.base import AdapterResult, DiscoveredBusiness
+
+    async def two_clinic_tags(self, **kw):
+        return AdapterResult(businesses=[DiscoveredBusiness(
+            source_external_id="csv:row:x1", name="Care Clinic", city="Pune", country_code="IN",
+            categories=["clinic", "clinic"], source_categories=["amenity:clinic", "healthcare:clinic"])])
+
+    monkeypatch.setattr(CSVImportAdapter, "discover", two_clinic_tags)
+    result = _import(client, "x.csv", "name\nignored\n")
+    assert (result["new"], result["errors"]) == (1, 0)
+
+
+def test_dead_listed_domain_is_explained_and_can_be_rechecked(client, monkeypatch, no_guessed_domains):
+    async def dead(self, url):
+        return ResolutionResult(original_url=url, is_reachable=False, status=WebsiteStatus.BROKEN,
+                                error_message="Could not establish connection to host")
+
+    monkeypatch.setattr(WebsiteResolver, "resolve", dead)
+    _import(client, "a.csv", CSV_A)  # Shah Dental lists https://shahdental-test.com
+    clinic = _id(client, "Shah Dental")
+    first = client.post(f"/api/v1/intelligence/assess/{clinic}").json()
+    assert first["assessment"]["website_verdict"] == "UNKNOWN"  # one failure: wait for a 2nd ≥ 6 h later
+    fetch = [c for c in first["checks"] if c["type"] == "SITE_FETCH"][0]
+    assert "no DNS record" in fetch["detail"]["note"]
+
+    again = client.post("/api/v1/intelligence/assess-batch", params={"recheck": "UNKNOWN"}).json()
+    assert again["assessed"] == 1
+    detail = client.get(f"/api/v1/intelligence/business/{clinic}").json()
+    assert len([c for c in detail["checks"] if c["type"] == "SITE_FETCH"]) == 2
+
+
+def test_same_email_same_city_is_one_business(client):
+    csv_text = (
+        "name,city,country,email\n"
+        "Cosmo Dentist,Delhi,IN,Cosmodontist@gmail.com\n"
+        "Dr Gupta Cosmo Dental Clinic,Delhi,IN,cosmodontist@gmail.com\n"
+    )
+    result = _import(client, "emails.csv", csv_text)
+    assert (result["new"], result["duplicate"]) == (1, 1)
+
+
+def test_shared_head_office_email_does_not_merge_two_branches(client):
+    csv_text = (
+        "name,city,country,email\n"
+        "Clove Dental Andheri,Mumbai,IN,care@chain-test.in\n"
+        "Clove Dental Bandra,Mumbai,IN,care@chain-test.in\n"   # same chain e-mail, different branch
+        "Sunrise Orthodontics,Mumbai,IN,care@chain-test.in\n"  # no shared distinctive word -> separate
+    )
+    result = _import(client, "branches.csv", csv_text)
+    # Andheri / Bandra branches differ by a distinctive word each -> kept apart; the third shares none.
+    assert (result["new"], result["duplicate"]) == (3, 0)

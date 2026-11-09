@@ -1,0 +1,14 @@
+Round 6: 238 reference lines, 238 cities, 235 with business data (99 %).
+- EC: 27/27 cities covered, 210,373 businesses near them
+- EE: 19/19 cities covered, 42,910 businesses near them
+- EG: 29/29 cities covered, 334,581 businesses near them
+- ER: 11/11 cities covered, 127 businesses near them
+- ET: 18/18 cities covered, 7,418 businesses near them
+- FI: 20/21 cities covered, 170,732 businesses near them; no data at: Mariehamn
+- FJ: 12/12 cities covered, 13,083 businesses near them
+- FK: 6/8 cities covered, 163 businesses near them; no data at: North Arm, Port Howard
+- FO: 32/32 cities covered, 10,453 businesses near them
+- FR: 20/20 cities covered, 844,484 businesses near them
+- GQ: 12/12 cities covered, 478 businesses near them
+- SV: 19/19 cities covered, 159,782 businesses near them
+- SZ: 10/10 cities covered, 4,083 businesses near them

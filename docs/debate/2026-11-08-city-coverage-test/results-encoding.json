@@ -1,0 +1,68 @@
+[
+ {
+  "city": "Wrocław",
+  "country_code": "PL",
+  "admin": "Lower Silesian Voivodeship",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 300,
+  "new": 292,
+  "duplicate": 8,
+  "available": 303,
+  "errors": 0,
+  "error": "",
+  "job_id": 1,
+  "resolved_place": {
+   "name": "Wrocław, województwo dolnośląskie, Polska",
+   "type": "city",
+   "bbox_km": [
+    41,
+    19
+   ]
+  },
+  "businesses": 292,
+  "phone_pct": 97,
+  "email_pct": 80,
+  "website_pct": 84,
+  "social_pct": 95,
+  "social_no_website_pct": 16,
+  "countries": {
+   "PL": 292
+  },
+  "seconds": 79
+ },
+ {
+  "city": "Łódź",
+  "country_code": "PL",
+  "admin": "Łódź Voivodeship",
+  "category": "dentist",
+  "http": 200,
+  "status": "COMPLETED",
+  "found": 261,
+  "new": 251,
+  "duplicate": 10,
+  "available": 261,
+  "errors": 0,
+  "error": "",
+  "job_id": 2,
+  "resolved_place": {
+   "name": "Łódź, województwo łódzkie, Polska",
+   "type": "city",
+   "bbox_km": [
+    35,
+    19
+   ]
+  },
+  "businesses": 251,
+  "phone_pct": 98,
+  "email_pct": 80,
+  "website_pct": 75,
+  "social_pct": 94,
+  "social_no_website_pct": 25,
+  "countries": {
+   "PL": 251
+  },
+  "seconds": 71
+ }
+]

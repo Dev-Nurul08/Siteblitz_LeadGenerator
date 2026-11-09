@@ -1,0 +1,8 @@
+## Check of your message-11 list
+Round 11: 260 reference lines, 260 cities, 253 with business data (97 %).
+Not covered: - FM: 9/10 cities covered, 498 businesses near them; no data at: Tol
+Not covered: - MH: 28/31 cities covered, 538 businesses near them; no data at: Airuk, Jabat, Lib
+Not covered: - MR: 16/17 cities covered, 4,364 businesses near them; no data at: Guerou
+Not covered: - MU: 16/18 cities covered, 72,942 businesses near them; no data at: Vingt Cinq, Raphael Island
+
+Same format again:

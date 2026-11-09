@@ -1,0 +1,5 @@
+## Check of your message-15 list
+Round 15: 271 reference lines, 271 cities, 267 with business data (99 %).
+Not covered: - RS: 27/31 cities covered, 80,266 businesses near them; no data at: Pristina, Gjilan, Peja, Prizren
+
+Same format again:
