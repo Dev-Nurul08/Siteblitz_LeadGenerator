@@ -1,62 +1,82 @@
-# HANDOFF — SiteBlitz Lead Generator — Phases 1, 1b–1f, 2, 4a–4d + city coverage test
+# HANDOFF — SiteBlitz Lead Generator — Phase 13 (AI outreach writer) — 2026-11-10
 
-Session date: 2026-11-08 · Branch: `phase-01-pipeline-repair` (from `main` @ 2705aca) · **not pushed**
+Branch: `phase-01-pipeline-repair`. Earlier phases (1–4d, 2026-11-08) are on `docs/PHASES.md`; the outreach
+strategy debate of the same day is in `docs/debate/2026-11-10-outreach-lifecycle-to-payment/RESULT.md`.
 
-## Done (verified)
-- **World business data (6th request, overnight)**: `E:\SiteBlitz-World-Business-Data\` (outside the repo,
-  shareable): 86,751,626 businesses from Overture Places 2026-10-21.0, 249 country folders (ZIP of CSV parts
-  ≤ 1 M rows with UTF-8 BOM + `<CC>_states_and_cities.csv` + `<CC>_categories.csv`), ISO state names,
-  world_summary.csv, README (English + Roman Hindi), LICENSE-and-ATTRIBUTION. All 249 ZIPs open; CRC + row
-  counts checked on samples. ChatGPT reference lists for all 249 countries (5,090 state capitals / largest cities):
-  5,048 (99.2 %) have data — `verification/README.md`. Rebuild: `bash scripts/world_run_all.sh` (download → split →
-  export → summary, resumable); `_work/` (12.5 GB) is only needed to rebuild or re-verify.
-- **City coverage test (5th request)**: 357 population-ranked cities in 53 countries (India 150, Bangladesh 38,
-  Afghanistan 22, 3 each in the 50 most populous other countries) + 39 re-check / validation searches, 10 ChatGPT
-  rounds. Full write-up: `docs/debate/2026-11-08-city-coverage-test/RESULT.md`.
-- Bugs the test found and fixed (each with a live before / after):
-  - repeat / overlapping searches listed nothing they had found before (job sightings) — Pimpri-Chinchwad 19 → 287;
-  - results not limited to the chosen country — "Shenzhen, CN" was 479 Hong Kong dentists of 522 → 43 CN;
-  - geocoder: Beijing → a business district, Ho Chi Minh City → a TV station, Tokyo → Hachioji, Nanded → a village,
-    Hubli-Dharwad → municipal offices; now name-checked settlements, city beats village, landmark = not found,
-    whole-municipality boxes trimmed to 1.5° and labelled, province-only names rejected — 20 / 20 on a validation
-    batch with expected answers;
-  - Find screen offered 10 countries (Bangladesh, Afghanistan impossible) → all 249;
-  - a city name outside cp1252 (Wrocław, Łódź) crashed the job through a log line on Windows → UTF-8 output.
-- Backend 221 tests pass; frontend `npm run build` passes; Find screen "Searched area" line screenshotted.
-- Earlier this session (phases 1–4d): see `docs/PHASES.md` and `docs/DECISIONS.md`.
+## Done
+- Founder approved the 18-row spec `docs/spec/outreach-engine.md` ("go for it"). Phase 13 of it is built.
+- The writer `OutreachWriter.write(lead, task)` in `backend/app/engines/writer/writer.py` does the following:
+  - It holds a lead by the rules before any model call: country not listed or not PILOT, no opt-in, no
+    observation, missing `.env` facts, suppressed.
+  - It sends Claude Sonnet 5.5 an allow-listed lead in which emails and phone numbers are redacted and the lead id
+    is left out. The request also carries server-side `fallbacks: "default"`, a cached system prompt and a JSON
+    schema for the answer.
+  - It validates the answer and asks for one rewrite when a check fails. A lead that fails twice becomes
+    `VALIDATION_FAILED` for the founder.
+  - It adds the signature and the addresses itself. The model never writes them.
+- The validator `backend/app/engines/writer/validator.py` checks:
+  - declared country and language against `docs/outreach/country-language.csv`, with the language confirmed by
+    `langdetect`;
+  - Roman Hindi only after the owner wrote in Roman Hindi;
+  - word counts per channel and touch, one closing question and no link in first messages;
+  - that the highest-priority observation is used, with its evidence word for word;
+  - that every number and domain in the message comes from the inputs;
+  - banned phrases and characters, and no unresolved placeholders;
+  - opt-out line and sign-off.
+- `build_observations()` turns stored website checks (≤ 30 days old) into the 7 observation types (BROKEN_FORM is
+  never produced, see below).
+- A missing country is now a hold in `country_rules.py`. It used to be treated as the US.
+- Acceptance results:
+  - 30 fixture leads (10 per vertical, Surat/Navsari): 27 READY on the first attempt and 3 held by the rules.
+  - One test per validator rejection.
+  - A test proves no email or phone reaches the request.
+  - Full suite: **322 passed**.
 
-## Decisions made this session
-- `docs/DECISIONS.md` — five 2026-11-08 blocks (the last two are the city test).
+## Files changed
+- `backend/app/engines/writer/{__init__,validator,writer}.py`: the writer and its validator (new).
+- `backend/tests/test_writer/test_validator.py` and `test_writer.py`: 40 tests.
+- `backend/tests/test_writer/test_fixtures_dryrun.py`, `fixtures_30.json` and `dryrun_outputs.json`: the 30-lead
+  acceptance run.
+- `backend/app/engines/qualification/country_rules.py` and its test: missing country = hold.
+- `backend/app/config.py` and `.env.example`: add `ANTHROPIC_API_KEY` and the `SITEBLITZ_SENDER_NAME` /
+  `_REPLY_EMAIL` / `_POSTAL_ADDRESS` settings.
+- `pyproject.toml`: add `anthropic>=2.7.0` and `langdetect>=1.0.9`.
+- `docs/outreach/*`: the system prompt, company facts, country-language table, reference messages and
+  `count_words.py`. The model's output fields are now body / signoff / opt_out_line.
+- `docs/spec/outreach-engine.md`, `docs/PHASES.md`, `docs/DECISIONS.md` and `CLAUDE.md`: approval, phases 13–16,
+  decisions, location rule.
+- `docs/debate/2026-11-10-outreach-lifecycle-to-payment/RESULT.md`: "Mumbai" corrected to Gujarat / Navsari+Surat.
+
+## Decisions made
+- These are in `docs/DECISIONS.md` under the two 2026-11-10 blocks:
+  - The AI writes every message.
+  - The studio is described as "based in Gujarat".
+  - No automated WhatsApp Web sending and no social bots.
+  - The signature is assembled by the app.
+  - Personal facts stay in `.env`.
+  - Holds are decided before the model is called.
+  - Server-side fallback is on.
+  - jiter must be pinned to 0.8.2 on this PC.
 
 ## Known broken / deliberately skipped
-- **Public Overpass (OpenStreetMap) refuses connections from this PC** since the test ran several processes at
-  once; "All sources" still returns Overture rows (status PARTIAL). Use "Overture Places" until it recovers.
-  Production fix proposed: phase 11 (Geofabrik extracts, needs budget approval + ODbL review).
-- Overture is near-empty for dentists in China, DR Congo, Madagascar, Niger, Afghanistan outside Kabul, Iran outside
-  Tehran and secondary African cities — a source gap. Phase 12 (Foursquare OS Places) proposed; needs the founder to
-  create a free Places Portal token.
-- Nominatim does not forgive spelling: "Bamyan" not found, "Bamiyan" works; "Dhamsona" not found.
-- Open founder decisions: SOCIAL_ONLY / NEITHER_LISTED reporting labels (ChatGPT's #1 by value per cost), social-only
-  Hot cap (a / b), dead domain = Website down immediately (both reviewers: no), widen area, admin-centre search mode,
-  ODbL legal review.
-- Old Contacts / Qualification / Campaigns **APIs** still contain the fabricated `info@` contact, template pitches and
-  fake SENT (removed from the UI) — phase 5.
-- Discovery + checks still run inside HTTP requests (no background worker) — phase 3. No Alembic migration for the
-  new tables (`source_job_sightings`, intelligence tables); `create_all` creates them at startup — phase 3.
-- The API has no authentication; keep it on 127.0.0.1.
-- **Not pushed** — the Claude OS guard hook blocks `git push` from Claude. Run:
-  `git push -u origin phase-01-pipeline-repair`, then open a PR into `main`.
+- **No live API run yet**, because there was no `ANTHROPIC_API_KEY`. The 27 recorded answers came from Claude Code's
+  own model (Opus 5.5) standing in for `claude-sonnet-5-5` on the exact same prompt. Re-record the run once the key
+  is set.
+- Every real lead is held (`MISSING_COMPANY_FACT`) until the founder sets the three `SITEBLITZ_*` values in `.env`.
+- BROKEN_FORM is never produced, because no form-test check type exists yet.
+- Demo links stay `TO FILL`: `siteblitz.vercel.app/demo/*` returns 404 because the SiteBlitz repo's `v2-redesign`
+  branch is not deployed (that is the SiteBlitz site session's job, not this repo).
+- Nothing is sent anywhere. Sending, the batch screen and the 100/day cap are phase 15.
+- Phases 14–16 were not started (one phase per session).
+- `E:\tmp\_writer_dryrun\` (scratch dry-run inputs) and `E:\tmp\_jiter_probe\` (a downloaded wheel) are left on
+  disk outside the repo. Deleting them was not permitted in this session.
 
 ## Next session starts here
-- Push the branch and open the PR.
-- Answer the open founder decisions above, then phase 6 pilot (ChatGPT R10 suggests India + Bangladesh + France,
-  60 labelled businesses each) or phase 3 (background jobs).
-- First commands (PowerShell, repo root):
-  `.venv\Scripts\python -m pip install -e ".[dev]"` ·
-  (this PC only) `$env:DISABLE_SQLALCHEMY_CEXT="1"; .venv\Scripts\python -m pip install --force-reinstall --no-deps --no-binary sqlalchemy sqlalchemy` ·
-  `.venv\Scripts\python -m pytest -q` (expect 221 passed) · `cd frontend; npm install; npm run build`
-- Run: `docs/USER-GUIDE.md` §0 (English) or `docs/GUIDE-ROMAN-HINDI.md`.
-- Re-run the city test: `scripts/city_coverage.py <cities.json> <results.json> --api http://127.0.0.1:8001 --source overture`
-  against a backend on a separate test database.
-- Watch out for: one search at a time against public Overpass; Nominatim 1 request / s; after stopping a background
-  worker on Windows, kill the leftover `python.exe` (uvicorn) by command line or the port stays taken.
+- Phase 14: the email finder for the 2,162 phone-only Navsari/Surat sites in the 3 demo verticals. It must respect
+  robots.txt, take emails only from the business's own pages and record the viewport / HTTPS / site-down checks on
+  the same visit (spec rows 9–12).
+- First command: `/boot`, then `go`.
+- Watch out for: never call `ContactDiscoveryEngine.discover_contacts()`, because it fabricates gmail addresses and
+  `+91 9825…` phone numbers. Reuse only `_crawl_contact_pages` / `_extract_from_html`.
+- After setting the key: `.venv/Scripts/python.exe -m backend.app.engines.writer.writer
+  backend/tests/test_writer/fixtures_30.json` (live run, spends API credit).

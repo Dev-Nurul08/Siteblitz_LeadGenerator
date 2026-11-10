@@ -6,3 +6,8 @@
 - Never call `ContactDiscoveryEngine.discover_contacts()` for real outreach until phase 5 lands: it fabricates email
   addresses and phone numbers. Use `_crawl_contact_pages` / `_extract_from_html` only.
 - Outreach copy rules, languages and limits live in `docs/outreach/` and `docs/spec/outreach-engine.md`.
+- On this PC Smart App Control blocks the jiter 0.19 DLL that `anthropic` installs, which breaks `import anthropic`.
+  Fix: `.venv/Scripts/python.exe -m pip install --force-reinstall --no-deps jiter==0.8.2`. SQLAlchemy needs its
+  pure-Python reinstall too (see README / memory).
+- Writer tests build `Settings(_env_file=None, ...)` so a real `.env` (API key, sender facts) can never make them
+  call the API or change their result. Keep it that way.
