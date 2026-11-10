@@ -111,3 +111,25 @@
   "Proprietor / Store Manager" and fake `+91 9825...` / `+1 (555)` phone numbers (`discovery.py:101-148`).
   - Nothing may call it until phase 5 removes this.
   - `ai_personalizer.py` signs as "Marcus Vance" with a fake New York address, so it must never be used to send.
+
+## 2026-11-10 - phase 13 build (AI writer + validator)
+- **The model never writes the signature.**
+  - It returns `body`, `signoff` and `opt_out_line`.
+  - The app adds the sender name, "SiteBlitz", the reply address and the postal address.
+  - Why: an address the model types can be wrong; an assembled one cannot.
+- **Sender name, reply address and postal address live in `.env`, not in git.**
+  - They are `SITEBLITZ_SENDER_NAME`, `SITEBLITZ_REPLY_EMAIL` and `SITEBLITZ_POSTAL_ADDRESS`.
+  - The model sees only the sender name. For the two addresses it sees only "set".
+  - Why: the postal address is personal.
+- **Holds are decided by the rules before any model call.**
+  - The rules: country, opt-in, observation, missing facts, suppression.
+  - A held lead costs nothing and sends no data.
+  - The validator recomputes the same rules, so a model that writes anyway is rejected.
+- **Server-side fallback is on.** The request carries `fallbacks: "default"` with beta
+  `server-side-fallback-2026-07-01`, so a declined request is re-run on Anthropic's recommended model. If every
+  model declines, the lead is held (`MODEL_REFUSED`), never sent.
+- **A missing country is now a hold in `country_rules.py`.** It used to fall back to "US" and pass as CAN-SPAM.
+- **BROKEN_FORM is in the prompt but never produced yet.** No form-test check type exists. It will be produced once
+  a form test is stored as a website check.
+- **This machine needs `jiter==0.8.2`.** Smart App Control blocks the jiter 0.19 DLL that `anthropic` 2.7.0
+  installs (see the comment in pyproject.toml).

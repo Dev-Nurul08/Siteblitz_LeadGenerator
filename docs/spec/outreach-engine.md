@@ -1,6 +1,7 @@
 # SPEC LOCK - Outreach engine: AI writer, email finder, batch screen, letter (phases 13-16)
 
-Status: 🔒 PROPOSED 2026-11-10, waiting for the founder's `go` or `change <numbers>`. Nothing below is built yet.
+Status: ✅ APPROVED 2026-11-10 (founder: "go for it"). Phase 13 built in the same session (see HANDOFF.md);
+phases 14-16 not started.
 Inputs:
 - The founder's request of 2026-11-10: AI writes every message; a daily cap of 100; select N and press one click;
   WhatsApp Web; social accounts; a scraper for phone-only leads.

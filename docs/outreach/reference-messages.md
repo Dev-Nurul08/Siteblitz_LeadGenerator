@@ -1,8 +1,11 @@
 # REFERENCE_MESSAGES - style anchors for the AI writer
 
-Status: DRAFT 2026-11-10, waiting for the founder's `go`. Attach this file to every writer request. The writer matches
+Status: approved 2026-11-10 (founder `go`). Attach this file to every writer request. The writer matches
 their shape and tone; it does not copy their sentences. Words in [brackets] are filled from LEAD / COMPANY_FACTS; a
 message that still contains a bracket after writing fails the validator.
+
+The signature lines under each email and letter ([Sender], SiteBlitz, reply address, postal address) are added by
+the app from `.env`. The model writes only the body, the sign-off and the opt-out line.
 
 Word counts (in brackets after each heading) cover greeting to last sentence, without signature and opt-out line.
 They were counted by `docs/outreach/count_words.py`.

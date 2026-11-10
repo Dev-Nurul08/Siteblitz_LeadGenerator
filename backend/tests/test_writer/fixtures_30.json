@@ -1,0 +1,1116 @@
+{
+ "note": "Fictional businesses (domains use the reserved .example TLD). Phase 13 acceptance criterion 1.",
+ "cases": [
+  {
+   "lead": {
+    "lead_id": "s01",
+    "business_name": "Glow & Grace Beauty Parlour",
+    "vertical": "salon_beauty",
+    "category": "beauty_salon",
+    "city": "Surat",
+    "area": "Adajan",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s02",
+    "business_name": "Mehndi Rang Bridal Studio",
+    "vertical": "salon_beauty",
+    "category": "bridal_salon",
+    "city": "Surat",
+    "area": "Vesu",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Facebook",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s03",
+    "business_name": "Sundar Look Unisex Salon",
+    "vertical": "salon_beauty",
+    "category": "hair_salon",
+    "city": "Navsari",
+    "area": "Lunsikui",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s04",
+    "business_name": "Rupal Hair & Skin Clinic",
+    "vertical": "salon_beauty",
+    "category": "hair_salon",
+    "city": "Surat",
+    "area": "Piplod",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_VIEWPORT",
+      "evidence_value": "rupalhairskin.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     },
+     {
+      "type": "NO_HTTPS",
+      "evidence_value": "rupalhairskin.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s05",
+    "business_name": "Tanvi Nail Lounge",
+    "vertical": "salon_beauty",
+    "category": "nail_salon",
+    "city": "Surat",
+    "area": "Athwa",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SITE_DOWN",
+      "evidence_value": "tanvinails.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s06",
+    "business_name": "Kesar Spa and Salon",
+    "vertical": "salon_beauty",
+    "category": "spa",
+    "city": "Navsari",
+    "area": "Station Road",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": [
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-03",
+      "text": "Subject: A website idea for Kesar Spa and Salon. (first email, no reply yet)"
+     }
+    ]
+   },
+   "task": {
+    "channel": "email",
+    "touch": 2,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s07",
+    "business_name": "Aarohi Makeover Studio",
+    "vertical": "salon_beauty",
+    "category": "beauty_salon",
+    "city": "Surat",
+    "area": "Ghod Dod Road",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": [
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-03",
+      "text": "Subject: A website idea for Aarohi Makeover Studio. (first email, no reply yet)"
+     },
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-09",
+      "text": "Second email offering a page structure and a fixed quotation (no reply)."
+     }
+    ]
+   },
+   "task": {
+    "channel": "email",
+    "touch": 3,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s08",
+    "business_name": "Classic Cuts Barber Shop",
+    "vertical": "salon_beauty",
+    "category": "barber",
+    "city": "Navsari",
+    "area": "Dudhia Talav",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "social_dm",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s09",
+    "business_name": "Shringar Ladies Parlour",
+    "vertical": "salon_beauty",
+    "category": "beauty_salon",
+    "city": "Navsari",
+    "area": "Kaliawadi",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "s10",
+    "business_name": "Noor Beauty Lounge",
+    "vertical": "salon_beauty",
+    "category": "beauty_salon",
+    "city": "Surat",
+    "area": "Rander",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": {
+     "source": "qr_whatsapp",
+     "at": "2026-11-10",
+     "message": "Hello SiteBlitz, I received your website idea for Noor Beauty Lounge. Please show me the suggested design and price."
+    },
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "whatsapp_reply",
+    "touch": null,
+    "inbound_message": "Bhai website ka kitna lagega? 1 page wali chahiye",
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c01",
+    "business_name": "Bright Minds Classes",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Navsari",
+    "area": "Lunsikui",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_VIEWPORT",
+      "evidence_value": "brightmindsclasses.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c02",
+    "business_name": "Shiksha Coaching Centre",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Adajan",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c03",
+    "business_name": "Vidya Science Academy",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Vesu",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SITE_DOWN",
+      "evidence_value": "vidyascience.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c04",
+    "business_name": "Pathshala Tuition Point",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Navsari",
+    "area": "Vijalpore",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Facebook",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c05",
+    "business_name": "Excel Commerce Classes",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Varachha",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_HTTPS",
+      "evidence_value": "excelcommerce.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c06",
+    "business_name": "Gyan Ganga Classes",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Katargam",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     },
+     {
+      "type": "AGGREGATOR_ONLY",
+      "evidence_value": "Justdial",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c07",
+    "business_name": "Target JEE Academy",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Athwa",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_VIEWPORT",
+      "evidence_value": "targetjee.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": [
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-03",
+      "text": "Subject: A website idea for Target JEE Academy. (first email, no reply yet)"
+     }
+    ]
+   },
+   "task": {
+    "channel": "email",
+    "touch": 2,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c08",
+    "business_name": "Little Stars Abacus Classes",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Navsari",
+    "area": "Jalalpore",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "letter",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c09",
+    "business_name": "Speak Easy English Classes",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Pal",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "social_dm",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "c10",
+    "business_name": "Ankur Tuition Classes",
+    "vertical": "coaching_tuition",
+    "category": "tutoring_service",
+    "city": "Surat",
+    "area": "Udhna",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": true,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r01",
+    "business_name": "Shree Krishna Furniture Mart",
+    "vertical": "retail_showroom",
+    "category": "furniture_store",
+    "city": "Surat",
+    "area": "Udhna",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r02",
+    "business_name": "Patel Saree Showroom",
+    "vertical": "retail_showroom",
+    "category": "clothing_store",
+    "city": "Surat",
+    "area": "Ring Road",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r03",
+    "business_name": "Navsari Steel and Utensils",
+    "vertical": "retail_showroom",
+    "category": "kitchen_supply_store",
+    "city": "Navsari",
+    "area": "Station Road",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_VIEWPORT",
+      "evidence_value": "navsaristeel.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r04",
+    "business_name": "Royal Footwear House",
+    "vertical": "retail_showroom",
+    "category": "shoe_store",
+    "city": "Surat",
+    "area": "Chowk Bazaar",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SITE_DOWN",
+      "evidence_value": "royalfootwear.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r05",
+    "business_name": "Om Electronics",
+    "vertical": "retail_showroom",
+    "category": "electronics_store",
+    "city": "Navsari",
+    "area": "Lunsikui",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "AGGREGATOR_ONLY",
+      "evidence_value": "Justdial",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     },
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r06",
+    "business_name": "Laxmi Jewellers Boutique",
+    "vertical": "retail_showroom",
+    "category": "jewelry_store",
+    "city": "Surat",
+    "area": "Ghod Dod Road",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": [
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-03",
+      "text": "Subject: A website idea for Laxmi Jewellers Boutique. (first email, no reply yet)"
+     },
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-09",
+      "text": "Second email offering a page structure and a fixed quotation (no reply)."
+     }
+    ]
+   },
+   "task": {
+    "channel": "email",
+    "touch": 3,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r07",
+    "business_name": "Green Leaf Home Decor",
+    "vertical": "retail_showroom",
+    "category": "home_decor_store",
+    "city": "Surat",
+    "area": "Pal",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_VIEWPORT",
+      "evidence_value": "greenleafdecor.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     },
+     {
+      "type": "NO_HTTPS",
+      "evidence_value": "greenleafdecor.example",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": [
+     {
+      "direction": "out",
+      "channel": "email",
+      "sent_at": "2026-11-03",
+      "text": "Subject: A website idea for Green Leaf Home Decor. (first email, no reply yet)"
+     }
+    ]
+   },
+   "task": {
+    "channel": "email",
+    "touch": 2,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r08",
+    "business_name": "Jay Ambe Mobile Shop",
+    "vertical": "retail_showroom",
+    "category": "mobile_phone_store",
+    "city": "Navsari",
+    "area": "Vijalpore",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "NO_SITE",
+      "evidence_value": null,
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "letter",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r09",
+    "business_name": "Kapda Kraft Boutique",
+    "vertical": "retail_showroom",
+    "category": "clothing_store",
+    "city": "Surat",
+    "area": "Vesu",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [
+     {
+      "type": "SOCIAL_ONLY",
+      "evidence_value": "Instagram",
+      "checked_at": "2026-11-09",
+      "check_id": 1
+     }
+    ],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "social_dm",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  },
+  {
+   "lead": {
+    "lead_id": "r10",
+    "business_name": "Sai Ram Kirana Store",
+    "vertical": "retail_showroom",
+    "category": "grocery_store",
+    "city": "Navsari",
+    "area": "Kaliawadi",
+    "region": "Gujarat",
+    "country": "IN",
+    "contact_name": null,
+    "contact_name_source": null,
+    "language_evidence": {
+     "site_language": null,
+     "source": null
+    },
+    "observations": [],
+    "optin": null,
+    "suppressed": false,
+    "thread": []
+   },
+   "task": {
+    "channel": "email",
+    "touch": 1,
+    "inbound_message": null,
+    "attachments_allowed": []
+   }
+  }
+ ]
+}
