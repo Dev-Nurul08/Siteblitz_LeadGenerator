@@ -71,9 +71,29 @@ def normal_url(url: str) -> str:
     return url if url.startswith(("http://", "https://")) else f"https://{url}"
 
 
+def has_address(lead: dict) -> bool:
+    # 79 of the 2,162 rows list an empty string as their website (seen 2026-11-10): nothing to visit.
+    return bool(host_of(lead["website"] or ""))
+
+
 def host_of(url: str) -> str:
     host = (urlparse(normal_url(url)).hostname or "").lower()
     return host[4:] if host.startswith("www.") else host
+
+
+def chain_split(site_rows: list[dict], email_rows: list[dict]) -> dict:
+    visited = [r for r in site_rows if r["outcome"] not in ("skipped", "no_address")]
+    per_host = Counter(host_of(r["website"]) for r in visited)
+    shared = [r for r in visited if per_host[host_of(r["website"])] >= 3]
+    single = [r for r in visited if per_host[host_of(r["website"])] < 3]
+    single_ids = {r["id"] for r in single}
+    return {
+        "hosts_with_3plus_leads": sum(1 for n in per_host.values() if n >= 3),
+        "leads_on_hosts_with_3plus_leads": len(shared),
+        "leads_with_email_on_hosts_with_3plus_leads": sum(1 for r in shared if r.get("emails_found")),
+        "leads_with_email_on_other_hosts": sum(1 for r in single if r.get("emails_found")),
+        "unique_emails_on_other_hosts": len({e["email"] for e in email_rows if e["id"] in single_ids}),
+    }
 
 
 def load_done(path: Path) -> dict:
@@ -123,6 +143,10 @@ def write_outputs(leads: list[dict], skipped: dict, done: dict, out: Path) -> di
             totals["skipped_rule9"] += 1
             site_rows.append({**row, "outcome": "skipped"})
             continue
+        if not has_address(lead):
+            totals["no_website_address"] += 1
+            site_rows.append({**row, "outcome": "no_address", "note": "Website field is an empty string"})
+            continue
         visit = done[url]
         own_hosts = {host_of(url), host_of(visit.get("final_url") or url)}
         kept = []
@@ -169,7 +193,8 @@ def write_outputs(leads: list[dict], skipped: dict, done: dict, out: Path) -> di
         writer.writeheader()
         writer.writerows(email_rows)
 
-    visits = [done[u] for u in {normal_url(l["website"]) for l in leads if not skipped.get(l["id"])}]
+    visits = [done[u] for u in {normal_url(l["website"]) for l in leads
+                                if not skipped.get(l["id"]) and has_address(l)}]
     summary = {
         "leads_selected": len(leads),
         "by_town_vertical": dict(Counter(f"{l['town']}/{l['vertical']}" for l in leads)),
@@ -184,6 +209,9 @@ def write_outputs(leads: list[dict], skipped: dict, done: dict, out: Path) -> di
         "email_methods": dict(Counter(r["source_method"] for r in email_rows)),
         "robots": dict(Counter(v["robots"] for v in visits)),
         "failed_notes": dict(Counter((v["note"] or "") for v in visits if v["outcome"] == "failed").most_common(12)),
+        # Chain store-locator hosts (stores.amaron.in, cakeshops.monginis.net, ...) carry many leads that have
+        # no Overture brand; their emails are head-office addresses, not the shop owner's.
+        **chain_split(site_rows, email_rows),
         **{k: totals[k] for k in sorted(totals)},
     }
     (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -210,7 +238,7 @@ def main() -> None:
             skipped[lead["id"]] = reason
     urls_by_host = defaultdict(list)
     for lead in leads:
-        if lead["id"] not in skipped:
+        if lead["id"] not in skipped and has_address(lead):
             url = normal_url(lead["website"])
             if url not in urls_by_host[host_of(url)]:
                 urls_by_host[host_of(url)].append(url)

@@ -179,6 +179,9 @@ def test_cloudflare_link_and_obfuscated_text_are_read_scripts_are_not():
     assert found == [("hello@acme.com", "cloudflare_decode"), ("sales@acme.in", "visible_text_obfuscated")]
 
 
-async def test_listing_and_social_addresses_are_not_fetched():
+async def test_listing_social_and_empty_addresses_are_not_fetched():
     assert (await visit_site("https://sites.google.com/view/shop", extract())).outcome == "listing"
     assert (await visit_site("https://instagram.com/shop", extract())).outcome == "social"
+    for empty in ("", "https://", "   "):
+        visit = await visit_site(empty, extract())
+        assert (visit.outcome, visit.requests) == ("no_address", 0)

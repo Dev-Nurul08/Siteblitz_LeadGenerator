@@ -155,7 +155,7 @@ class RobotsRules:
 @dataclass
 class SiteVisit:
     listed_url: str
-    outcome: str = "failed"      # ok | protected | failed | social | listing | blocked | robots_blocked
+    outcome: str = "failed"      # ok | protected | failed | social | listing | blocked | robots_blocked | no_address
     note: Optional[str] = None
     http_status: Optional[int] = None
     final_url: Optional[str] = None
@@ -212,11 +212,13 @@ async def visit_site(listed_url: str, extract: Callable[[str, str], list],
     """`extract(html, source_url)` returns the contacts a page shows (ContactDiscoveryEngine._extract_from_html)."""
     visit = SiteVisit(listed_url=listed_url)
     url = (listed_url or "").strip()
-    if not url:
-        visit.note = "No website address"
-        return visit
-    if not url.startswith(("http://", "https://")):
+    if url and not url.startswith(("http://", "https://")):
         url = f"https://{url}"
+    if not urlparse(url).hostname:
+        # Seen 2026-11-10: 79 Overture rows list an empty string as their website. Without this check
+        # "https://" resolved to localhost and was reported as blocked by the SSRF guard.
+        visit.outcome, visit.note = "no_address", "No website address"
+        return visit
     if social_platform(url):
         visit.outcome = "social"
         return visit
