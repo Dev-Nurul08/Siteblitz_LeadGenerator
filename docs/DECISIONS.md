@@ -133,3 +133,22 @@
   a form test is stored as a website check.
 - **This machine needs `jiter==0.8.2`.** Smart App Control blocks the jiter 0.19 DLL that `anthropic` 2.7.0
   installs (see the comment in pyproject.toml).
+
+## 2026-11-10 - QA-1 audit and fixes
+- **The app now uses a SQLite file by default** (`./siteblitz_leads.db`, gitignored). PostgreSQL is used only when
+  `DATABASE_URL` says so, as `docker-compose.yml` does.
+  - Why: the old Postgres default made every API call return 500 on a fresh checkout, while the README promised
+    zero-config SQLite.
+- **An unsubscribe suppresses only that address.** A whole domain is suppressed only when one is given explicitly
+  (`POST /qualification/opt-outs` with `domain`).
+  - Why: deriving the domain from the address meant one gmail user unsubscribing blocked every gmail lead.
+- **The old compliance evaluator no longer turns a missing country into "US".** A country-less lead, or any lead whose
+  country profile does not permit outreach, becomes NEEDS_REVIEW with MANUAL_REVIEW_ONLY.
+- **The frontend reads a timestamp without an offset as UTC.**
+  - Why: the API stores UTC, but SQLite drops the offset, so India showed every date 5 h 30 min early.
+- **The Lead Radar funnel is labelled as generated sample data, and its code is otherwise unchanged.**
+  - Showing real places, Navsari + Surat defaults and input validation are in board row LR.
+  - Why: it is colleague Dev-Nurul08's code, so the fix needs agreement first.
+- **This session stopped fixing at 13 changed files**, following the ~8-file phase rule (the overrun was the 2
+  high-severity phase-13 claim gaps). The 37 other open bugs are in the board rows QA-1b, 3, 5, 14, 15 and LR, with
+  IDs in `docs/qa/ISSUES.csv`.

@@ -11,3 +11,9 @@
   pure-Python reinstall too (see README / memory).
 - Writer tests build `Settings(_env_file=None, ...)` so a real `.env` (API key, sender facts) can never make them
   call the API or change their result. Keep it that way.
+- UI / API QA without new installs:
+  - Playwright 1.62 is in the npx cache. Pass `PW_PATH=%LOCALAPPDATA%/npm-cache/_npx/e41f203b7505f1fb/node_modules/playwright`
+    to `docs/qa/tools/ui_sweep.cjs`.
+  - Run the backend on a copy of `dev_preview.db` through the `DATABASE_URL` / `DATABASE_URL_SYNC` environment
+    variables, never on the original file.
+  - The issue register is `docs/qa/ISSUES.csv`. Keep adding to it; do not start a new one.
