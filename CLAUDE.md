@@ -16,4 +16,9 @@
     to `docs/qa/tools/ui_sweep.cjs`.
   - Run the backend on a copy of `dev_preview.db` through the `DATABASE_URL` / `DATABASE_URL_SYNC` environment
     variables, never on the original file.
-  - The issue register is `docs/qa/ISSUES.csv`. Keep adding to it; do not start a new one.
+  - The issue register is `docs/qa/ISSUES.csv`. Keep adding to it; do not start a new one. Edit only the target
+    lines: rewriting it with `csv.writer` re-quotes every row (and the guard blocks `git checkout --` to undo it).
+- Email finder (`scripts/email_finder.py`): output holds business emails, so it lives under
+  `E:\SiteBlitz-World-Business-Data\_work\email_finder\<date>\`, never in the repo. The same `--out` resumes from
+  `visits.jsonl`, so a re-check needs a new folder. Overture rows can list an empty string as their website.
+- New tests that touch `ContactDiscoveryEngine` must stub `_crawl_contact_pages`: it fetches real websites.

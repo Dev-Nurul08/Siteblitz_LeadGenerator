@@ -38,6 +38,6 @@ Phases 1, 1b–1f, 2, 4a–4d done (2026-11-08); phase 13 AI writer, QA-1 audit 
 (2026-11-10). Branch `phase-01-pipeline-repair`.
 
 ## Next 3
-QA-1b (open QA bugs, writer hardening before any real sending), 14b (email-finder follow-up: 6 h re-check, chain
-filter, import into the app DB), phase 5 (remove the fabricated-contact code: `discover_contacts()` invents gmail
+14b (email-finder follow-up: 6 h re-check of the 701 failed sites, chain filter, import into the app DB - it
+unblocks phase 15), QA-1b (open QA bugs, writer hardening before any real sending), phase 5 (remove the fabricated-contact code: `discover_contacts()` invents gmail
 addresses and phone numbers; signed unsubscribe).
