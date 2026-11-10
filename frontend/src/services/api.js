@@ -3,6 +3,23 @@
  * Communicates with FastAPI backend via Vite proxy (/api and /health)
  */
 
+// FastAPI sends `detail` as a string for HTTP errors but as a list of {loc, msg} for 422
+// validation errors. Passing that list to `new Error()` showed "[object Object]" in the UI.
+function errorMessage(body, fallback) {
+  const detail = body ? (body.detail ?? body.message) : undefined
+  if (typeof detail === 'string' && detail) return detail
+  if (Array.isArray(detail) && detail.length) {
+    return detail
+      .map((e) => {
+        const field = Array.isArray(e?.loc) ? e.loc.filter((p) => !['body', 'query', 'path'].includes(p)).join('.') : ''
+        const msg = e?.msg || 'Invalid value'
+        return field ? `${field}: ${msg}` : msg
+      })
+      .join('; ')
+  }
+  return fallback
+}
+
 async function request(endpoint, options = {}) {
   const headers = {
     'Content-Type': 'application/json',
@@ -17,9 +34,10 @@ async function request(endpoint, options = {}) {
   if (!res.ok) {
     let errorDetail = `Request failed (${res.status})`
     try {
-      const err = await res.json()
-      errorDetail = err.detail || err.message || errorDetail
-    } catch (_) {}
+      errorDetail = errorMessage(await res.json(), errorDetail)
+    } catch {
+      // Body was not JSON (e.g. proxy error page): keep the status-code message.
+    }
     throw new Error(errorDetail)
   }
 
@@ -93,9 +111,10 @@ export const api = {
       if (!res.ok) {
         let errorDetail = `Upload failed (${res.status})`
         try {
-          const err = await res.json()
-          errorDetail = err.detail || err.message || errorDetail
-        } catch (_) {}
+          errorDetail = errorMessage(await res.json(), errorDetail)
+        } catch {
+          // Body was not JSON: keep the status-code message.
+        }
         throw new Error(errorDetail)
       }
 
