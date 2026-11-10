@@ -486,3 +486,26 @@ def test_shared_head_office_email_does_not_merge_two_branches(client):
     result = _import(client, "branches.csv", csv_text)
     # Andheri / Bandra branches differ by a distinctive word each -> kept apart; the third shares none.
     assert (result["new"], result["duplicate"]) == (3, 0)
+
+
+def test_unsubscribe_suppresses_only_that_address_not_its_email_domain(client, no_guessed_domains):
+    # QA-2026-11-10 (QA-005): one stranger unsubscribing used to store "gmail.com" as a suppressed
+    # domain, which BLOCKED every other business with a gmail address.
+    _import(client, "g.csv", "name,city,country,phone,email,category\n"
+                             "Patel Sweets,Surat,IN,+91 98250 10111,patelsweets@gmail.com,bakery\n")
+    sweets = _id(client, "Patel Sweets")
+    client.post(f"/api/v1/intelligence/assess/{sweets}")
+
+    stranger = client.get("/api/v1/qualification/unsubscribe", params={"email": "random.stranger@gmail.com"})
+    assert stranger.status_code == 200, stranger.text
+    opt_outs = client.get("/api/v1/qualification/opt-outs").json()["items"]
+    assert [(o["email"], o["domain"]) for o in opt_outs] == [("random.stranger@gmail.com", None)]
+    after = client.post(f"/api/v1/intelligence/assess/{sweets}").json()["assessment"]
+    assert after["outreach_readiness"] != "BLOCKED"
+
+    # The business's own address still blocks it, and an explicit domain opt-out still works.
+    client.get("/api/v1/qualification/unsubscribe", params={"email": "patelsweets@gmail.com"})
+    assert client.post(f"/api/v1/intelligence/assess/{sweets}").json()["assessment"]["outreach_readiness"] == "BLOCKED"
+    explicit = client.post("/api/v1/qualification/opt-outs",
+                           json={"email": "owner@acme-test.com", "domain": "acme-test.com"})
+    assert explicit.status_code == 200 and explicit.json()["domain"] == "acme-test.com"

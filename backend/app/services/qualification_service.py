@@ -273,7 +273,10 @@ class QualificationService:
         Register recipient in global suppression list and disqualify any pending outreach.
         """
         clean_email = email.strip().lower()
-        clean_domain = domain.strip().lower() if domain else (clean_email.split("@")[-1] if "@" in clean_email else None)
+        # A domain is suppressed only when one is given explicitly (POST /opt-outs). Deriving it
+        # from the address meant one person unsubscribing from a gmail.com address blocked every
+        # gmail.com business (QA-005, 2026-11-10).
+        clean_domain = domain.strip().lower() if domain else None
 
         existing_stmt = select(OptOut).where(OptOut.email == clean_email)
         existing = (await self.session.execute(existing_stmt)).scalar_one_or_none()
