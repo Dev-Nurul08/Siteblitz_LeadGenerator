@@ -1,0 +1,26 @@
+id,requirement,target,check,status,evidence,limitation
+C-01,Backend unit + integration tests,backend/tests,pytest -q (before fixes),PASS 322/322,docs/qa/evidence/2026-11-10/backend-pytest.log,
+C-02,Backend tests after fixes (+3 regression tests),backend/tests,pytest -q,PASS 325/325,docs/qa/evidence/2026-11-10/backend-pytest-after-fixes.log,
+C-03,Frontend builds,frontend,npm run build,PASS,docs/qa/evidence/2026-11-10/frontend-build-lint-after-fixes.log,"warning only: MapView chunk 1,065 kB > 500 kB"
+C-04,Frontend lint,frontend,npm run lint (oxlint),PASS (0 errors; warnings only),docs/qa/evidence/2026-11-10/frontend-build-lint-after-fixes.log,"TDZ / ref warnings judged not runtime bugs (subagent compiled and ran LeadRadarPage)"
+C-05,Fresh start without .env works (README zero-config),backend config,uvicorn in an empty folder,FAIL -> FIXED (QA-001),docs/qa/evidence/2026-11-10/fix-launcher-default-db.log,
+C-06,Double-click launcher starts both servers,run_all.bat,cmd /c .\run_all.bat,FAIL -> FIXED (QA-002),docs/qa/evidence/2026-11-10/launcher-run_all_bat.log,
+C-07,Every GET route answers on real data,"34 GET routes, QA copy of dev_preview.db",scripted GET sweep,PASS (422 only where an id/param was missing by design),docs/qa/evidence/2026-11-10/api-get-smoke.log,
+C-08,Not-found and boundary inputs (phase 1c),"list, detail, export, unsubscribe routes",404 / 422 probes,PASS,docs/qa/evidence/2026-11-10/api-get-smoke.log,"opportunities/audits/999999 returns 200 [] (by design: list)"
+C-09,Export CSV / PDF (phase 1e),/businesses/export,GET csv and pdf,PASS (PDF 57 pages),docs/qa/evidence/2026-11-10/api-get-smoke.log,
+C-10,Live discovery from OSM / Overture (phase 1 / 1b / 1f),external sources,live search,NOT RUN,,"skipped: external network side effects; not changed this session"
+C-11,UI: 6 screens populated at 1280 and 390,Vite + QA DB,Playwright sweep + inspected screenshots,PASS except Lead Radar 390 overflow (QA-030),docs/qa/screens/2026-11-10/after-*.png; docs/qa/evidence/2026-11-10/ui-sweep-after-fixes.log,
+C-12,UI: backend-down error state on each screen,Vite with backend stopped,Playwright + inspected screenshots,PASS (error + Retry shown; no page errors),docs/qa/screens/2026-11-10/backend-down-1280-*.png,1280 only
+C-13,UI: empty / loading states,UI,screenshots,NOT RUN this session,docs/screenshots/ui/1280-*-empty.png (2026-11-08),historical evidence only
+C-14,UI: 422 messages readable,frontend api client,browser import of api.js,FAIL -> FIXED (QA-003),docs/qa/evidence/2026-11-10/fix-frontend-api-422-message.log,
+C-15,UI: dates in India time,lib/format.js,node TZ=Asia/Kolkata before/after + Review screenshot,FAIL -> FIXED (QA-004),docs/qa/evidence/2026-11-10/fix-frontend-utc-timestamps.log,
+C-16,Writer holds before any model call (phase 13),writer CLI on 30 fixtures,python -m backend.app.engines.writer.writer fixtures_30.json,PASS (30 HOLD attempts=0: 28 MISSING_COMPANY_FACT + 2 NO_OBSERVATION),docs/qa/evidence/2026-11-10/writer-cli-nokey.log,no .env on this PC
+C-17,Writer sends no email/phone to the model (phase 13 claim),writer.write,unit test with owner reply in TASK,FAIL -> FIXED (QA-016),docs/qa/evidence/2026-11-10/fix-writer-task-redaction.log,"redactor still misses some formats (QA-032)"
+C-18,Missing country = hold (phase 13 claim),compliance_evaluator,unit test,FAIL -> FIXED (QA-015),docs/qa/evidence/2026-11-10/fix-compliance-missing-country.log,
+C-19,Writer live API run,Anthropic API,live run of 30 fixtures,BLOCKED,,"no ANTHROPIC_API_KEY and no SITEBLITZ_* values in .env"
+C-20,Opt-out suppresses only the address,qualification + intelligence,integration test,FAIL -> FIXED (QA-005),docs/qa/evidence/2026-11-10/fix-optout-domain.log,
+C-21,SSRF guard (phase 1d),resolver / intelligence fetches,subagent probes on 127.0.0.1,PARTIAL: address forms blocked; DNS rebinding passes (QA-031),subagent report,"decimal/hex IP forms not testable on Windows"
+C-22,Code review: API + services,backend/app/api + services,read + TestClient probes (subagent),DONE: 14 findings,docs/qa/ISSUES.csv,"probes in E:\tmp\_qa_scratch (outside repo)"
+C-23,Code review: frontend contract + UI logic,frontend/src,read + replay (subagent),DONE: contract clean; 14 findings,docs/qa/ISSUES.csv,
+C-24,Code review: engines,writer / intelligence / discovery / enrichment / lead_radar,read + probes (subagent),DONE: 15 findings,docs/qa/ISSUES.csv,
+C-25,Postgres path,docker-compose,run on Postgres,NOT RUN,,"no Postgres on this PC; QA-017 and 255-char email limits are Postgres-only"
