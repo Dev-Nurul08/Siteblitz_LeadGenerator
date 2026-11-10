@@ -192,8 +192,10 @@ export default function LeadRadarPage() {
             <div className="flex flex-wrap gap-4 items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg">Section 1: Mumbai 2-Lakh Pipeline to Verified Shortlist</h3>
+                {/* This page never sends real places, so the backend generates 100 example places
+                    (lead_radar_service._generate_sample_mumbai_places). Say so — QA-2026-11-10, QA-012. */}
                 <p className="text-sm opacity-80">
-                  Data source: Overture Places + Meta open data. Eliminates junk, tests absence across 3 paths, verifies active demand and task gaps.
+                  Sample data: 100 generated example places, not real businesses. Do not contact anyone listed here.
                 </p>
               </div>
               <div className="flex items-center gap-3">
