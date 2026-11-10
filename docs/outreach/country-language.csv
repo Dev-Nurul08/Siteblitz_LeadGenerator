@@ -1,0 +1,34 @@
+country,country_name,email_status,default_language,allowed_languages,region_rule,register,greeting_no_name,signoff,native_check,notes
+IN,India,PILOT,en-IN,en-IN|hi-Latn,,polite English,Hello [Business Name] team,Regards,not needed (English),hi-Latn (Roman Hindi / Hinglish) only in replies to an owner who wrote that way
+US,United States,LATER,en-US,en-US|es-US,,plain polite,Hello [Business Name] team,Best regards,not needed (English),CAN-SPAM: postal address + working opt-out; es-US only with business_evidence; no price (quote only)
+CA,Canada,LATER,en-CA,en-CA|fr-CA,region QC or Quebec or Québec -> fr-CA,fr: vous,Hello [Business Name] team / Bonjour,Regards / Cordialement,fr-CA required before first send,CASL: address published by the business + role-relevant + no 'no solicitation' note
+AU,Australia,LATER,en-AU,en-AU,,plain polite,Hello [Business Name] team,Kind regards,not needed (English),Spam Act inferred consent: conspicuously published address + relevant offer
+GB,United Kingdom,LATER,en-GB,en-GB,,plain polite,Hello [Business Name] team,Kind regards,not needed (English),Ltd / LLP only (checked on Companies House); sole traders and partnerships HOLD (PECR)
+FR,France,LATER,fr-FR,fr-FR,,vous,Bonjour,Cordialement,required before first send,CNIL: B2B email must relate to the recipient's profession
+DE,Germany,HOLD,de-DE,de-DE,,Sie,Sehr geehrte Damen und Herren,Mit freundlichen Grüßen,required before first send,UWG §7: prior consent even B2B
+AT,Austria,HOLD,de-AT,de-AT,,Sie,Sehr geehrte Damen und Herren,Mit freundlichen Grüßen,required before first send,strict opt-in (country_rules.py manual)
+IT,Italy,HOLD,it-IT,it-IT,,Lei,Buongiorno,Cordiali saluti,required before first send,no coded rule yet
+ES,Spain,HOLD,es-ES,es-ES,,usted,Buenos días,Atentamente,required before first send,opt-in; no coded rule yet
+MX,Mexico,HOLD,es-MX,es-MX,,usted,Buenos días,Atentamente,required before first send,no coded rule yet
+AR,Argentina,HOLD,es-AR,es-AR,,usted,Buenos días,Atentamente,required before first send,no coded rule yet
+CO,Colombia,HOLD,es-CO,es-CO,,usted,Buenos días,Atentamente,required before first send,no coded rule yet
+PE,Peru,HOLD,es-PE,es-PE,,usted,Buenos días,Atentamente,required before first send,no coded rule yet
+BR,Brazil,HOLD,pt-BR,pt-BR,,o senhor / a senhora vs você (disputed),Prezados,Atenciosamente,required before first send,no coded rule yet
+PT,Portugal,HOLD,pt-PT,pt-PT,,o senhor / a senhora,TBD (native check),TBD (native check),required before first send,no coded rule yet
+NL,Netherlands,HOLD,nl-NL,nl-NL,,u,Geachte heer/mevrouw,Met vriendelijke groet,required before first send,opt-in; no coded rule yet
+BE,Belgium,HOLD,,nl-BE|fr-BE|de-BE,language only from business_evidence; none -> HOLD,u / vous / Sie,TBD (native check),TBD (native check),required before first send,three language regions; never guess
+PL,Poland,HOLD,pl-PL,pl-PL,,Państwo (formal),Szanowni Państwo,Z poważaniem,required before first send,no coded rule yet
+CZ,Czechia,HOLD,cs-CZ,cs-CZ,,vy (formal),Dobrý den,S pozdravem,required before first send,no coded rule yet
+HU,Hungary,HOLD,hu-HU,hu-HU,,Ön,TBD (native check),TBD (native check),required before first send,no coded rule yet
+GR,Greece,HOLD,el-GR,el-GR,,formal plural,TBD (native check),TBD (native check),required before first send,strict opt-in (country_rules.py manual)
+TR,Turkey,HOLD,tr-TR,tr-TR,,siz,TBD (native check),TBD (native check),required before first send,no coded rule yet
+VN,Vietnam,HOLD,vi-VN,vi-VN,,TBD,TBD (native check),TBD (native check),required before first send,no coded rule yet
+ID,Indonesia,HOLD,id-ID,id-ID,,Bapak / Ibu,TBD (native check),TBD (native check),required before first send,no coded rule yet
+TH,Thailand,HOLD,th-TH,th-TH,,polite particle depends on the sender's gender,TBD (native check),TBD (native check),required before first send,no coded rule yet
+PH,Philippines,HOLD,en-PH,en-PH|fil-PH,,plain polite,Hello [Business Name] team,Regards,not needed (English),fil-PH only with business_evidence; no coded rule yet
+MY,Malaysia,HOLD,,en-MY|ms-MY,language only from business_evidence; none -> HOLD,formal,TBD (native check),TBD (native check),required for ms-MY,no coded rule yet
+JP,Japan,HOLD,ja-JP,ja-JP,,keigo,[Business Name] ご担当者様,何卒よろしくお願い申し上げます,required before first send,first line はじめてご連絡いたします; length rule in characters must be set before use
+TW,Taiwan,HOLD,zh-TW,zh-TW,,您 (formal),TBD (native check),TBD (native check),required before first send,Traditional characters; length rule in characters must be set before use
+ZA,South Africa,HOLD,en-ZA,en-ZA,,plain polite,Hello [Business Name] team,Kind regards,not needed (English),POPIA opt-in; no coded rule yet
+AE,United Arab Emirates,HOLD,en-AE,en-AE|ar-AE,,ar: Modern Standard Arabic,Hello [Business Name] team / تحية طيبة وبعد,Regards,required for ar-AE,opt-in; no coded rule yet
+SG,Singapore,HOLD,en-SG,en-SG,,plain polite,Hello [Business Name] team,Regards,not needed (English),subject must start with <ADV> (rule not coded yet)

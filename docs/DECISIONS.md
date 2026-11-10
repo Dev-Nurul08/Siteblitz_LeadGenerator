@@ -91,3 +91,23 @@
   source for countries where Overture is thin (Iran, China). Needs a free Places Portal account + access token
   created by the founder; the paid Foursquare API terms forbid lead generation, the open dataset does not.
   Proposed as phase 12 (incremental-coverage test first: keep it only if it adds ≥ 20 % verified unique businesses).
+
+## 2026-11-10 - outreach writer request
+- **An AI writes every outreach message; no person writes any** (founder). This replaces RESULT B.7 of the
+  2026-11-10 outreach debate. Safeguards: the observation comes only from stored checks, a validator re-checks every
+  number, domain, word count, phrase and the declared language, and the founder reads the first 20 emails once.
+  Spec: `docs/spec/outreach-engine.md` (waiting for go).
+- **Messages say "a small web studio in Gujarat"; the pilot area is Navsari + Surat.** The outreach RESULT first said
+  Mumbai, which was wrong (SiteBlitz FD-22, truthful location; the founder lives in Navsari). Corrected in RESULT.md.
+- **Still no automated WhatsApp Web sending and no logged-in social bots, re-checked against sources today.**
+  - WhatsApp FAQ: since 2019-12-07, WhatsApp takes legal action against those engaged in, or assisting, automated or
+    bulk messaging.
+  - WhatsApp Terms: no bulk or auto-messaging, and no non-personal use.
+  - LinkedIn UA §8.2 (2025-11-03): no bots to send messages.
+  - Facebook Terms §3.2 (2025-01-01): no automated access.
+  - WhatsApp is used for a lead only after that lead writes first. The app opens the chat with the text typed, and
+    the founder presses Send.
+- **`discover_contacts()` fabricates more than `info@`.** It also makes `inquiry.<name>@gmail.com`, a fake
+  "Proprietor / Store Manager" and fake `+91 9825...` / `+1 (555)` phone numbers (`discovery.py:101-148`).
+  - Nothing may call it until phase 5 removes this.
+  - `ai_personalizer.py` signs as "Marcus Vance" with a fake New York address, so it must never be used to send.

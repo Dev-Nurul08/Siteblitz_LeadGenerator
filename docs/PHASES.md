@@ -23,6 +23,10 @@ Legend: ✅ done · 🔨 in progress · ⛔ blocked · ⬜ not started · 🔒 w
 | 10 | Calibration: social-only + phone tops out at 75 (Warm) under the approved weights — founder decision needed | ⛔ | founder | 6 | Decision recorded in DECISIONS.md |
 | 11 | OpenStreetMap from Geofabrik country extracts processed locally (no public Overpass); per-country refresh ≤ 7 days | ⬜ | — | 3, founder approves cost | 10 tested cities: 0 public Overpass requests, OSM adds measurable unique businesses over Overture |
 | 12 | Foursquare Open Source Places as a third source (Apache 2.0) — incremental-coverage test in 7 thin countries first | ⬜ | — | founder creates a Places Portal token | Same city boxes: ≥ 20 % more verified unique businesses than Overture, or ≥ 20 in a near-empty city |
+| 13 | AI outreach writer: system prompt + company facts + 33-country language table + validator (langdetect, facts guard, banned phrases, counts) + Claude API call; no email/phone sent to the model | 🔒 | — | 2, 5, founder blanks (sender, reply address, postal address) | `docs/spec/outreach-engine.md` phase-13 criteria |
+| 14 | Email finder for phone-only leads with own website: Navsari + Surat, 3 demo verticals, 2,162 sites; robots.txt; emails only from own pages, never guessed; same visit records viewport/HTTPS/site-down checks | 🔒 | — | 2, 5 | Every stored email has a source URL; totals reported |
+| 15 | Outreach batch screen: 100/day ceiling, select + one click Write, READY/HOLD list, email queue, WhatsApp chat link only for opted-in leads, social draft + open profile (hand send) | 🔒 | — | 13, sending provider chosen | Cap refusal at 101; screenshots of 5 states at 1280 + 390 |
+| 16 | Letter + QR pack (PDF, 25 per batch) for phone-only / social-only Navsari + Surat leads | 🔒 | — | 13, India Post class + price | Scanned QR opens WhatsApp to +91 92744 90242 with the business name typed |
 | 9 | Later: moment-of-need triggers, evidence-based micro-proposals, outcome learning | ⬜ | — | 6 | Defined after pilot results |
 
 ## Now

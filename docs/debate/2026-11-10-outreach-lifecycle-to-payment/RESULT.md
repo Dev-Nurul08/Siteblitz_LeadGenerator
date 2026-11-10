@@ -4,6 +4,10 @@ Inputs: founder-context.md (measured data), research-copy.md and research-legal.
 passes), claude-position.md (Claude's view written before ChatGPT replied), 01/02 ChatGPT replies.
 Nothing was sent to any business, bought, deployed or changed in code. Nothing was deleted.
 
+**Correction 2026-11-10 (later the same day):** this file first said the studio is in Mumbai. That was wrong. The
+founder lives in Navsari, South Gujarat, and the SiteBlitz site states "Gujarat-based" on purpose (FD-22, truthful
+location). Every "Mumbai" was replaced with Gujarat (identity) or Navsari/Surat (pilot area).
+
 | # | Point | Proposed by | Evidence (file:line / round) | Claude's verdict | Status |
 |---|---|---|---|---|---|
 | 1 | Keep the 86.75 M source folder; outreach uses a lean filtered table with a reason for every rejection | Claude, ChatGPT R1 | contact_profile.csv; R1 §1 | agreed | Agreed |
@@ -40,7 +44,7 @@ Every rejected lead keeps its reason. Guessed emails are removed in the code tha
 | Bucket (world / India, measured) | Route |
 |---|---|
 | Email (30.97 M / 1.74 M) | Verify -> email sequence where the country allows it |
-| Phone only (41.96 M / 1.82 M) | India: find an email on their own website/page; else letter + QR (pilot: 1 category, 1 Mumbai area); Mumbai walk-in. Abroad: skip for now |
+| Phone only (41.96 M / 1.82 M) | India: find an email on their own website/page; else letter + QR (pilot: 1 category, 1 Navsari/Surat area); local walk-in optional. Abroad: skip for now |
 | Social profile only (10.06 M / 1.08 M) | Letter + QR if an address exists; otherwise later (paid ads) |
 | Nothing (2.22 M / 10 k) | Drop |
 | Email looks fake | Ladder below; failing addresses move to the phone / letter route |
@@ -56,7 +60,7 @@ address passing is a blocking defect.
 2. 60-85 words, max 100 with signature. Plain text. No link, image, attachment or tracking pixel in touch 1.
 3. Plain words. Never: "I hope this email finds you well", "I came across", "elevate", "seamless", "unlock",
    "vibrant", "testament", lists of three, "not just X but Y", em dashes, compliments you cannot prove.
-4. Say who you are honestly: a small studio in Mumbai. No invented clients, results or reviews.
+4. Say who you are honestly: a small studio based in Gujarat (SiteBlitz FD-22). No invented clients, results or reviews.
 5. One question at the end that can be answered in one line.
 6. Real name, working reply address, postal address, one-line reply opt-out.
 7. Templates are written once by a person, per language, and reviewed by a native speaker; per lead only the
@@ -69,7 +73,7 @@ address passing is a blocking defect.
 >
 > Your [Instagram page] shows [verified detail, e.g. your full menu and timings], but I couldn't find a website linked there.
 >
-> I'm [Founder name] from SiteBlitz in Mumbai. We build simple websites that put services, location and contact details in one place. Our packages start at ₹7,999, excluding domain and hosting.
+> I'm [Founder name] from SiteBlitz, a small web studio in Gujarat. We build simple websites that put services, location and contact details in one place. Our packages start at ₹7,999, excluding domain and hosting.
 >
 > Would you like a short outline for [Business Name]?
 >
@@ -156,7 +160,7 @@ Payment status comes only from the bank / UPI record, never from "invoice sent".
 ### G. First 30 days (dates corrected for the 1-month domain-age rule)
 | Dates | Work | Email first touches | Letters |
 |---|---|---|---|
-| Nov 10-14 | Fix live site prices + contact email; remove guessed emails; India country rule; decide sender (Instantly AirMail quote vs level-1 plan); design letter + QR; choose 1 category + 1 Mumbai area | 0 | 0 |
+| Nov 10-14 | Fix live site prices + contact email; remove guessed emails; India country rule; decide sender (Instantly AirMail quote vs level-1 plan); design letter + QR; choose 1 category + 1 Navsari/Surat area | 0 | 0 |
 | Nov 16-Dec 4 | Letters in 4 batches of 25; answer every WhatsApp the owners start; Snapshots, previews, quotes | 0 (domains younger than 1 month) | 100 |
 | From the day the sending domain is 1 month old (~Dec 11 if bought Nov 11) | India email 10/day week 1, 15/day week 2, 20/day after; follow-ups count inside the 30/inbox/day ceiling | 275 over ~3 weeks | - |
 | Dec 9 | Preliminary review (letters, workload, any deposit) | | |
@@ -181,7 +185,7 @@ running -> slow outreach.
 3. SiteBlitz site: correct live prices and the bouncing contact email before any message goes out (from 2026-11-09).
 4. Founder: get the Instantly AirMail quote and check domain age vs the 2026-11-09 level-1 plan; buy domains early
    because the 1-month clock starts at purchase.
-5. Founder: pick 1 category + 1 Mumbai area for 100 letters; confirm printed-postcard class and price at the post office.
+5. Founder: pick 1 category + 1 Navsari/Surat area for 100 letters; confirm printed-postcard class and price at the post office.
 6. Code + founder: letter template, Snapshot template, QR with the pre-filled WhatsApp text, 3 email templates loaded.
 
 ## Points still open
