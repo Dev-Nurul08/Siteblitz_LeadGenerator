@@ -1,0 +1,9 @@
+# Agenda - outreach by channel, human-sounding copy, lifecycle to payment, countries, unique hook (2026-11-10)
+
+1. Data hygiene and fake emails: which records to keep or drop before any outreach, and the exact verification ladder for an email (syntax, MX, SMTP check, catch-all, shared by many places, guessed by our tool) with the action for each result.
+2. Channel routing per lead - (a) has email, (b) phone only, (c) neither, (d) email suspect - the lawful channel per country (WhatsApp app vs API vs call vs SMS vs DM vs contact form vs post vs walk-in), with ban and legal risk for each.
+3. The cold email itself: structure, length, subject line, first line, offer/hook, call to action, signature, and the rules that make it read as written by a respectful human, not AI - with full English drafts for touch 1 and every follow-up.
+4. The lifecycle as a state machine from "found" to "paid" to "after delivery": days between touches, total touches, every reply branch (interested, price?, send details, already have a site, not now, no, wrong person, bounce, unsubscribe) with the next message, the requirements checklist, and the exact moments the deposit and balance are taken.
+5. Countries and languages: how to pick the language and formality per lead (country, region, script), which countries to hold or skip, send-time windows, native review, and how to price for non-India clients (founder decision - propose options only).
+6. The unique hook: AI-generated voice note (founder's own cloned voice vs real recording vs none), free personalised homepage concept, short screen video, before/after screenshot - which works, at which step, cost, deliverability and trust risk, disclosure.
+7. A 30-day paid-first pilot: which country and business type first, daily volume per channel, what the founder does each day, and the numbers that mean continue / change / stop.
