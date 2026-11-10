@@ -123,6 +123,18 @@ class TestComplianceEvaluator:
         assert res.lead_status == LeadStatus.NEEDS_REVIEW
         assert res.outreach_mode == OutreachMode.MANUAL_REVIEW_ONLY
 
+    def test_missing_country_is_held_not_treated_as_us(self):
+        """QA-2026-11-10 (QA-015): an empty country became "US" and qualified for automated sending."""
+        for missing in (None, ""):
+            self.business.country_code = missing
+            res = self.evaluator.evaluate_lead(
+                business=self.business,
+                contact=self.contact,
+                opportunity=self.opportunity,
+            )
+            assert res.lead_status == LeadStatus.NEEDS_REVIEW, missing
+            assert res.outreach_mode == OutreachMode.MANUAL_REVIEW_ONLY, missing
+
     def test_borderline_score_routes_to_needs_review(self):
         """Low opportunity score brings composite score below 60, triggering manual review."""
         self.opportunity.score = 25.0

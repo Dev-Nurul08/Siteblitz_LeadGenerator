@@ -94,7 +94,9 @@ class ComplianceEvaluator:
                 )
 
         # 4. Country Jurisdiction Rules
-        country_code = business.country_code or "US"
+        # No default country: country_rules holds an unknown country. Defaulting to "US" sent
+        # country-less leads to automated CAN-SPAM outreach (QA-015, 2026-11-10).
+        country_code = business.country_code
         is_corporate = True
         profile: CountryComplianceProfile = self.rules_engine.evaluate_jurisdiction(
             country_code=country_code,
@@ -146,7 +148,8 @@ class ComplianceEvaluator:
         is_risky_email = contact.email_status in (EmailVerificationStatus.CATCH_ALL, EmailVerificationStatus.UNVERIFIED)
         is_generic_inbox = contact.role_level == RoleLevel.GENERAL_INBOX
 
-        if is_borderline or is_risky_email or is_generic_inbox or profile.default_mode == OutreachMode.MANUAL_REVIEW_ONLY:
+        if (is_borderline or is_risky_email or is_generic_inbox or not profile.is_outreach_permitted
+                or profile.default_mode == OutreachMode.MANUAL_REVIEW_ONLY):
             lead_status = LeadStatus.NEEDS_REVIEW
             outreach_mode = OutreachMode.MANUAL_REVIEW_ONLY
         else:
