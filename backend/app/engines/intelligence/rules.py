@@ -29,10 +29,17 @@ SKIP_AMENITIES = {
     "school", "university", "college", "hospital", "parking", "toilets",
 }
 # The same institutions as Overture basic_category fragments (Overture has no amenity tags).
+# "school" is not a fragment: a substring match also skipped specialty_school (coaching classes)
+# and preschool, which are businesses in the coaching/tuition vertical (QA-038). Schools are
+# listed as exact categories below instead.
 SKIP_CATEGORY_FRAGMENTS = (
     "atm", "bank", "gas_station", "fuel", "place_of_worship", "temple", "mosque", "church",
-    "government", "police", "post_office", "school", "university", "college", "hospital", "parking",
+    "government", "police", "post_office", "university", "college", "hospital", "parking",
 )
+SKIP_CATEGORIES_EXACT = {
+    "school", "elementary_school", "middle_school", "high_school", "public_school",
+    "school_district_office", "education_office",
+}
 
 # Spec row 11 — listing sites whose page is not the business's own website.
 AGGREGATOR_HOSTS = ("zomato.com", "swiggy.com", "justdial.com", "practo.com")
@@ -103,7 +110,8 @@ def skip_reason(facts: Facts) -> Optional[str]:
             if key.startswith(("disused:", "abandoned:", "was:")):
                 return f"Closed or moved ({key})"
         category = (raw.get("basic_category") or "").lower()
-        if any(fragment in category for fragment in SKIP_CATEGORY_FRAGMENTS):
+        if category in SKIP_CATEGORIES_EXACT or any(
+                fragment in category for fragment in SKIP_CATEGORY_FRAGMENTS):
             return f"Not a website prospect (category={category})"
     return None
 

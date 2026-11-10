@@ -46,6 +46,14 @@ def test_atm_and_vacant_are_skipped():
     assert skip_reason(facts(raw_records=[{"basic_category": "bank_or_credit_union"}]))
 
 
+def test_coaching_and_preschool_are_prospects_schools_are_skipped():
+    """QA-038: 'school' as a substring skipped specialty_school (coaching classes) and preschool."""
+    for category in ("specialty_school", "preschool", "tutoring_service", "educational_service"):
+        assert skip_reason(facts(raw_records=[{"basic_category": category}])) is None, category
+    for category in ("high_school", "elementary_school", "middle_school", "college_university"):
+        assert skip_reason(facts(raw_records=[{"basic_category": category}])), category
+
+
 def test_403_means_site_exists_not_down():
     checks = [Check(1, T.SOURCE_TAG, "found", "https://x.in"),
               Check(2, T.SITE_FETCH, "protected", "https://x.in", {"http_status": 403})]
