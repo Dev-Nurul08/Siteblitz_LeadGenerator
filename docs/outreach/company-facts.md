@@ -1,6 +1,7 @@
 # COMPANY_FACTS - SiteBlitz (attach to every writer request)
 
-Status: DRAFT 2026-11-10, waiting for the founder's `go`. Fields marked `TO FILL` are blanks the founder must fill.
+Status: approved 2026-11-10 (founder `go`). Fields marked `TO FILL` are blanks the founder fills in `.env`; the
+writer puts the `.env` values into this file's text before sending it to the model.
 While any `TO FILL` field that a channel needs is empty, the writer returns `HOLD` for that channel.
 
 Sources: `E:\Temp\SiteBlitz\src\lib\offer.ts` (prices, payments, delivery, inclusions, exclusions),
@@ -13,9 +14,9 @@ update this file the same day. `offer.ts` wins on any conflict.
 | Studio name | SiteBlitz |
 | Who we are, in one line | A small web studio based in Gujarat that builds websites for businesses across India |
 | Location wording | "based in Gujarat". Never name another city or claim an office (FD-22, truthful location) |
-| Sender name used in signatures | `TO FILL` (founder decision: first name only, or full name. The site shows no founder name, per FD-28/29) |
-| Reply email address | `TO FILL` (the sending domain's mailbox. hello@siteblitz.in is NOT live, so mail to it bounces, see site.ts) |
-| Postal address for email and letter footers | `TO FILL` |
+| Sender name used in signatures | `TO FILL` (set `SITEBLITZ_SENDER_NAME` in `.env`; founder decision: first name only, or full name. The site shows no founder name, per FD-28/29) |
+| Reply email address | `TO FILL` (set `SITEBLITZ_REPLY_EMAIL` in `.env`: the sending domain's mailbox. hello@siteblitz.in is NOT live, so mail to it bounces, see site.ts) |
+| Postal address for email and letter footers | `TO FILL` (set `SITEBLITZ_POSTAL_ADDRESS` in `.env`; kept out of git because it is personal) |
 | WhatsApp / phone (public on the site) | +91 92744 90242 |
 | Website | https://siteblitz.vercel.app |
 | GST | Not GST-registered, so prices are final and no GST is added |
@@ -30,6 +31,11 @@ update this file the same day. `offer.ts` wins on any conflict.
 
 Short price line for first messages: "starting at ₹7,999 (domain and hosting are separate)".
 Outside India: no price in the first message. Say a written quotation is sent on request.
+
+## Qualifying questions (asked one per message, in this order, after a positive reply)
+1. Are you the person who decides on the website?
+2. Does the ₹7,999-₹17,999 range work for you?
+3. Would you like it live within 60 days?
 
 ## Not included in any package
 Domain registration and yearly renewal · third-party hosting or subscription charges · paid plugins, premium fonts,

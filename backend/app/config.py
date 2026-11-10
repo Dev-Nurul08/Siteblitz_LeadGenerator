@@ -41,6 +41,13 @@ class Settings(BaseSettings):
     HUNTER_API_KEY: Optional[str] = None
     GOOGLE_PAGESPEED_API_KEY: Optional[str] = None
 
+    # === AI outreach writer (docs/spec/outreach-engine.md) ===
+    ANTHROPIC_API_KEY: Optional[str] = None
+    # Kept in .env, not in git: they appear in every signature and the postal address is personal.
+    SITEBLITZ_SENDER_NAME: Optional[str] = None
+    SITEBLITZ_REPLY_EMAIL: Optional[str] = None
+    SITEBLITZ_POSTAL_ADDRESS: Optional[str] = None
+
     # === Overture Maps Places ===
     # Dated release folder on s3://overturemaps-us-west-2/release/ (monthly). Newest on
     # 2026-11-08 = 2026-10-21.0; old releases are removed, so update this when reads fail.

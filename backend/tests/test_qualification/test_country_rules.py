@@ -62,3 +62,11 @@ class TestCountryRulesEngine:
         assert profile.framework == LegalFramework.GENERAL_B2B
         assert profile.default_mode == OutreachMode.MANUAL_REVIEW_ONLY
         assert profile.is_outreach_permitted is True
+
+    def test_missing_country_is_held_not_treated_as_us(self):
+        """A lead without a country is never contacted (outreach-engine spec row 3)."""
+        for missing in (None, "", "  "):
+            profile = self.engine.evaluate_jurisdiction(missing)
+            assert profile.is_outreach_permitted is False
+            assert profile.legal_basis == LegalBasis.NONE
+            assert profile.country_code == ""

@@ -32,6 +32,11 @@ dependencies = [
     "scrapy>=2.11.0",
     "beautifulsoup4>=4.12.0",
     "lxml>=5.0.0",
+    # AI outreach writer (phase 13). On this Windows machine Smart App Control blocks jiter 0.19 (an anthropic
+    # dependency); `pip install --force-reinstall --no-deps jiter==0.8.2` loads fine.
+    "anthropic>=2.7.0",
+    # Pure-Python language detector used to verify the language the writer declared
+    "langdetect>=1.0.9",
     # Validation & Settings
     "pydantic>=2.8.0",
     "pydantic-settings>=2.4.0",

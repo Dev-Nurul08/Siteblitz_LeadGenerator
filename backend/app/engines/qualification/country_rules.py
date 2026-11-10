@@ -51,7 +51,20 @@ class CountryRulesEngine:
         """
         Evaluate legal posture and compliance obligations based on the lead's country.
         """
-        cc = (country_code or "US").strip().upper()
+        cc = (country_code or "").strip().upper()
+        if not cc:
+            # A missing country used to fall back to "US" and pass as CAN-SPAM. Unknown country = HOLD
+            # (docs/spec/outreach-engine.md row 3).
+            return CountryComplianceProfile(
+                country_code="",
+                country_name="Unknown country",
+                framework=LegalFramework.GENERAL_B2B,
+                is_outreach_permitted=False,
+                default_mode=OutreachMode.MANUAL_REVIEW_ONLY,
+                legal_basis=LegalBasis.NONE,
+                risk_score=1.0,
+                compliance_guidance="Country unknown: hold until the country is known.",
+            )
 
         if cc in ("US", "USA"):
             return CountryComplianceProfile(
