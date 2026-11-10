@@ -1,7 +1,7 @@
 # SPEC LOCK - Outreach engine: AI writer, email finder, batch screen, letter (phases 13-16)
 
-Status: ✅ APPROVED 2026-11-10 (founder: "go for it"). Phase 13 built in the same session (see HANDOFF.md);
-phases 14-16 not started.
+Status: ✅ APPROVED 2026-11-10 (founder: "go for it"). Phase 13 built in the same session. Phase 14 built and run
+on 2026-11-10 (`docs/outreach/email-finder-run-2026-11-10.md`). Phases 15-16 not started.
 Inputs:
 - The founder's request of 2026-11-10: AI writes every message; a daily cap of 100; select N and press one click;
   WhatsApp Web; social accounts; a scraper for phone-only leads.
@@ -45,9 +45,9 @@ Inputs:
       count, 0 or 2+ questions in T1, link in T1, banned phrase, em dash, `!`, `;`, unresolved `[..]` / `{{..}}` /
       `TO FILL`, missing opt-out, missing signature, and a HOLD country producing text.
 - [ ] Phase 13: a test proves that the request body sent to the model contains no `@` email and no phone digits.
-- [ ] Phase 14: the run covers 2,162 sites. Every stored email has a source URL on the business's own site, and
+- [x] Phase 14: the run covers 2,162 sites. Every stored email has a source URL on the business's own site, and
       0 emails exist without one. Totals are reported: emails found, sites down, NO_VIEWPORT, NO_HTTPS,
-      robots-blocked.
+      robots-blocked. (2026-11-10: 2,162 outcomes, 839 email rows, 0 without a source URL, 0 off-host.)
 - [ ] Phase 15: 100 sends in one day are possible and the 101st selection is refused with a visible message.
       WhatsApp **Open chat** appears only for leads with an opt-in. Screenshots exist for each state (empty,
       selecting, writing, ready/hold list, cap reached) at 1280 and 390 px.

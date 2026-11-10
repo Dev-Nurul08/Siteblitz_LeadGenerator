@@ -152,3 +152,29 @@
 - **This session stopped fixing at 13 changed files**, following the ~8-file phase rule (the overrun was the 2
   high-severity phase-13 claim gaps). The 37 other open bugs are in the board rows QA-1b, 3, 5, 14, 15 and LR, with
   IDs in `docs/qa/ISSUES.csv`.
+
+## 2026-11-10 - Phase 14 email finder
+- **robots.txt is read by a small RFC 9309 parser in `site_visit.py`, not `urllib.robotparser`.**
+  - Why: the standard library has no `*` / `$` wildcards and takes the first matching rule, so `Disallow: /*`
+    allowed every page.
+  - A robots.txt answering 429 or 5xx means "disallow everything" (RFC 9309 2.3.1.4). A 4xx means there is no
+    robots.txt. A site whose robots.txt cannot be reached at all is recorded as failed (unreachable).
+  - Our group name is `SiteBlitzEnricher`; otherwise the `*` group applies.
+- **"Max 5 GET per site" counts page GETs:** the homepage plus `/contact`, `/contact-us`, `/contactus`, `/about`.
+  robots.txt is fetched on top of those: once, or twice when HTTPS fails and plain HTTP is tried, or when the
+  homepage moves to another host. The visit stops at the first page that shows an email.
+- **Emails come only from mailto links, visible text (including "name [at] domain [dot] com") and Cloudflare-encoded
+  addresses** (spec row 10). JSON-LD sits in a `<script>`, so it is no longer read; the old Schema.org test now
+  checks that it is ignored. Example addresses (`you@example.com`), Sentry keys and comments are dropped (QA-040).
+- **An email is stored only when its page is on the host the business lists, or the host its homepage redirects
+  to** (`www.` ignored). A contact page that redirects elsewhere does not count as the business's own site.
+- **Listing addresses (Google pages, business.site, directories) and social profiles are not fetched.** They are not
+  the business's own site.
+- **Schools are skipped by exact Overture category** (`school`, `elementary_school`, `middle_school`, `high_school`,
+  `public_school`, `school_district_office`, `education_office`). College/university stays a fragment rule.
+  Coaching classes (`specialty_school`), preschools, tutoring and educational services are prospects (QA-038).
+- **"Sites down" in the totals means one failed check.** `SITE_DOWN_CONFIRMED` needs a second failure at least 6 h
+  later (website-intelligence spec row 6). That second check was not run in this session.
+- **The results stay outside the repository**, in `E:\SiteBlitz-World-Business-Data\_work\email_finder\2026-11-10\`,
+  because they hold business contact data. They are not imported into the app database yet: phase 15 needs them as
+  businesses, `website_checks` and contacts.
