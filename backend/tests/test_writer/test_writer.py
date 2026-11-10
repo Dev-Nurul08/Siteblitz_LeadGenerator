@@ -58,6 +58,17 @@ def test_request_carries_no_email_or_phone():
     assert result.status == "READY", result.errors
     sent = json.dumps(messages.calls[0]["messages"], ensure_ascii=False)
     assert "@gmail.com" not in sent and "98250" not in sent and "12345" not in sent
+
+
+def test_owner_reply_in_task_reaches_the_model_without_email_or_phone():
+    # QA-2026-11-10 (QA-016): only LEAD was redacted; TASK.inbound_message went to the model as typed.
+    writer, messages = writer_with(answer(), answer())
+    writer.write(lead(), task(channel="email", touch=2,
+                              inbound_message="Price batao. Mera number 98250 12345 hai, mail owner.glow@gmail.com"))
+    assert messages.calls, "the model should have been called for a reply"
+    sent = messages.calls[0]["messages"][0]["content"]  # the first user turn: LEAD + TASK as JSON
+    assert "Price batao" in sent
+    assert "@gmail.com" not in sent and "98250" not in sent and "12345" not in sent
     assert "t-1" not in sent  # the lead id stays in the app
     assert "(email removed)" in sent and "(phone removed)" in sent
 

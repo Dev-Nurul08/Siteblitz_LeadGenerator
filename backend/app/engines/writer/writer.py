@@ -288,6 +288,16 @@ def model_payload(lead: dict) -> dict:
     return payload
 
 
+def model_task(task: dict) -> dict:
+    """The TASK as sent to the model: the owner's reply (inbound_message) can carry their number or address,
+    so it gets the same redaction and check as the lead (spec row 2). The validator still sees the original."""
+    payload = _redact(dict(task))
+    dumped = json.dumps(payload, ensure_ascii=False)
+    if EMAIL_ADDRESS.search(dumped) or PHONE.search(dumped):
+        raise PrivacyError("an email address or phone number would be sent to the model")
+    return payload
+
+
 def assemble_message(output: dict, facts: CompanyFacts, channel: str) -> str:
     """The text the recipient sees: the model's body + sign-off, the app's signature, the model's opt-out line."""
     body = (output.get("body") or "").strip()
@@ -358,7 +368,7 @@ class OutreachWriter:
         if not self.settings.ANTHROPIC_API_KEY and self._client is None:
             return WriterResult("ERROR", lead_id, errors=["ANTHROPIC_API_KEY is not set in .env"])
         try:
-            user = json.dumps({"LEAD": model_payload(lead), "TASK": task}, ensure_ascii=False)
+            user = json.dumps({"LEAD": model_payload(lead), "TASK": model_task(task)}, ensure_ascii=False)
         except PrivacyError as exc:
             return WriterResult("ERROR", lead_id, errors=[str(exc)])
 
