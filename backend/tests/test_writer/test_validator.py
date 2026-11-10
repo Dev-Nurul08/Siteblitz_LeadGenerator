@@ -6,7 +6,9 @@ from backend.app.config import Settings
 from backend.app.engines.writer.validator import is_roman_hindi, numbers_in, validate
 from backend.app.engines.writer.writer import OutreachWriter
 
-SETTINGS = Settings(SITEBLITZ_SENDER_NAME="Asha", SITEBLITZ_REPLY_EMAIL="hello@siteblitz.example",
+# Explicit values (and no .env file) keep the tests hermetic once the founder fills a real .env.
+SETTINGS = Settings(_env_file=None, ANTHROPIC_API_KEY=None, SITEBLITZ_SENDER_NAME="Asha",
+                    SITEBLITZ_REPLY_EMAIL="hello@siteblitz.example",
                     SITEBLITZ_POSTAL_ADDRESS="Test Road, Navsari, Gujarat")
 WRITER = OutreachWriter(client=object(), settings=SETTINGS)
 
