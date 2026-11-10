@@ -2,26 +2,24 @@
 Contact Discovery Engine module (Phase 3).
 
 Discovers B2B contacts from permitted sources:
-- Multi-page company website crawling (/contact, /about, /team, /leadership, /staff)
-- Schema.org Person and ContactPoint JSON-LD structured data extraction
-- Decodes obfuscated email addresses (e.g., [at], [dot], Cloudflare cfemail)
+- Polite website visit (robots.txt, homepage + /contact, /contact-us, /contactus, /about) — site_visit.py
+- Emails only from mailto links, visible text and Cloudflare-encoded addresses (spec row 10)
 - Stored website technical audit signals
-- Domain email pattern generation
+- Domain email pattern generation  (discover_contacts() only — it invents addresses; removal is phase 5)
 - Hunter.io API integration (if configured)
 """
 
-from dataclasses import dataclass, field
-import json
+from dataclasses import dataclass
 import re
 from typing import Optional
-from urllib.parse import unquote, urljoin, urlparse
+from urllib.parse import unquote, urlparse
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 import httpx
 import structlog
 
 from backend.app.config import get_settings
-from backend.app.engines.opportunity.resolver import ensure_public_destination
+from backend.app.engines.enrichment.site_visit import visit_site
 from backend.app.models.business import Business
 from backend.app.models.opportunity import WebsiteAudit
 
@@ -32,6 +30,21 @@ CONTACT_PAGE_PATHS = [
     "/about", "/about-us", "/our-team", "/team",
     "/leadership", "/staff", "/management", "/our-story",
 ]
+
+EMAIL_SYNTAX = re.compile(r"[a-z0-9][a-z0-9._%+-]{0,63}@[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,24}")
+EMAIL_IN_TEXT = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}")
+OBFUSCATED_IN_TEXT = re.compile(
+    r"([a-zA-Z0-9._%+-]+)\s*[\[(](?:at|@)[\])]\s*([a-zA-Z0-9.-]+)\s*[\[(](?:dot|\.)[\])]\s*([a-zA-Z]{2,})",
+    re.IGNORECASE,
+)
+# Not part of what a visitor reads, or not an address the business wrote for visitors (QA-040).
+HIDDEN_TAGS = ["script", "style", "noscript", "template", "head", "svg", "iframe", "object", "textarea"]
+PLACEHOLDER_DOMAINS = ("example.com", "example.org", "example.net", "example.in", "domain.com",
+                       "yourdomain.com", "yoursite.com", "mysite.com", "website.com", "company.com",
+                       "test.com", "sentry.io", "wixpress.com")
+PLACEHOLDER_LOCAL_PARTS = {"you", "your", "yourname", "youremail", "your.name", "your.email", "name",
+                           "username", "user", "someone", "example", "test", "johndoe", "john.doe",
+                           "jane.doe"}
 
 
 @dataclass
@@ -150,141 +163,58 @@ class ContactDiscoveryEngine:
         return list(found_map.values())
 
     async def _crawl_contact_pages(self, base_url: str) -> list[DiscoveredContact]:
-        """Fetch dedicated contact/about pages to locate team contacts."""
-        results: list[DiscoveredContact] = []
-        if not base_url.startswith(("http://", "https://")):
-            base_url = f"https://{base_url}"
+        """Visit the site politely and return the emails its own pages show.
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) SiteBlitzEnricher/1.0",
-            "Accept": "text/html,application/xhtml+xml",
-        }
-
-        # SSRF guard: ensure base_url and redirected targets are public
-        async with httpx.AsyncClient(
-            timeout=self.timeout_seconds,
-            follow_redirects=True,
-            event_hooks={"request": [ensure_public_destination]},
-        ) as client:
-            for path in CONTACT_PAGE_PATHS[:4]:  # Probe top 4 contact paths
-                target_url = urljoin(base_url, path)
-                try:
-                    resp = await client.get(target_url, headers=headers)
-                    if resp.status_code == 200 and "text/html" in resp.headers.get("content-type", ""):
-                        extracted = self._extract_from_html(resp.text, target_url)
-                        results.extend(extracted)
-                        if len(results) >= 3:
-                            break  # Found high quality contacts, don't spam requests
-                except Exception:
-                    continue
-
-        return results
+        robots.txt, homepage + 4 contact paths, 2 MB / 5 redirects / SSRF guard (QA-040,
+        outreach-engine spec rows 10-11). `site_visit.visit_site` also returns the site checks.
+        """
+        visit = await visit_site(base_url, self._extract_from_html, timeout=self.timeout_seconds)
+        return visit.contacts
 
     def _extract_from_html(self, html: str, source_url: str) -> list[DiscoveredContact]:
-        """Extract contacts, mailto links, and Schema.org Persons from HTML."""
+        """Emails a visitor can see on the page: mailto links, visible text, Cloudflare-encoded ones.
+
+        Spec row 10 allows only these three. Scripts (JSON-LD, analytics keys such as Sentry DSNs),
+        HTML comments, form placeholders and example addresses are not the business's address (QA-040).
+        """
         soup = BeautifulSoup(html, "html.parser")
         contacts: list[DiscoveredContact] = []
-        seen_emails: set[str] = set()
+        seen: set[str] = set()
 
-        # 1. Parse Schema.org Person JSON-LD
-        for s in soup.find_all("script", type="application/ld+json"):
-            try:
-                data = json.loads(s.string or "{}")
-                items = data.get("@graph", [data]) if isinstance(data, dict) else (data if isinstance(data, list) else [])
-                for item in items:
-                    if isinstance(item, dict) and item.get("@type") in ["Person", "ContactPoint"]:
-                        em = item.get("email")
-                        if em and self._is_valid_email(em):
-                            em_clean = em.lower().strip()
-                            if em_clean not in seen_emails:
-                                seen_emails.add(em_clean)
-                                contacts.append(
-                                    DiscoveredContact(
-                                        email=em_clean,
-                                        full_name=item.get("name"),
-                                        job_title=item.get("jobTitle") or item.get("contactType"),
-                                        phone=item.get("telephone"),
-                                        source_method="schema_org_person",
-                                        source_url=source_url,
-                                        confidence=0.95,
-                                    )
-                                )
-            except Exception:
-                pass
+        def add(raw: Optional[str], method: str, confidence: float, name: Optional[str] = None) -> None:
+            email = (raw or "").strip().strip(".").lower()
+            if email in seen or not self._is_valid_email(email) or self._is_placeholder_email(email):
+                return
+            seen.add(email)
+            contacts.append(DiscoveredContact(email=email, full_name=name, source_method=method,
+                                              source_url=source_url, confidence=confidence))
 
-        # 2. Decode Cloudflare Email Protection
-        for cf in soup.find_all(attrs={"data-cfemail": True}):
-            try:
-                encoded = cf["data-cfemail"]
-                decoded = self._decode_cloudflare_email(encoded)
-                if decoded and self._is_valid_email(decoded) and decoded not in seen_emails:
-                    seen_emails.add(decoded)
-                    contacts.append(
-                        DiscoveredContact(
-                            email=decoded,
-                            source_method="website_scrape",
-                            source_url=source_url,
-                            confidence=0.90,
-                        )
-                    )
-            except Exception:
-                pass
+        # 1. Cloudflare Email Protection: data-cfemail elements and /cdn-cgi/l/email-protection#<hex> links
+        for element in soup.find_all(attrs={"data-cfemail": True}):
+            add(self._decode_cloudflare_email(element["data-cfemail"]), "cloudflare_decode", 0.90)
 
-        # 3. Find mailto links
+        # 2. mailto links (a link may list several addresses separated by commas)
         for a in soup.find_all("a", href=True):
             href = a["href"].strip()
-            if href.lower().startswith("mailto:"):
-                raw_email = unquote(href.split(":", 1)[1].split("?")[0].strip().lower())
-                if self._is_valid_email(raw_email) and raw_email not in seen_emails:
-                    seen_emails.add(raw_email)
-                    anchor_text = a.get_text(strip=True)
-                    name = anchor_text if (anchor_text and "@" not in anchor_text and len(anchor_text) < 40) else None
+            if "/cdn-cgi/l/email-protection#" in href:
+                add(self._decode_cloudflare_email(href.split("#", 1)[1]), "cloudflare_decode", 0.90)
+            elif href.lower().startswith("mailto:"):
+                anchor_text = a.get_text(strip=True)
+                name = anchor_text if (anchor_text and "@" not in anchor_text and len(anchor_text) < 40) else None
+                for part in unquote(href.split(":", 1)[1].split("?")[0]).split(","):
+                    add(part, "mailto", 0.88, name)
 
-                    contacts.append(
-                        DiscoveredContact(
-                            email=raw_email,
-                            full_name=name,
-                            source_method="website_scrape",
-                            source_url=source_url,
-                            confidence=0.88,
-                        )
-                    )
-
-        # 4. Obfuscated email syntax (e.g., name [at] domain [dot] com)
-        obfuscated_matches = re.findall(
-            r"([a-zA-Z0-9._%+-]+)\s*\[(?:at|@)\]\s*([a-zA-Z0-9.-]+)\s*\[(?:dot|\.)\]\s*([a-zA-Z]{2,})",
-            html,
-            re.IGNORECASE,
-        )
-        for user, dom, tld in obfuscated_matches:
-            rebuilt = f"{user}@{dom}.{tld}".lower()
-            if self._is_valid_email(rebuilt) and rebuilt not in seen_emails:
-                seen_emails.add(rebuilt)
-                contacts.append(
-                    DiscoveredContact(
-                        email=rebuilt,
-                        source_method="obfuscated_decode",
-                        source_url=source_url,
-                        confidence=0.85,
-                    )
-                )
-
-        # 5. Regex scan for emails in text
-        raw_emails = re.findall(
-            r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", html
-        )
-        for em in raw_emails[:8]:
-            em_clean = em.lower().strip()
-            if self._is_valid_email(em_clean) and em_clean not in seen_emails:
-                seen_emails.add(em_clean)
-                contacts.append(
-                    DiscoveredContact(
-                        email=em_clean,
-                        source_method="website_scrape",
-                        source_url=source_url,
-                        confidence=0.80,
-                    )
-                )
+        # 3. Visible text only: drop scripts, styles, head, form text and comments first
+        for tag in soup(HIDDEN_TAGS):
+            tag.decompose()
+        for comment in soup.find_all(string=lambda s: isinstance(s, Comment)):
+            comment.extract()
+        text = soup.get_text(" ", strip=True)
+        for match in EMAIL_IN_TEXT.findall(text)[:20]:
+            add(match, "visible_text", 0.85)
+        # "name [at] domain [dot] com" written out on the page is still the address the business shows
+        for user, dom, tld in OBFUSCATED_IN_TEXT.findall(text):
+            add(f"{user}@{dom}.{tld}", "visible_text_obfuscated", 0.85)
 
         return contacts
 
@@ -353,7 +283,14 @@ class ContactDiscoveryEngine:
 
     @staticmethod
     def _is_valid_email(email: str) -> bool:
-        if not email or "@" not in email:
+        if not email or "@" not in email or len(email) > 254:
             return False
         disallowed = (".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif", ".js", ".css", ".woff", ".ttf")
-        return not email.endswith(disallowed)
+        return not email.endswith(disallowed) and EMAIL_SYNTAX.fullmatch(email) is not None
+
+    @staticmethod
+    def _is_placeholder_email(email: str) -> bool:
+        """Example / template addresses (`you@example.com`) and analytics keys (`…@o123.ingest.sentry.io`)."""
+        local, _, domain = email.partition("@")
+        return local in PLACEHOLDER_LOCAL_PARTS or any(
+            domain == d or domain.endswith("." + d) for d in PLACEHOLDER_DOMAINS)

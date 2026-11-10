@@ -128,8 +128,9 @@ class TestDeepDiscoveryFeatures:
         emails = [c.email for c in extracted]
         assert "press@newsroom.com" in emails
 
-    def test_schema_org_person_extraction(self):
-        """Extracts person details from JSON-LD Schema.org Person markup."""
+    def test_schema_org_person_in_script_is_not_extracted(self):
+        """JSON-LD sits in a <script>; the outreach spec (row 10) takes emails only from mailto
+        links, visible text and Cloudflare-encoded addresses (QA-040)."""
         html = """
         <html>
         <head>
@@ -148,11 +149,5 @@ class TestDeepDiscoveryFeatures:
         </html>
         """
         extracted = self.discovery._extract_from_html(html, "https://navy.gov/team")
-        assert len(extracted) == 1
-        grace = extracted[0]
-        assert grace.email == "grace@navy.gov"
-        assert grace.full_name == "Grace Hopper"
-        assert grace.job_title == "Chief Technology Officer"
-        assert grace.phone == "+1-202-555-0100"
-        assert grace.source_method == "schema_org_person"
+        assert extracted == []
 

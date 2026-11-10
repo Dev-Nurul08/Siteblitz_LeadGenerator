@@ -64,8 +64,13 @@ class TestContactDiscoveryEngine:
         assert "billing@apexdynamics.com" in emails
 
     @pytest.mark.asyncio
-    async def test_synthetic_fallback_email(self):
+    async def test_synthetic_fallback_email(self, monkeypatch):
         """Generates info@{domain} fallback when no explicit email found."""
+        # The crawl must find nothing here. Without this stub the test visited the real
+        # hotelalpha.ch, whose homepage lists info@hotelalpha.ch in a mailto link (2026-11-10).
+        async def no_crawl(self, base_url):
+            return []
+        monkeypatch.setattr(ContactDiscoveryEngine, "_crawl_contact_pages", no_crawl)
         biz = Business(
             name="Boutique Hotel Alpha",
             country_code="CH",
