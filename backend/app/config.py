@@ -23,10 +23,11 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "change-me-in-production"
 
     # === Database ===
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/siteblitz_leads"
-    DATABASE_URL_SYNC: str = (
-        "postgresql+psycopg2://postgres:postgres@localhost:5432/siteblitz_leads"
-    )
+    # Zero-config local default is a SQLite file in the folder the app starts from (README).
+    # Docker / production set DATABASE_URL to PostgreSQL explicitly (docker-compose.yml).
+    # A PostgreSQL default made every API call fail with 500 on a fresh checkout without Postgres.
+    DATABASE_URL: str = "sqlite+aiosqlite:///./siteblitz_leads.db"
+    DATABASE_URL_SYNC: str = "sqlite:///./siteblitz_leads.db"
     DB_ECHO: bool = False
     DB_POOL_SIZE: int = 10
     DB_MAX_OVERFLOW: int = 20

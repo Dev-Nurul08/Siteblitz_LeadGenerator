@@ -9,9 +9,14 @@ import subprocess
 
 def main():
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    venv_python = os.path.join(root_dir, "venv", "Scripts", "python.exe")
-    if not os.path.exists(venv_python):
-        venv_python = sys.executable
+    # The project's virtual environment is .venv; venv is the older name. Without either, the
+    # backend would start on whatever Python launched this script, which usually lacks the deps.
+    venv_python = sys.executable
+    for venv_dir in (".venv", "venv"):
+        candidate = os.path.join(root_dir, venv_dir, "Scripts", "python.exe")
+        if os.path.exists(candidate):
+            venv_python = candidate
+            break
 
     frontend_dir = os.path.join(root_dir, "frontend")
 
