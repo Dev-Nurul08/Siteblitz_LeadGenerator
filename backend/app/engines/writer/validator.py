@@ -94,6 +94,27 @@ URL = re.compile(r"(?:https?://|www\.)\S+", re.IGNORECASE)
 DOMAIN = re.compile(r"\b(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}\b", re.IGNORECASE)
 UNRESOLVED = re.compile(r"\[[^\]]*\]|\{\{|\}\}|TO FILL")
 
+# ─── Email engine v2 pilot (docs/outreach/pilot-templates.md; spec v2 rows 5-6, RESULT rows 13 / 16 / C) ──────
+# Body words per touch (spec v2 rows 5-6). The phase-13 "100 with signature" cap is not applied to pilot emails:
+# the v2 signature adds WhatsApp + unsubscribe lines, so that cap would depend on the postal address (e3-notes.md).
+PILOT_WORD_LIMITS = {1: (60, 85), 2: (40, 70), 3: (30, 50)}
+PILOT_SUBJECT_FACT_WORDS = (3, 8)
+# RESULT C / spec v2 row 5, word for word (India).
+PILOT_PRICE_LINE = "Website setup starts at ₹7,999, with domain and hosting charged separately."
+PILOT_IDENTITY_LINE = "I'm {sender} from SiteBlitz, a small web studio in Gujarat."
+PILOT_QUESTION = "Shall I make a sample page for {business} and send it here?"
+# The opt-out line E2's message builder writes (backend/app/engines/sending/message.py UNSUBSCRIBE_LINE). Until a
+# send record exists the stored text carries the placeholder; the builder replaces the whole line at send time.
+UNSUBSCRIBE_PREFIX = 'Reply "stop" or unsubscribe here:'
+UNSUBSCRIBE_PLACEHOLDER = "[unsubscribe link added when sent]"
+UNSUBSCRIBE_LINE_RE = re.compile(r'^Reply "stop" or unsubscribe here: (\S+|\[unsubscribe link added when sent\])$')
+# Prompt P8 (no deadlines, discounts, "limited slots", "only this week", fear or guilt), checked in every pilot touch.
+PRESSURE_PHRASES = ("limited", "last chance", "hurry", "urgent", "only this week", "act now", "offer ends",
+                    "deadline", "discount", "don't miss")
+# A follow-up must carry new information (RESULT row 13), not a nudge.
+FOLLOW_UP_FILLER = ("just following up", "following up", "checking in", "circling back", "bumping",
+                    "my last email", "my previous email", "did you get a chance", "did you see my")
+
 
 @dataclass(frozen=True)
 class LanguageRow:
@@ -211,6 +232,107 @@ def _has_phrase(text: str, phrase: str) -> bool:
     return re.search(r"(?<![a-z])" + re.escape(phrase) + r"(?![a-z])", text, flags=re.IGNORECASE) is not None
 
 
+def _flat(text: Optional[str]) -> str:
+    """Whitespace collapsed to single spaces: paragraph breaks do not matter for the word-for-word lines."""
+    return " ".join((text or "").split())
+
+
+def pilot_email_errors(output: dict, lead: dict, task: dict) -> list[str]:
+    """The pilot template rules for one email touch (docs/outreach/pilot-templates.md). `task["pilot"]` is built by
+    the app (observation sentence from E1, identity / price / question lines), never by the model."""
+    pilot = task.get("pilot") or {}
+    touch = task.get("touch")
+    errors: list[str] = []
+    subject = (output.get("subject") or "").strip()
+    body = (output.get("body") or "").strip()
+    model_text = "\n".join(x for x in (subject, body) if x)
+    flat = _flat(body)
+
+    if (output.get("signoff") or "").strip():
+        errors.append("a pilot email has no sign-off line: the app adds the signature block")
+    if (output.get("opt_out_line") or "").strip():
+        errors.append("a pilot email has no opt-out line of its own: the app adds the unsubscribe line")
+    if URL.search(model_text):
+        errors.append("no link is allowed in a pilot email (the app adds only the unsubscribe link)")
+    low, high = PILOT_WORD_LIMITS.get(touch, (0, 0))
+    words = word_count(body)
+    if not low <= words <= high:
+        errors.append(f"body has {words} words; pilot touch {touch} needs {low}-{high}")
+    for phrase in PRESSURE_PHRASES:
+        if _has_phrase(model_text, phrase):
+            errors.append(f"pressure wording is not allowed: {phrase!r}")
+    questions = body.count("?") + body.count("？")
+
+    if touch == 1:
+        observation = _flat(pilot.get("observation_sentence"))
+        identity = _flat(pilot.get("identity_line"))
+        price = _flat(pilot.get("price_line"))
+        question = _flat(pilot.get("question"))
+        tail = f"{price} {question}" if price else question
+        if not observation or not flat.startswith(observation):
+            errors.append("line 1 must be the observation sentence, word for word: " + repr(observation))
+        else:
+            rest = flat[len(observation):].strip()
+            if not rest.startswith(identity):
+                errors.append("the identity line must come right after the observation, word for word: "
+                              + repr(identity))
+            elif flat.endswith(tail) and not rest[len(identity):len(rest) - len(tail)].strip():
+                errors.append("say what we build for this vertical between the identity line and the price line")
+        if questions != 1:
+            errors.append(f"a pilot touch 1 needs exactly one question, found {questions}")
+        if not flat.endswith(question):
+            errors.append("the last sentence must be the question, word for word: " + repr(question))
+        elif price and not flat.endswith(tail):
+            errors.append("the price line must come just before the question, word for word: " + repr(price))
+        if price and flat.count(price) != 1:
+            errors.append("the price line must appear exactly once")
+        name = (lead.get("business_name") or "").strip()
+        if not subject:
+            errors.append("email touch 1 needs a subject")
+        elif not subject.startswith(f"{name}:"):
+            errors.append(f"the subject must start with the business name and a colon: {name + ':'!r}")
+        else:
+            fact_words = word_count(subject[len(name) + 1:])
+            low_s, high_s = PILOT_SUBJECT_FACT_WORDS
+            if not low_s <= fact_words <= high_s:
+                errors.append(f"the subject fact after the name has {fact_words} words; {low_s}-{high_s} allowed")
+        if re.match(r"\s*(re|fwd?)\s*:", subject, flags=re.IGNORECASE):
+            errors.append("the first subject must not start with Re: or Fwd:")
+        if "?" in subject or "!" in subject:
+            errors.append("the subject must not contain a question or exclamation mark")
+    else:
+        for phrase in FOLLOW_UP_FILLER:
+            if _has_phrase(model_text, phrase):
+                errors.append(f"a follow-up must add new information, not {phrase!r}")
+        if touch == 2:
+            if not re.search(r"\bsample\b", body, flags=re.IGNORECASE):
+                errors.append("touch 2 must offer the sample page again")
+            if questions != 1:
+                errors.append(f"touch 2 needs exactly one question, found {questions}")
+            elif not body.rstrip().endswith(("?", "？")):
+                errors.append("the question must be the last sentence")
+    return errors
+
+
+def assembled_pilot_errors(text: str, signature_lines: list[str]) -> list[str]:
+    """Checks on the full text the app stores for sending: the signature block is there, the unsubscribe line is the
+    last line (exactly once, with a URL or the placeholder E2 replaces) and it holds the only URL in the message."""
+    errors: list[str] = []
+    lines = (text or "").replace("\r\n", "\n").rstrip().split("\n")
+    last = lines[-1].strip() if lines else ""
+    if not UNSUBSCRIBE_LINE_RE.match(last):
+        errors.append(f'the last line must be: {UNSUBSCRIBE_PREFIX} <unsubscribe link>')
+    if sum(1 for line in lines if line.strip().startswith(UNSUBSCRIBE_PREFIX)) != 1:
+        errors.append("the unsubscribe line must appear exactly once")
+    rest = "\n".join(lines[:-1]) if UNSUBSCRIBE_LINE_RE.match(last) else "\n".join(lines)
+    if URL.search(rest):
+        errors.append("the unsubscribe link is the only link allowed in a pilot email")
+    for line in signature_lines:
+        if line not in lines:
+            errors.append(f"signature line missing: {line!r}")
+    return errors
+
+
 def validate(
     output: dict,
     lead: dict,
@@ -303,12 +425,18 @@ def validate(
 
     # --- Length and shape (spec row 5) ---
     base_language = language.split("-")[0].lower()
-    first_touch = (channel == "email" and touch == 1) or channel == "social_dm"
+    # Email engine v2 pilot: its own template rules replace the phase-13 email shape rules (pilot-templates.md).
+    pilot = channel == "email" and not inbound and bool(task.get("pilot"))
+    first_touch = ((channel == "email" and touch == 1) or channel == "social_dm") and not pilot
     limits = WHATSAPP_WORD_LIMITS if channel == "whatsapp_reply" else WORD_LIMITS.get((channel, touch))
     if inbound and channel != "whatsapp_reply":
         limits = None  # email replies have no locked length
-    if reply_class == "STOP":
+    if reply_class == "STOP" or pilot:
         limits = None
+    if pilot:
+        if base_language in NO_WORD_COUNT:
+            errors.append(f"no length rule exists yet for {language}")
+        errors.extend(pilot_email_errors(output, lead, task))
     if limits and base_language in NO_WORD_COUNT:
         errors.append(f"no length rule exists yet for {language}")
     elif limits:
@@ -330,7 +458,7 @@ def validate(
         if URL.search(body):
             errors.append("no link is allowed in a first message")
 
-    if channel == "email" and not inbound:
+    if channel == "email" and not inbound and not pilot:
         if touch == 1:
             if not subject:
                 errors.append("email touch 1 needs a subject")
@@ -349,7 +477,7 @@ def validate(
                 errors.append("the subject must not contain a question mark")
         if not signoff:
             errors.append("email needs a sign-off")
-    if channel in ("email", "social_dm", "letter") and not inbound and not opt_out:
+    if channel in ("email", "social_dm", "letter") and not inbound and not opt_out and not pilot:
         errors.append(f"{channel} needs an opt-out line")
 
     # --- Observation (spec row 4) ---

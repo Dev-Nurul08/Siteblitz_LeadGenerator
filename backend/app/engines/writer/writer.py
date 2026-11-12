@@ -28,9 +28,15 @@ from backend.app.engines.writer.validator import (
     HOLD_REASONS,
     LANGUAGE_BASES,
     OBSERVATION_PRIORITY,
+    PILOT_IDENTITY_LINE,
+    PILOT_PRICE_LINE,
+    PILOT_QUESTION,
     REPLY_CLASSES,
+    UNSUBSCRIBE_PLACEHOLDER,
+    UNSUBSCRIBE_PREFIX,
     LanguageRow,
     ValidationResult,
+    assembled_pilot_errors,
     expected_hold,
     load_country_languages,
     validate,
@@ -48,6 +54,15 @@ FACT_ROWS = {
     "reply_email": "Reply email address",
     "postal_address": "Postal address for email and letter footers",
 }
+WHATSAPP_ROW = re.compile(r"^\| WhatsApp / phone \(public on the site\) \| (.+?) \|$", re.MULTILINE)
+DEMO_ROW = re.compile(r"^\| (salon_beauty|coaching_tuition|retail_showroom|other) \| [^|]* \| ([^|]+) \| ([^|]+) \|$",
+                      re.MULTILINE)
+
+# App-level hold codes (the model never returns these; HOLD_REASONS are the model's own STEP 1 codes).
+WRITER_UNAVAILABLE = "WRITER_UNAVAILABLE"   # no API key, or the API could not be reached: never fake text
+VALIDATION_FAILED = "VALIDATION_FAILED"
+MODEL_REFUSED = "MODEL_REFUSED"
+PRIVACY_BLOCKED = "PRIVACY_BLOCKED"
 
 # Only these lead fields ever reach the model (spec row 2).
 MODEL_LEAD_KEYS = (
@@ -115,6 +130,8 @@ class CompanyFacts:
     sender_name: Optional[str]
     reply_email: Optional[str]
     postal_address: Optional[str]
+    whatsapp: Optional[str] = None                                    # studio WhatsApp, public on the site
+    demo_pages: dict = field(default_factory=dict)                    # vertical -> (customer word, page contents)
 
     def missing_for(self, channel: str) -> list[str]:
         return [key for key in CHANNEL_FACTS.get(channel, ()) if not getattr(self, key)]
@@ -125,6 +142,11 @@ class CompanyFacts:
         if channel == "letter":
             return f"{self.sender_name}, SiteBlitz\n{self.postal_address}"
         return ""
+
+    def pilot_signature_lines(self) -> list[str]:
+        """The v2 signature block (spec v2 row 5, RESULT C), without the unsubscribe line."""
+        return [f"{self.sender_name} | SiteBlitz", f"{self.reply_email} | {self.postal_address}",
+                f"WhatsApp: {self.whatsapp}"]
 
 
 def load_company_facts(settings: Settings, docs_dir: Path = DOCS_DIR) -> CompanyFacts:
@@ -144,7 +166,10 @@ def load_company_facts(settings: Settings, docs_dir: Path = DOCS_DIR) -> Company
                 shown = values[key] if key == "sender_name" else "set (the app adds it to the signature)"
                 line = f"| {label} | {shown} |"
         lines.append(line)
-    return CompanyFacts("\n".join(lines), **values)
+    whatsapp = WHATSAPP_ROW.search(raw)
+    demos = {m.group(1): (m.group(2).strip(), m.group(3).strip()) for m in DEMO_ROW.finditer(raw)}
+    return CompanyFacts("\n".join(lines), **values, whatsapp=whatsapp.group(1).strip() if whatsapp else None,
+                        demo_pages=demos)
 
 
 def load_system_text(facts: CompanyFacts, docs_dir: Path = DOCS_DIR) -> str:
@@ -152,11 +177,46 @@ def load_system_text(facts: CompanyFacts, docs_dir: Path = DOCS_DIR) -> str:
     prompt = prompt_doc.split("```text\n", 1)[1].split("\n```", 1)[0]
     countries = (docs_dir / "country-language.csv").read_text(encoding="utf-8")
     references = (docs_dir / "reference-messages.md").read_text(encoding="utf-8")
+    pilot_doc = (docs_dir / "pilot-templates.md").read_text(encoding="utf-8")
+    pilot = pilot_doc.split("```text\n", 1)[1].split("\n```", 1)[0]
     return (
         f"{prompt}\n\n<COMPANY_FACTS>\n{facts.text}\n</COMPANY_FACTS>\n\n"
         f"<COUNTRY_LANGUAGE>\n{countries}</COUNTRY_LANGUAGE>\n\n"
-        f"<REFERENCE_MESSAGES>\n{references}</REFERENCE_MESSAGES>"
+        f"<REFERENCE_MESSAGES>\n{references}</REFERENCE_MESSAGES>\n\n"
+        f"<PILOT_EMAIL_TEMPLATES>\n{pilot}\n</PILOT_EMAIL_TEMPLATES>"
     )
+
+
+def pilot_task(touch: int, lead: dict, observation_type: str, observation_sentence: str,
+               facts: CompanyFacts) -> dict:
+    """The TASK for one pilot email touch (docs/outreach/pilot-templates.md). Every fixed line is built here from
+    E1's stored observation sentence and the company facts; the validator checks the model kept them word for word."""
+    name = lead.get("business_name") or ""
+    vertical = lead.get("vertical") or "other"
+    customer_word, page = facts.demo_pages.get(vertical) or facts.demo_pages.get("other") or ("customers", "")
+    india = (lead.get("country") or "").upper() == "IN"
+    return {
+        "channel": "email", "touch": touch, "inbound_message": None, "attachments_allowed": [],
+        "pilot": {
+            "template": f"T{touch}",
+            "observation_type": observation_type,
+            "observation_sentence": observation_sentence,
+            "identity_line": PILOT_IDENTITY_LINE.format(sender=facts.sender_name),
+            # Spec v2 row 2: India only; outside India no price in a first message (company-facts.md).
+            "price_line": PILOT_PRICE_LINE if india else None,
+            "question": PILOT_QUESTION.format(business=name),
+            "vertical": vertical,
+            "vertical_page": page,
+            "customer_word": customer_word,
+        },
+    }
+
+
+def assemble_pilot_email(body: str, facts: CompanyFacts, unsubscribe: str = UNSUBSCRIBE_PLACEHOLDER) -> str:
+    """Body + the v2 signature block + the unsubscribe line. E2's message builder replaces the last line with the
+    real per-message link at send time (it always adds one blank line before it, kept here so the preview matches)."""
+    signature = "\n".join(facts.pilot_signature_lines())
+    return f"{body.strip()}\n\n{signature}\n\n{UNSUBSCRIBE_PREFIX} {unsubscribe}"
 
 
 def vertical_for(category: Optional[str]) -> str:
@@ -315,7 +375,7 @@ def assemble_message(output: dict, facts: CompanyFacts, channel: str) -> str:
 
 @dataclass
 class WriterResult:
-    status: str                    # READY | HOLD | ERROR
+    status: str                    # READY | HOLD (WRITER_UNAVAILABLE when the model cannot be reached)
     lead_id: Optional[str]
     hold_reason: Optional[str] = None
     output: Optional[dict] = None
@@ -366,11 +426,13 @@ class OutreachWriter:
             # Decided by the rules alone; the model is not called and no data leaves the machine.
             return WriterResult("HOLD", lead_id, hold_reason=hold)
         if not self.settings.ANTHROPIC_API_KEY and self._client is None:
-            return WriterResult("ERROR", lead_id, errors=["ANTHROPIC_API_KEY is not set in .env"])
+            # Spec v2 row 17 e "model down": never a fallback text, the lead waits for the writer.
+            return WriterResult("HOLD", lead_id, hold_reason=WRITER_UNAVAILABLE,
+                                errors=["ANTHROPIC_API_KEY is not set in .env"])
         try:
             user = json.dumps({"LEAD": model_payload(lead), "TASK": model_task(task)}, ensure_ascii=False)
         except PrivacyError as exc:
-            return WriterResult("ERROR", lead_id, errors=[str(exc)])
+            return WriterResult("HOLD", lead_id, hold_reason=PRIVACY_BLOCKED, errors=[str(exc)])
 
         messages: list[dict] = [{"role": "user", "content": user}]
         errors: list[str] = []
@@ -378,17 +440,20 @@ class OutreachWriter:
             try:
                 response = self.client().beta.messages.create(**self.request(messages))
             except (anthropic.AuthenticationError, anthropic.PermissionDeniedError):
-                return WriterResult("ERROR", lead_id, errors=["API key missing or not allowed"], attempts=attempt)
+                return WriterResult("HOLD", lead_id, hold_reason=WRITER_UNAVAILABLE,
+                                    errors=["API key missing or not allowed"], attempts=attempt)
             except anthropic.RateLimitError:
-                return WriterResult("ERROR", lead_id, errors=["rate limited; try the batch again later"],
-                                    attempts=attempt)
+                return WriterResult("HOLD", lead_id, hold_reason=WRITER_UNAVAILABLE,
+                                    errors=["rate limited; try the batch again later"], attempts=attempt)
             except anthropic.APIStatusError as exc:
-                return WriterResult("ERROR", lead_id, errors=[f"API error {exc.status_code}"], attempts=attempt)
+                return WriterResult("HOLD", lead_id, hold_reason=WRITER_UNAVAILABLE,
+                                    errors=[f"API error {exc.status_code}"], attempts=attempt)
             except anthropic.APIConnectionError:
-                return WriterResult("ERROR", lead_id, errors=["network error"], attempts=attempt)
+                return WriterResult("HOLD", lead_id, hold_reason=WRITER_UNAVAILABLE, errors=["network error"],
+                                    attempts=attempt)
 
             if response.stop_reason == "refusal":
-                return WriterResult("HOLD", lead_id, hold_reason="MODEL_REFUSED", attempts=attempt)
+                return WriterResult("HOLD", lead_id, hold_reason=MODEL_REFUSED, attempts=attempt)
             text = next((b.text for b in response.content if b.type == "text"), "")
             try:
                 output = json.loads(text)
@@ -401,6 +466,14 @@ class OutreachWriter:
                 if output["decision"] == "HOLD":
                     return WriterResult("HOLD", lead_id, hold_reason=output.get("hold_reason"), output=output,
                                         attempts=attempt)
+                if task.get("pilot") and channel == "email":
+                    text = assemble_pilot_email(output["body"], self.facts)
+                    problems = assembled_pilot_errors(text, self.facts.pilot_signature_lines())
+                    if problems:   # app-side assembly; a failure here is a bug, never sent
+                        return WriterResult("HOLD", lead_id, hold_reason=VALIDATION_FAILED, output=output,
+                                            errors=problems, attempts=attempt)
+                    return WriterResult("READY", lead_id, output=output, attempts=attempt, text=text,
+                                        subject=output.get("subject"))
                 return WriterResult("READY", lead_id, output=output, attempts=attempt,
                                     text=assemble_message(output, self.facts, channel),
                                     subject=output.get("subject"))
@@ -411,7 +484,7 @@ class OutreachWriter:
                 {"role": "user", "content": "Your answer failed these checks:\n- " + "\n- ".join(errors)
                  + "\nWrite it again so every check passes. Answer with the JSON object only."},
             ]
-        return WriterResult("HOLD", lead_id, hold_reason="VALIDATION_FAILED", errors=errors, attempts=2)
+        return WriterResult("HOLD", lead_id, hold_reason=VALIDATION_FAILED, errors=errors, attempts=2)
 
 
 def _main(argv: list[str]) -> int:

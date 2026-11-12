@@ -294,12 +294,12 @@ class SendingService:
         book = sched.CapacityBook()
         rows = (await self.session.execute(
             select(SendRecord.mailbox_id, SendRecord.local_date, SendRecord.window_label, SendRecord.kind,
-                   SendRecord.step)
+                   SendRecord.step, SendRecord.scheduled_for)
             .where(SendRecord.local_date >= start, SendRecord.local_date <= end,
                    SendRecord.state.in_(CAPACITY_STATES)))).all()
-        for mailbox_id, day, label, kind, step in rows:
+        for mailbox_id, day, label, kind, step, at in rows:
             book.add(mailbox_id, day, label, campaign=kind == SendKind.CAMPAIGN,
-                     new_contact=kind == SendKind.CAMPAIGN and step == 1)
+                     new_contact=kind == SendKind.CAMPAIGN and step == 1, at=at)
         return book
 
     async def submitted_counts(self, mailbox_id: int, day: date) -> dict:
@@ -359,12 +359,15 @@ class SendingService:
         ).scalar_one_or_none()
         return sent is not None
 
-    async def create_sequences(self, send_date: date, items: list[dict], now: Optional[datetime] = None) -> dict:
+    async def create_sequences(self, send_date: date, items: list[dict], now: Optional[datetime] = None,
+                               dry_run: bool = False) -> dict:
         """Admit approved, eligible prospects for step 1 on `send_date` (recipient-local). Each item:
-        {eligibility_id, subject, body, content_version, approved_by}. Every refusal is returned with a code and
-        a message the batch screen (E3) shows as it is."""
+        {eligibility_id, subject, body, content_version, approved_by} and optionally `mailbox_id` (E3: the texts
+        name that mailbox's sender, so the sequence must use it). Every refusal is returned with a code and a
+        message the batch screen (E3) shows as it is. `dry_run` (E3 review) plans the same way, items seeing each
+        other, and writes nothing: `planned` lists the mailbox and the three slots per item."""
         now = self._now(now)
-        admitted, refused = [], []
+        admitted, refused, planned = [], [], []
 
         def refuse(item, code, message):
             refused.append({"eligibility_id": item["eligibility_id"], "code": code, "message": message})
@@ -402,8 +405,14 @@ class SendingService:
                 continue
             source, batch = await self._source_of(row)
             probe = EmailSequence(source=source, source_batch=batch)
+            pinned = item.get("mailbox_id")
             usable = [b.id for b in mailboxes
-                      if not self.blocking(flags, step=1, mailbox=b, sequence=probe)]
+                      if not self.blocking(flags, step=1, mailbox=b, sequence=probe)
+                      and (pinned is None or b.id == pinned)]
+            if pinned is not None and not usable:
+                refuse(item, "MAILBOX_NOT_AVAILABLE", f"mailbox {pinned} (whose sender the texts name) is disabled "
+                       "or paused; write this lead again")
+                continue
             source_blocks = [f for f in flags if f.scope in (PauseScope.SOURCE, PauseScope.SOURCE_BATCH)
                              and f.scope_value in (source, batch)]
             if source_blocks:
@@ -416,6 +425,13 @@ class SendingService:
                 continue
             seen_hashes.add(recipient_hash)
             box = next(b for b in mailboxes if b.id == plan.mailbox_id)
+            if dry_run:   # the reservation stays in the in-memory book only, so later items see it
+                planned.append({"eligibility_id": row.id, "mailbox_id": box.id, "mailbox": box.address,
+                                "display_name": box.display_name,
+                                "steps": [{"step": step, "local_date": slot.local_date.isoformat(),
+                                           "window": slot.window_label, "scheduled_for": iso(slot.scheduled_for)}
+                                          for step, slot in sorted(plan.slots.items())]})
+                continue
             sequence = EmailSequence(business_id=row.business_id, eligibility_id=row.id, mailbox_id=box.id,
                                      recipient_email=row.email, recipient_hash=recipient_hash, country=row.country
                                      or (business.country_code if business else None), timezone=zone_name,
@@ -442,8 +458,11 @@ class SendingService:
             await self.session.flush()
             admitted.append({"eligibility_id": row.id, "sequence_id": sequence.id, "business_id": row.business_id,
                              "mailbox_id": box.id, "records": [record_dict(r) for r in records]})
-        return {"send_date": send_date.isoformat(), "admitted": admitted, "refused": refused,
-                "daily_new_limit": limit}
+        result = {"send_date": send_date.isoformat(), "admitted": admitted, "refused": refused,
+                  "daily_new_limit": limit}
+        if dry_run:
+            result["planned"] = planned
+        return result
 
     async def approve_follow_up(self, record_id: int, body: str, approved_by: str,
                                 content_version: Optional[str], now: Optional[datetime] = None) -> dict:
@@ -539,6 +558,49 @@ class SendingService:
         await self.session.flush()
         return {"moved": moved, "held": held}
 
+    async def move_to_next_window(self, record: SendRecord, now: Optional[datetime] = None) -> bool:
+        """E3 4xx cap: a record that got its third temporary refusal in a window moves to the next permitted window
+        with free capacity on its mailbox (never later in the same window); later steps keep their Day 6 / 14
+        distance. False (record held) when no window fits."""
+        now = self._now(now)
+        sequence = await self.session.get(EmailSequence, record.sequence_id) if record.sequence_id else None
+        zone = sched.load_zone(sequence.timezone if sequence else None)
+        if zone is None:
+            record.hold_reason = sched.HoldCode.TIMEZONE_MISSING
+            return False
+        records = (await self.session.execute(select(SendRecord).where(
+            SendRecord.sequence_id == record.sequence_id).order_by(SendRecord.step))).scalars().all()
+        after = max(now, aware(record.window_end))   # find_slot skips every slot before this instant
+        book = await self.capacity_book(record.local_date - timedelta(days=1),
+                                        after.date() + timedelta(days=sched.RESCHEDULE_SEARCH_DAYS + 30))
+        limit = await self.daily_new_limit()
+        if not await self._move(book, record, records, zone, after, limit):
+            return False
+        for later in records:
+            if later.step > record.step and later.state == SendState.SCHEDULED:
+                step1 = next(r for r in records if r.step == 1)
+                earliest = max(sched.due_date(step1.local_date, later.step),
+                               max(r.local_date for r in records if r.step < later.step) + timedelta(days=1))
+                if later.local_date < earliest:
+                    await self._move(book, later, records, zone, after, limit, earliest=earliest)
+        await self.session.flush()
+        return True
+
+    async def hold_sequence(self, sequence_id: int, reason: str, now: Optional[datetime] = None) -> int:
+        """E3: the sequence waits for a person (state HELD); every later message not yet submitted is cancelled so
+        it frees its capacity. Returns the number of cancelled records."""
+        now = self._now(now)
+        sequence = await self.session.get(EmailSequence, sequence_id)
+        if sequence is None or sequence.state in STOPPED_STATES:
+            return 0
+        sequence.state, sequence.stop_reason = SequenceState.HELD, reason[:300]
+        cancelled = (await self.session.execute(
+            update(SendRecord).where(SendRecord.sequence_id == sequence_id, SendRecord.state == SendState.SCHEDULED)
+            .values(state=SendState.CANCELLED, cancel_reason=f"SEQUENCE_HELD: {reason}"[:300])
+            .execution_options(synchronize_session="fetch"))).rowcount
+        await self.session.flush()
+        return cancelled
+
     async def _move(self, book: sched.CapacityBook, record: SendRecord, records: list[SendRecord], zone,
                     now: datetime, limit: int, earliest: Optional[date] = None) -> bool:
         today = sched.local_date(now, zone)
@@ -559,7 +621,8 @@ class SendingService:
             if record.step == 1 and book.new_contacts.get(slot.local_date, 0) >= limit:
                 day = slot.local_date + timedelta(days=1)
                 continue
-            book.add(record.mailbox_id, slot.local_date, slot.window_label, new_contact=record.step == 1)
+            book.add(record.mailbox_id, slot.local_date, slot.window_label, new_contact=record.step == 1,
+                     at=slot.scheduled_for)
             record.local_date, record.window_label = slot.local_date, slot.window_label
             record.window_start, record.window_end, record.scheduled_for = (slot.window_start, slot.window_end,
                                                                             slot.scheduled_for)

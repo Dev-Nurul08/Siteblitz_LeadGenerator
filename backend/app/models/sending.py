@@ -17,7 +17,7 @@ State machines (docs/outreach/e2-notes.md):
   SendRecord: SCHEDULED -> SUBMITTING -> ACCEPTED | FAILED | UNCERTAIN;  SCHEDULED -> CANCELLED;
               SUBMITTING -> UNCERTAIN (crash / restart); UNCERTAIN -> ACCEPTED | FAILED only by a person (API).
   Sequence:   ACTIVE -> COMPLETED | STOPPED_REPLY | STOPPED_SUPPRESSED | STOPPED_BOUNCE | CANCELLED;
-              ACTIVE <-> PAUSED_OOO (E4, out-of-office).
+              ACTIVE <-> PAUSED_OOO (E4, out-of-office); ACTIVE -> HELD (E3, 4xx refusals in 3 windows).
 """
 
 import enum
@@ -59,6 +59,9 @@ class SequenceState(str, enum.Enum):
     PAUSED_OOO = "PAUSED_OOO"                  # out-of-office reply (E4)
     COMPLETED = "COMPLETED"                    # step 3 accepted
     CANCELLED = "CANCELLED"                    # by a person, a failed step, or a false observation
+    # E3: a step got temporary (4xx) refusals in 3 windows (3 attempts each) and is FAILED (soft); later steps are
+    # cancelled and the sequence waits for a person. Not a stopped state: E4 may still mark a reply on it.
+    HELD = "HELD"
 
 
 STOPPED_STATES = {SequenceState.STOPPED_REPLY, SequenceState.STOPPED_SUPPRESSED, SequenceState.STOPPED_BOUNCE,

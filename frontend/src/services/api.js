@@ -282,6 +282,38 @@ export const api = {
     label: async (id, body) => request(`/api/v1/intelligence/business/${id}/label`, { method: 'POST', body: JSON.stringify(body) }),
     contactLog: async (id, body) => request(`/api/v1/intelligence/business/${id}/contact-log`, { method: 'POST', body: JSON.stringify(body) }),
   },
+
+  // Email engine v2 (E1-E3): eligibility, founder checks, sending state, the batch screen
+  outreach: {
+    allowance: async (date) => request(`/api/v1/outreach/batches/allowance?${qs({ date })}`),
+    candidates: async (params = {}) => request(`/api/v1/outreach/batches/candidates?${qs(params)}`),
+    batches: async () => request('/api/v1/outreach/batches?limit=10'),
+    batch: async (id) => request(`/api/v1/outreach/batches/${id}`),
+    createBatch: async (body) => requestDetailed('/api/v1/outreach/batches', { method: 'POST', body: JSON.stringify(body) }),
+    continueWriting: async (id) => requestDetailed(`/api/v1/outreach/batches/${id}/write`, { method: 'POST' }),
+    approve: async (id, body) => requestDetailed(`/api/v1/outreach/batches/${id}/approve`, { method: 'POST', body: JSON.stringify(body) }),
+    reject: async (id, body) => requestDetailed(`/api/v1/outreach/batches/${id}/reject`, { method: 'POST', body: JSON.stringify(body) }),
+    pendingConfirmations: async () => request('/api/v1/outreach/confirmations/pending?limit=50'),
+    confirm: async (body) => request('/api/v1/outreach/confirmations', { method: 'POST', body: JSON.stringify(body) }),
+    clearPause: async (body) => requestDetailed('/api/v1/outreach/pauses', { method: 'POST', body: JSON.stringify(body) }),
+  },
+}
+
+// Like request(), but a refusal keeps its structured detail ({code, message, refused, ...}) on the Error, so the
+// batch screen can show the server's own message and mark the refused rows (E3: the 11th lead on a 10-a-day day).
+async function requestDetailed(endpoint, options = {}) {
+  const res = await fetch(endpoint, { ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } })
+  let body = null
+  try { body = await res.json() } catch { body = null }
+  if (!res.ok) {
+    const detail = body ? body.detail : undefined
+    const structured = detail && typeof detail === 'object' && !Array.isArray(detail) && typeof detail.message === 'string'
+    const error = new Error(structured ? detail.message : errorMessage(body, `Request failed (${res.status})`))
+    error.status = res.status
+    error.detail = detail
+    throw error
+  }
+  return body
 }
 
 // Query string from an object, skipping empty values.

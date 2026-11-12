@@ -50,6 +50,7 @@ class Reason:
     SEND_RESULT_UNKNOWN = "SEND_RESULT_UNKNOWN"          # GLOBAL pause until every UNCERTAIN record is resolved
     REPLY_BACKLOG = "REPLY_BACKLOG"                      # NEW_CONTACTS pause
     SMTP_UNAVAILABLE = "SMTP_UNAVAILABLE"                # MAILBOX pause: connect / TLS / login refused
+    SOFT_BOUNCE_LIMIT = "SOFT_BOUNCE_LIMIT"              # E3: record FAILED (soft) + sequence HELD, no pause
     MANUAL = "MANUAL"
 
 

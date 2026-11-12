@@ -126,10 +126,12 @@ def test_refusal_is_held_not_sent():
     assert writer.write(lead(), task()).hold_reason == "MODEL_REFUSED"
 
 
-def test_missing_api_key_is_an_error_not_a_crash():
+def test_missing_api_key_holds_writer_unavailable_not_a_crash():
+    # E3 brief: a missing key is HOLD WRITER_UNAVAILABLE, never a fallback text.
     writer = OutreachWriter(settings=SETTINGS)
     result = writer.write(lead(), task())
-    assert result.status == "ERROR" and "ANTHROPIC_API_KEY" in result.errors[0]
+    assert result.status == "HOLD" and result.hold_reason == "WRITER_UNAVAILABLE"
+    assert result.text is None and "ANTHROPIC_API_KEY" in result.errors[0]
 
 
 def test_assembled_email_has_signature_and_opt_out():
