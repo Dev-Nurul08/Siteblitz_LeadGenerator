@@ -255,3 +255,24 @@
 - **Pool selection (`scripts/pool_e1.py`):** `IN_businesses.zip` has no `operating_status`, so permanently closed
   places cannot be left out as phase 14 did. The crawl visits Navsari and Surat completely first, then the other 9
   cities round-robin, and stops at the time limit, so a cap cuts every other city by about the same amount.
+
+## 2026-11-12 - E1 pool crawl: MemoryError, fixes, and where it stopped
+- **The crawl stopped at 12:48 after 101 minutes with a MemoryError**, at about 5,250 of 13,185 hosts (6,233 URLs
+  in `visits.jsonl`, none lost). The machine had about 500 MB of free RAM (other sessions, Chrome, VS Code).
+- **Part of the cause was our code, measured on a dense 2 MB page:** the viewport flag came from the full
+  `WebsiteAuditor.audit_html` (a whole parse tree plus a lowercased copy of the page): ~97 MB peak for one flag. The
+  email extractor parsed the page again: ~80 MB. Fixes:
+  - the viewport flag parses only `<meta>` tags, with the auditor's rule (a test compares both on 6 cases): ~0 MB;
+  - the extractor cuts `<script>`, `<style>` and comments before parsing (an `<a>` inside them was never parsed as a
+    tag and their text was already dropped, so results do not change; a test proves it);
+  - page bodies are released right after use, and the 2 MB read keeps one copy at a time;
+  - the crawler runs N workers over one queue instead of one waiting task per host (13,185 tasks).
+  A soak test of the fixed code (10 visits at a time of that page) stayed between 165 and 223 MB working set: a slow
+  creep, no runaway growth. Parsing is synchronous, so only one page is parsed at a time even with 10 sites in
+  flight; the low free RAM of the machine was the other half of the cause.
+- **The pool crawl now stops cleanly when free RAM falls below 500 MB** (`--min-free-mb`, checked every 30 s) and
+  records why it stopped (`time_limit`, `low_memory`) in `summary.json`.
+- **Imported times are stored in UTC.** The importer kept visit times in IST; SQLite drops the offset and the app
+  reads a stored time as UTC, so every imported check and capture was 5 h 30 min late (two pages were rendered
+  twice because of it, and a SITE_DOWN gap or an observation date could have been wrong). The importer converts to
+  UTC now; the 8,874 checks and 3,544 captures already imported were shifted once (backup kept outside the repo).
