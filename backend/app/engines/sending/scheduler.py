@@ -230,6 +230,9 @@ def plan_admission(book: CapacityBook, mailbox_ids: Iterable[int], zone: ZoneInf
     if send_day < local_date(now, zone):
         return Refusal(HoldCode.DATE_IN_PAST, f"{send_day.isoformat()} is in the past")
     already = book.new_contacts.get(send_day, 0)
+    if daily_new_limit <= 0:
+        return Refusal(HoldCode.RAMP_LIMIT_REACHED,
+                       "new first contacts are off: the ramp is at stage 0 (pilot not started, or stopped)")
     if already >= daily_new_limit:
         return Refusal(HoldCode.RAMP_LIMIT_REACHED,
                        f"{already} new first contacts are already scheduled for {send_day.isoformat()}; "
