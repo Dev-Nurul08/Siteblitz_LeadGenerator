@@ -140,6 +140,7 @@ def free_port() -> int:
 class Collector:
     def __init__(self):
         self.envelopes = []
+        self.data_started = 0     # complete messages received (counted before the handler answers)
         self.data_delay = 0.0
         self.rcpt_answer = None   # e.g. "550 5.1.1 <x>: Recipient address rejected: User unknown"
         self.data_answer = "250 2.0.0 Ok: queued"
@@ -151,6 +152,7 @@ class Collector:
         return "250 OK"
 
     async def handle_DATA(self, server, session, envelope):
+        self.data_started += 1
         if self.data_delay:
             await asyncio.sleep(self.data_delay)
         self.envelopes.append(envelope)
