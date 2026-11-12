@@ -34,6 +34,8 @@ from backend.app.models.sending import (
 from backend.app.services.sending_service import SendingService, aware
 
 FOUNDER_ZONE = COUNTRY_TIMEZONES["IN"]   # the founders work in India time (reply backlog business days)
+SOFT_ATTEMPTS_PER_WINDOW = 3   # E3 brief: at most 3 attempts in one window after a 4xx answer
+SOFT_WINDOWS = 3               # E3 brief: after 3 windows the record is FAILED (soft) and the sequence HELD
 
 
 def smtp_kind(status: Optional[str], response: Optional[str], code: Optional[int]) -> str:
@@ -218,6 +220,41 @@ class DeliveryRulesService:
             result = {"actions": []}
         await self._stop(record, SequenceState.CANCELLED, f"step {record.step} refused: {record.smtp_code}", now)
         return result
+
+    async def record_temporary_refusal(self, record: SendRecord, now: datetime, code: Optional[int],
+                                       status: Optional[str], response: Optional[str], phase: str) -> str:
+        """
+        E3 cap on SMTP 4xx answers (e2-notes open question 3): at most SOFT_ATTEMPTS_PER_WINDOW attempts in one
+        window, then the next permitted window; after SOFT_WINDOWS windows the record is FAILED (soft) and the
+        sequence HELD with a reason. Each refusal is a SOFT_BOUNCE event (origin smtp) carrying its window, so the
+        count needs no new column. Returns "retry" | "next_window" | "held" (no window fits) | "failed".
+        """
+        window = aware(record.window_start).isoformat()
+        await self._event(DeliveryEventKind.SOFT_BOUNCE, record, now, "smtp", status=status,
+                          detail={"smtp_code": code, "phase": phase, "window_start": window,
+                                  "response": (response or "")[:300]})
+        details = (await self.session.execute(select(DeliveryEvent.detail).where(
+            DeliveryEvent.send_record_id == record.id, DeliveryEvent.kind == DeliveryEventKind.SOFT_BOUNCE,
+            DeliveryEvent.origin == "smtp"))).scalars().all()
+        windows = {(d or {}).get("window_start") for d in details}
+        in_window = sum(1 for d in details if (d or {}).get("window_start") == window)
+        last = f"{code} {status or ''}".strip()
+        if (len(windows) >= SOFT_WINDOWS and in_window >= SOFT_ATTEMPTS_PER_WINDOW) or len(windows) > SOFT_WINDOWS:
+            record.state, record.submitted_at = SendState.FAILED, None
+            record.hold_reason = Reason.SOFT_BOUNCE_LIMIT
+            if record.sequence_id:
+                await self.sending.hold_sequence(
+                    record.sequence_id, f"{Reason.SOFT_BOUNCE_LIMIT}: step {record.step} got temporary refusals "
+                    f"in {len(windows)} windows ({SOFT_ATTEMPTS_PER_WINDOW} attempts each); last answer {last}", now)
+            await self.session.flush()
+            return "failed"
+        if in_window >= SOFT_ATTEMPTS_PER_WINDOW:
+            if await self.sending.move_to_next_window(record, now):
+                record.hold_reason = f"SMTP_RETRY_NEXT_WINDOW:{code}"
+                return "next_window"
+            record.hold_reason = record.hold_reason or "NO_CAPACITY"
+            return "held"
+        return "retry"
 
     # ─── state that blocks everything ────────────────────────────────────
 

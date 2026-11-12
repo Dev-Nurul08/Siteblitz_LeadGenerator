@@ -539,6 +539,49 @@ class SendingService:
         await self.session.flush()
         return {"moved": moved, "held": held}
 
+    async def move_to_next_window(self, record: SendRecord, now: Optional[datetime] = None) -> bool:
+        """E3 4xx cap: a record that got its third temporary refusal in a window moves to the next permitted window
+        with free capacity on its mailbox (never later in the same window); later steps keep their Day 6 / 14
+        distance. False (record held) when no window fits."""
+        now = self._now(now)
+        sequence = await self.session.get(EmailSequence, record.sequence_id) if record.sequence_id else None
+        zone = sched.load_zone(sequence.timezone if sequence else None)
+        if zone is None:
+            record.hold_reason = sched.HoldCode.TIMEZONE_MISSING
+            return False
+        records = (await self.session.execute(select(SendRecord).where(
+            SendRecord.sequence_id == record.sequence_id).order_by(SendRecord.step))).scalars().all()
+        after = max(now, aware(record.window_end))   # find_slot skips every slot before this instant
+        book = await self.capacity_book(record.local_date - timedelta(days=1),
+                                        after.date() + timedelta(days=sched.RESCHEDULE_SEARCH_DAYS + 30))
+        limit = await self.daily_new_limit()
+        if not await self._move(book, record, records, zone, after, limit):
+            return False
+        for later in records:
+            if later.step > record.step and later.state == SendState.SCHEDULED:
+                step1 = next(r for r in records if r.step == 1)
+                earliest = max(sched.due_date(step1.local_date, later.step),
+                               max(r.local_date for r in records if r.step < later.step) + timedelta(days=1))
+                if later.local_date < earliest:
+                    await self._move(book, later, records, zone, after, limit, earliest=earliest)
+        await self.session.flush()
+        return True
+
+    async def hold_sequence(self, sequence_id: int, reason: str, now: Optional[datetime] = None) -> int:
+        """E3: the sequence waits for a person (state HELD); every later message not yet submitted is cancelled so
+        it frees its capacity. Returns the number of cancelled records."""
+        now = self._now(now)
+        sequence = await self.session.get(EmailSequence, sequence_id)
+        if sequence is None or sequence.state in STOPPED_STATES:
+            return 0
+        sequence.state, sequence.stop_reason = SequenceState.HELD, reason[:300]
+        cancelled = (await self.session.execute(
+            update(SendRecord).where(SendRecord.sequence_id == sequence_id, SendRecord.state == SendState.SCHEDULED)
+            .values(state=SendState.CANCELLED, cancel_reason=f"SEQUENCE_HELD: {reason}"[:300])
+            .execution_options(synchronize_session="fetch"))).rowcount
+        await self.session.flush()
+        return cancelled
+
     async def _move(self, book: sched.CapacityBook, record: SendRecord, records: list[SendRecord], zone,
                     now: datetime, limit: int, earliest: Optional[date] = None) -> bool:
         today = sched.local_date(now, zone)

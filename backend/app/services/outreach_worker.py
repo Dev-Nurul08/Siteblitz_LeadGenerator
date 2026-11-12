@@ -17,7 +17,9 @@ Each cycle: integrity audit -> move missed messages to their next window -> stop
               8. mark SUBMITTING with a conditional update (only one worker can win a record) and COMMIT
               9. SMTP submission (STARTTLS or SSL, 30 s timeout)
              10. ACCEPTED on 2xx, FAILED on 5xx (bounce rules), back to SCHEDULED when nothing was accepted,
-                 UNCERTAIN on a lost answer after DATA (+ global pause, never retried automatically)
+                 UNCERTAIN on a lost answer after DATA (+ global pause, never retried automatically). A 4xx answer
+                 is tried at most 3 times in one window, then in the next window; after 3 windows the record is
+                 FAILED (soft) and the sequence HELD (E3, record_temporary_refusal)
 """
 
 import asyncio
@@ -389,6 +391,13 @@ class OutreachWorker:
             if result.mailbox_problem or result.phase == "mail":
                 await sending.raise_pause(PauseScope.MAILBOX, Reason.SMTP_UNAVAILABLE, str(mailbox.id),
                                           detail=f"{result.phase}: {(result.response or '')[:300]}", now=done)
+            elif result.code and 400 <= result.code < 500:
+                # E3 cap: 3 attempts per window, then the next window; after 3 windows FAILED (soft) + HELD.
+                action = await rules.record_temporary_refusal(record, done, result.code, result.status,
+                                                              result.response, result.phase)
+                if action == "failed":
+                    await session.commit()
+                    return "failed"
             await session.commit()
             return "not_sent"
 
