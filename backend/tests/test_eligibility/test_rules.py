@@ -317,6 +317,9 @@ def test_email_hash_matches_the_contract():
     # docs/spec/email-engine-v2-contracts.md: sha256_hex(email.strip().lower())
     import hashlib
     assert rules.email_hash("  Info@GlowHair.in ") == hashlib.sha256(b"info@glowhair.in").hexdigest()
+    # the website's known-answer vector (contract, "Byte rules and known-answer vector")
+    assert rules.email_hash("  Owner@Example.com ") == (
+        "c8cd3c6427301eaf6665bccacd65ddb614527acc843a15463e3faba57124c351")
 
 
 def test_dates_are_written_in_india_time():

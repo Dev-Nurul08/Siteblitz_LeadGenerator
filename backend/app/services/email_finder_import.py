@@ -8,8 +8,8 @@ A folder written by `scripts/email_finder.py` (phase 14) or `scripts/pool_e1.py`
                 (contacts carry the page excerpt from E1 on; phase-14 visits have none)
   leads.csv     optional (pool runs): state, address, postcode, lat, lon, phones, emails (Overture listing),
                 brand and social links of each lead
-Each lead becomes (or is matched to) a business: first by its Overture source id, then by the app's normal
-duplicate rules (DiscoveryService). Its visit becomes a SITE_FETCH website check with the visit time; each address a
+Each lead becomes (or is matched to) a business by its Overture source id only (no name + city merging; see
+_business_for). Its visit becomes a SITE_FETCH website check with the visit time; each address a
 Contact row plus an EmailCapture with source URL, method, capture time and excerpt; an Overture listing address an
 EmailCapture of method `listing` (Tier 2). Re-running the same folder adds nothing: checks carry an `import_key`,
 captures a unique `capture_key`, contacts are unique per (business, address).
@@ -165,17 +165,14 @@ class EmailFinderImporter:
                 return found
         discovered = self._discovered(lead, extra, website)
         discovered.raw_data["import_origin"] = origin
+        # Matched by source id only, never by name + city: phase-14 rows have no phone or coordinates, so the
+        # app's fuzzy rule merged 423 of 2,014 leads (mostly same-name chain branches in one city) and the merged
+        # branches no longer counted towards the "site shared by 3+ businesses" chain rule (2026-11-12 trial).
         async with self.session.begin_nested():
             if record is None:
                 record = await self.discovery._save_source_record(source, job, discovered)
-            existing = await self.discovery._find_existing_business(discovered)
-            if existing:
-                await self.discovery._link_business_to_source(existing, record, method="dedup_match")
-                stats["businesses_matched_by_dedup"] += 1
-                business = existing
-            else:
-                business = await self.discovery._create_business(discovered, record)
-                stats["businesses_created"] += 1
+            business = await self.discovery._create_business(discovered, record)
+            stats["businesses_created"] += 1
             record.is_processed = True
             await self.session.flush()
         return business

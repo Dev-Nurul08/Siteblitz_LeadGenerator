@@ -17,7 +17,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Awaitable, Callable, Iterable, Optional
 
 import structlog
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -454,7 +454,8 @@ class EligibilityService:
 
     async def render_candidates(self, business_ids: Optional[list[int]] = None) -> list[tuple[int, str]]:
         """Businesses whose latest homepage check found no viewport tag and that have an address read on their
-        own pages (only those can become Tier 1 + NO_VIEWPORT). Returns (business id, URL to render)."""
+        own pages (only those can become Tier 1 + NO_VIEWPORT). A page already rendered (zoomed_out / fits) after
+        that homepage check is not rendered again. Returns (business id, URL to render)."""
         page_methods = [CaptureMethod.MAILTO, CaptureMethod.VISIBLE_TEXT, CaptureMethod.CLOUDFLARE_DECODE]
         stmt = select(EmailCapture.business_id).where(EmailCapture.method.in_(page_methods)).distinct()
         ids = sorted(set((await self.session.execute(stmt)).scalars().all()))
@@ -463,15 +464,23 @@ class EligibilityService:
         out = []
         for part in _chunks(ids):
             checks: dict[int, list[WebsiteCheck]] = defaultdict(list)
+            renders: dict[int, list[WebsiteCheck]] = defaultdict(list)
             for row in (await self.session.execute(select(WebsiteCheck).where(
-                    WebsiteCheck.business_id.in_(part), WebsiteCheck.check_type == CheckType.SITE_FETCH))).scalars():
-                checks[row.business_id].append(row)
+                    WebsiteCheck.business_id.in_(part),
+                    WebsiteCheck.check_type.in_([CheckType.SITE_FETCH, CheckType.PHONE_RENDER])))).scalars():
+                (checks if row.check_type == CheckType.SITE_FETCH else renders)[row.business_id].append(row)
             for business_id in part:
                 fetches = sorted(checks.get(business_id, []), key=lambda c: (rules.aware(c.observed_at), c.id))
                 fetches = [c for c in fetches if c.outcome in rules.SITE_EXISTS | rules.SITE_FAILED]
-                if fetches and fetches[-1].outcome == "ok" and (fetches[-1].detail or {}).get("has_viewport") is False:
-                    latest = fetches[-1]
-                    out.append((business_id, (latest.detail or {}).get("final_url") or latest.target))
+                no_viewport = (fetches[-1].detail or {}).get("has_viewport") is False if fetches else False
+                if not fetches or fetches[-1].outcome != "ok" or not no_viewport:
+                    continue
+                latest = fetches[-1]
+                if any(r.outcome in ("zoomed_out", "fits")
+                       and rules.aware(r.observed_at) >= rules.aware(latest.observed_at)
+                       for r in renders.get(business_id, [])):
+                    continue
+                out.append((business_id, (latest.detail or {}).get("final_url") or latest.target))
         return out
 
     async def record_render_results(self, results: list[RenderResult]) -> int:
@@ -488,6 +497,3 @@ class EligibilityService:
             stored += 1
         await self.session.flush()
         return stored
-
-    async def count_rows(self) -> int:
-        return (await self.session.execute(select(func.count(EmailEligibility.id)))).scalar() or 0

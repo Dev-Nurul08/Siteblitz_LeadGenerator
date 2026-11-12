@@ -97,6 +97,7 @@ async def test_render_results_become_phone_checks_and_the_observation(session):
     stored = (await session.execute(select(WebsiteCheck).where(
         WebsiteCheck.check_type == CheckType.PHONE_RENDER))).scalar_one()
     assert stored.outcome == "zoomed_out" and stored.detail["screenshot"] == "E:/ev/9.png"
+    assert await svc.render_candidates() == []          # rendered after the latest homepage check: not again
     await svc.evaluate(now=NOW)
     row = (await svc.business_rows(lead.id))[0]
     assert row["observation"]["type"] == ObservationType.NO_VIEWPORT.value
