@@ -91,7 +91,10 @@ No new environment variables: IMAP uses the same `MAILBOX_<SLUG>_PASSWORD`; host
     duration that is not word-for-word in company facts ("2 working days" and "within 60 days" are), a guarantee
     ("we cannot guarantee" is allowed), a refund or contract terms; a snapshot link must be present when one was
     made. Breaking a rule = BLOCKED draft (kept for audit, never listed for approval). An inbound request for a
-    discount, date, guarantee, refund or contract = no draft, flagged. A newer reply supersedes the older draft.
+    discount, date, guarantee, refund or contract = no draft, flagged. A newer reply supersedes the older draft; a
+    failed or blocked regeneration keeps the waiting draft; a writer / model error flags the message
+    (`WRITER_ERROR`) instead of failing the reconcile. A later stop or complaint in the same thread withdraws every
+    waiting draft (REJECTED by "system") and marks the earlier messages handled.
 15. **Snapshot:** only for interested / sample_requested, once per sequence (reused until 1 day before it expires).
     Evidence image only when it is a PNG / JPEG of at most 400 KB; `concept_demo` left out for vertical `other`
     (no demo page exists); offer = the Launch row of company facts (price, 5 inclusion lines, delivery line) and the

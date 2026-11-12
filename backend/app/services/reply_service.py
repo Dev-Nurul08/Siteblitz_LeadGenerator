@@ -521,6 +521,19 @@ class ReplyLoop:
         if labels:
             if L.STOP in labels and L.COMPLAINT_LEGAL not in labels and sequence is not None:
                 await self._stop_confirmation(session, msg, sequence, now)
+            if sequence is not None:
+                # After a stop or a complaint no answer is owed in this thread any more (backlog rule), and a draft
+                # that still waits is withdrawn so it can never be approved by mistake.
+                for row in (await session.execute(select(InboundMessage).where(
+                        InboundMessage.sequence_id == sequence.id, InboundMessage.handled_at.is_(None),
+                        InboundMessage.id != msg.id))).scalars().all():
+                    row.handled_at, row.handled_by = now, "system"
+                    row.handled_note = f"{' / '.join(labels)} received later (inbound {msg.id})"
+                for old in (await session.execute(select(ReplyDraft).where(
+                        ReplyDraft.sequence_id == sequence.id, ReplyDraft.kind == DraftKind.REPLY,
+                        ReplyDraft.state.in_([DraftState.WAITING, DraftState.BLOCKED])))).scalars().all():
+                    old.state, old.decided_at, old.decided_by = DraftState.REJECTED, now, "system"
+                    old.decision_note = f"{' / '.join(labels)} received (inbound {msg.id})"
             msg.labels, msg.label_source, msg.flags = labels, "rules", flags
             msg.state = InboundState.FLAGGED if flags else InboundState.PROCESSED
             return
@@ -694,7 +707,12 @@ class ReplyLoop:
         task = {"channel": "email", "touch": None, "inbound_message": sanitize(full_text)[:4000],
                 "attachments_allowed": [snapshot.url] if snapshot else [], "reply_labels": list(msg.labels),
                 "sample_page_url": snapshot.url if snapshot else None}
-        result = await asyncio.to_thread(writer.write, lead, task)
+        try:
+            result = await asyncio.to_thread(writer.write, lead, task)
+        except Exception as exc:   # model down / unexpected answer: no draft, the founder sees why (launch gate e)
+            msg.flags = list(msg.flags or []) + [f"WRITER_ERROR: {type(exc).__name__}"]
+            msg.state = InboundState.FLAGGED
+            return None
         if result.status != "READY":
             reason = result.hold_reason or "; ".join(result.errors) or result.status
             msg.flags = list(msg.flags or []) + [f"WRITER_{result.status}: {reason}"[:120]]
@@ -708,6 +726,8 @@ class ReplyLoop:
         for old in (await session.execute(select(ReplyDraft).where(
                 ReplyDraft.sequence_id == sequence.id, ReplyDraft.kind == DraftKind.REPLY,
                 ReplyDraft.state == DraftState.WAITING))).scalars().all():
+            if violations and old.inbound_message_id == msg.id:
+                continue   # a blocked regeneration never replaces a usable draft for the same message
             old.state, old.decided_at, old.decided_by = DraftState.SUPERSEDED, now, "system"
             old.decision_note = f"a newer draft (inbound {msg.id})"
         subject = reply_subject(msg.subject or (record.subject if record else "") or business.name)
@@ -834,15 +854,19 @@ class ReplyLoop:
         return [draft_dict(d, name, url, text) for d, name, url, text in rows]
 
     async def _sync_uncertain(self, session: AsyncSession) -> None:
-        """A draft whose UNCERTAIN send a person resolved (E2 /send-records/{id}/resolve) takes that outcome."""
+        """A draft whose UNCERTAIN send a person resolved (E2 /send-records/{id}/resolve) takes that outcome; a draft
+        left SENDING by a crash takes its record's state (the worker's start-up turns SUBMITTING into UNCERTAIN)."""
         rows = (await session.execute(select(ReplyDraft, SendRecord.state)
                                       .join(SendRecord, SendRecord.id == ReplyDraft.send_record_id)
-                                      .where(ReplyDraft.state == DraftState.UNCERTAIN))).all()
+                                      .where(ReplyDraft.state.in_([DraftState.UNCERTAIN, DraftState.SENDING])))
+                ).all()
         for draft, state in rows:
             if state == SendState.ACCEPTED:
                 draft.state = DraftState.SENT
             elif state == SendState.FAILED:
                 draft.state = DraftState.FAILED
+            elif state == SendState.UNCERTAIN:
+                draft.state = DraftState.UNCERTAIN
         await session.flush()
 
     async def reject(self, session: AsyncSession, draft_id: int, rejected_by: str, note: str,
@@ -877,12 +901,16 @@ class ReplyLoop:
             msg = await session.get(InboundMessage, draft.inbound_message_id)
             sequence = await session.get(EmailSequence, draft.sequence_id)
             record = await session.get(SendRecord, msg.send_record_id) if msg.send_record_id else None
+            before = (draft.state, draft.decided_at, draft.decided_by, draft.decision_note)
             if draft.state == DraftState.WAITING:
                 draft.state = DraftState.SUPERSEDED
             draft.decided_at, draft.decided_by = now, requested_by
             draft.decision_note = f"regenerate requested: {note or ''}"[:500]
             await session.flush()
             new = await self._draft(session, msg, sequence, record, now, regenerations=draft.regenerations + 1)
+            if new is None or new.state == DraftState.BLOCKED:
+                # No usable new draft (writer hold, snapshot failure, a broken reply rule): the old one stays.
+                draft.state, draft.decided_at, draft.decided_by, draft.decision_note = before
             await session.commit()
             if new is None:
                 raise Conflict("no new draft: " + "; ".join(msg.flags or []))

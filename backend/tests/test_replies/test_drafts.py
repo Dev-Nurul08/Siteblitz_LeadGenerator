@@ -265,3 +265,36 @@ async def test_backlog_counts_messages_without_a_label_and_the_founder_can_close
         await db.commit()
     async with factory() as db:
         assert await apply_reply_backlog(db, CONFIG, site.client(), ist(WED, 10, 2)) is False
+
+
+async def test_a_failed_or_blocked_regeneration_keeps_the_waiting_draft(factory, session, site, models):
+    sent, loop, _ = await setup(factory, session, site, models, "How much for one page?", ["price"])
+    [draft] = await drafts(session)
+    draft_id = draft.id
+    set_writer(models, writer_answer("Hello Glow Hair Studio team,\n\nThank you. I can send it tomorrow at a 10% "
+                                     "discount. Would that work for you?"))
+    blocked = await loop.regenerate(draft_id, "founder", None)
+    assert blocked["state"] == "BLOCKED"
+    session.expire_all()
+    assert (await session.get(ReplyDraft, draft_id)).state == DraftState.WAITING
+    set_writer(models, RuntimeError("model down"))
+    with pytest.raises(Conflict, match="no new draft"):
+        await loop.regenerate(draft_id, "founder", None)
+    session.expire_all()
+    assert (await session.get(ReplyDraft, draft_id)).state == DraftState.WAITING
+
+
+async def test_a_later_stop_means_no_answer_is_owed(factory, session, site, models):
+    sent, loop, imap = await setup(factory, session, site, models, "Interested, how much?", ["interested", "price"])
+    imap.add(eml("Actually, please stop. Not interested.", in_reply_to=sent.message_id,
+                 message_id="<owner-reply-2@glowhair.example>"))
+    await loop.reconcile()
+    session.expire_all()
+    first = (await session.execute(select(InboundMessage).where(
+        InboundMessage.message_id == "<owner-reply-1@glowhair.example>"))).scalar_one()
+    assert first.handled_by == "system" and "stop" in first.handled_note
+    async with factory() as db:
+        assert await apply_reply_backlog(db, CONFIG, site.client(), ist(WED, 12)) is False
+    session.expire_all()
+    states = [(d.kind.value, d.state) for d in await drafts(session)]
+    assert states == [("REPLY", DraftState.REJECTED), ("STOP_CONFIRMATION", DraftState.OPTIONAL)]
