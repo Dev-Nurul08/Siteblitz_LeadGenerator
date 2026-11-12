@@ -113,6 +113,8 @@ class HoldReason(str, enum.Enum):
     SITE_RECOVERED           the homepage was confirmed down earlier but loaded in the latest check
     MAILBOX_DOMAIN_DOWN      SITE_DOWN lead whose address is on the down domain and has not passed an MX check
     NEEDS_FOUNDER_CHECK      social-only business: the founder must check the Instagram bio first - spec row 4
+    SOCIAL_ONLY_DOMAIN_ADDRESS  SOCIAL_ONLY lead whose address is on its own (non-free-mail) domain, which may host a
+                             website: "no website link" would read as "you have no website" (pre-send review 2026-11-12)
     """
 
     COUNTRY_NOT_IN_PILOT = "COUNTRY_NOT_IN_PILOT"
@@ -138,6 +140,7 @@ class HoldReason(str, enum.Enum):
     SITE_RECOVERED = "SITE_RECOVERED"
     MAILBOX_DOMAIN_DOWN = "MAILBOX_DOMAIN_DOWN"
     NEEDS_FOUNDER_CHECK = "NEEDS_FOUNDER_CHECK"
+    SOCIAL_ONLY_DOMAIN_ADDRESS = "SOCIAL_ONLY_DOMAIN_ADDRESS"
 
 
 class EmailCapture(Base):

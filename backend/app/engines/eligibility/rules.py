@@ -476,6 +476,9 @@ def decide(facts: BusinessFacts, email: str, captures: list[Capture], checks: li
         decision.add(HoldReason.SUPPRESSED)
     decision.add(*observation.holds)
     found = observation.observation
+    if found and found.type == ObservationType.SOCIAL_ONLY and email.rsplit("@", 1)[-1].lower() not in FREE_MAIL:
+        # The address's own domain may host a website the Instagram bio does not link (pre-send review).
+        decision.add(HoldReason.SOCIAL_ONLY_DOMAIN_ADDRESS)
     if found and found.type == ObservationType.SITE_DOWN and same_domain(email, found.domain) \
             and not mx_passed(verifications, now):
         decision.add(HoldReason.MAILBOX_DOMAIN_DOWN)

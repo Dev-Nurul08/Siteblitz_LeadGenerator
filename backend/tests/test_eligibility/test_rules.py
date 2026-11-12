@@ -326,3 +326,18 @@ def test_email_hash_matches_the_contract():
 def test_dates_are_written_in_india_time():
     late_utc = datetime(2026, 11, 11, 20, 0, tzinfo=timezone.utc)   # 01:30 IST on 12 November
     assert rules.date_text(late_utc) == "12 November 2026"
+
+
+def test_social_only_on_an_own_domain_address_is_held():
+    """Pre-send review 2026-11-12: "no website link" sent to info@theirbrand.in reads as "you have no website"
+    while that domain may host one. Free-mail addresses are fine."""
+    f = facts(website_url=None, social_urls={"instagram": "https://instagram.com/glowhair"})
+    ok = Confirmation(1, "https://instagram.com/glowhair", NOW - timedelta(days=1), False, "glowhair@gmail.com")
+    founder = page_capture("glowhair@gmail.com", method=CaptureMethod.FOUNDER_CONFIRMED,
+                           source_url="https://instagram.com/glowhair")
+    free = run(f, email="glowhair@gmail.com", checks=[], confirmation=ok, captures=[founder])
+    assert H.SOCIAL_ONLY_DOMAIN_ADDRESS not in free.holds
+    own = run(f, email="info@glowhair.in", checks=[], confirmation=ok,
+              captures=[page_capture("info@glowhair.in", method=CaptureMethod.FOUNDER_CONFIRMED,
+                                     source_url="https://instagram.com/glowhair")])
+    assert H.SOCIAL_ONLY_DOMAIN_ADDRESS in own.holds and not own.eligible
