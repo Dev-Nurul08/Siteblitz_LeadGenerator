@@ -6,8 +6,9 @@ Opportunity Snapshot creation on the website (spec row 7; docs/spec/email-engine
 Called only after a reply labelled sample_requested or interested (contract, "Lead-generator side"); the returned
 URL goes into the AI-drafted reply, which waits for the founder's approval. The payload is built only from approved
 facts: the business's own lead data (name, city, vertical, the dated observation and its stored evidence image),
-the Launch package lines from docs/outreach/company-facts.md, and the sender mailbox. The recording is left out until
-the founder adds one (E5). A URL in the answer that is not `<OUTREACH_PUBLIC_BASE_URL>/s/<slug>` is refused, so a
+the Launch package lines from docs/outreach/company-facts.md, and the sender mailbox. The founder's recorded overview
+per vertical comes from `docs/outreach/recordings.json` (E5); a vertical without a complete https URL + transcript
+there gets no recording block (the website hides it). A URL in the answer that is not `<OUTREACH_PUBLIC_BASE_URL>/s/<slug>` is refused, so a
 wrong or hostile answer can never put a foreign link into a draft.
 """
 
@@ -29,6 +30,8 @@ CONCEPT_DEMOS = {"salon_beauty": "salon", "coaching_tuition": "coaching", "retai
 VERTICALS = ("salon_beauty", "coaching_tuition", "retail_showroom", "other")
 OBSERVATIONS = ("SOCIAL_ONLY", "NO_VIEWPORT", "SITE_DOWN")
 _SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,79}$")
+RECORDINGS_FILE = Path(__file__).resolve().parents[4] / "docs" / "outreach" / "recordings.json"
+TRANSCRIPT_MAX = 2000   # contract: transcript max 2,000 characters, required when a URL is set
 
 
 class SnapshotUnavailable(RuntimeError):
@@ -87,9 +90,31 @@ def evidence_base64(path: Optional[str]) -> Optional[str]:
     return base64.b64encode(data).decode("ascii")
 
 
+def load_recording(vertical: Optional[str], path: Optional[Path] = None) -> Optional[dict]:
+    """The founder's recorded overview for a vertical ({"url", "transcript"}), or None.
+
+    Only a complete entry is used: an https URL and a non-empty transcript of at most 2,000 characters (contract,
+    Snapshot "recording"). Anything else - missing file, broken JSON, http URL, no transcript - means no recording,
+    never a half block."""
+    import json
+
+    file = path or RECORDINGS_FILE
+    try:
+        data = json.loads(file.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    entry = data.get(vertical if vertical in VERTICALS else "other") if isinstance(data, dict) else None
+    if not isinstance(entry, dict):
+        return None
+    url, transcript = str(entry.get("url") or "").strip(), str(entry.get("transcript") or "").strip()
+    if not url.startswith("https://") or not transcript or len(transcript) > TRANSCRIPT_MAX:
+        return None
+    return {"url": url, "transcript": transcript}
+
+
 def build_payload(*, business_name: str, city: Optional[str], vertical: Optional[str], observation_type: str,
                   observation_text: str, checked_at: datetime, evidence_path: Optional[str], reply_email: str,
-                  facts_md: str) -> dict:
+                  facts_md: str, recording: Optional[dict] = None) -> dict:
     if observation_type not in OBSERVATIONS:
         raise SnapshotUnavailable(f"observation {observation_type!r} is not one of the pilot observations")
     if not (observation_text or "").strip():
@@ -111,6 +136,8 @@ def build_payload(*, business_name: str, city: Optional[str], vertical: Optional
     image = evidence_base64(evidence_path)
     if image:
         payload["evidence_image_base64"] = image
+    if recording:
+        payload["recording"] = recording
     return payload
 
 

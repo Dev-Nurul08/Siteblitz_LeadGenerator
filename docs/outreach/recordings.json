@@ -1,0 +1,7 @@
+{
+  "_how": "Founder's own 30-60 s recorded overview per vertical (spec v2 row 7). Fill url (https, e.g. a file in the website's public/recordings/ folder after deploy) and the exact transcript. Empty = no recording block on the snapshot page. No synthetic or AI voice.",
+  "salon_beauty": {"url": "", "transcript": ""},
+  "coaching_tuition": {"url": "", "transcript": ""},
+  "retail_showroom": {"url": "", "transcript": ""},
+  "other": {"url": "", "transcript": ""}
+}

@@ -34,7 +34,8 @@ from backend.app.engines.replies.classifier import ReplyClassifier
 from backend.app.engines.replies.imap_client import ImapError, InboxReader, connect as imap_connect
 from backend.app.engines.replies.parsing import ParsedMessage, ooo_return_date, parse_message
 from backend.app.engines.replies.sanitizer import sanitize
-from backend.app.engines.replies.snapshot_client import SnapshotClient, SnapshotUnavailable, build_payload
+from backend.app.engines.replies.snapshot_client import (SnapshotClient, SnapshotUnavailable, build_payload,
+                                                         load_recording)
 from backend.app.engines.sending import dsn
 from backend.app.engines.sending import scheduler as sched
 from backend.app.engines.sending import smtp as smtp_engine
@@ -660,7 +661,8 @@ class ReplyLoop:
         payload = build_payload(
             business_name=business.name, city=city, vertical=row.vertical, observation_type=row.observation_type.value,
             observation_text=row.observation_text or "", checked_at=aware(row.observation_checked_at),
-            evidence_path=row.observation_evidence_path, reply_email=mailbox.address, facts_md=self.deps.facts_md)
+            evidence_path=row.observation_evidence_path, reply_email=mailbox.address, facts_md=self.deps.facts_md,
+            recording=load_recording(row.vertical))
         result = await self.deps.snapshots.create(payload)
         snapshot = OpportunitySnapshot(business_id=business.id, sequence_id=sequence.id, inbound_message_id=msg.id,
                                        slug=result.slug, url=result.url, expires_at=result.expires_at,
