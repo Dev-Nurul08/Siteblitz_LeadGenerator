@@ -150,7 +150,7 @@ class OutreachWorker:
 
     async def recover(self) -> int:
         """A record still SUBMITTING belongs to a run that stopped mid-conversation: its result is unknown."""
-        now = self.clock()
+        now = aware(self.clock())
         async with self.factory() as session:
             sending = SendingService(session, self.config)
             rules = DeliveryRulesService(sending, self.client)
@@ -166,7 +166,7 @@ class OutreachWorker:
     # ─── one cycle ───────────────────────────────────────────────────────
 
     async def run_once(self) -> dict:
-        now = self.clock()
+        now = aware(self.clock())
         summary = {"at": now.isoformat(), "accepted": 0, "failed": 0, "uncertain": 0, "not_sent": 0, "held": 0,
                    "cancelled": 0, "skipped": 0, "waiting": 0, "global_pause": [], "integrity": []}
         async with self.factory() as session:
@@ -205,7 +205,7 @@ class OutreachWorker:
         async with self.factory() as session:
             sending = SendingService(session, self.config)
             rules = DeliveryRulesService(sending, self.client)
-            now = self.clock()
+            now = aware(self.clock())
             record = await session.get(SendRecord, record_id)
             if record is None or record.state != SendState.SCHEDULED:
                 return "skipped"
@@ -340,7 +340,7 @@ class OutreachWorker:
                                              outgoing.as_bytes())
 
             # 10. outcome
-            done = self.clock()
+            done = aware(self.clock())
             await session.refresh(record)
             record.smtp_code, record.smtp_status = result.code, result.status
             record.smtp_response = (result.response or "")[:2000] or None
