@@ -203,6 +203,35 @@ class OutreachWorker:
         await session.commit()
         return "cancelled"
 
+    async def _local_hold(self, sending: SendingService, record: SendRecord, sequence: EmailSequence,
+                          mailbox: Mailbox, now: datetime) -> Optional[str]:
+        """Steps 5-7 (no network): the hold reason, or None when the record may go now."""
+        # 5. pause flags in scope, mailbox state
+        blocks = sending.blocking(await sending.active_pauses(), step=record.step, mailbox=mailbox,
+                                  sequence=sequence)
+        if blocks:
+            return f"PAUSED:{blocks[0].reason_code}"
+        if not mailbox.enabled:
+            return "MAILBOX_DISABLED"
+        if mailbox.smtp_tls != TlsMode.NONE and self.password_lookup(mailbox.slug) is None:
+            return "MAILBOX_PASSWORD_MISSING"
+        # 6. inside the recipient-local window
+        zone = sched.load_zone(sequence.timezone)
+        if zone is None:
+            return sched.HoldCode.TIMEZONE_MISSING
+        window = sched.window_containing(now, zone)
+        if (window is None or window.local_date != record.local_date
+                or not (aware(record.window_start) <= now < aware(record.window_end))):
+            return "OUTSIDE_WINDOW"
+        # 7. capacity: what already left today; caps are never exceeded to catch up
+        sent = await sending.submitted_counts(mailbox.id, record.local_date)
+        if sent["total"] >= sched.MAILBOX_DAILY_CEILING or sent["campaign"] >= sched.CAMPAIGN_DAILY_LIMIT:
+            return "CAPACITY_FULL"
+        if record.step == 1 and (await sending.submitted_new_contacts(record.local_date)
+                                 >= await sending.daily_new_limit()):
+            return sched.HoldCode.RAMP_LIMIT_REACHED
+        return None
+
     async def _process(self, record_id: int) -> str:
         async with self.factory() as session:
             sending = SendingService(session, self.config)
@@ -213,6 +242,13 @@ class OutreachWorker:
                 return "skipped"
             sequence = await session.get(EmailSequence, record.sequence_id) if record.sequence_id else None
             mailbox = await session.get(Mailbox, record.mailbox_id)
+            # Cheap local pre-filter: a record that steps 5-7 would hold anyway is held before any network call,
+            # so a paused or full mailbox never makes the worker ask the website or fetch a prospect's homepage
+            # every minute. Steps 1-7 still all run, in order, right before the claim.
+            if sequence is not None and sequence.state == SequenceState.ACTIVE:
+                reason = await self._local_hold(sending, record, sequence, mailbox, now)
+                if reason:
+                    return await self._hold(session, record, reason)
 
             # 1. approval + company facts
             if not (record.approved_at and record.approved_by and (record.body or "").strip()
@@ -272,6 +308,7 @@ class OutreachWorker:
             except Exception as exc:   # an unexpected error is never a reason to send
                 await session.rollback()
                 record = await session.get(SendRecord, record_id)
+                record.scheduled_for = record.window_end
                 return await self._hold(session, record, f"RECHECK_FAILED:{type(exc).__name__}")
             if not check["send_allowed"] or (check["send_to"] or "").lower() != record.recipient_email.lower():
                 if check.get("reason") == HoldReason.SITE_RECOVERED.value:
@@ -282,36 +319,16 @@ class OutreachWorker:
                     return "cancelled"
                 reasons = next((r["hold_reasons"] for r in check["rows"]
                                 if r["email"].lower() == record.recipient_email.lower()), [])
+                # At most one recheck per window: the record becomes overdue and moves to the next window.
+                record.scheduled_for = record.window_end
                 return await self._hold(session, record, "NOT_ELIGIBLE:" + ",".join(reasons or ["?"]))
             await session.commit()
 
-            # 5. pause flags, mailbox state
-            blocks = sending.blocking(await sending.active_pauses(), step=record.step, mailbox=mailbox,
-                                      sequence=sequence)
-            if blocks:
-                return await self._hold(session, record, f"PAUSED:{blocks[0].reason_code}")
-            if not mailbox.enabled:
-                return await self._hold(session, record, "MAILBOX_DISABLED")
+            # 5-7. pause flags and mailbox state, the recipient-local window, capacity (again, right before claiming)
+            reason = await self._local_hold(sending, record, sequence, mailbox, now)
+            if reason:
+                return await self._hold(session, record, reason)
             password = None if mailbox.smtp_tls == TlsMode.NONE else self.password_lookup(mailbox.slug)
-            if mailbox.smtp_tls != TlsMode.NONE and password is None:
-                return await self._hold(session, record, "MAILBOX_PASSWORD_MISSING")
-
-            # 6. inside the recipient-local window
-            zone = sched.load_zone(sequence.timezone)
-            if zone is None:
-                return await self._hold(session, record, sched.HoldCode.TIMEZONE_MISSING)
-            window = sched.window_containing(now, zone)
-            if (window is None or window.local_date != record.local_date
-                    or not (aware(record.window_start) <= now < aware(record.window_end))):
-                return await self._hold(session, record, "OUTSIDE_WINDOW")
-
-            # 7. capacity (what already left today; caps are never exceeded to catch up)
-            sent = await sending.submitted_counts(mailbox.id, record.local_date)
-            if sent["total"] >= sched.MAILBOX_DAILY_CEILING or sent["campaign"] >= sched.CAMPAIGN_DAILY_LIMIT:
-                return await self._hold(session, record, "CAPACITY_FULL")
-            if record.step == 1 and (await sending.submitted_new_contacts(record.local_date)
-                                     >= await sending.daily_new_limit()):
-                return await self._hold(session, record, sched.HoldCode.RAMP_LIMIT_REACHED)
 
             # build before claiming, so a build error can never leave a record SUBMITTING
             parents = [r.message_id for r in steps if r.step < (record.step or 0) and r.state == SendState.ACCEPTED]

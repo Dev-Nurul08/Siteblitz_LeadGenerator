@@ -316,3 +316,32 @@ async def test_preflight_refuses_without_mailbox_or_shared_values(factory, websi
     assert await worker.preflight() == ["no enabled mailbox has its MAILBOX_<SLUG>_PASSWORD set in .env"]
     worker = OutreachWorker(factory, CONFIG, website.client(), password_lookup=lambda slug: "set")
     assert await worker.preflight() == []
+
+
+async def test_a_paused_mailbox_causes_no_network_calls(factory, session, website, smtp_server):
+    admitted = await ready(session, smtp_server)
+    await SendingService(session, CONFIG).raise_pause(PauseScope.DOMAIN, "POLICY_REJECTION", "send-one.example",
+                                                     now=BEFORE)
+    await session.commit()
+    worker = make_worker(factory, Clock(ist(TUE, 9, 1)), website)
+    await worker.run_once()
+    await worker.run_once()
+    assert website.checks == 0 and FakeEligibility.calls == [] and smtp_server.envelopes == []
+    assert (await steps(session, admitted["sequence_id"]))[0].hold_reason == "PAUSED:POLICY_REJECTION"
+
+
+async def test_a_lead_no_longer_eligible_is_rechecked_at_most_once_per_window(factory, session, website,
+                                                                              smtp_server):
+    admitted = await ready(session, smtp_server)
+    business_id = (await session.get(EmailSequence, admitted["sequence_id"])).business_id
+    FakeEligibility.outcomes[business_id] = {"send_allowed": False, "reason": "NOT_ELIGIBLE", "send_to": None,
+                                             "rows": [{"email": "info@glowhair.example",
+                                                       "hold_reasons": ["OBSERVATION_STALE"]}]}
+    clock = Clock(ist(TUE, 9, 1))
+    worker = make_worker(factory, clock, website)
+    await worker.run_once()
+    clock.at(ist(TUE, 9, 2))
+    await worker.run_once()
+    assert FakeEligibility.calls == [business_id] and smtp_server.envelopes == []
+    first = (await steps(session, admitted["sequence_id"]))[0]
+    assert first.hold_reason == "NOT_ELIGIBLE:OBSERVATION_STALE" and first.state == SendState.SCHEDULED
