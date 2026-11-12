@@ -36,7 +36,7 @@
   - T2 names the sender;
   - WhatsApp/phone replies can stop a sequence;
   - Instagram-only leads with an own-domain address are held.
-- **Tests:** the merged suite passed 795 before the last fixes. The final run is in the commit message of the handoff commit.
+- **Tests:** 805 passed on the final code (after the pre-send fixes); the frontend build passes; the website has 368 tests.
 
 ## Files changed
 - `backend/app/engines/eligibility/`, `services/eligibility_service.py`, `models/eligibility.py`, `api/v1/outreach.py` — E1 rules, verification, render check, API.
