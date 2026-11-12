@@ -1042,3 +1042,27 @@ class ReplyLoop:
             row.handled_at, row.handled_by = now, by
             row.handled_note = f"answered by draft {draft.id}"
         await session.flush()
+
+
+FACTS_FILE = Path(__file__).resolve().parents[3] / "docs" / "outreach" / "company-facts.md"
+
+
+def build_reply_loop(settings, session_factory: async_sessionmaker) -> ReplyLoop:
+    """The loop with everything from settings (API and scripts/outreach_reconcile.py). The AI writer is created
+    only when a draft is needed (it reads docs/outreach/ and imports the model client)."""
+    config = SendingConfig.from_settings(settings)
+    writer_box: dict = {}
+
+    def writer():
+        if "w" not in writer_box:
+            from backend.app.engines.writer.writer import OutreachWriter
+            writer_box["w"] = OutreachWriter(settings=settings)
+        return writer_box["w"]
+
+    deps = ReplyLoopDeps(
+        config=config,
+        suppression=SuppressionClient(settings.OUTREACH_PUBLIC_BASE_URL, settings.OUTREACH_API_KEY),
+        snapshots=SnapshotClient(settings.OUTREACH_PUBLIC_BASE_URL, settings.OUTREACH_API_KEY),
+        classifier=ReplyClassifier(lambda: writer().client(), api_key_set=bool(settings.ANTHROPIC_API_KEY)),
+        writer_factory=writer, facts_md=FACTS_FILE.read_text(encoding="utf-8"))
+    return ReplyLoop(session_factory, deps)

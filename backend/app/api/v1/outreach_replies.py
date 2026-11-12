@@ -17,7 +17,6 @@ Invalid input returns 422.
 """
 
 from datetime import date
-from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
@@ -27,49 +26,20 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.app.config import get_settings
 from backend.app.database import get_async_session_factory, get_db_session
-from backend.app.engines.replies.classifier import ReplyClassifier
-from backend.app.engines.replies.snapshot_client import SnapshotClient
-from backend.app.engines.sending.suppression_client import SuppressionClient
 from backend.app.schemas.types import OptionalText, Text
 from backend.app.services.brief_service import build_brief, default_day
 from backend.app.services.outreach_worker import WorkerLock
-from backend.app.services.reply_service import ReplyLoop, ReplyLoopDeps, reconcile_lock_path
-from backend.app.services.sending_service import SendingConfig, ServiceError
+from backend.app.services.reply_service import ReplyLoop, build_reply_loop, reconcile_lock_path
+from backend.app.services.sending_service import ServiceError
 
 router = APIRouter(prefix="/outreach", tags=["Outreach replies (email engine v2)"])
 
-FACTS_FILE = Path(__file__).resolve().parents[4] / "docs" / "outreach" / "company-facts.md"
 DRAFT_STATES = ("WAITING", "OPTIONAL", "SENDING", "SENT", "FAILED", "UNCERTAIN", "REJECTED", "SUPERSEDED", "BLOCKED")
 
 
-@lru_cache
-def _facts_md() -> str:
-    return FACTS_FILE.read_text(encoding="utf-8")
-
-
-def build_loop() -> ReplyLoop:
-    """Everything from settings; tests replace this dependency (app.dependency_overrides)."""
-    settings = get_settings()
-    config = SendingConfig.from_settings(settings)
-    writer_box: dict = {}
-
-    def writer():
-        if "w" not in writer_box:
-            from backend.app.engines.writer.writer import OutreachWriter
-            writer_box["w"] = OutreachWriter(settings=settings)
-        return writer_box["w"]
-
-    deps = ReplyLoopDeps(
-        config=config,
-        suppression=SuppressionClient(settings.OUTREACH_PUBLIC_BASE_URL, settings.OUTREACH_API_KEY),
-        snapshots=SnapshotClient(settings.OUTREACH_PUBLIC_BASE_URL, settings.OUTREACH_API_KEY),
-        classifier=ReplyClassifier(lambda: writer().client(), api_key_set=bool(settings.ANTHROPIC_API_KEY)),
-        writer_factory=writer, facts_md=_facts_md())
-    return ReplyLoop(get_async_session_factory(), deps)
-
-
 def reply_loop() -> ReplyLoop:
-    return build_loop()
+    """Everything from settings; tests replace this dependency (app.dependency_overrides)."""
+    return build_reply_loop(get_settings(), get_async_session_factory())
 
 
 def lock_file() -> Path:
