@@ -59,3 +59,23 @@ scope, one-time price, yearly costs note, the recorded overview (no autoplay, tr
 - "stop" replies, hard bounces and complaints are written to `POST /suppressions` first, then locally.
 - Creates a snapshot only after a reply labelled `sample_requested` or `interested`, and puts the returned URL in the
   AI-drafted reply, which waits for the founder's approval.
+
+## Byte rules and known-answer vector (added 2026-11-12 from the website implementation, commit 35fdc03)
+- The secret is the env value with surrounding whitespace removed, used as UTF-8 bytes; a secret shorter than 32
+  characters counts as missing (the website answers 503).
+- The HMAC message is the base64url payload string (ASCII), not the raw JSON.
+- base64url without `=` padding on both parts.
+
+| Input / output | Value |
+|---|---|
+| email (before strip + lower) | `"  Owner@Example.com "` |
+| h | `c8cd3c6427301eaf6665bccacd65ddb614527acc843a15463e3faba57124c351` |
+| m | `"send-0001"` |
+| secret | `kat-secret-not-for-production-0123456789` |
+| payload | `{"h":"c8cd3c6427301eaf6665bccacd65ddb614527acc843a15463e3faba57124c351","m":"send-0001","v":1}` |
+| token | `eyJoIjoiYzhjZDNjNjQyNzMwMWVhZjY2NjViY2NhY2Q2NWRkYjYxNDUyN2FjYzg0M2ExNTQ2M2UzZmFiYTU3MTI0YzM1MSIsIm0iOiJzZW5kLTAwMDEiLCJ2IjoxfQ.CyQyXv0246O-c9S4tTeSF4c3xo-pCWu4M_Uj6ituq3Y` |
+
+Website limits chosen where this contract was silent (website D19): suppression history capped at 100 events per
+address; `since` paging includes the boundary item (the caller removes duplicates); snapshot life 1-30 days; scope
+1-6 lines; recording URL must be https; image checked by PNG/JPEG header, max 409,600 bytes; every API answer also
+carries `ok: true/false`. `/u/{token}/` with a trailing slash gets a 308 to the URL without it - never generate one.

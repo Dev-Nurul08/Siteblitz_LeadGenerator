@@ -3,12 +3,18 @@
 - The founder lives in Navsari, South Gujarat. SiteBlitz's public identity is "based in Gujarat" (SiteBlitz FD-22,
   truthful location). Never write Mumbai, Thane or any other city as the studio's location. Pilot and field areas
   default to Navsari + Surat. (Corrected twice on 2026-11-10.)
-- Never call `ContactDiscoveryEngine.discover_contacts()` for real outreach until phase 5 lands: it fabricates email
-  addresses and phone numbers. Use `_crawl_contact_pages` / `_extract_from_html` only.
+- `ContactDiscoveryEngine.discover_contacts()` was deleted on 2026-11-12 (commit 619ff24) because it fabricated emails
+  and phones; a regression test scans for guessed-address patterns. Never reintroduce pattern-made addresses. Emails
+  come only from `_crawl_contact_pages` / `_extract_from_html` (with source URL + excerpt) or a founder confirmation.
+- Email engine v2 (`docs/spec/email-engine-v2.md`): no email is sent from Gmail/Workspace/Vercel; the suppression
+  list on the website is authoritative and is checked fresh before every SMTP submission.
 - Outreach copy rules, languages and limits live in `docs/outreach/` and `docs/spec/outreach-engine.md`.
 - On this PC Smart App Control blocks the jiter 0.19 DLL that `anthropic` installs, which breaks `import anthropic`.
   Fix: `.venv/Scripts/python.exe -m pip install --force-reinstall --no-deps jiter==0.8.2`. SQLAlchemy needs its
-  pure-Python reinstall too (see README / memory).
+  pure-Python reinstall too (see README / memory). fontTools' compiled `.pyd` files are blocked too (PDF export):
+  they were renamed to `*.pyd.blocked-by-sac` in `.venv` on 2026-11-12 so the pure-Python fallback loads.
+- Crawls: keep `--min-free-mb` (default 500) on `scripts/pool_e1.py`; this PC often has < 1 GB free RAM and a crawl
+  died with MemoryError on 2026-11-12. Store times in UTC (SQLite drops the offset).
 - Writer tests build `Settings(_env_file=None, ...)` so a real `.env` (API key, sender facts) can never make them
   call the API or change their result. Keep it that way.
 - UI / API QA without new installs:
