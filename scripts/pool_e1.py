@@ -8,7 +8,8 @@ Steps (run in this order; each one can be re-run):
              phase-14 run already visited are skipped. Writes <out>/leads.csv + select.json.
   visit      `site_visit.visit_site` exactly as phase 14 (robots.txt, homepage + 4 contact paths, 12 s, 2 MB,
              5 redirects, SSRF guard, 10 hosts in parallel, one request per host at a time). Resumable through
-             <out>/visits.jsonl. --max-hosts caps the run (the ~4 h limit). Writes sites.csv, emails.csv, summary.json.
+             <out>/visits.jsonl. Surat + Navsari first, then the other cities round-robin; --max-minutes stops the
+             run (the ~4 h limit), --max-hosts caps it. Writes sites.csv, emails.csv, summary.json.
   recapture  The phase-14 leads whose homepage had no viewport tag and showed an email were visited before the
              extractor kept the page excerpt; they are visited once more the same way (<out>/recapture_phase14/) so
              their addresses can have Tier 1 provenance.
@@ -147,7 +148,44 @@ def read_leads(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
-def visit_leads(leads: list[dict], out: Path, parallel: int, max_hosts: int = 0) -> dict:
+FOUNDER_AREA = ("Navsari", "Surat")   # visited completely first (pilot area, CLAUDE.md)
+
+
+def visit_order(urls_by_host: dict, leads: list[dict]) -> list[str]:
+    """Hosts in visiting order: the founder's area first, then the other cities round-robin, so a time limit
+    cuts every other city by about the same number of hosts instead of dropping whole cities."""
+    order = {c: i for i, c in enumerate(CITIES)}
+    city_of = {}
+    for lead in leads:
+        host = host_of(normal_url(lead["website"]))
+        if order.get(lead["town"], 99) < order.get(city_of.get(host), 99):
+            city_of[host] = lead["town"]
+    by_city = defaultdict(list)
+    for host in sorted(urls_by_host):
+        by_city[city_of.get(host, "?")].append(host)
+    first = [h for city in FOUNDER_AREA for h in by_city.pop(city, [])]
+    rest, queues = [], [by_city[c] for c in CITIES if c in by_city] + [by_city[c] for c in by_city if c not in CITIES]
+    while any(queues):
+        for queue in queues:
+            if queue:
+                rest.append(queue.pop(0))
+    return first + rest
+
+
+async def _visit_with_deadline(urls_by_host: dict, done: dict, out: Path, parallel: int, max_minutes: float) -> bool:
+    """True when the time limit stopped the run. A visits.jsonl line is written without an await in between,
+    so stopping never leaves half a line."""
+    if not max_minutes:
+        await run_visits(urls_by_host, done, out, parallel)
+        return False
+    try:
+        await asyncio.wait_for(run_visits(urls_by_host, done, out, parallel), timeout=max_minutes * 60)
+        return False
+    except asyncio.TimeoutError:
+        return True
+
+
+def visit_leads(leads: list[dict], out: Path, parallel: int, max_hosts: int = 0, max_minutes: float = 0) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     skipped = {l["id"]: rule9(l) for l in leads if rule9(l)}
     urls_by_host = defaultdict(list)
@@ -156,26 +194,20 @@ def visit_leads(leads: list[dict], out: Path, parallel: int, max_hosts: int = 0)
             url = normal_url(lead["website"])
             if url not in urls_by_host[host_of(url)]:
                 urls_by_host[host_of(url)].append(url)
-    capped = False
-    if max_hosts and len(urls_by_host) > max_hosts:
-        # Keep whole cities first in the CITIES order (the founder's area first), then cut.
-        order = {c: i for i, c in enumerate(CITIES)}
-        first_city = {}
-        for lead in leads:
-            host = host_of(normal_url(lead["website"]))
-            first_city[host] = min(first_city.get(host, 99), order.get(lead["town"], 99))
-        keep = sorted(urls_by_host, key=lambda h: (first_city.get(h, 99), h))[:max_hosts]
-        urls_by_host = {h: urls_by_host[h] for h in keep}
-        capped = True
+    ordered = visit_order(urls_by_host, leads)
+    if max_hosts:
+        ordered = ordered[:max_hosts]
+    urls_by_host = {h: urls_by_host[h] for h in ordered}
     done = load_done(out / "visits.jsonl")
-    print(f"{len(leads)} leads, {len(skipped)} skipped by rule 9, {len(urls_by_host)} hosts"
-          f"{' (capped)' if capped else ''}, {len(done)} URLs already visited", flush=True)
-    asyncio.run(run_visits(urls_by_host, done, out, parallel))
+    print(f"{len(leads)} leads, {len(skipped)} skipped by rule 9, {len(urls_by_host)} hosts, "
+          f"{len(done)} URLs already visited, time limit {max_minutes or 'none'} min", flush=True)
+    stopped = asyncio.run(_visit_with_deadline(urls_by_host, done, out, parallel, max_minutes))
     visited_urls = set(done)
     kept = [l for l in leads if l["id"] in skipped or not has_address(l)
             or normal_url(l["website"]) in visited_urls]
     summary = write_outputs(kept, skipped, done, out)
-    summary["capped"] = capped
+    summary["capped"] = bool(stopped or max_hosts)
+    summary["stopped_by_time_limit"] = stopped
     summary["leads_not_visited_because_of_cap"] = len(leads) - len(kept)
     (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     return summary
@@ -314,11 +346,13 @@ def main() -> None:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--parallel", type=int, default=10)
     parser.add_argument("--max-hosts", type=int, default=0, help="cap the visit (0 = no cap)")
+    parser.add_argument("--max-minutes", type=float, default=0, help="stop visiting after N minutes (0 = no limit)")
     args = parser.parse_args()
     if args.step == "select":
         result = step_select(args.out)
     elif args.step == "visit":
-        result = visit_leads(read_leads(args.out / "leads.csv"), args.out, args.parallel, args.max_hosts)
+        result = visit_leads(read_leads(args.out / "leads.csv"), args.out, args.parallel, args.max_hosts,
+                             args.max_minutes)
     elif args.step == "recapture":
         result = step_recapture(args.out, args.parallel)
     elif args.step == "import":
