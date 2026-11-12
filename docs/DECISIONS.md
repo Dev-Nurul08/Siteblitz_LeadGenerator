@@ -178,3 +178,17 @@
 - **The results stay outside the repository**, in `E:\SiteBlitz-World-Business-Data\_work\email_finder\2026-11-10\`,
   because they hold business contact data. They are not imported into the app database yet: phase 15 needs them as
   businesses, `website_checks` and contacts.
+
+## 2026-11-12 - two review rounds (recommendations; founder approval pending)
+- **Verified:** the live site (production deploy of 2026-07-10) shows invented testimonials, invented results,
+  "Studio Mumbai" and withdrawn prices; the truthful version is on the website branch v2-redesign (not deployed).
+  `siteblitz.in` is still unregistered. Both local lead databases hold 0 contact rows (no fabricated contacts stored).
+- **Agency route** (`docs/debate/2026-11-12-clients-without-selling/RESULT.md`): white-label builds for agencies as
+  the main route, contract work as the cash route; kit written in `docs/agency/`. The founder then asked to focus on
+  email; the agency kit stays for later use.
+- **Email engine v2** (`docs/debate/2026-11-12-email-engine-personas/RESULT.md`, spec `docs/spec/email-engine-v2.md`):
+  India-only pilot, Tier 1 addresses only (published on the business's own site, source URL stored), three
+  observation templates, Mailforge mailboxes (Terms §3.4(1) allows unsolicited B2B outreach where lawful) on two
+  founder-registered domains, 30/25/5 caps per mailbox, ramp 10/15/20/20 new per sending day, RFC 8058 unsubscribe
+  with a cloud suppression list, AI-drafted replies approved by the founder, `/start-day` brief. Phases E0-E6 on the
+  board, all 🔒. Old 14b folds into E1, 15 is replaced by E3, 16 is paused.
