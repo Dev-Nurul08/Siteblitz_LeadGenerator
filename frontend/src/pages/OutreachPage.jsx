@@ -1,5 +1,5 @@
 // 04 Outreach — honest, human-sent contact; signature "Evidence threads" (fact ↔ sentence).
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { Ban, Check, Copy, ExternalLink, Info, Mail, MessageCircle, Phone, Send } from 'lucide-react'
 import api from '../services/api'
@@ -7,8 +7,10 @@ import { go } from '../lib/router'
 import { refreshStats } from '../lib/stats'
 import { date } from '../lib/format'
 import { TitleBlock } from '../components/TitleBlock'
-import { DelayedSkeleton, ErrorBanner, StateBlock, TierChip } from '../components/ui'
+import { DelayedSkeleton, ErrorBanner, Segmented, StateBlock, TierChip } from '../components/ui'
 import { ease, ms } from '../motion'
+
+const BatchScreen = lazy(() => import('./BatchScreen'))
 
 const OUTCOMES = [['interested', 'Interested'], ['not_now', 'Not now'], ['no_reply', 'No reply'], ['other', 'Other']]
 const CHANNELS = [['phone', 'Phone'], ['email', 'Email'], ['social', 'Social message'], ['form', 'Contact form'], ['visit', 'Visit']]
@@ -199,7 +201,26 @@ function Workspace({ id, onChanged }) {
   )
 }
 
+// Email batch (email engine v2, E3) is the default view; the manual, copy-and-send workspace stays one click away.
 export default function OutreachPage({ params, entrance }) {
+  const [mode, setMode] = useState(params.lead || params.mode === 'manual' ? 'manual' : 'batch')
+  const switcher = (
+    <Segmented id="outreach-mode" value={mode} onChange={(v) => { setMode(v); go('outreach', v === 'manual' ? { mode: 'manual' } : {}) }}
+      options={[{ value: 'batch', label: 'Email batch' }, { value: 'manual', label: 'Manual outreach' }]} />
+  )
+  if (mode === 'batch') {
+    return (
+      <>
+        <TitleBlock index="04" title="Outreach" entrance={entrance} actions={switcher}
+          text="Step 4 of 4. Pick eligible leads, let the writer draft three emails each, check the evidence, then approve. Approved mail leaves only in the supervised sending windows." />
+        <Suspense fallback={<DelayedSkeleton rows={10} />}><BatchScreen /></Suspense>
+      </>
+    )
+  }
+  return <ManualOutreach params={params} entrance={entrance} switcher={switcher} />
+}
+
+function ManualOutreach({ params, entrance, switcher }) {
   const [queue, setQueue] = useState(null)
   const [error, setError] = useState(null)
   const [selected, setSelected] = useState(params.lead ? Number(params.lead) : null)
@@ -215,7 +236,7 @@ export default function OutreachPage({ params, entrance }) {
   useEffect(() => { load() }, [load])
   return (
     <>
-      <TitleBlock index="04" title="Outreach" entrance={entrance} text="Step 4 of 4. Contact a lead yourself and log what happened." />
+      <TitleBlock index="04" title="Outreach" entrance={entrance} actions={switcher} text="Step 4 of 4. Contact a lead yourself and log what happened." />
       <div className="banner banner-info"><Info size={16} /><span style={{ flex: 1 }}>Sending is off: no email provider is connected. Copy the draft, send it yourself, then log it here.</span><a href="#/settings">Settings</a></div>
       {error && <ErrorBanner message={`Could not load leads. ${error}`} onRetry={load} />}
       {!queue && !error && <DelayedSkeleton />}
