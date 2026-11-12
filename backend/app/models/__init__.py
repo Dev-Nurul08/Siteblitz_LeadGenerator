@@ -51,6 +51,15 @@ from backend.app.models.eligibility import (
     EmailVerification,
     SocialConfirmation,
 )
+from backend.app.models.sending import (
+    DeliveryEvent,
+    EmailSequence,
+    Mailbox,
+    PauseFlag,
+    RampSetting,
+    SendRecord,
+    SuppressionMirror,
+)
 
 __all__ = [
     "Source",
@@ -91,4 +100,11 @@ __all__ = [
     "EmailEligibility",
     "EmailVerification",
     "SocialConfirmation",
+    "Mailbox",
+    "EmailSequence",
+    "SendRecord",
+    "PauseFlag",
+    "RampSetting",
+    "DeliveryEvent",
+    "SuppressionMirror",
 ]
