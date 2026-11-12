@@ -276,3 +276,22 @@
   reads a stored time as UTC, so every imported check and capture was 5 h 30 min late (two pages were rendered
   twice because of it, and a SITE_DOWN gap or an observation date could have been wrong). The importer converts to
   UTC now; the 8,874 checks and 3,544 captures already imported were shifted once (backup kept outside the repo).
+
+## 2026-11-12 - email engine v2 build (founder "go for all")
+- **Phases ran as parallel workers in separate git worktrees** (E2 `email-engine-e2`, E3/E4 from E2) and were merged
+  into `phase-01-pipeline-repair` (6f724b6, b75c6b3, d975c35). Merge conflicts were only additive lines (router,
+  models, main, one constant block) and were resolved by keeping both sides; 795 tests passed after the last merge.
+- **The production deploy was not done by Claude**: the safety classifier denied "Production Deploy" when setting a
+  Vercel production variable. Not worked around; the founders run the steps in `docs/outreach/email-engine-setup.md`.
+- **Pool reality**: 26 leads eligible once verified (all NO_VIEWPORT) from 10,725 visited Gujarat businesses; the
+  SOCIAL_ONLY route needs the founder's Instagram check (automated reading stays banned) and a separate import.
+- **Pre-send review changes** (ChatGPT + Claude panel, `docs/debate/2026-11-12-pilot-template-review/RESULT.md`):
+  NO_VIEWPORT sentence and subject say only what the 390 px check showed; T2 starts with the identity line; replies on
+  WhatsApp / phone can be marked (`/replied-elsewhere`, `/start-day` `replied` / `stop`); SOCIAL_ONLY leads with an
+  own-domain address are held (`SOCIAL_ONLY_DOMAIN_ADDRESS`).
+- **Recordings**: the founder's own recorded overview per vertical comes from `docs/outreach/recordings.json`; empty
+  means no audio block. No synthetic voice.
+- **Defaults chosen for open worker questions** (founder may change): business days Mon-Fri for the reply backlog;
+  a duplicate caught before sending still pauses everything; 4xx = 3 attempts per window x 3 windows then FAILED soft;
+  "not interested right now" is treated as stop (suppressed); a weak complaint ("is this a scam?") suppresses without a
+  global pause; the stop confirmation reply is off by default; vertical `other` gets a snapshot without a concept demo.
