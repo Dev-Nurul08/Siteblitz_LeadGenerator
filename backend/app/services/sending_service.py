@@ -294,12 +294,12 @@ class SendingService:
         book = sched.CapacityBook()
         rows = (await self.session.execute(
             select(SendRecord.mailbox_id, SendRecord.local_date, SendRecord.window_label, SendRecord.kind,
-                   SendRecord.step)
+                   SendRecord.step, SendRecord.scheduled_for)
             .where(SendRecord.local_date >= start, SendRecord.local_date <= end,
                    SendRecord.state.in_(CAPACITY_STATES)))).all()
-        for mailbox_id, day, label, kind, step in rows:
+        for mailbox_id, day, label, kind, step, at in rows:
             book.add(mailbox_id, day, label, campaign=kind == SendKind.CAMPAIGN,
-                     new_contact=kind == SendKind.CAMPAIGN and step == 1)
+                     new_contact=kind == SendKind.CAMPAIGN and step == 1, at=at)
         return book
 
     async def submitted_counts(self, mailbox_id: int, day: date) -> dict:
@@ -621,7 +621,8 @@ class SendingService:
             if record.step == 1 and book.new_contacts.get(slot.local_date, 0) >= limit:
                 day = slot.local_date + timedelta(days=1)
                 continue
-            book.add(record.mailbox_id, slot.local_date, slot.window_label, new_contact=record.step == 1)
+            book.add(record.mailbox_id, slot.local_date, slot.window_label, new_contact=record.step == 1,
+                     at=slot.scheduled_for)
             record.local_date, record.window_label = slot.local_date, slot.window_label
             record.window_start, record.window_end, record.scheduled_for = (slot.window_start, slot.window_end,
                                                                             slot.scheduled_for)

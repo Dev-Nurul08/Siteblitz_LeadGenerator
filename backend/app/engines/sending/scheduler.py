@@ -131,6 +131,9 @@ class DayLoad:
     campaign: int = 0                     # campaign records using a slot (scheduled, sent, uncertain, failed)
     total: int = 0                        # every kind (campaign + replies + tests)
     per_window: dict = field(default_factory=dict)   # window label -> campaign records
+    # window label -> the latest slot time (UTC) reserved in it. E3 fix: without it, every message admitted while a
+    # window is already open got the same time ("now + 1 min") and a mailbox's messages left in one burst.
+    last_at: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -145,13 +148,16 @@ class CapacityBook:
         return self.loads.setdefault((mailbox_id, day), DayLoad())
 
     def add(self, mailbox_id: int, day: date, window_label: Optional[str], campaign: bool = True,
-            new_contact: bool = False) -> None:
+            new_contact: bool = False, at: Optional[datetime] = None) -> None:
         load = self.load(mailbox_id, day)
         load.total += 1
         if campaign:
             load.campaign += 1
             if window_label:
                 load.per_window[window_label] = load.per_window.get(window_label, 0) + 1
+                if at is not None:
+                    at = aware(at)
+                    load.last_at[window_label] = max(load.last_at.get(window_label, at), at)
         if new_contact:
             self.new_contacts[day] = self.new_contacts.get(day, 0) + 1
 
@@ -186,6 +192,9 @@ def _slot_on(book: CapacityBook, mailbox_id: int, day: date, zone: ZoneInfo,
     options = []
     for index, window in enumerate(windows_for(day, zone)):
         at = window.start + SLOT_SPACING * load.per_window.get(window.label, 0)
+        last = load.last_at.get(window.label)
+        if last is not None and at < last + SLOT_SPACING:
+            at = last + SLOT_SPACING
         if not_before is not None and at < not_before:
             at = aware(not_before).replace(second=0, microsecond=0) + timedelta(minutes=1)
         if at < window.end:
@@ -255,9 +264,9 @@ def plan_admission(book: CapacityBook, mailbox_ids: Iterable[int], zone: ZoneInf
                               latest_date(send_day, 3))
         if second is None or third is None:
             continue
-        book.add(mailbox_id, first.local_date, first.window_label, new_contact=True)
-        book.add(mailbox_id, second.local_date, second.window_label)
-        book.add(mailbox_id, third.local_date, third.window_label)
+        book.add(mailbox_id, first.local_date, first.window_label, new_contact=True, at=first.scheduled_for)
+        book.add(mailbox_id, second.local_date, second.window_label, at=second.scheduled_for)
+        book.add(mailbox_id, third.local_date, third.window_label, at=third.scheduled_for)
         return Admission(mailbox_id, {1: first, 2: second, 3: third})
     if not step1_fitted:
         return Refusal(HoldCode.NO_STEP1_CAPACITY,
