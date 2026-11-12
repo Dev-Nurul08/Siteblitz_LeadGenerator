@@ -60,6 +60,7 @@ from backend.app.models.sending import (
     SendRecord,
     SuppressionMirror,
 )
+from backend.app.models.outreach_batch import OutreachBatch, OutreachBatchLead
 
 __all__ = [
     "Source",
@@ -107,4 +108,6 @@ __all__ = [
     "RampSetting",
     "DeliveryEvent",
     "SuppressionMirror",
+    "OutreachBatch",
+    "OutreachBatchLead",
 ]

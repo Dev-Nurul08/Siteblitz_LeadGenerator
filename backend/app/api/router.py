@@ -15,6 +15,7 @@ from backend.app.api.v1.lead_radar import router as lead_radar_router
 from backend.app.api.v1.intelligence import router as intelligence_router
 from backend.app.api.v1.outreach import router as outreach_router
 from backend.app.api.v1.outreach_sending import router as outreach_sending_router
+from backend.app.api.v1.outreach_batches import router as outreach_batches_router
 
 api_v1_router = APIRouter(prefix="/api/v1")
 
@@ -29,3 +30,4 @@ api_v1_router.include_router(lead_radar_router)
 api_v1_router.include_router(intelligence_router)
 api_v1_router.include_router(outreach_router)
 api_v1_router.include_router(outreach_sending_router)
+api_v1_router.include_router(outreach_batches_router)

@@ -359,12 +359,15 @@ class SendingService:
         ).scalar_one_or_none()
         return sent is not None
 
-    async def create_sequences(self, send_date: date, items: list[dict], now: Optional[datetime] = None) -> dict:
+    async def create_sequences(self, send_date: date, items: list[dict], now: Optional[datetime] = None,
+                               dry_run: bool = False) -> dict:
         """Admit approved, eligible prospects for step 1 on `send_date` (recipient-local). Each item:
-        {eligibility_id, subject, body, content_version, approved_by}. Every refusal is returned with a code and
-        a message the batch screen (E3) shows as it is."""
+        {eligibility_id, subject, body, content_version, approved_by} and optionally `mailbox_id` (E3: the texts
+        name that mailbox's sender, so the sequence must use it). Every refusal is returned with a code and a
+        message the batch screen (E3) shows as it is. `dry_run` (E3 review) plans the same way, items seeing each
+        other, and writes nothing: `planned` lists the mailbox and the three slots per item."""
         now = self._now(now)
-        admitted, refused = [], []
+        admitted, refused, planned = [], [], []
 
         def refuse(item, code, message):
             refused.append({"eligibility_id": item["eligibility_id"], "code": code, "message": message})
@@ -402,8 +405,14 @@ class SendingService:
                 continue
             source, batch = await self._source_of(row)
             probe = EmailSequence(source=source, source_batch=batch)
+            pinned = item.get("mailbox_id")
             usable = [b.id for b in mailboxes
-                      if not self.blocking(flags, step=1, mailbox=b, sequence=probe)]
+                      if not self.blocking(flags, step=1, mailbox=b, sequence=probe)
+                      and (pinned is None or b.id == pinned)]
+            if pinned is not None and not usable:
+                refuse(item, "MAILBOX_NOT_AVAILABLE", f"mailbox {pinned} (whose sender the texts name) is disabled "
+                       "or paused; write this lead again")
+                continue
             source_blocks = [f for f in flags if f.scope in (PauseScope.SOURCE, PauseScope.SOURCE_BATCH)
                              and f.scope_value in (source, batch)]
             if source_blocks:
@@ -416,6 +425,13 @@ class SendingService:
                 continue
             seen_hashes.add(recipient_hash)
             box = next(b for b in mailboxes if b.id == plan.mailbox_id)
+            if dry_run:   # the reservation stays in the in-memory book only, so later items see it
+                planned.append({"eligibility_id": row.id, "mailbox_id": box.id, "mailbox": box.address,
+                                "display_name": box.display_name,
+                                "steps": [{"step": step, "local_date": slot.local_date.isoformat(),
+                                           "window": slot.window_label, "scheduled_for": iso(slot.scheduled_for)}
+                                          for step, slot in sorted(plan.slots.items())]})
+                continue
             sequence = EmailSequence(business_id=row.business_id, eligibility_id=row.id, mailbox_id=box.id,
                                      recipient_email=row.email, recipient_hash=recipient_hash, country=row.country
                                      or (business.country_code if business else None), timezone=zone_name,
@@ -442,8 +458,11 @@ class SendingService:
             await self.session.flush()
             admitted.append({"eligibility_id": row.id, "sequence_id": sequence.id, "business_id": row.business_id,
                              "mailbox_id": box.id, "records": [record_dict(r) for r in records]})
-        return {"send_date": send_date.isoformat(), "admitted": admitted, "refused": refused,
-                "daily_new_limit": limit}
+        result = {"send_date": send_date.isoformat(), "admitted": admitted, "refused": refused,
+                  "daily_new_limit": limit}
+        if dry_run:
+            result["planned"] = planned
+        return result
 
     async def approve_follow_up(self, record_id: int, body: str, approved_by: str,
                                 content_version: Optional[str], now: Optional[datetime] = None) -> dict:
