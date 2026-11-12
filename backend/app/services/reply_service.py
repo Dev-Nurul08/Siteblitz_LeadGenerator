@@ -337,6 +337,8 @@ class ReplyLoop:
         received = parsed.date
         if received is None or received > now + timedelta(days=1) or received.year < 2000:
             received = now
+        # SQLite keeps no UTC offset: everything stored is UTC (E2 convention), so a "+0530" Date header is converted.
+        received = received.astimezone(timezone.utc)
         meta: dict[str, Any] = {"auto_signals": parsed.auto_signals, "report_type": parsed.report_type,
                                 "to": parsed.to_addresses[:5]}
         if parsed.bounce is not None:

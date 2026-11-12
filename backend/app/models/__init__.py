@@ -60,6 +60,15 @@ from backend.app.models.sending import (
     SendRecord,
     SuppressionMirror,
 )
+from backend.app.models.replies import (
+    BriefRun,
+    ImapFolderState,
+    InboundMessage,
+    MailboxReconcile,
+    OpportunitySnapshot,
+    ReplyDraft,
+    ReplySuppression,
+)
 
 __all__ = [
     "Source",
@@ -107,4 +116,11 @@ __all__ = [
     "RampSetting",
     "DeliveryEvent",
     "SuppressionMirror",
+    "ImapFolderState",
+    "MailboxReconcile",
+    "InboundMessage",
+    "ReplyDraft",
+    "ReplySuppression",
+    "OpportunitySnapshot",
+    "BriefRun",
 ]

@@ -4,7 +4,8 @@ Email engine v2, phase E2 - the sender worker (one process, supervised sending w
 Start-up:   refuses to run when another worker holds the lock file, when the shared outreach values are missing,
             or when no enabled mailbox has its password configured. Any record left SUBMITTING by a crash becomes
             UNCERTAIN (+ global pause SEND_RESULT_UNKNOWN): it may have been accepted, so it is never re-sent.
-Each cycle: integrity audit -> move missed messages to their next window -> stop if a global pause is active ->
+Each cycle: integrity audit -> move missed messages to their next window -> pause every mailbox whose inbox was not
+            read completely in the last 24 h (E4) -> stop if a global pause is active ->
             for every due SendRecord, in this order:
               1. approval present (text, approver, approval time) and company facts filled
               2. FRESH suppression check against the website; no trustworthy answer = no send + global pause
@@ -51,6 +52,7 @@ from backend.app.models.sending import (
 )
 from backend.app.services.delivery_rules_service import DeliveryRulesService
 from backend.app.services.eligibility_service import EligibilityService
+from backend.app.services.inbox_guard import check_inbox_freshness
 from backend.app.services.sending_service import SendingConfig, SendingService, aware
 
 logger = structlog.get_logger(__name__)
@@ -124,7 +126,8 @@ class OutreachWorker:
                  submit: Callable = smtp_engine.submit,
                  password_lookup: Callable[[str], Optional[str]] = smtp_engine.mailbox_password,
                  clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
-                 smtp_timeout: float = smtp_engine.SMTP_TIMEOUT_SECONDS):
+                 smtp_timeout: float = smtp_engine.SMTP_TIMEOUT_SECONDS,
+                 inbox_guard: Optional[Callable[..., Awaitable]] = check_inbox_freshness):
         self.factory = session_factory
         self.config = config
         self.client = client
@@ -133,6 +136,8 @@ class OutreachWorker:
         self.password_lookup = password_lookup
         self.clock = clock
         self.smtp_timeout = smtp_timeout
+        # E4: a mailbox whose inbox was not read completely in the last 24 h is paused (MAILBOX scope) each cycle.
+        self.inbox_guard = inbox_guard
 
     # ─── start-up ────────────────────────────────────────────────────────
 
@@ -176,6 +181,8 @@ class OutreachWorker:
             rules = DeliveryRulesService(sending, self.client)
             summary["integrity"] = await rules.integrity_audit(now)
             summary["moved"] = (await sending.reschedule_overdue(now))["moved"]
+            if self.inbox_guard is not None:
+                summary["stale_inboxes"] = await self.inbox_guard(session, self.config, now)
             await session.commit()
             blocking = [f for f in await sending.active_pauses() if f.scope == PauseScope.GLOBAL]
             if blocking:

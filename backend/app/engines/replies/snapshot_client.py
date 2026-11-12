@@ -14,7 +14,7 @@ wrong or hostile answer can never put a foreign link into a draft.
 import base64
 import re
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -147,4 +147,5 @@ class SnapshotClient:
             expires = datetime.fromisoformat(str(data.get("expires_at")).replace("Z", "+00:00"))
         except ValueError as exc:
             raise SnapshotUnavailable("the snapshot answer has no valid expires_at") from exc
+        expires = expires.astimezone(timezone.utc) if expires.tzinfo else expires.replace(tzinfo=timezone.utc)
         return SnapshotResult(slug, url, expires)

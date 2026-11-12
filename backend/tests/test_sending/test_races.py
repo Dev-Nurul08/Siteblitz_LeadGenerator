@@ -287,7 +287,7 @@ async def test_site_down_lead_is_rechecked_by_e1_right_before_sending(factory, s
                                                                       outcome, sent):
     admitted = await site_down_sequence(session, smtp_server)
     worker = OutreachWorker(factory, CONFIG, website.client(), password_lookup=lambda slug: None,
-                            clock=Clock(ist(TUE, 9, 1)),
+                            clock=Clock(ist(TUE, 9, 1)), inbox_guard=None,
                             eligibility_factory=lambda s: e1_service(s, paid=Paid(), site_check=site_check(outcome)))
     await worker.run_once()
     assert (len(smtp_server.envelopes) == 1) is sent

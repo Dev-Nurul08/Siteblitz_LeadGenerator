@@ -270,6 +270,39 @@ async def add_imap_mailbox(db, smtp_port: int = 2525) -> Mailbox:
     return box
 
 
+async def sent_sequence(db, name: str = "Glow Hair Studio", email: str = OWNER, vertical: str = "salon_beauty",
+                        evidence_path: Optional[str] = None) -> SimpleNamespace:
+    """A prospect admitted for TUE whose step 1 was accepted at 09:01 IST (steps 2 / 3 still reserved)."""
+    from sqlalchemy import select
+
+    from backend.app.models.sending import EmailSequence, SendRecord, SendState
+    from backend.app.services.sending_service import SendingService
+    from backend.tests.test_sending.conftest import add_lead, item
+
+    row = await add_lead(db, name=name, email=email)
+    row.vertical, row.observation_evidence_path = vertical, evidence_path
+    result = await SendingService(db, CONFIG).create_sequences(
+        TUE, [item(row, subject=f"{name}: no website link in Instagram bio")], now=BEFORE)
+    assert result["admitted"], result["refused"]
+    sequence_id = result["admitted"][0]["sequence_id"]
+    step1 = (await db.execute(select(SendRecord).where(SendRecord.sequence_id == sequence_id,
+                                                       SendRecord.step == 1))).scalar_one()
+    step1.state, step1.submitted_at, step1.accepted_at = SendState.ACCEPTED, ist(TUE, 9, 1), ist(TUE, 9, 1)
+    sequence = await db.get(EmailSequence, sequence_id)
+    sequence.current_step = 1
+    await db.commit()
+    return SimpleNamespace(sequence_id=sequence_id, step1_id=step1.id, message_id=step1.message_id,
+                           subject=step1.subject, eligibility=row, business_id=row.business_id, email=email)
+
+
+async def ready_mailbox(db, smtp_port: int = 2525) -> Mailbox:
+    from backend.tests.test_sending.conftest import set_ramp
+    box = await add_imap_mailbox(db, smtp_port)
+    await set_ramp(db, 1)
+    await db.commit()
+    return box
+
+
 def make_loop(factory, clock, site: FakeSite, imap: FakeImapServer, models, api_key: bool = True,
               suppression=True) -> ReplyLoop:
     settings = WRITER_SETTINGS if api_key else Settings(

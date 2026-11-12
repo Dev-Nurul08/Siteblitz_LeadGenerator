@@ -42,6 +42,7 @@ async def lifespan(app: FastAPI):
     import backend.app.models.intelligence
     import backend.app.models.eligibility
     import backend.app.models.sending
+    import backend.app.models.replies
 
     SourceAdapterRegistry.register("openstreetmap", OSMAdapter)
     SourceAdapterRegistry.register("csv_import", CSVImportAdapter)
