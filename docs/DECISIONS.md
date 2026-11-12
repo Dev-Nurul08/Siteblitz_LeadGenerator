@@ -295,3 +295,7 @@
   a duplicate caught before sending still pauses everything; 4xx = 3 attempts per window x 3 windows then FAILED soft;
   "not interested right now" is treated as stop (suppressed); a weak complaint ("is this a scam?") suppresses without a
   global pause; the stop confirmation reply is off by default; vertical `other` gets a snapshot without a concept demo.
+- **E0 done by another session**: the website session deployed `v2-redesign` (aa116dc) with `NEXT_PUBLIC_SITE_URL`
+  (website commit fa3cd13). Claude re-checked production on 2026-11-12: no invented reviews or results, no "Studio
+  Mumbai", no withdrawn prices. The outreach routes are live but answer 503 until `OUTREACH_API_KEY` and
+  `OUTREACH_SIGNING_SECRET` are set in Vercel (O2, founders).

@@ -13,31 +13,19 @@ git push origin v2-redesign
 ```
 Worked if: both commands end with `-> phase-01-pipeline-repair` / `-> v2-redesign` and no error.
 
-## 2. Put the truthful website live (E0) with the outreach endpoints (Claude was denied "Production Deploy")
-The live site (a July 2026 build) still shows invented reviews, invented results and "Studio Mumbai". Branch
-`v2-redesign` is truthful and now also has `/u/` (unsubscribe), the suppression API and `/s/` (sample pages).
-1. Make two random secrets (run twice, keep both values private, never commit them):
+## 2. Website: switch on the outreach endpoints (O2)
+The truthful site is live: another session deployed `v2-redesign` (aa116dc, incl. `/u/`, the suppression API and
+`/s/`) with `NEXT_PUBLIC_SITE_URL` (website commit fa3cd13). Checked 2026-11-12: 0 invented reviews / results, no
+"Studio Mumbai", no withdrawn prices. The outreach routes answer 503 `outreach_not_configured` until two secrets exist.
+1. Make two random secrets (run twice, keep both private, never commit them):
    `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`
-2. In `E:\Temp\SiteBlitz` add the Production variables (each command asks for the value):
-   ```
-   vercel env add NEXT_PUBLIC_SITE_URL production      # https://siteblitz.vercel.app
-   vercel env add OUTREACH_API_KEY production          # secret 1
-   vercel env add OUTREACH_SIGNING_SECRET production   # secret 2
-   ```
-   Do not add them to Preview (previews share the production database - `docs/DEPLOY.md`).
-3. Deploy only committed files (keeps `.env.local` and scratch folders out of the upload):
-   ```
-   New-Item -ItemType Directory -Force E:\tmp\_sb_deploy_live
-   git -C E:\Temp\SiteBlitz archive -o E:\tmp\_sb_live.tar v2-redesign
-   tar -xf E:\tmp\_sb_live.tar -C E:\tmp\_sb_deploy_live
-   Copy-Item -Recurse E:\Temp\SiteBlitz\.vercel E:\tmp\_sb_deploy_live\.vercel
-   cd E:\tmp\_sb_deploy_live
-   vercel deploy --prod
-   ```
-4. Worked if: `https://siteblitz.vercel.app` shows no "Rohan Mehta", no "Studio Mumbai", no ₹14,999; and the two
-   checks in `E:\Temp\SiteBlitz\docs\DEPLOY.md` (outreach section) pass.
-- Decision for you: Vercel's free Hobby plan is for non-commercial use only. SiteBlitz is a business site: move to a
-  paid plan or another host when you can.
+2. In `E:\Temp\SiteBlitz`: `vercel env add OUTREACH_API_KEY production` (secret 1) and
+   `vercel env add OUTREACH_SIGNING_SECRET production` (secret 2). Not in Preview (shared database, `docs/DEPLOY.md`).
+3. Redeploy the same build the way the website session does (its `docs/DEPLOY.md` records the release path and the
+   rollback target).
+4. Worked if: `curl -s -X POST https://siteblitz.vercel.app/api/outreach/suppressions/check -H "Content-Type: application/json" -d "{\"hashes\":[]}"`
+   answers 401 (key required) instead of 503.
+- Decision for you: Vercel's free Hobby plan is for non-commercial use only; move to a paid plan or another host.
 
 ## 3. Lead generator `.env` (in `E:\tmp\Siteblitz_LeadGenerator\.env`, never committed)
 ```

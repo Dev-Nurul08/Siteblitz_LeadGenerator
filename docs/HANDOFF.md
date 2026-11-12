@@ -1,93 +1,75 @@
-# HANDOFF — SiteBlitz Lead Generator — Phase 14 (email finder) — 2026-11-10
-
-Branch: `phase-01-pipeline-repair`. Full run report: `docs/outreach/email-finder-run-2026-11-10.md`.
+# HANDOFF — SiteBlitz Lead Generator — Phase E (email engine v2, E1-E6) — 2026-11-12
 
 ## Done
-- **The email finder ran on all 2,162 Navsari + Surat leads** (spec row 9): 19:31 to 19:46 IST, 5,713 requests.
-  - 69 leads skipped by rule 9 (colleges and schools).
-  - 79 leads have an empty website field.
-  - 2,014 leads visited (1,860 URLs on 1,230 hosts).
-- **Emails:** 499 leads have at least one email: 619 unique addresses in 839 lead-email rows.
-  - 0 rows have no source URL, and 0 come from a page off the business's own host. Checked independently from
-    the CSVs.
-  - 15 random rows fetched live again: 15/15 addresses are still on their page.
-- **Totals:**
-  - Down on this check: 701.
-  - NO_VIEWPORT: 37.
-  - NO_HTTPS: 63.
-  - robots-blocked: 70.
-  - Also ok 1,063, listing 102, protected 70, SSRF-blocked 6, social 2.
-- **QA-038 fixed:** coaching classes (`specialty_school`) and preschools are prospects. Schools are skipped by exact
-  category. Before the fix, 89 coaching leads in this selection were skipped.
-- **QA-040 fixed:** the crawler respects robots.txt (RFC 9309 parser). It allows 12 s per GET, reads at most 2 MB
-  and follows at most 5 redirects. It takes emails only from mailto links, visible text and Cloudflare-encoded
-  addresses.
-  - Before the fix, the probe extracted `you@example.com`, a Sentry key and an address inside an HTML comment, and
-    ignored `Disallow: /`.
-- **Tests:** backend 338/338, up from 325. New: 12 site-visit tests and the QA-038 rule test.
+- **Two strategy rounds with ChatGPT** (`docs/debate/2026-11-12-clients-without-selling/`, `docs/debate/2026-11-12-email-engine-personas/`).
+  - The agency kit is in `docs/agency/`.
+  - The founder then chose email: spec lock `docs/spec/email-engine-v2.md` (20 rows), approved with "go for all".
+- **E1 eligibility.** For each (business, email) the app decides TIER1 / TIER2 / HOLD, with reason codes. Every address keeps its source URL, capture date and an excerpt.
+  - Email verification: syntax + MX, then Bouncer when a key is set.
+  - A rendered 390 px phone check takes a screenshot.
+  - SITE_DOWN is re-checked right before sending.
+  - The founder's Instagram check is an API.
+  - `discover_contacts()` and the generated-email CSVs are deleted.
+  - Pool: 10,725 Gujarat businesses visited; 26 are eligible once verified.
+- **E2 sending core.**
+  - Scheduler: Tue-Thu, 09:00-11:30 / 14:00-16:30 IST.
+  - Caps: 30 per mailbox per day; 25 campaign + 5 replies; ramp 10/15/20.
+  - Worker: lock file; fresh website suppression check before every SMTP submission; RFC 8058 headers.
+  - DSN parser and the pause/stop rules.
+  - An UNCERTAIN send is never retried.
+- **E3 batch screen** (React Outreach tab).
+  - Flow: select → AI writes T1-T3 → validator → READY/HOLD cards with evidence → approve → scheduled.
+  - The 11th lead on a 10-a-day day is refused.
+  - Screenshots: `docs/screenshots/e3-batch/`.
+- **E4 reply loop.**
+  - IMAP reconcile at least every 24 h.
+  - Deterministic stop / complaint / out-of-office rules; the model labels the rest.
+  - AI drafts wait for approval; snapshots are created on the website.
+  - Daily brief API and `/start-day` (`.claude/commands/start-day.md`).
+  - 87-reply eval set: 0 missed stop.
+- **E5 recordings.** The founder's recorded voice per vertical comes from `docs/outreach/recordings.json`.
+- **Website (E:\Temp\SiteBlitz) O1** is built and live:
+  - `/u/` unsubscribe, the suppression API and `/s/` snapshot pages; 368 tests.
+  - The truthful site was deployed by the website session (fa3cd13). Claude checked production: 0 invented reviews, no Mumbai, no withdrawn prices.
+- **Pre-send persona review (gate h)** with ChatGPT and a Claude panel; 5 fixes applied:
+  - NO_VIEWPORT sentence and subject reworded;
+  - T2 names the sender;
+  - WhatsApp/phone replies can stop a sequence;
+  - Instagram-only leads with an own-domain address are held.
+- **Tests:** the merged suite passed 795 before the last fixes. The final run is in the commit message of the handoff commit.
 
 ## Files changed
-- `backend/app/engines/intelligence/rules.py`: exact school categories instead of the "school" fragment (QA-038).
-- `backend/app/engines/enrichment/site_visit.py` (new): the polite visit.
-  - robots.txt, homepage + `/contact`, `/contact-us`, `/contactus`, `/about`.
-  - 12 s / 2 MB / 5 redirects, SSRF guard.
-  - Records site down / HTTPS / viewport, and `no_address` for an empty website.
-- `backend/app/engines/enrichment/discovery.py`:
-  - `_extract_from_html` reads only mailto, visible text and Cloudflare. It drops scripts, comments and
-    placeholders.
-  - `_crawl_contact_pages` now calls `visit_site`.
-- `scripts/email_finder.py` (new): the 2,162-lead selection, rule-9 skips, 10 hosts in parallel, resumable
-  `visits.jsonl`, and `sites.csv` / `emails.csv` / `summary.json`.
-- Tests:
-  - `backend/tests/test_enrichment/test_site_visit.py` (new).
-  - `test_phase3_deep.py`: JSON-LD is now ignored.
-  - `test_discovery.py`: the fallback test stubs the crawl. It used to call the real hotelalpha.ch.
-  - `test_intelligence/test_rules.py`: QA-038 test.
-- `docs/outreach/email-finder-run-2026-11-10.md` (new): the totals and what they mean.
-- `docs/DECISIONS.md`: phase-14 section.
-- `docs/PHASES.md`: 14 ✅, new row 14b, Now / Next 3.
-- `docs/spec/outreach-engine.md`: the phase-14 box is ticked.
-- `docs/qa/ISSUES.csv`: QA-038 and QA-040 FIXED.
-  - Rewriting the file removed redundant quotes on 28 other rows. Their content is unchanged; checked by parsing
-    both versions.
-- `CLAUDE.md`: 3 traps (below).
+- `backend/app/engines/eligibility/`, `services/eligibility_service.py`, `models/eligibility.py`, `api/v1/outreach.py` — E1 rules, verification, render check, API.
+- `backend/app/engines/sending/`, `models/sending.py`, `services/{sending,delivery_rules,outreach_worker}_service.py`, `api/v1/outreach_sending.py`, `scripts/outreach_worker.py` — E2 sending core, plus replied-elsewhere and sequence search.
+- `backend/app/engines/writer/{writer,validator}.py`, `models/outreach_batch.py`, `services/batch_service.py`, `api/v1/outreach_batches.py`, `frontend/src/pages/BatchScreen.jsx` — E3 pilot templates and batch screen.
+- `backend/app/engines/replies/`, `models/replies.py`, `services/{reply,inbox_guard,brief}_service.py`, `api/v1/outreach_replies.py`, `scripts/outreach_reconcile.py`, `scripts/register_outreach_tasks.ps1`, `.claude/commands/start-day.md` — E4.
+- `scripts/pool_e1.py`, `scripts/render_check.cjs`; `enrichment/site_visit.py` and `discovery.py` — crawl memory fixes and UTC times.
+- `docs/spec/email-engine-v2.md`, `email-engine-v2-contracts.md` — spec and the cross-repo contract, with the token known-answer vector.
+- `docs/outreach/{pilot-templates,e2-notes,e3-notes,e4-notes,e1-eligibility-run-2026-11-12,email-engine-setup,e6-launch-gates}.md`, `recordings.json` — templates, decisions, the founder setup guide, the gate log.
+- `docs/agency/` — the agency kit; `docs/PHASES.md`, `docs/DECISIONS.md`, `CLAUDE.md`.
 
 ## Decisions made
-- All are in `docs/DECISIONS.md` under "2026-11-10 - Phase 14 email finder". In short:
-  - Own RFC 9309 robots parser.
-  - "5 GET" counts page GETs; robots.txt is fetched on top.
-  - The visit stops at the first page that shows an email.
-  - JSON-LD is no longer read.
-  - An email is kept only from the listed or redirected host.
-  - Listing and social addresses are not fetched.
-  - "Down" means one failed check.
-  - The output stays outside the repo and is not imported into the app DB yet.
+- India-only pilot.
+  - Tier 1 addresses only: found on the business's own page, or seen by the founder.
+  - Three observations: SOCIAL_ONLY / NO_VIEWPORT / SITE_DOWN.
+  - Mailforge is the sending service: its Terms §3.4(1) allow unsolicited B2B outreach where the law allows it.
+  - No Gmail, Workspace or Vercel sending.
+- The website's suppression list is authoritative. The laptop keeps only a display copy.
+- Synthetic voice stays banned; only the founder's own recording is used.
+- Sample pages only after a positive reply; no tracking pixels and no "opens" count.
+- Worker phases ran in separate git worktrees, then were merged; conflicts were additive only.
+- Defaults for the open questions are listed in `docs/DECISIONS.md` (2026-11-12, email engine v2 build).
 
 ## Known broken / deliberately skipped
-- **Not pushed.** The Claude OS guard blocked `git push` again: "the check itself failed (… git log …
-  --not --remotes=origin)". The branch is about 29 commits ahead of origin.
-- **The guard also blocked `git checkout -- docs/qa/ISSUES.csv`**, which I wanted to use to undo my own re-quoting.
-  The re-quoted file was kept instead (content verified identical).
-- **Chain stores are in the results.**
-  - 115 hosts carry 797 leads, for example `stores.amaron.in`. 136 of the 499 email leads are on such hosts.
-  - Brand head-office addresses repeat across many leads.
-  - Not filtered: that is row 14b.
-- **"Down" is not confirmed.** SITE_DOWN_CONFIRMED needs a second failure at least 6 h later (row 14b). 124 of the
-  701 are deep links that return 404/410, so the domain may still work.
-- **No email ladder status yet** (CONFIRMED / VALID / RISKY).
-- **Nothing is imported into the app DB.** Phase 15 cannot list these leads until 14b does that.
-- **Some old tests still reach real websites** through `discover_contacts()` (`test_merge_with_audit_emails`).
-  Removing that function is phase 5.
-- **Leftover files:**
-  - `E:\tmp\_p14\` (probe, smoke run, logs).
-  - The earlier session's `E:\tmp\_qa_scratch\`.
-  - `visits.jsonl` keeps one stale `https://` record from the first run. It is unused.
+- **Website outreach routes answer 503** — `OUTREACH_API_KEY` and `OUTREACH_SIGNING_SECRET` are not set in Vercel. Claude's Vercel production change was denied by the safety classifier, so this needs the founders (O2).
+- **0 leads are sendable** — there is no `BOUNCER_API_KEY`, sender facts, sending domains or Mailforge mailboxes yet. 26 leads become eligible once verified.
+- **Pool too small for more than about 2 weeks** — automated Instagram reading is banned, so SOCIAL_ONLY needs the founder's checks and a separate import.
+- **Real AI-writer pass rate and cost not measured** — the tests stub the model. Start with a batch of 1.
+- **Seed tests, 10-reader test, "founder reads 20" (gates c, g, i) not done** — they need the founders.
+- **Leftover worktrees** `E:\tmp\_lg_e2`, `_lg_e3`, `_lg_e4` (branches merged) and `.claude/worktrees/agent-a8e5388c0ea15d512` (unused) remain. `_lg_e3\frontend\node_modules` is a JUNCTION to the main checkout's folder: remove the junction with `rmdir` (no `/s`) before `git worktree remove`, never `rm -rf`.
+- **Scratch folders** `E:\tmp\_strategy\`, `E:\tmp\_sb_deploy_e0\`, `E:\tmp\_lg_e3_qa\`, `E:\tmp\_sb_outreach_qa\` and `%TEMP%\lg_e2_smoke` can be deleted.
 
 ## Next session starts here
-- **Phase 14b:** re-check the 701 failed sites (now more than 6 h after the run), filter out chain store-locator
-  hosts and head-office addresses, and import the kept rows into the app DB for phase 15.
-- **First command:** push by hand in your own terminal: `git push origin phase-01-pipeline-repair`. Then in a new
-  session: `/boot`, then `go`.
-- **Watch out for:** never call `ContactDiscoveryEngine.discover_contacts()` (it invents addresses). Re-running
-  `scripts/email_finder.py` with the same `--out` skips URLs that are already in `visits.jsonl`, so a re-check needs a
-  new output folder.
+- Phase E6 (pilot launch): once the founders finish `docs/outreach/email-engine-setup.md` sections 2-4, run the remaining launch gates (seed tests, live unsubscribe, verification of the 26). Then write batch 1 with ONE lead, read it, and raise the ramp to stage 1.
+- First command: `.venv\Scripts\python.exe scripts\outreach_worker.py --check`
+- Watch out for: this PC often has < 1 GB free RAM. Crawls need `--min-free-mb`, and the full test suite (~5 min) can hit MemoryError while other sessions run.

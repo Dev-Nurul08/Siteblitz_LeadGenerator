@@ -28,3 +28,9 @@
   `E:\SiteBlitz-World-Business-Data\_work\email_finder\<date>\`, never in the repo. The same `--out` resumes from
   `visits.jsonl`, so a re-check needs a new folder. Overture rows can list an empty string as their website.
 - New tests that touch `ContactDiscoveryEngine` must stub `_crawl_contact_pages`: it fetches real websites.
+- Parallel workers: the Agent tool's `isolation: "worktree"` refuses this repo (path case `e:` vs `E:`). Create the
+  worktree by hand (`git worktree add E:/tmp/_lg_<name> -b <branch> <base>`) and run tests there with the main
+  checkout's `.venv` (the backend package is not installed, so imports resolve to the worktree).
+- Push: the Claude OS guard blocks a `git push` that carries a redirect or pipe (`2>&1`, `| tail`). Use the bare
+  `git push origin phase-01-pipeline-repair`. Vercel production changes (env vars, `--prod`) are denied to Claude by
+  the safety classifier: give the founders the commands (`docs/outreach/email-engine-setup.md`).
