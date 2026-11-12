@@ -264,5 +264,6 @@ def _reset_fake_eligibility():
 
 def make_worker(factory, clock: Clock, website: FakeWebsite, config: SendingConfig = CONFIG,
                 eligibility=FakeEligibility, **kwargs) -> OutreachWorker:
+    kwargs.setdefault("inbox_guard", None)   # E4's inbox guard has its own tests (test_replies)
     return OutreachWorker(factory, config, website.client(), eligibility_factory=eligibility,
                           password_lookup=lambda slug: None, clock=clock, **kwargs)

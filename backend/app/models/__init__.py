@@ -61,6 +61,15 @@ from backend.app.models.sending import (
     SuppressionMirror,
 )
 from backend.app.models.outreach_batch import OutreachBatch, OutreachBatchLead
+from backend.app.models.replies import (
+    BriefRun,
+    ImapFolderState,
+    InboundMessage,
+    MailboxReconcile,
+    OpportunitySnapshot,
+    ReplyDraft,
+    ReplySuppression,
+)
 
 __all__ = [
     "Source",
@@ -110,4 +119,11 @@ __all__ = [
     "SuppressionMirror",
     "OutreachBatch",
     "OutreachBatchLead",
+    "ImapFolderState",
+    "MailboxReconcile",
+    "InboundMessage",
+    "ReplyDraft",
+    "ReplySuppression",
+    "OpportunitySnapshot",
+    "BriefRun",
 ]
