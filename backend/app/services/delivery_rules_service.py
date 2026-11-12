@@ -26,6 +26,7 @@ from backend.app.models.sending import (
     Mailbox,
     PauseLevel,
     PauseScope,
+    SendKind,
     SendRecord,
     SendState,
     SequenceState,
@@ -34,6 +35,8 @@ from backend.app.models.sending import (
 from backend.app.services.sending_service import SendingService, aware
 
 FOUNDER_ZONE = COUNTRY_TIMEZONES["IN"]   # the founders work in India time (reply backlog business days)
+# E4 (reply_service.py): idempotency-key prefix of the optional "stop" confirmation reply.
+STOP_CONFIRMATION_KEY = "reply:stop-confirmation:"
 
 
 def smtp_kind(status: Optional[str], response: Optional[str], code: Optional[int]) -> str:
@@ -250,12 +253,15 @@ class DeliveryRulesService:
                 record.integrity_flag = Reason.UNAPPROVED_SEND
                 await self.record_integrity_incident(Reason.UNAPPROVED_SEND, f"send record {record.id}", now)
                 found.append(f"{Reason.UNAPPROVED_SEND}:{record.id}")
+        # E4: only campaign steps can be duplicates; replies (step NULL, kind REPLY) to one person are a conversation.
         dupes = (await self.session.execute(
             select(SendRecord.recipient_hash, SendRecord.step, func.count())
-            .where(SendRecord.state.in_(SUBMITTED_STATES + (SendState.FAILED,)), SendRecord.submitted_at.isnot(None))
+            .where(SendRecord.state.in_(SUBMITTED_STATES + (SendState.FAILED,)), SendRecord.submitted_at.isnot(None),
+                   SendRecord.kind == SendKind.CAMPAIGN)
             .group_by(SendRecord.recipient_hash, SendRecord.step).having(func.count() > 1))).all()
         for recipient_hash, step, _ in dupes:
-            rows = [r for r in submitted if r.recipient_hash == recipient_hash and r.step == step]
+            rows = [r for r in submitted if r.recipient_hash == recipient_hash and r.step == step
+                    and r.kind == SendKind.CAMPAIGN]
             if rows:
                 for row in rows:
                     row.integrity_flag = Reason.DUPLICATE_SEND
@@ -265,6 +271,8 @@ class DeliveryRulesService:
         mirror = {row.email_hash: row for row in (await self.session.execute(select(SuppressionMirror))).scalars()}
         for record in submitted:
             seen = mirror.get(record.recipient_hash)
+            if record.kind == SendKind.REPLY and record.idempotency_key.startswith(STOP_CONFIRMATION_KEY):
+                continue   # E4: the one-line "stop" confirmation the founder approved goes to a suppressed address
             if (seen is not None and record.integrity_flag is None
                     and aware(seen.fetched_at) < aware(record.submitted_at)):
                 record.integrity_flag = Reason.SUPPRESSED_SEND
