@@ -211,3 +211,72 @@ async def upsert_mailbox(body: MailboxRequest, svc: SendingService = Depends(ser
         return await svc.upsert_mailbox(body.model_dump())
     except ServiceError as exc:
         _raise(exc)
+
+
+# ─── replies that arrive outside email (pre-send review 2026-11-12) ─────────────────────────────────────────────
+# Owners often answer on WhatsApp or by phone. The IMAP loop (E4) never sees those answers, so without this mark
+# Day 6 / Day 14 would still go out - the most likely real complaint found by the pre-send persona review.
+
+class RepliedElsewhere(BaseModel):
+    model_config = {"extra": "forbid"}
+    channel: Literal["whatsapp", "phone", "in_person", "other"]
+    stop: StrictBool = Field(..., description="true = they asked not to be contacted (suppressed everywhere)")
+    marked_by: Text(100, min_length=1)
+    note: OptionalText(300) = None
+
+
+@router.post("/sequences/{sequence_id}/replied-elsewhere")
+async def replied_elsewhere(sequence_id: int, body: RepliedElsewhere, svc: SendingService = Depends(service)):
+    """Stop the cold sequence because the business answered outside email. With stop=true the address goes to the
+    website suppression list first (DeliveryRulesService.suppress: a failed write raises E2's global pause
+    SUPPRESSION_WRITE_FAILED), then an opt-out row, then the sequence is STOPPED_SUPPRESSED; otherwise STOPPED_REPLY.
+    Either way every not-yet-submitted message of the sequence is cancelled."""
+    from datetime import datetime, timezone
+
+    from sqlalchemy import select
+
+    from backend.app.engines.sending.suppression_client import SuppressionClient
+    from backend.app.models.compliance import OptOut
+    from backend.app.models.sending import EmailSequence, SequenceState
+    from backend.app.services.delivery_rules_service import DeliveryRulesService
+
+    sequence = await svc.session.get(EmailSequence, sequence_id)
+    if sequence is None:
+        raise HTTPException(status_code=404, detail=f"sequence {sequence_id} not found")
+    now = datetime.now(timezone.utc)
+    reason = f"replied via {body.channel} (marked by {body.marked_by})" + (f": {body.note}" if body.note else "")
+    website_written = None
+    if body.stop:
+        settings = get_settings()
+        rules = DeliveryRulesService(svc, SuppressionClient(settings.OUTREACH_PUBLIC_BASE_URL,
+                                                            settings.OUTREACH_API_KEY))
+        website_written = await rules.suppress(sequence.recipient_hash, "manual",
+                                               f"replied_elsewhere:{body.channel}", now)
+        address = (sequence.recipient_email or "").lower()
+        if address and (await svc.session.execute(select(OptOut.id).where(OptOut.email == address))
+                        ).scalar_one_or_none() is None:
+            svc.session.add(OptOut(email=address, domain=address.rsplit("@", 1)[-1], reason="stop_elsewhere",
+                                   source=body.channel.upper(), created_at=now))
+        result = await svc.stop_sequence(sequence_id, SequenceState.STOPPED_SUPPRESSED, reason[:300], now)
+    else:
+        result = await svc.stop_sequence(sequence_id, SequenceState.STOPPED_REPLY, reason[:300], now)
+    return {**result, "suppressed": body.stop, "website_written": website_written}
+
+
+@router.get("/sequences")
+async def find_sequences(business: str = Query(..., min_length=2, max_length=120),
+                         live_only: bool = Query(True), svc: SendingService = Depends(service)):
+    """Find a business's email sequence by (part of) its name, e.g. to mark a WhatsApp answer (/start-day)."""
+    from sqlalchemy import select
+
+    from backend.app.models.business import Business
+    from backend.app.models.sending import EmailSequence, SequenceState
+
+    query = (select(EmailSequence, Business.name).join(Business, Business.id == EmailSequence.business_id)
+             .where(Business.name.ilike(f"%{business.strip()}%")).order_by(EmailSequence.id.desc()).limit(20))
+    if live_only:
+        query = query.where(EmailSequence.state.in_([SequenceState.ACTIVE, SequenceState.PAUSED_OOO,
+                                                     SequenceState.HELD]))
+    rows = (await svc.session.execute(query)).all()
+    return {"items": [{"sequence_id": s.id, "business_name": name, "state": s.state.value,
+                       "step": getattr(s, "step", None)} for s, name in rows]}

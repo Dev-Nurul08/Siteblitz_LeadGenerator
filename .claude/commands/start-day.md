@@ -79,6 +79,11 @@ Spec: `docs/spec/email-engine-v2.md` rows 14-16. Decisions: `docs/outreach/e4-no
   Report the scheduled day/window per lead from the answer. A 409 answer (cap reached, day over, not eligible):
   show its message and stop. Approval schedules the emails; the worker sends them inside the window.
 - `send`: does `send replies` and, if step 8 listed READY leads, also `send batch`.
+- `replied <business> <whatsapp|phone|in_person>` or `stop <business> <whatsapp|phone|in_person>` (the owner answered
+  outside email, so the IMAP loop never saw it): find the sequence with
+  `curl -s -G "http://127.0.0.1:8000/api/v1/outreach/sequences" --data-urlencode "business=<business>"`. Exactly one
+  match: `curl -s -X POST http://127.0.0.1:8000/api/v1/outreach/sequences/<id>/replied-elsewhere -H "Content-Type: application/json" -d "{\"channel\": \"whatsapp\", \"stop\": false, \"marked_by\": \"founder\"}"`
+  (`"stop": true` for `stop`). Several or no matches: show them and ask which one; call nothing.
 - Anything else: answer it; send nothing.
 
 A "stop" confirmation draft (listed only with `curl -s "http://127.0.0.1:8000/api/v1/outreach/drafts?state=OPTIONAL"`)

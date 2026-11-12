@@ -203,3 +203,57 @@ def test_pauses_are_listed_and_cleared_with_who_and_a_note(api):
     assert client.post("/api/v1/outreach/pauses", json={"pause_id": 999, "cleared_by": "founder",
                                                         "note": "missing"}).status_code == 404
     assert client.get("/api/v1/outreach/pauses", params={"active": "true"}).json()["items"] == []
+
+
+def _admit_one(client, ids):
+    day = next_tuesday()
+    client.post("/api/v1/outreach/mailboxes", json={**MAILBOX, "smtp_host": "127.0.0.1", "smtp_tls": "none",
+                                                    "imap_host": None, "imap_port": None, "imap_tls": None})
+    client.post("/api/v1/outreach/settings/ramp", json={"stage": 1, "changed_by": "founder", "note": "launch gates passed"})
+    body = client.post("/api/v1/outreach/sequences", json=batch(ids["eligible"][:1], day)).json()
+    return body["admitted"][0]
+
+
+def test_replied_elsewhere_stops_the_sequence_without_suppressing(api):
+    client, ids = api
+    admitted = _admit_one(client, ids)
+    seq_id = admitted["sequence_id"]
+    r = client.post(f"/api/v1/outreach/sequences/{seq_id}/replied-elsewhere",
+                    json={"channel": "whatsapp", "stop": False, "marked_by": "founder", "note": "asked price"})
+    assert r.status_code == 200, r.text
+    assert r.json()["state"] == "STOPPED_REPLY" and r.json()["cancelled"] >= 1 and r.json()["suppressed"] is False
+    day = next_tuesday()
+    states = {i["state"] for i in client.get(f"/api/v1/outreach/schedule?date={day.isoformat()}").json()["items"]
+              if i.get("sequence_id") == seq_id}
+    assert states <= {"CANCELLED"}
+
+
+def test_stop_elsewhere_suppresses_and_a_failed_website_write_pauses(api):
+    client, ids = api
+    seq_id = _admit_one(client, ids)["sequence_id"]
+    # The test website (CONFIG.base_url) is not running, so the website write fails: the sequence still stops,
+    # nothing more can be sent to it, and E2's global pause SUPPRESSION_WRITE_FAILED is raised.
+    r = client.post(f"/api/v1/outreach/sequences/{seq_id}/replied-elsewhere",
+                    json={"channel": "phone", "stop": True, "marked_by": "founder"})
+    assert r.status_code == 200, r.text
+    assert r.json()["state"] == "STOPPED_SUPPRESSED" and r.json()["website_written"] is False
+    pauses = client.get("/api/v1/outreach/pauses").json()
+    assert any(p["reason_code"] == "SUPPRESSION_WRITE_FAILED" for p in pauses["items"] if not p.get("cleared_at"))
+
+
+def test_replied_elsewhere_validation(api):
+    client, _ = api
+    assert client.post("/api/v1/outreach/sequences/999/replied-elsewhere",
+                       json={"channel": "whatsapp", "stop": False, "marked_by": "founder"}).status_code == 404
+    assert client.post("/api/v1/outreach/sequences/1/replied-elsewhere",
+                       json={"channel": "telegram", "stop": False, "marked_by": "founder"}).status_code == 422
+    assert client.post("/api/v1/outreach/sequences/1/replied-elsewhere",
+                       json={"channel": "whatsapp", "stop": "yes", "marked_by": "founder"}).status_code == 422
+
+
+def test_find_sequences_by_business_name(api):
+    client, ids = api
+    seq_id = _admit_one(client, ids)["sequence_id"]
+    found = client.get("/api/v1/outreach/sequences", params={"business": "salon 0"}).json()["items"]
+    assert [i["sequence_id"] for i in found] == [seq_id] and found[0]["state"] == "ACTIVE"
+    assert client.get("/api/v1/outreach/sequences", params={"business": "x"}).status_code == 422
