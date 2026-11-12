@@ -77,8 +77,8 @@ def test_tier1_own_site_valid_and_observed_is_eligible():
     assert d.holds == [] and d.eligible and d.eligible_if_verified
     assert d.tier == EligibilityTier.TIER1
     assert d.observation.type == ObservationType.NO_VIEWPORT
-    assert d.observation.text == ("On 12 November 2026, the homepage at glowhair.in opened zoomed-out on a phone "
-                                  "screen in our check, so the text showed very small.")
+    assert d.observation.text == ("On 12 November 2026, the homepage at glowhair.in showed small text when we "
+                                  "checked it at a phone-screen size.")
     assert d.observation.evidence_path == "E:/evidence/1.png"
 
 

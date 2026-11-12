@@ -57,7 +57,7 @@ T1 (Day 1). "body" has 60-85 words.
   Nothing else: no second offer, no other price, no claim about results.
 
 T2 (Day 6, same thread; the app sends it as "Re: <touch 1 subject>"). "body" has 40-70 words.
-  Text only. Offer the sample page again and add one new, useful piece of information that touch 1 did not give:
+  Start with identity_line, word for word (T2 is often read without touch 1). Text only. Offer the sample page again and add one new, useful piece of information that touch 1 did not give:
   what the sample page would show for this vertical (vertical_page), and the WhatsApp and call buttons that the
   Launch package includes. Do not say "just following up", "checking in", "circling back", "bumping" or refer to
   "my last email". Exactly one question, at the end, offering to make and send the sample page.
@@ -80,9 +80,9 @@ Website setup starts at ₹7,999, with domain and hosting charged separately.
 
 Shall I make a sample page for [Business] and send it here?
 
-T1, NO_VIEWPORT, coaching_tuition (body 66 words, same counting)
-Subject: [Business]: your homepage on a phone
-On [date], the homepage at [domain] opened zoomed-out on a phone screen in our check, so the text showed very small.
+T1, NO_VIEWPORT, coaching_tuition (body 63 words, same counting)
+Subject: [Business]: small homepage text in our check
+On [date], the homepage at [domain] showed small text when we checked it at a phone-screen size.
 
 I'm [Sender] from SiteBlitz, a small web studio in Gujarat. We build mobile-friendly pages showing courses, timings and enquiry details.
 
@@ -111,7 +111,7 @@ Website setup starts at ₹7,999, with domain and hosting charged separately.
 Shall I make a sample page for [Business] and send it here?
 
 T2, salon_beauty (46 words)
-One more detail about the sample page for [Business]. For a salon, it would show your services with prices, an appointment request and your timings, with WhatsApp and call buttons so clients can reach you from their phone. Shall I make it and send it here?
+I'm [Sender] from SiteBlitz, a small web studio in Gujarat. The sample page for [Business] would show your salon services, prices, opening hours and an appointment request. It would include WhatsApp and call buttons. Shall I make a sample page for [Business] and send it here?
 
 T3, any vertical (39 words)
 I'll close this today so I don't keep writing. If a website becomes useful for [Business] later, just reply here and I'll send the sample page and the prices. Thank you for your time. No further follow-ups are planned.
@@ -136,6 +136,7 @@ domain must be in COMPANY_FACTS, LEAD or TASK), the observation type, and MISSIN
 | Exactly one `?`, the question is the last sentence, word for word | yes | one `?`, last | - |
 | Subject `<Business>: <fact>`, fact 3-8 words, no `?` / `!` / `Re:` | yes | (kept by the app) | (kept by the app) |
 | Mentions the sample page | - | yes | - |
+| Starts with the identity line, word for word (pre-send review 2026-11-12) | - | yes | - |
 | No "following up" / "checking in" / "circling back" / "bumping" / "my last email" | - | yes | yes |
 | No pressure words (limited, last chance, hurry, urgent, only this week, act now, offer ends, deadline, discount, don't miss) | yes | yes | yes |
 

@@ -346,8 +346,10 @@ def site_down_text(day: datetime, domain: str) -> str:
 
 
 def no_viewport_text(day: datetime, domain: str) -> str:
-    return (f"On {date_text(day)}, the homepage at {domain} opened zoomed-out on a phone screen in our check, "
-            f"so the text showed very small.")
+    # Wording from the pre-send review (2026-11-12, ChatGPT + Claude panel): say only what the rendered 390 px
+    # check showed - no "zoomed-out", no "phone screen" (it was a phone-size browser view), no "very".
+    return (f"On {date_text(day)}, the homepage at {domain} showed small text when we checked it at a "
+            f"phone-screen size.")
 
 
 def social_only_text(day: datetime, business_name: str) -> str:

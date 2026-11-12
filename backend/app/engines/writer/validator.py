@@ -305,6 +305,10 @@ def pilot_email_errors(output: dict, lead: dict, task: dict) -> list[str]:
             if _has_phrase(model_text, phrase):
                 errors.append(f"a follow-up must add new information, not {phrase!r}")
         if touch == 2:
+            identity = _flat(pilot.get("identity_line"))
+            if identity and not _flat(body).startswith(identity):
+                # Pre-send review 2026-11-12: T2 is often read without touch 1, so it names the sender first.
+                errors.append("touch 2 must start with the identity line, word for word: " + repr(identity))
             if not re.search(r"\bsample\b", body, flags=re.IGNORECASE):
                 errors.append("touch 2 must offer the sample page again")
             if questions != 1:

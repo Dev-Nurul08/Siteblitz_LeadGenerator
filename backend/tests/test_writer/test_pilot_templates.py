@@ -247,7 +247,7 @@ def test_writer_returns_ready_pilot_text_with_signature_and_placeholder():
     lead, kind, sentence = make_lead("coaching")
     result = writer.write(lead, pilot_task(1, lead, kind, sentence, writer.facts))
     assert result.status == "READY", result.errors
-    assert result.subject == "Nilgiri Classes: your homepage on a phone"
+    assert result.subject == "Nilgiri Classes: small homepage text in our check"
     assert result.text.startswith(sentence) and result.text.endswith(UNSUBSCRIBE_PLACEHOLDER)
     system = messages.calls[0]["system"][0]["text"]
     assert "<PILOT_EMAIL_TEMPLATES>" in system and "Website setup starts at ₹7,999" in system

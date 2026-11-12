@@ -12,7 +12,7 @@ from types import SimpleNamespace
 
 SUBJECT_FACTS = {
     "SOCIAL_ONLY": "no website link in Instagram bio",
-    "NO_VIEWPORT": "your homepage on a phone",
+    "NO_VIEWPORT": "small homepage text in our check",
     "SITE_DOWN": "{domain} did not load in our checks",
 }
 VERTICAL_CONTENT = {
@@ -46,15 +46,15 @@ def pilot_answer(lead: dict, task: dict, *, bad: bool = False) -> dict:
     elif touch == 2:
         page = pilot["vertical_page"]
         page = page[0].lower() + page[1:]
-        body = (f"One more detail about the sample page for {name}. It would show {page}, with WhatsApp and call "
-                f"buttons so {pilot['customer_word']} can reach you from their phone. Shall I make it and send it "
-                f"here?")
+        body = (f"{pilot['identity_line']} The sample page for {name} would show {page}. It would include "
+                f"WhatsApp and call buttons so {pilot['customer_word']} can reach you from their phone. Shall I "
+                f"make it and send it here?")
     else:
         body = (f"I'll close this today so I don't keep writing. If a website becomes useful for {name} later, just "
                 f"reply here and I'll send the sample page and the prices. Thank you for your time. No further "
                 f"follow-ups are planned.")
     if bad:
-        body = body.replace("One more detail", "Just checking in with one more detail", 1) if touch == 2 \
+        body = body.replace("The sample page", "Just checking in: the sample page", 1) if touch == 2 \
             else body + " I came across your page."
     return {
         "decision": "WRITE", "hold_reason": None, "declared_country": "IN", "country_name": "India",
