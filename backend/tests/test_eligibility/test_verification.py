@@ -172,3 +172,15 @@ async def test_paid_verifier_is_not_called_for_held_or_mx_invalid_addresses(sess
                                   website="https://secondsalon.in")
     await service(session, paid=paid, lookup=lookup_returning(MxAnswer())).evaluate([lead.id], verify=True, now=NOW)
     assert paid.calls == []   # the free MX check already said INVALID
+
+
+async def test_business_marked_invalid_later_loses_its_eligible_row(session):
+    from backend.app.models.business import BusinessStatus
+    lead = await no_viewport_lead(session)
+    await service(session, paid=CountingVerifier()).evaluate(verify=True, now=NOW)
+    assert (await service(session).business_rows(lead.id))[0]["eligible"] is True
+    lead.status = BusinessStatus.INVALID
+    await session.flush()
+    await service(session).evaluate(now=NOW)
+    row = (await service(session).business_rows(lead.id))[0]
+    assert row["eligible"] is False and row["hold_reasons"] == ["NOT_A_PROSPECT"]

@@ -193,9 +193,10 @@ class EligibilityService:
         rules.dedupe(decisions)
         return decisions, facts_by_id
 
-    async def _store(self, decisions: list[rules.Decision], facts_by_id: dict, now: datetime) -> None:
+    async def _store(self, decisions: list[rules.Decision], facts_by_id: dict, now: datetime,
+                     target_ids: list[int]) -> None:
         existing: dict[tuple[int, str], EmailEligibility] = {}
-        ids = sorted({d.business_id for d in decisions})
+        ids = sorted({d.business_id for d in decisions} | set(target_ids))
         for part in _chunks(ids):
             for row in (await self.session.execute(
                     select(EmailEligibility).where(EmailEligibility.business_id.in_(part)))).scalars():
@@ -228,6 +229,13 @@ class EligibilityService:
             row.eligible = d.eligible
             row.eligible_if_verified = d.eligible_if_verified
             row.evaluated_at = now
+        decided = {(d.business_id, d.email) for d in decisions}
+        for key, row in existing.items():
+            if key not in decided:
+                # The business was marked DUPLICATE / INVALID since the last run: its old row must not stay eligible.
+                row.hold_reasons = [HoldReason.NOT_A_PROSPECT.value]
+                row.eligible = row.eligible_if_verified = False
+                row.evaluated_at = now
         await self.session.flush()
 
     # ─── verification ladder ─────────────────────────────────────────────
@@ -254,7 +262,8 @@ class EligibilityService:
             async with gate:
                 return email, await verifier.verify(email)
 
-        need_mx = [e for e in emails if force_mx or rules.fresh_record(cached.get(e, []), "syntax_mx", now) is None]
+        need_mx = [e for e in emails
+                   if force_mx or rules.fresh_record(cached.get(e, []), "syntax_mx", now) is None]
         for email, result in await asyncio.gather(*(run(self.ladder.syntax_mx, e) for e in need_mx)):
             stats[f"syntax_mx_{result.status.value if result.status else 'no_answer'}"] += 1
             if result.status is not None:
@@ -288,7 +297,7 @@ class EligibilityService:
             candidates = [d.email for d in decisions if set(d.holds) <= waiting]
             verified = await self.verify_emails(candidates, now)
             decisions, facts_by_id = await self._decide_all(ids, now)
-        await self._store(decisions, facts_by_id, now)
+        await self._store(decisions, facts_by_id, now, ids)
         holds: dict[str, int] = defaultdict(int)
         for d in decisions:
             for h in d.holds:
