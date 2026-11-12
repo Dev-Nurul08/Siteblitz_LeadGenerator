@@ -80,6 +80,7 @@ function AllowanceHeader({ allowance, who, setWho, onChanged }) {
           <input className="input" style={{ width: 180 }} value={who} onChange={(e) => setWho(e.target.value)} placeholder="Recorded on approvals" aria-label="Your name" />
         </label>
       </div>
+      {a.pauses.length > 0 && <div className="stack" style={{ gap: 8, marginBottom: 16 }}>{a.pauses.map((p) => <PauseBanner key={p.id} pause={p} who={who} onCleared={onChanged} />)}</div>}
       <div className="tickers batch-tickers">
         <div className="ticker"><div className="label">Ramp stage</div><div className="stat"><Ticker value={a.ramp_stage} /></div><div className="hint">{a.daily_limit} new a day</div></div>
         <div className="ticker"><div className="label">New contacts left</div><div className="stat"><Ticker value={a.left} /></div><div className="hint">of {a.daily_limit} for {dayText(a.send_date)}</div></div>
@@ -100,7 +101,6 @@ function AllowanceHeader({ allowance, who, setWho, onChanged }) {
           ))}</tbody>
         </table></div>
       )}
-      {a.pauses.length > 0 && <div className="stack" style={{ gap: 8, marginTop: 16 }}>{a.pauses.map((p) => <PauseBanner key={p.id} pause={p} who={who} onCleared={onChanged} />)}</div>}
     </section>
   )
 }
@@ -187,12 +187,13 @@ function CandidateList({ data, allowance, filter, setFilter, reason, setReason, 
         </div>
       )}
       {filter === 'eligible' && left === 0 && (
-        <div className="banner banner-error" role="status"><Ban size={16} strokeWidth={1.75} />Cap reached for {allowance.send_date_text}. {allowance.message}</div>
+        <div className="banner banner-error" role="status"><Ban size={16} strokeWidth={1.75} />No new first contact can be added. {allowance.message}</div>
       )}
       {filter === 'eligible' && (atCap || blockedClick) && left > 0 && (
         <div className="banner banner-error" role="alert"><Ban size={16} strokeWidth={1.75} />Cap reached: {selected.size} of {left} new first contacts selected for {allowance.send_date_text}. The ramp allows {allowance.daily_limit} a day, so no more can be added.</div>
       )}
       {error && <ErrorBanner message={error} />}
+      {filter === 'eligible' && data.counts.busy > 0 && <p className="hint" style={{ margin: '0 0 12px' }}>{plural(data.counts.busy, 'eligible lead')} not listed: already in a sequence or a batch waiting for review.</p>}
       {items.length === 0 ? (
         <p className="hint" style={{ margin: 0 }}>{filter === 'eligible' ? 'No eligible lead is waiting.' : 'No lead on hold for this reason.'}</p>
       ) : (
@@ -320,8 +321,8 @@ function LeadCard({ lead, chosen, toggle, who, batchId, onChanged }) {
       {lead.approval_refusal && lead.state === 'READY' && (
         <div className="banner banner-error" role="status" style={{ margin: 0 }}><TriangleAlert size={16} strokeWidth={1.75} />Not approved: {lead.approval_refusal.code}. {lead.approval_refusal.message}</div>
       )}
-      {lead.state === 'APPROVED' && <div className="approved-line"><CircleCheck size={16} strokeWidth={1.75} />Approved by {lead.approved_by} · <span className="mono">{date(lead.approved_at)}</span></div>}
-      {lead.state === 'REJECTED' && <div className="approved-line muted"><Ban size={16} strokeWidth={1.75} />Rejected by {lead.rejected_by}: {lead.reject_reason}</div>}
+      {lead.state === 'APPROVED' && <div className="approved-line"><CircleCheck size={16} strokeWidth={1.75} /><span>Approved by {lead.approved_by} · <span className="mono">{date(lead.approved_at)}</span></span></div>}
+      {lead.state === 'REJECTED' && <div className="approved-line muted"><Ban size={16} strokeWidth={1.75} /><span>Rejected by {lead.rejected_by}: {lead.reject_reason}</span></div>}
       <div className="lead-grid">
         <div className="stack" style={{ gap: 16 }}>
           <Evidence lead={lead} />
@@ -425,6 +426,9 @@ export default function BatchScreen() {
   const [error, setError] = useState(null)
   const [writeError, setWriteError] = useState(null)
 
+  // The batch shown: one still being written or reviewed, else the latest one (its scheduled result) until the
+  // founder starts a new batch.
+  const [dismissed, setDismissed] = useState(() => Number(sessionStorage.getItem('sb.batchDismissed')) || 0)
   const loadBatch = useCallback(async (id) => { if (id) setBatch(await api.outreach.batch(id)) }, [])
   const load = useCallback(async () => {
     setError(null)
@@ -434,11 +438,15 @@ export default function BatchScreen() {
         api.outreach.pendingConfirmations(), api.outreach.batches(),
       ])
       setAllowance(a); setCandidates(c); setPending(p)
-      const open = list.items.find((b) => b.status !== 'DONE') || null
-      setBatch((current) => (current && list.items.some((b) => b.id === current.id) ? current : null))
-      if (open) await loadBatch(open.id)
+      const shown = list.items.find((b) => b.status !== 'DONE') || list.items.find((b) => b.id > dismissed) || null
+      if (shown) await loadBatch(shown.id)
+      else setBatch(null)
     } catch (e) { setError(e.message) }
-  }, [filter, reason, loadBatch])
+  }, [filter, reason, loadBatch, dismissed])
+  function newBatch() {
+    if (batch) { sessionStorage.setItem('sb.batchDismissed', String(batch.id)); setDismissed(batch.id) }
+    setBatch(null)
+  }
   useEffect(() => { load() }, [load])
 
   // While the writer works, the batch is polled; the list and allowance refresh when it ends.
@@ -471,7 +479,7 @@ export default function BatchScreen() {
   return (
     <div className="stack">
       <AllowanceHeader allowance={allowance} who={who} setWho={setWho} onChanged={refresh} />
-      {batch && <BatchReview batch={batch} who={who} onChanged={refresh} onNew={() => { setBatch(null); load() }} />}
+      {batch && <BatchReview batch={batch} who={who} onChanged={refresh} onNew={newBatch} />}
       {nothingEligible ? (
         <div className="panel"><StateBlock icon={Inbox} title="No eligible leads yet"
           text="A lead appears here once the eligibility check finds an address on the business's own page or profile, a VALID verifier result and a checked observation (Instagram bio, website down, or a phone screenshot). Instagram profiles waiting for your check are listed below." /></div>

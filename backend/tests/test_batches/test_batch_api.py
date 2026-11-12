@@ -114,10 +114,12 @@ def test_a_lead_already_in_an_open_batch_or_a_sequence_is_refused(api):
     assert approve.status_code == 200, approve.text
     third = api.create(api.ids["eligible"][:1])
     assert third.json()["detail"]["refused"][0]["code"] == "IN_SEQUENCE"
-    candidates = api.client.get(f"{BATCHES}/candidates", params={"status": "eligible"}).json()
-    busy = {c["id"]: c["busy"] for c in candidates["items"]}
+    everything = api.client.get(f"{BATCHES}/candidates", params={"status": "all"}).json()
+    busy = {c["id"]: c["busy"] for c in everything["items"]}
     assert busy[api.ids["eligible"][0]]["code"] == "IN_SEQUENCE" and busy[api.ids["eligible"][1]] is None
-    assert candidates["counts"]["selectable"] == 10
+    assert everything["counts"]["selectable"] == 10 and everything["counts"]["busy"] == 1
+    selectable = api.client.get(f"{BATCHES}/candidates", params={"status": "eligible"}).json()
+    assert api.ids["eligible"][0] not in {c["id"] for c in selectable["items"]} and len(selectable["items"]) == 10
 
 
 def test_approve_all_ready_creates_e2_sequences_with_three_approved_texts(api):

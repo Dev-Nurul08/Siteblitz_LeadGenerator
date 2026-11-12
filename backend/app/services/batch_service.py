@@ -216,14 +216,15 @@ class BatchService:
                 selectable += busy is None
             for code in row.hold_reasons or []:
                 counts[code] += 1
-            if status == "eligible" and not row.eligible or status == "hold" and row.eligible:
-                continue
+            if status == "eligible" and (not row.eligible or busy) or status == "hold" and row.eligible:
+                continue   # the "eligible" view lists only leads that can still be selected
             if reason and reason not in (row.hold_reasons or []):
                 continue
             if len(items) < limit:
                 items.append({**EligibilityService.row_dict(row, name), "busy": busy})
         return {"items": items, "counts": {"rows": len(rows), "eligible": eligible, "selectable": selectable,
-                                           "hold": len(rows) - eligible, "by_hold_reason": dict(sorted(counts.items()))}}
+                                           "busy": eligible - selectable, "hold": len(rows) - eligible,
+                                           "by_hold_reason": dict(sorted(counts.items()))}}
 
     # ─── create ──────────────────────────────────────────────────────────
 

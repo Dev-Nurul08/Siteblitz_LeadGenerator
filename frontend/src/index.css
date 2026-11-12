@@ -362,6 +362,7 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
   .mail-sheet { padding: var(--s4); }
   .evidence { grid-template-columns: 1fr; }
   .evidence dt { margin-top: var(--s2); }
+  .evidence dt:first-child { margin-top: 0; }
   .select-bar .row { width: 100%; }
   .select-bar .btn-primary { flex: 1; }
 }
