@@ -59,6 +59,12 @@ ROLE_WORDS = {
     "jobs", "general", "official", "online", "export", "exports", "purchase", "helpdesk",
 }
 ROLE_PREFIXES = ("info", "contact", "enquir", "inquir", "sales", "admin", "office", "support", "booking", "hello")
+# Parts that name a place or a unit, not a person: `surat.branch@` is a business inbox, not "first.last".
+NON_PERSON_WORDS = {
+    "surat", "navsari", "ahmedabad", "amdavad", "vadodara", "baroda", "rajkot", "bharuch", "valsad", "anand",
+    "gandhinagar", "bhavnagar", "jamnagar", "gujarat", "india", "branch", "head", "main", "corporate", "group",
+    "unit", "centre", "center", "showroom", "outlet", "factory", "works", "ho", "hq",
+}
 # Mailboxes that are not for a sales message (no reader, or a legal / privacy channel).
 SYSTEM_LOCAL_PARTS = {
     "noreply", "donotreply", "mailerdaemon", "postmaster", "hostmaster", "webmaster", "abuse", "bounce",
@@ -236,7 +242,8 @@ def is_system_address(email: str) -> bool:
 
 def recipient_type(email: str, business_name: str, site_hosts: Iterable[str]) -> RecipientType:
     """
-    business       role inbox (info@, sales@, owner@ ...) or a local part that names the business / its domain
+    business       role inbox (info@, sales@, owner@ ...), a place / unit word (surat.branch@), or a local part
+                   that names the business / its domain
     employee_like  at a company (non-free-mail) domain: two or more name-like parts (first.last, r.patel)
     unknown        anything else, e.g. a free-mail address that does not name the business. Not a HOLD by itself;
                    the founder's provenance audit (spec row 17 f) looks at these.
@@ -244,7 +251,7 @@ def recipient_type(email: str, business_name: str, site_hosts: Iterable[str]) ->
     local, _, domain = email.lower().partition("@")
     parts = [p for p in re.split(r"[._+\-]+", local) if p]
     letters = [re.sub(r"\d+", "", p) for p in parts]
-    if any(p in ROLE_WORDS for p in letters if p) or local.startswith(ROLE_PREFIXES):
+    if any(p in ROLE_WORDS or p in NON_PERSON_WORDS for p in letters if p) or local.startswith(ROLE_PREFIXES):
         return RecipientType.BUSINESS
     compact = re.sub(r"[^a-z]", "", local)
     name_tokens = {t for t in _tokens(business_name) if len(t) >= 4}

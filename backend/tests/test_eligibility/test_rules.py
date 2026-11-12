@@ -144,6 +144,7 @@ def test_founder_confirmed_address_is_tier1():
     ("info@glowhair.in", RecipientType.BUSINESS),
     ("bookings.surat@glowhair.in", RecipientType.BUSINESS),
     ("glowhair@gmail.com", RecipientType.BUSINESS),           # names the business
+    ("surat.branch@glowhair.in", RecipientType.BUSINESS),     # a place / unit, not a person
     ("priya.shah@glowhair.in", RecipientType.EMPLOYEE_LIKE),  # first.last at the company domain
     ("r.patel@glowhair.in", RecipientType.EMPLOYEE_LIKE),
     ("priya.shah@gmail.com", RecipientType.UNKNOWN),           # free-mail: cannot tell

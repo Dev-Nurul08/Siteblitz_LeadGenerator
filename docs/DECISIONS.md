@@ -192,3 +192,66 @@
   founder-registered domains, 30/25/5 caps per mailbox, ramp 10/15/20/20 new per sending day, RFC 8058 unsubscribe
   with a cloud suppression list, AI-drafted replies approved by the founder, `/start-day` brief. Phases E0-E6 on the
   board, all 🔒. Old 14b folds into E1, 15 is replaced by E3, 16 is paused.
+
+## 2026-11-12 - E1 eligibility (email engine v2, founder `go`)
+- **Who may be emailed is one stored row per (business, address)** in `email_eligibility`, recomputed by
+  `POST /api/v1/outreach/eligibility/evaluate`. Evidence is append-only: `email_captures` (every sighting with source
+  URL, method, capture time, excerpt), `website_checks` (homepage checks, and the new `PHONE_RENDER` check),
+  `email_verifications` (verifier cache) and `social_confirmations` (the founder's Instagram-bio checks). Every HOLD
+  row carries one or more codes from `HoldReason` (`backend/app/models/eligibility.py`, 23 codes, each documented).
+- **Tier 1 = the address was read on the business's own site**: the page host is the listed website host or the host
+  its homepage redirected to, and the source URL, capture time and an excerpt of at most 300 characters are stored.
+  A founder confirmation of the Instagram bio is Tier 1 too. A listing address (Overture) is Tier 2 = HOLD.
+  - Phase-14 addresses were found before the extractor kept excerpts, so they are HOLD `PROVENANCE_INCOMPLETE` until
+    their page is visited again. Only the 2 phase-14 leads that could become eligible (no viewport + an address)
+    were visited again; the other 837 rows have no pilot observation anyway.
+- **Recipient type:** two or more name-like parts at a company domain (`priya.shah@`, `r.patel@`) = `employee_like`
+  = HOLD. `unknown` (for example a free-mail address that does not name the business) is not a HOLD; it is shown for
+  the founder's 30-lead provenance audit (spec row 17 f). Added: no-reply, postmaster, webmaster, abuse, privacy,
+  legal, grievance and similar mailboxes are HOLD `SYSTEM_ADDRESS` - not for a sales message.
+- **Chains and duplicates:** Overture `brand`, or a site shared by 3 or more businesses, or one address on 3 or more
+  businesses = `CHAIN_OR_DIRECTORY`. `sites.google.com` sites are told apart by their first two path parts. An
+  address on 2 businesses goes to the better-placed one (`DUPLICATE_RECIPIENT` for the other); a business with
+  several addresses keeps its best one (`NOT_PRIMARY_RECIPIENT` for the rest).
+- **Import matches businesses by Overture source id only.** The app's name + city duplicate rule merged 423 of the
+  2,014 phase-14 leads (they have no phone or coordinates), mostly same-name chain branches, and merged branches
+  stopped counting towards the chain rule.
+- **Verifier ladder:** a free syntax + MX check first (null MX, or no MX and no A/AAAA = INVALID). Passing it is
+  stored as UNVERIFIED with `mx_ok`, because an MX record does not prove a mailbox. Bouncer only with
+  `BOUNCER_API_KEY`: deliverable = VALID, but deliverable or risky with `acceptAll: yes` = CATCH_ALL, other risky =
+  RISKY, undeliverable = INVALID, unknown or any new value = UNKNOWN. An HTTP error (401, 402 no credits, 429) or a
+  network error is "no answer" and is not cached. The paid check runs only for addresses nothing else holds back.
+  Results are re-checked after 30 days. No key on this PC today, so no address is VALID and none is eligible.
+- **Observation sentences are fixed texts with the date written as "12 November 2026" in India time** (11/12 is read
+  both ways). The domain is the host without `www.`.
+- **NO_VIEWPORT needs the rendered phone check** (`scripts/render_check.cjs`): Chromium with isMobile, 390 x 844,
+  deviceScaleFactor 3, a mobile Chrome user agent that ends in `SiteBlitzEnricher/1.0`, 12 s navigation timeout;
+  `window.innerWidth >= 900` after load = zoomed-out. When the load event does not fire in 12 s but the page is
+  there, the width is still measured and `load_timeout` is stored. One PNG viewport screenshot per page under
+  `E:\SiteBlitz-World-Business-Data\_work\evidence\<date>\`. URLs pass the same SSRF guard first; the script also
+  aborts requests to localhost and private IP literals. A page rendered after its latest homepage check is not
+  rendered again.
+- **SITE_DOWN:** the trailing run of failed homepage checks must span at least 6 h; an ok, protected or
+  robots-blocked answer breaks the run. Block and challenge pages (Cloudflare "Just a moment...", DDoS-Guard, Sucuri,
+  "access denied" or captcha on an error answer) are now recorded as `protected`, never `failed`. A site confirmed
+  down that loads again = HOLD `SITE_RECOVERED`. `recheck_before_send(business)` (for E2) runs a fresh robots.txt +
+  homepage check and a fresh MX check; a SITE_DOWN lead may be sent to only when that fresh check failed.
+  - Found: a SITE_DOWN lead can only be eligible with an address captured while the site still worked, or a founder
+    confirmation; a down site shows no pages, so the pool cannot produce one.
+- **SOCIAL_ONLY confirmations accept only an instagram.com profile URL** (the observation text names Instagram), a
+  real true/false for `website_link_present` (`"no"` is refused), and no `checked_at` in the future. An `email_seen`
+  becomes a Tier 1 capture (method `founder_confirmed`) whose excerpt records the founder's check. The pending list =
+  India, an Instagram profile, no own website, no founder check in the last 30 days.
+- **Fabricated contacts removed (old phase 5, part):** `discover_contacts()` and the Hunter.io lookup are deleted;
+  the enrichment API uses `published_contacts()` (the listing email, stored audit emails, the polite own-site visit).
+  `export_surat_leads.py`, `surat_restaurant_leads_with_contacts.csv` and `surat_leads_extracted.csv` are removed
+  (38 rows each: 37 generated `inquiry.*@gmail.com` addresses, 36 generated `+91 9825...` numbers). The Lead Radar
+  sample no longer makes up `info@<name>.in`. The old sender marks a message SENT only with a provider event that
+  accepted it with its own message id; there is no provider yet, so `/campaigns/{id}/dispatch` sends and counts
+  nothing. A test scans the code for guessed-address patterns.
+- **This PC:** Smart App Control now also blocks fontTools' compiled modules (used by the PDF export), so the 6
+  `.pyd` files in `.venv/Lib/site-packages/fontTools` were renamed to `*.pyd.blocked-by-sac`; fontTools then runs its
+  pure-Python modules. A fresh install needs the same step.
+- **Pool selection (`scripts/pool_e1.py`):** `IN_businesses.zip` has no `operating_status`, so permanently closed
+  places cannot be left out as phase 14 did. The crawl visits Navsari and Surat completely first, then the other 9
+  cities round-robin, and stops at the time limit, so a cap cuts every other city by about the same amount.
