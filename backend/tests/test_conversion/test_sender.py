@@ -4,7 +4,7 @@ Tests for MultiMailboxSender (Phase 5).
 
 from datetime import datetime, timezone
 
-from backend.app.engines.conversion.sender import MultiMailboxSender
+from backend.app.engines.conversion.sender import MultiMailboxSender, ProviderEvent
 from backend.app.models.campaign import MessageStatus, OutreachMessage
 
 
@@ -46,9 +46,8 @@ class TestMultiMailboxSender:
         assert "{{UNSUBSCRIBE_LINK}}" not in resolved
         assert "{{PHYSICAL_ADDRESS}}" not in resolved
 
-    def test_dispatch_updates_message_status(self):
-        """Dispatch marks message as SENT with current timestamp."""
-        msg = OutreachMessage(
+    def _message(self) -> OutreachMessage:
+        return OutreachMessage(
             id=1,
             campaign_id=1,
             lead_id=1,
@@ -62,10 +61,34 @@ class TestMultiMailboxSender:
             status=MessageStatus.QUEUED,
         )
 
+    def test_dispatch_without_provider_event_never_marks_sent(self):
+        """E1 (old phase 5): no sending provider exists, so a dispatch leaves the message QUEUED and untouched."""
+        msg = self._message()
         report = self.sender.dispatch(msg, simulate=True)
+
+        assert report.success is False
+        assert "no sending provider" in report.error
+        assert msg.status == MessageStatus.QUEUED
+        assert msg.sent_at is None
+        assert msg.sender_mailbox == "unassigned"
+        assert "{{UNSUBSCRIBE_LINK}}" in msg.body_text
+
+    def test_dispatch_with_rejected_or_incomplete_provider_event_never_marks_sent(self):
+        now = datetime.now(timezone.utc)
+        for event in (ProviderEvent("smtp", "abc", accepted=False, at=now),
+                      ProviderEvent("smtp", "", accepted=True, at=now)):
+            msg = self._message()
+            assert self.sender.dispatch(msg, provider_event=event).success is False
+            assert msg.status == MessageStatus.QUEUED
+
+    def test_dispatch_with_accepted_provider_event_marks_sent(self):
+        """Only a provider that accepted the message (with its own message id) makes it SENT."""
+        msg = self._message()
+        accepted_at = datetime(2026, 11, 12, 4, 30, tzinfo=timezone.utc)
+        report = self.sender.dispatch(msg, provider_event=ProviderEvent("smtp", "<id-1@mx>", True, accepted_at))
 
         assert report.success is True
         assert msg.status == MessageStatus.SENT
-        assert msg.sent_at is not None
+        assert msg.sent_at == accepted_at
         assert msg.sender_mailbox in self.mailboxes
         assert "unsubscribe?email=ceo%40target.com" in msg.body_text

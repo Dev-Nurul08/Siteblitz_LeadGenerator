@@ -274,7 +274,7 @@ class LeadRadarService:
         - 100 places
         - ~85% Meta-sourced
         - ~24.5% no website on file
-        - ~66% phone, ~32% email, ~93% social
+        - ~66% phone, ~93% social (no generated email addresses)
         """
         samples = []
         categories = [
@@ -304,9 +304,11 @@ class LeadRadarService:
             has_web = (i % 4) != 0
             websites = [f"https://{name.lower().replace(' ', '')}.com"] if has_web else []
 
-            # Contacts: ~66% phone, ~32% email, ~93% social
+            # Contacts: ~66% phone, ~93% social
             phones = [f"+91 98200 {10000 + i}"] if (i % 3) != 0 else []
-            emails = [f"info@{name.lower().replace(' ', '')}.in"] if (i % 3) == 0 else []
+            # No email addresses in the generated sample: a made-up info@<name>.in address looked like a real
+            # contact (email engine v2 E1 removed every generated address). The email ratio is not modelled.
+            emails: list[str] = []
             socials = [f"https://facebook.com/{name.lower().replace(' ', '')}"] if (i % 10) != 0 else []
 
             samples.append({

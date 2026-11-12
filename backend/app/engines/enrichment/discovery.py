@@ -1,12 +1,16 @@
 """
 Contact Discovery Engine module (Phase 3).
 
-Discovers B2B contacts from permitted sources:
+Collects the email addresses a business itself publishes:
 - Polite website visit (robots.txt, homepage + /contact, /contact-us, /contactus, /about) — site_visit.py
-- Emails only from mailto links, visible text and Cloudflare-encoded addresses (spec row 10)
-- Stored website technical audit signals
-- Domain email pattern generation  (discover_contacts() only — it invents addresses; removal is phase 5)
-- Hunter.io API integration (if configured)
+- Emails only from mailto links, visible text and Cloudflare-encoded addresses (spec row 10), each with the
+  page excerpt around it (email engine v2 spec row 3)
+- Addresses already stored on the business (its source listing) and in an earlier website audit
+
+Nothing here invents an address or a phone number. The old `discover_contacts()` made up `info@<domain>`,
+`inquiry.<name>@gmail.com`, "Proprietor / Store Manager" and fake `+91 9825…` numbers; it was removed in
+email engine v2 phase E1 together with the Hunter.io lookup (third-party addresses are not the business's
+own publication). `backend/tests/test_eligibility/test_no_guessed_addresses.py` keeps it that way.
 """
 
 from dataclasses import dataclass
@@ -15,10 +19,8 @@ from typing import Optional
 from urllib.parse import unquote, urlparse
 
 from bs4 import BeautifulSoup, Comment
-import httpx
 import structlog
 
-from backend.app.config import get_settings
 from backend.app.engines.enrichment.site_visit import visit_site
 from backend.app.models.business import Business
 from backend.app.models.opportunity import WebsiteAudit
@@ -45,6 +47,9 @@ PLACEHOLDER_DOMAINS = ("example.com", "example.org", "example.net", "example.in"
 PLACEHOLDER_LOCAL_PARTS = {"you", "your", "yourname", "youremail", "your.name", "your.email", "name",
                            "username", "user", "someone", "example", "test", "johndoe", "john.doe",
                            "jane.doe"}
+EXCERPT_MAX = 300   # email engine v2: the page excerpt stored with every address (<= 300 characters)
+# The nearest element around a mailto / Cloudflare link whose text gives the address its context.
+BLOCK_TAGS = ["p", "li", "td", "th", "dd", "address", "footer", "header", "section", "article", "div"]
 
 
 @dataclass
@@ -59,107 +64,78 @@ class DiscoveredContact:
     source_method: str = "website_scrape"
     source_url: Optional[str] = None
     confidence: float = 0.80
+    excerpt: Optional[str] = None   # visible page text around the address, <= EXCERPT_MAX characters
+
+
+def _squash(text: str) -> str:
+    return " ".join((text or "").split())
+
+
+def text_window(text: str, needle: str, limit: int = EXCERPT_MAX) -> Optional[str]:
+    """The `limit`-character window of `text` centred on `needle` (case-insensitive), or None if absent."""
+    text = _squash(text)
+    if not needle:
+        return None
+    start = text.lower().find(needle.lower())
+    if start < 0:
+        return None
+    pad = max(0, (limit - len(needle)) // 2)
+    begin = max(0, start - pad)
+    end = min(len(text), begin + limit)
+    begin = max(0, end - limit)
+    return text[begin:end].strip() or None
+
+
+def element_context(element, email: str, limit: int = EXCERPT_MAX) -> str:
+    """Text of the block around a link, with the link target written out when the text does not show it."""
+    block = element.find_parent(BLOCK_TAGS) or element.parent or element
+    text = _squash(block.get_text(" ", strip=True))
+    inside = text_window(text, email, limit)
+    if inside:
+        return inside
+    marker = f"<mailto:{email}>"
+    anchor = _squash(element.get_text(" ", strip=True))
+    room = max(0, limit - len(marker) - 1)
+    around = (text_window(text, anchor, room) if anchor else None) or text[:room]
+    return f"{around} {marker}".strip()[:limit]
 
 
 class ContactDiscoveryEngine:
     """
-    Coordinates multi-source B2B contact discovery.
+    Reads the contact addresses a business publishes on its own pages (no guessing).
     """
 
     def __init__(self, timeout_seconds: float = 3.0):
         self.timeout_seconds = timeout_seconds
-        self.settings = get_settings()
 
-    async def discover_contacts(
+    async def published_contacts(
         self,
         business: Business,
         audit: Optional[WebsiteAudit] = None,
     ) -> list[DiscoveredContact]:
-        """
-        Extract contacts from all permitted channels for this business.
+        """Addresses that exist somewhere for this business. Never a made-up one.
+
+        1. the email on the business record (from its source listing: Tier 2 for email engine v2)
+        2. emails a stored website audit read from its pages
+        3. a polite visit of its own website (`_crawl_contact_pages`)
+        No result is a valid result: an empty list.
         """
         found_map: dict[str, DiscoveredContact] = {}
-
-        # 1. Direct Business record email
         if business.email:
-            em = business.email.lower().strip()
-            found_map[em] = DiscoveredContact(
-                email=em,
-                phone=business.phone,
-                source_method="business_profile",
-                source_url=business.website_url,
-                confidence=0.95,
-            )
-
-        # 2. Existing audit signals
+            email = business.email.lower().strip()
+            found_map[email] = DiscoveredContact(
+                email=email, phone=business.phone, source_method="business_profile",
+                source_url=None, confidence=0.95)
         if audit and audit.emails_found:
-            audit_emails = audit.emails_found.get("emails", [])
-            for em in audit_emails:
-                cleaned = em.lower().strip()
-                if cleaned not in found_map:
-                    found_map[cleaned] = DiscoveredContact(
-                        email=cleaned,
-                        source_method="website_audit",
-                        source_url=audit.final_url or audit.url_analyzed,
-                        confidence=0.90,
-                    )
-
-        # 3. Targeted page crawl if website is reachable
+            for raw in audit.emails_found.get("emails", []):
+                email = raw.lower().strip()
+                if email and email not in found_map:
+                    found_map[email] = DiscoveredContact(
+                        email=email, source_method="website_audit",
+                        source_url=audit.final_url or audit.url_analyzed, confidence=0.90)
         if business.website_url and (audit is None or audit.is_reachable):
-            crawled = await self._crawl_contact_pages(business.website_url)
-            for c in crawled:
-                if c.email not in found_map:
-                    found_map[c.email] = c
-
-        # 4. Synthesize corporate inbox if domain exists but no email found
-        if not found_map and business.website_url:
-            domain = self._extract_domain(business.website_url)
-            if domain:
-                synthetic_email = f"info@{domain}"
-                found_map[synthetic_email] = DiscoveredContact(
-                    email=synthetic_email,
-                    phone=business.phone,
-                    source_method="corporate_domain_default",
-                    source_url=business.website_url,
-                    confidence=0.60,
-                )
-
-        # 5. Hunter.io API integration (if API key is present)
-        if self.settings.HUNTER_API_KEY and business.website_url:
-            hunter_contacts = await self._query_hunter_api(business.website_url)
-            for hc in hunter_contacts:
-                if hc.email not in found_map:
-                    found_map[hc.email] = hc
-
-        # 6. Local Business B2B Contact Resolution (for local/spatial businesses)
-        if not found_map:
-            clean_name = re.sub(r"[^a-zA-Z0-9]", "", business.name.lower()) if business.name else "business"
-            slug = clean_name[:16] or "contact"
-
-            # Resolve phone: use existing or generate standard local business line
-            biz_phone = business.phone
-            if not biz_phone:
-                seed = abs(hash(business.name or str(business.id))) % 10000000
-                if business.country_code == "IN" or not business.country_code:
-                    biz_phone = f"+91 9825{seed % 1000000:06d}"
-                elif business.country_code == "US":
-                    biz_phone = f"+1 (555) {seed % 1000:03d}-{seed % 10000:04d}"
-                elif business.country_code == "GB":
-                    biz_phone = f"+44 20 {seed % 10000:04d} {seed % 10000:04d}"
-                else:
-                    biz_phone = f"+91 9825{seed % 1000000:06d}"
-
-            contact_email = f"inquiry.{slug}@gmail.com"
-            found_map[contact_email] = DiscoveredContact(
-                email=contact_email,
-                full_name="Proprietor / Store Manager",
-                job_title="Proprietor & Managing Director",
-                phone=biz_phone,
-                source_method="local_business_registry",
-                source_url=business.website_url or "https://openstreetmap.org",
-                confidence=0.88,
-            )
-
+            for contact in await self._crawl_contact_pages(business.website_url):
+                found_map.setdefault(contact.email, contact)
         return list(found_map.values())
 
     async def _crawl_contact_pages(self, base_url: str) -> list[DiscoveredContact]:
@@ -181,28 +157,37 @@ class ContactDiscoveryEngine:
         contacts: list[DiscoveredContact] = []
         seen: set[str] = set()
 
-        def add(raw: Optional[str], method: str, confidence: float, name: Optional[str] = None) -> None:
+        def add(raw: Optional[str], method: str, confidence: float, name: Optional[str] = None,
+                excerpt: Optional[str] = None) -> None:
             email = (raw or "").strip().strip(".").lower()
             if email in seen or not self._is_valid_email(email) or self._is_placeholder_email(email):
                 return
             seen.add(email)
             contacts.append(DiscoveredContact(email=email, full_name=name, source_method=method,
-                                              source_url=source_url, confidence=confidence))
+                                              source_url=source_url, confidence=confidence,
+                                              excerpt=excerpt))
 
-        # 1. Cloudflare Email Protection: data-cfemail elements and /cdn-cgi/l/email-protection#<hex> links
+        # 1. Cloudflare Email Protection: data-cfemail elements and /cdn-cgi/l/email-protection#<hex> links.
+        # The decoded address is written into the element, so the excerpt shows what a visitor's browser shows.
         for element in soup.find_all(attrs={"data-cfemail": True}):
-            add(self._decode_cloudflare_email(element["data-cfemail"]), "cloudflare_decode", 0.90)
+            decoded = self._decode_cloudflare_email(element["data-cfemail"])
+            if decoded:
+                element.string = decoded
+                add(decoded, "cloudflare_decode", 0.90, excerpt=element_context(element, decoded))
 
         # 2. mailto links (a link may list several addresses separated by commas)
         for a in soup.find_all("a", href=True):
             href = a["href"].strip()
             if "/cdn-cgi/l/email-protection#" in href:
-                add(self._decode_cloudflare_email(href.split("#", 1)[1]), "cloudflare_decode", 0.90)
+                decoded = self._decode_cloudflare_email(href.split("#", 1)[1])
+                if decoded:
+                    add(decoded, "cloudflare_decode", 0.90, excerpt=element_context(a, decoded))
             elif href.lower().startswith("mailto:"):
                 anchor_text = a.get_text(strip=True)
                 name = anchor_text if (anchor_text and "@" not in anchor_text and len(anchor_text) < 40) else None
                 for part in unquote(href.split(":", 1)[1].split("?")[0]).split(","):
-                    add(part, "mailto", 0.88, name)
+                    address = part.strip().strip(".").lower()
+                    add(part, "mailto", 0.88, name, excerpt=element_context(a, address) if address else None)
 
         # 3. Visible text only: drop scripts, styles, head, form text and comments first
         for tag in soup(HIDDEN_TAGS):
@@ -211,11 +196,18 @@ class ContactDiscoveryEngine:
             comment.extract()
         text = soup.get_text(" ", strip=True)
         for match in EMAIL_IN_TEXT.findall(text)[:20]:
-            add(match, "visible_text", 0.85)
+            add(match, "visible_text", 0.85, excerpt=text_window(text, match))
         # "name [at] domain [dot] com" written out on the page is still the address the business shows
-        for user, dom, tld in OBFUSCATED_IN_TEXT.findall(text):
-            add(f"{user}@{dom}.{tld}", "visible_text_obfuscated", 0.85)
+        for found in OBFUSCATED_IN_TEXT.finditer(text):
+            user, dom, tld = found.groups()
+            add(f"{user}@{dom}.{tld}", "visible_text_obfuscated", 0.85,
+                excerpt=text_window(text, found.group(0)))
 
+        # The page text around the address beats the link's block when the visitor can read the address.
+        for contact in contacts:
+            visible = text_window(text, contact.email)
+            if visible:
+                contact.excerpt = visible
         return contacts
 
     @staticmethod
@@ -229,45 +221,6 @@ class ContactDiscoveryEngine:
             return email.lower()
         except Exception:
             return None
-
-    async def _query_hunter_api(self, website_url: str) -> list[DiscoveredContact]:
-        """Query Hunter.io domain search endpoint."""
-        domain = self._extract_domain(website_url)
-        if not domain:
-            return []
-
-        hunter_url = "https://api.hunter.io/v2/domain-search"
-        params = {
-            "domain": domain,
-            "api_key": self.settings.HUNTER_API_KEY,
-            "limit": 5,
-        }
-
-        try:
-            async with httpx.AsyncClient(timeout=8.0) as client:
-                res = await client.get(hunter_url, params=params)
-                if res.status_code == 200:
-                    data = res.json().get("data", {})
-                    emails = data.get("emails", [])
-                    return [
-                        DiscoveredContact(
-                            email=item.get("value", "").lower(),
-                            first_name=item.get("first_name"),
-                            last_name=item.get("last_name"),
-                            job_title=item.get("position"),
-                            linkedin_url=item.get("linkedin"),
-                            phone=item.get("phone_number"),
-                            source_method="hunter_api",
-                            source_url=f"https://hunter.io/search/{domain}",
-                            confidence=0.92,
-                        )
-                        for item in emails
-                        if item.get("value")
-                    ]
-        except Exception as e:
-            logger.warning("hunter_api_failed", error=str(e))
-
-        return []
 
     @staticmethod
     def _extract_domain(url: str) -> Optional[str]:

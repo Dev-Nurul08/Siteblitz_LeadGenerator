@@ -23,7 +23,7 @@ logger = structlog.get_logger(__name__)
 class EnrichmentService:
     """
     Coordinates Phase 3 contact enrichment pipeline:
-    1. Discover raw candidate contacts
+    1. Collect the addresses the business publishes (ContactDiscoveryEngine.published_contacts, no guessing)
     2. Verify email deliverability & MX
     3. Classify job title & role hierarchy
     4. Persist validated contacts
@@ -52,8 +52,8 @@ class EnrichmentService:
 
         latest_audit = business.audits[-1] if business.audits else None
 
-        # 1. Discover raw candidate contacts
-        discovered_candidates = await self.discovery.discover_contacts(
+        # 1. Addresses the business publishes (listing, stored audit, its own pages) - never a guessed one
+        discovered_candidates = await self.discovery.published_contacts(
             business=business,
             audit=latest_audit,
         )
@@ -189,7 +189,7 @@ class EnrichmentService:
             website_url=domain_or_url,
         )
 
-        candidates = await self.discovery.discover_contacts(temp_biz)
+        candidates = await self.discovery.published_contacts(temp_biz)
         verified = []
         for cand in candidates:
             ver = self.verifier.verify(cand.email)

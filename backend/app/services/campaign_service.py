@@ -160,9 +160,14 @@ class CampaignService:
         )
         messages = (await self.session.execute(stmt)).scalars().all()
 
-        dispatched = []
+        dispatched, not_sent = [], []
         for msg in messages:
+            # No sending provider exists, so no provider event: nothing is marked SENT, counted, logged as
+            # MESSAGE_SENT or moved to CONTACTED (email engine v2 E1; real sending is E2).
             report = self.sender.dispatch(msg, simulate=True)
+            if not report.success:
+                not_sent.append({"message_id": msg.id, "reason": report.error})
+                continue
             campaign.sent_count += 1
 
             # Log analytics event
@@ -205,6 +210,8 @@ class CampaignService:
             "dispatched_count": len(dispatched),
             "total_sent": campaign.sent_count,
             "messages": dispatched,
+            "not_sent_count": len(not_sent),
+            "not_sent": not_sent,
         }
 
     async def handle_inbound_reply(

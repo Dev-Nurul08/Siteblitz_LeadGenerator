@@ -42,8 +42,11 @@ class TestContactDiscoveryEngine:
         assert david_contact.full_name == "David Kim"
 
     @pytest.mark.asyncio
-    async def test_merge_with_audit_emails(self):
-        """Pulls contacts identified in prior technical audits."""
+    async def test_merge_with_audit_emails(self, monkeypatch):
+        """Pulls contacts identified in prior technical audits (the crawl is stubbed: it fetches real sites)."""
+        async def no_crawl(self, base_url):
+            return []
+        monkeypatch.setattr(ContactDiscoveryEngine, "_crawl_contact_pages", no_crawl)
         biz = Business(
             name="Apex Dynamics",
             country_code="US",
@@ -57,17 +60,16 @@ class TestContactDiscoveryEngine:
             emails_found={"emails": ["contact@apexdynamics.com", "billing@apexdynamics.com"]},
         )
 
-        contacts = await self.engine.discover_contacts(biz, audit=audit)
+        contacts = await self.engine.published_contacts(biz, audit=audit)
         emails = [c.email for c in contacts]
 
         assert "contact@apexdynamics.com" in emails
         assert "billing@apexdynamics.com" in emails
 
     @pytest.mark.asyncio
-    async def test_synthetic_fallback_email(self, monkeypatch):
-        """Generates info@{domain} fallback when no explicit email found."""
-        # The crawl must find nothing here. Without this stub the test visited the real
-        # hotelalpha.ch, whose homepage lists info@hotelalpha.ch in a mailto link (2026-11-10).
+    async def test_no_address_found_means_no_contact(self, monkeypatch):
+        """E1: a business whose pages show no email gets no contact. The old fallback invented info@<domain>,
+        inquiry.<name>@gmail.com and +91 9825... numbers (removed with discover_contacts)."""
         async def no_crawl(self, base_url):
             return []
         monkeypatch.setattr(ContactDiscoveryEngine, "_crawl_contact_pages", no_crawl)
@@ -76,10 +78,7 @@ class TestContactDiscoveryEngine:
             country_code="CH",
             website_url="https://hotelalpha.ch",
             email=None,
+            phone=None,
         )
-        contacts = await self.engine.discover_contacts(biz, audit=None)
-        emails = [c.email for c in contacts]
-
-        assert "info@hotelalpha.ch" in emails
-        fallback = next(c for c in contacts if c.email == "info@hotelalpha.ch")
-        assert fallback.source_method == "corporate_domain_default"
+        assert await self.engine.published_contacts(biz, audit=None) == []
+        assert not hasattr(ContactDiscoveryEngine, "discover_contacts")

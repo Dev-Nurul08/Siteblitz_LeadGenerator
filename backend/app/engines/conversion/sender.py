@@ -15,6 +15,19 @@ from backend.app.models.contact import RoleLevel
 
 
 @dataclass
+class ProviderEvent:
+    """What a real sending provider reported for one submission (email engine v2 E2 builds the provider).
+
+    A message is SENT only when a provider accepted it and gave its own message id. There is no provider in this
+    app yet, so the old Campaigns API can no longer mark anything SENT (email engine v2 E1, old phase 5)."""
+
+    provider: str
+    provider_message_id: str
+    accepted: bool
+    at: datetime
+
+
+@dataclass
 class DeliveryReport:
     """Outcome of message dispatch."""
 
@@ -81,10 +94,19 @@ class MultiMailboxSender:
         message: OutreachMessage,
         role_level: Optional[RoleLevel] = None,
         simulate: bool = True,
+        provider_event: Optional[ProviderEvent] = None,
     ) -> DeliveryReport:
         """
-        Dispatch outbound message with sender rotation and token resolution.
+        Mark a message SENT - only with a provider event that accepted it. Without one (every call today: there
+        is no sending provider) the message is left untouched in its queue and the report says why.
+        `simulate` is kept for old callers and has no effect: a simulation is never recorded as a send.
         """
+        if provider_event is None or not provider_event.accepted or not provider_event.provider_message_id:
+            return DeliveryReport(
+                success=False, sender_used=message.sender_mailbox, recipient=message.recipient_email,
+                message_id=message.id, sent_at=datetime.now(timezone.utc),
+                error=("Not sent: no sending provider accepted this message "
+                       "(sending is built in email engine v2 E2)."))
         sender = self.get_next_mailbox(role_level)
         message.sender_mailbox = sender
 
@@ -95,7 +117,7 @@ class MultiMailboxSender:
             sender_mailbox=sender,
         )
 
-        now = datetime.now(timezone.utc)
+        now = provider_event.at
         message.status = MessageStatus.SENT
         message.sent_at = now
 
