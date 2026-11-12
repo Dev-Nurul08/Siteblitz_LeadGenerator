@@ -202,6 +202,9 @@ class SendRecord(Base):
     resolved_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
     resolved_by: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     resolution_note: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    # Set by the integrity audit when this record was part of an incident (unapproved / duplicate / suppressed
+    # send), so a pause a person has cleared is not raised again for the same incident.
+    integrity_flag: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(),
                                                  onupdate=func.now())
