@@ -138,7 +138,9 @@ class OutreachWorker:
 
     async def preflight(self) -> list[str]:
         """Reasons not to start (empty = ready)."""
-        problems = [f"{name} is missing (or shorter than 32 characters)" for name in self.config.missing_outreach()]
+        problems = [f"{name} is missing (or not an http(s) origin)" if name == "OUTREACH_PUBLIC_BASE_URL"
+                    else f"{name} is missing (or shorter than 32 characters)"
+                    for name in self.config.missing_outreach()]
         async with self.factory() as session:
             boxes = await SendingService(session, self.config).enabled_mailboxes()
         ready = [b for b in boxes if b.smtp_tls == TlsMode.NONE or self.password_lookup(b.slug)]
