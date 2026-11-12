@@ -48,6 +48,11 @@ PLACEHOLDER_LOCAL_PARTS = {"you", "your", "yourname", "youremail", "your.name", 
                            "username", "user", "someone", "example", "test", "johndoe", "john.doe",
                            "jane.doe"}
 EXCERPT_MAX = 300   # email engine v2: the page excerpt stored with every address (<= 300 characters)
+# Script and style contents and comments never yield an address (an `<a>` inside them is not parsed as a tag, and
+# they are removed before the visible text is read), so they are cut before parsing: big pages are mostly inline
+# scripts, and parsing them cost tens of MB per page (2026-11-12 MemoryError in the pool crawl).
+NOT_PARSED = re.compile(r"<script\b[^>]*>.*?</script\s*>|<style\b[^>]*>.*?</style\s*>|<!--.*?-->",
+                        re.IGNORECASE | re.DOTALL)
 # The nearest element around a mailto / Cloudflare link whose text gives the address its context.
 BLOCK_TAGS = ["p", "li", "td", "th", "dd", "address", "footer", "header", "section", "article", "div"]
 
@@ -153,7 +158,7 @@ class ContactDiscoveryEngine:
         Spec row 10 allows only these three. Scripts (JSON-LD, analytics keys such as Sentry DSNs),
         HTML comments, form placeholders and example addresses are not the business's address (QA-040).
         """
-        soup = BeautifulSoup(html, "html.parser")
+        soup = BeautifulSoup(NOT_PARSED.sub(" ", html), "html.parser")
         contacts: list[DiscoveredContact] = []
         seen: set[str] = set()
 

@@ -9,7 +9,9 @@ Steps (run in this order; each one can be re-run):
   visit      `site_visit.visit_site` exactly as phase 14 (robots.txt, homepage + 4 contact paths, 12 s, 2 MB,
              5 redirects, SSRF guard, 10 hosts in parallel, one request per host at a time). Resumable through
              <out>/visits.jsonl. Surat + Navsari first, then the other cities round-robin; --max-minutes stops the
-             run (the ~4 h limit), --max-hosts caps it. Writes sites.csv, emails.csv, summary.json.
+             run (the ~4 h limit), --max-hosts caps it, --min-free-mb (default 500) stops it cleanly when the
+             machine runs low on RAM, --write-only writes the outputs of a stopped run without visiting.
+             Writes sites.csv, emails.csv, summary.json.
   recapture  The phase-14 leads whose homepage had no viewport tag and showed an email were visited before the
              extractor kept the page excerpt; they are visited once more the same way (<out>/recapture_phase14/) so
              their addresses can have Tier 1 provenance.
@@ -27,6 +29,7 @@ Usage: python scripts/pool_e1.py <step> [--out DIR] [--max-hosts N]
 import argparse
 import asyncio
 import csv
+import ctypes
 import io
 import json
 import re
@@ -36,6 +39,7 @@ import zipfile
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from backend.app.engines.intelligence.rules import Facts, skip_reason  # noqa: E402
@@ -172,20 +176,55 @@ def visit_order(urls_by_host: dict, leads: list[dict]) -> list[str]:
     return first + rest
 
 
-async def _visit_with_deadline(urls_by_host: dict, done: dict, out: Path, parallel: int, max_minutes: float) -> bool:
-    """True when the time limit stopped the run. A visits.jsonl line is written without an await in between,
-    so stopping never leaves half a line."""
-    if not max_minutes:
-        await run_visits(urls_by_host, done, out, parallel)
-        return False
-    try:
-        await asyncio.wait_for(run_visits(urls_by_host, done, out, parallel), timeout=max_minutes * 60)
-        return False
-    except asyncio.TimeoutError:
-        return True
+def free_ram_mb() -> Optional[int]:
+    """Free physical memory in MB (Windows; None elsewhere)."""
+    if sys.platform != "win32":
+        return None
+
+    class MemoryStatus(ctypes.Structure):
+        _fields_ = [("length", ctypes.c_ulong), ("load", ctypes.c_ulong), ("total_phys", ctypes.c_ulonglong),
+                    ("avail_phys", ctypes.c_ulonglong), ("total_page", ctypes.c_ulonglong),
+                    ("avail_page", ctypes.c_ulonglong), ("total_virtual", ctypes.c_ulonglong),
+                    ("avail_virtual", ctypes.c_ulonglong), ("avail_extended", ctypes.c_ulonglong)]
+
+    status = MemoryStatus()
+    status.length = ctypes.sizeof(MemoryStatus)
+    if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(status)):
+        return None
+    return status.avail_phys // (1024 * 1024)
 
 
-def visit_leads(leads: list[dict], out: Path, parallel: int, max_hosts: int = 0, max_minutes: float = 0) -> dict:
+async def _memory_low(min_free_mb: int, every_seconds: float = 30) -> int:
+    """Returns once free RAM falls below min_free_mb (checked every 30 s). The 2026-11-12 crawl ended in a
+    MemoryError while other programs left ~500 MB free; this stops the run cleanly first."""
+    while True:
+        await asyncio.sleep(every_seconds)
+        free = free_ram_mb()
+        if free is not None and free < min_free_mb:
+            print(f"free RAM {free} MB < {min_free_mb} MB: stopping the visit", flush=True)
+            return free
+
+
+async def _visit_with_deadline(urls_by_host: dict, done: dict, out: Path, parallel: int, max_minutes: float,
+                               min_free_mb: int = 0) -> Optional[str]:
+    """Why the run stopped early ("time_limit" / "low_memory"), or None when every host was visited.
+    A visits.jsonl line is written without an await in between, so stopping never leaves half a line."""
+    visit = asyncio.ensure_future(run_visits(urls_by_host, done, out, parallel))
+    guard = asyncio.ensure_future(_memory_low(min_free_mb)) if min_free_mb else None
+    waiting = {visit} | ({guard} if guard else set())
+    finished, pending = await asyncio.wait(waiting, timeout=max_minutes * 60 if max_minutes else None,
+                                           return_when=asyncio.FIRST_COMPLETED)
+    for task in pending:
+        task.cancel()
+    await asyncio.gather(*pending, return_exceptions=True)
+    if visit in finished:
+        visit.result()   # re-raise a crash instead of hiding it
+        return None
+    return "low_memory" if guard in finished else "time_limit"
+
+
+def visit_leads(leads: list[dict], out: Path, parallel: int, max_hosts: int = 0, max_minutes: float = 0,
+                write_only: bool = False, min_free_mb: int = 0) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     skipped = {l["id"]: rule9(l) for l in leads if rule9(l)}
     urls_by_host = defaultdict(list)
@@ -200,14 +239,17 @@ def visit_leads(leads: list[dict], out: Path, parallel: int, max_hosts: int = 0,
     urls_by_host = {h: urls_by_host[h] for h in ordered}
     done = load_done(out / "visits.jsonl")
     print(f"{len(leads)} leads, {len(skipped)} skipped by rule 9, {len(urls_by_host)} hosts, "
-          f"{len(done)} URLs already visited, time limit {max_minutes or 'none'} min", flush=True)
-    stopped = asyncio.run(_visit_with_deadline(urls_by_host, done, out, parallel, max_minutes))
+          f"{len(done)} URLs already visited, time limit {max_minutes or 'none'} min, "
+          f"free RAM {free_ram_mb()} MB", flush=True)
+    # write_only: no visit at all, only the outputs of what visits.jsonl already holds (after a stopped run)
+    stopped = "write_only" if write_only else asyncio.run(
+        _visit_with_deadline(urls_by_host, done, out, parallel, max_minutes, min_free_mb))
     visited_urls = set(done)
     kept = [l for l in leads if l["id"] in skipped or not has_address(l)
             or normal_url(l["website"]) in visited_urls]
     summary = write_outputs(kept, skipped, done, out)
     summary["capped"] = bool(stopped or max_hosts)
-    summary["stopped_by_time_limit"] = stopped
+    summary["stopped"] = stopped   # None | time_limit | low_memory | write_only
     summary["leads_not_visited_because_of_cap"] = len(leads) - len(kept)
     (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     return summary
@@ -347,12 +389,16 @@ def main() -> None:
     parser.add_argument("--parallel", type=int, default=10)
     parser.add_argument("--max-hosts", type=int, default=0, help="cap the visit (0 = no cap)")
     parser.add_argument("--max-minutes", type=float, default=0, help="stop visiting after N minutes (0 = no limit)")
+    parser.add_argument("--min-free-mb", type=int, default=500,
+                        help="stop visiting when free RAM falls below this (0 = no check)")
+    parser.add_argument("--write-only", action="store_true",
+                        help="visit nothing; write sites.csv / emails.csv / summary.json from visits.jsonl")
     args = parser.parse_args()
     if args.step == "select":
         result = step_select(args.out)
     elif args.step == "visit":
         result = visit_leads(read_leads(args.out / "leads.csv"), args.out, args.parallel, args.max_hosts,
-                             args.max_minutes)
+                             args.max_minutes, args.write_only, args.min_free_mb)
     elif args.step == "recapture":
         result = step_recapture(args.out, args.parallel)
     elif args.step == "import":

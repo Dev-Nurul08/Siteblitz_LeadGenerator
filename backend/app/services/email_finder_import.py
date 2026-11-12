@@ -54,17 +54,19 @@ def normal_url(url: str) -> str:
 
 
 def parse_time(text: Optional[str]) -> Optional[datetime]:
-    """visits.jsonl writes time.strftime('%Y-%m-%dT%H:%M:%S%z'), e.g. 2026-11-10T19:35:12+0530."""
+    """visits.jsonl writes time.strftime('%Y-%m-%dT%H:%M:%S%z'), e.g. 2026-11-10T19:35:12+0530. Returned in UTC:
+    SQLite drops the offset and the app reads a stored time without one as UTC (DECISIONS 2026-11-10), so a time
+    kept in IST came back 5 h 30 min late (seen 2026-11-12: two pages rendered twice)."""
     if not text:
         return None
     for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S.%f%z"):
         try:
-            return datetime.strptime(text, fmt)
+            return datetime.strptime(text, fmt).astimezone(timezone.utc)
         except ValueError:
             continue
     try:
         moment = datetime.fromisoformat(text)
-        return moment if moment.tzinfo else moment.replace(tzinfo=timezone.utc)
+        return moment.astimezone(timezone.utc) if moment.tzinfo else moment.replace(tzinfo=timezone.utc)
     except ValueError:
         return None
 

@@ -17,10 +17,10 @@ from typing import Callable, Optional
 from urllib.parse import urljoin, urlparse
 
 import httpx
+from bs4 import BeautifulSoup, SoupStrainer
 
 from backend.app.engines.discovery.overture import social_platform
 from backend.app.engines.intelligence.checks import PARKED_TOKENS, is_listing
-from backend.app.engines.opportunity.auditor import WebsiteAuditor
 from backend.app.engines.opportunity.resolver import UnsafeDestinationError, ensure_public_destination
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) SiteBlitzEnricher/1.0"
@@ -72,7 +72,10 @@ async def fetch(client: httpx.AsyncClient, url: str, timeout: float = TIMEOUT_SE
                 if size >= MAX_BYTES:
                     page.truncated = True
                     break
-            raw = b"".join(chunks)[:MAX_BYTES]
+            raw = b"".join(chunks)
+            chunks.clear()   # one copy of the body at a time (2026-11-12 MemoryError)
+            if len(raw) > MAX_BYTES:
+                raw = raw[:MAX_BYTES]
             try:
                 page.body = raw.decode(response.encoding or "utf-8", errors="replace")
             except LookupError:   # a made-up charset in the Content-Type header
@@ -198,6 +201,17 @@ async def _load_robots(client: httpx.AsyncClient, origin: str, timeout: float,
     return RobotsRules.allow_all(), page
 
 
+def has_viewport_tag(html: str) -> bool:
+    """The rule of WebsiteAuditor.audit_html (the first `<meta name="viewport">` whose content has
+    width=device-width or initial-scale=1), parsing only `<meta>` tags. The full audit built a whole parse tree and
+    a lowercased copy of the page just for this flag: ~97 MB for a 2 MB page, so 10 sites in parallel ended the
+    2026-11-12 pool crawl with a MemoryError."""
+    soup = BeautifulSoup(html, "html.parser", parse_only=SoupStrainer("meta"))
+    tag = soup.find("meta", attrs={"name": re.compile(r"^viewport$", re.I)})
+    content = str(tag.get("content") or "").strip().lower() if tag else ""
+    return "width=device-width" in content or "initial-scale=1" in content
+
+
 def is_challenge(page: Page, strong_only: bool = False) -> bool:
     head = (page.body or "")[:20000].lower()
     return any(token in head for token in (STRONG_CHALLENGE_TOKENS if strong_only else WEAK_CHALLENGE_TOKENS))
@@ -293,12 +307,13 @@ async def visit_site(listed_url: str, extract: Callable[[str, str], list],
         visit.outcome = "ok"
         is_html = "html" in home.content_type
         if is_html:
-            visit.has_viewport = WebsiteAuditor().audit_html(final, home.body).has_viewport_meta
+            visit.has_viewport = has_viewport_tag(home.body)
         if not contact_pages:
             return visit
         if is_html:
             visit.contacts = extract(home.body, final)
             visit.pages[-1]["emails"] = len(visit.contacts)
+        home.body = ""   # not needed any more: do not hold it while the contact pages load
 
         if _origin(final) != _origin(url):
             # The homepage moved to another host: its own robots.txt decides the contact pages.
@@ -320,6 +335,7 @@ async def visit_site(listed_url: str, extract: Callable[[str, str], list],
                     or social_platform(landed) or is_listing(landed)):
                 continue
             found = extract(page.body, landed)
+            page.body = ""
             entry["emails"] = len(found)
             visit.contacts.extend(found)
     return visit

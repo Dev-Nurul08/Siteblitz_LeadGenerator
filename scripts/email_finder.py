@@ -22,7 +22,7 @@ import csv
 import json
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, deque
 from dataclasses import asdict
 from pathlib import Path
 from urllib.parse import urlparse
@@ -108,29 +108,34 @@ def load_done(path: Path) -> dict:
 
 async def run_visits(urls_by_host: dict, done: dict, out: Path, parallel: int) -> None:
     extract = ContactDiscoveryEngine()._extract_from_html
-    gate = asyncio.Semaphore(parallel)
     lock = asyncio.Lock()
     progress = {"hosts": 0, "total": len(urls_by_host), "start": time.monotonic()}
+    # `parallel` workers take hosts from one queue in order: the same "10 hosts at a time, one request per host"
+    # as before, without one waiting task per host for the whole run (13,185 hosts in the E1 pool).
+    queue = deque(urls_by_host.values())
 
     async def one_host(urls: list[str]) -> None:
-        async with gate:
-            for url in urls:   # one request at a time per host
-                if url in done:
-                    continue
-                visit = await visit_site(url, extract)
-                record = asdict(visit)
-                record["contacts"] = [asdict(c) for c in visit.contacts]
-                record["visited_at"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
-                async with lock:
-                    done[url] = record
-                    with open(out / "visits.jsonl", "a", encoding="utf-8") as f:
-                        f.write(json.dumps(record, ensure_ascii=False) + "\n")
-            progress["hosts"] += 1
-            if progress["hosts"] % 50 == 0 or progress["hosts"] == progress["total"]:
-                minutes = (time.monotonic() - progress["start"]) / 60
-                print(f"{progress['hosts']}/{progress['total']} hosts, {minutes:.1f} min", flush=True)
+        for url in urls:   # one request at a time per host
+            if url in done:
+                continue
+            visit = await visit_site(url, extract)
+            record = asdict(visit)
+            record["contacts"] = [asdict(c) for c in visit.contacts]
+            record["visited_at"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+            async with lock:
+                done[url] = record
+                with open(out / "visits.jsonl", "a", encoding="utf-8") as f:
+                    f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        progress["hosts"] += 1
+        if progress["hosts"] % 50 == 0 or progress["hosts"] == progress["total"]:
+            minutes = (time.monotonic() - progress["start"]) / 60
+            print(f"{progress['hosts']}/{progress['total']} hosts, {minutes:.1f} min", flush=True)
 
-    await asyncio.gather(*(one_host(urls) for urls in urls_by_host.values()))
+    async def worker() -> None:
+        while queue:
+            await one_host(queue.popleft())
+
+    await asyncio.gather(*(worker() for _ in range(parallel)))
 
 
 def write_outputs(leads: list[dict], skipped: dict, done: dict, out: Path) -> dict:

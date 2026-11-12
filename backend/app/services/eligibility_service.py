@@ -416,7 +416,7 @@ class EligibilityService:
                     ).scalar_one_or_none()
         if business is None:
             raise LookupError(f"Business {business_id} not found")
-        checked_at = rules.aware(checked_at)
+        checked_at = rules.aware(checked_at).astimezone(timezone.utc)   # stored as UTC (SQLite drops offsets)
         row = SocialConfirmation(business_id=business_id, profile_url=profile_url, checked_at=checked_at,
                                  website_link_present=website_link_present, email_seen=email_seen)
         self.session.add(row)

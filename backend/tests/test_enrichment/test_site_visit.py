@@ -212,3 +212,41 @@ async def test_homepage_only_check_reads_no_contact_pages(serve):
     assert visit.outcome == "ok" and visit.has_viewport is False
     assert hits == ["/robots.txt", "/"]
     assert visit.contacts == []
+
+
+# ---------- memory (2026-11-12 MemoryError in the E1 pool crawl) ----------
+
+@pytest.mark.parametrize("head", [
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    '<meta name="Viewport" content="initial-scale=1.0">',
+    '<meta name="viewport" content="width=1024">',
+    '<meta name="viewport">',
+    '<meta property="og:title" content="x"><meta name="description" content="width=device-width">',
+    "",
+])
+def test_viewport_check_gives_the_auditor_answer(head):
+    from backend.app.engines.opportunity.auditor import WebsiteAuditor
+    html = f"<html><head>{head}<title>t</title></head><body><p>Hi</p></body></html>"
+    assert site_visit.has_viewport_tag(html) == WebsiteAuditor().audit_html("https://x.in", html).has_viewport_meta
+
+
+def test_viewport_check_stays_small_on_a_dense_2_mb_page():
+    import tracemalloc
+    row = '<div class="p"><a href="/x">Item 999</a><span>desc</span></div>'
+    html = ("<html><head><meta name='viewport' content='width=device-width'></head><body>"
+            + row * (1_950_000 // len(row)) + "</body></html>")
+    tracemalloc.start()
+    assert site_visit.has_viewport_tag(html) is True
+    peak = tracemalloc.get_traced_memory()[1]
+    tracemalloc.stop()
+    # The full WebsiteAuditor.audit_html used before needed ~97 MB for a page like this (measured 2026-11-12).
+    assert peak < 10 * 1024 * 1024
+
+
+def test_cutting_scripts_and_comments_before_parsing_changes_no_result():
+    html = ('<html><body><script>var a = "<a href=\\"mailto:hidden@shop.in\\">x</a>"; // ceo@shop.in</script>'
+            "<style>.x{}/* style@shop.in */</style><!-- old@shop.in -->"
+            '<p>Mail <a href="mailto:owner@shop.in">us</a></p><SCRIPT type="x">admin@shop.in</SCRIPT>'
+            "<p>sales@shop.in</p></body></html>")
+    found = sorted(c.email for c in ContactDiscoveryEngine()._extract_from_html(html, "https://shop.in/"))
+    assert found == ["owner@shop.in", "sales@shop.in"]

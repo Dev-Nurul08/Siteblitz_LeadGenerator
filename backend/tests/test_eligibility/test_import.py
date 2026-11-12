@@ -5,9 +5,11 @@ with provenance; idempotent; chain hosts held. The folder is written here with m
 
 import csv
 import json
+from datetime import datetime, timezone
 
 from sqlalchemy import func, select
 
+from backend.app.engines.eligibility.rules import aware
 from backend.app.models.business import Business
 from backend.app.models.contact import Contact
 from backend.app.models.eligibility import CaptureMethod, EmailCapture, HoldReason
@@ -98,10 +100,12 @@ async def test_import_is_idempotent_and_keeps_provenance(session, tmp_path):
     capture = (await session.execute(select(EmailCapture).where(
         EmailCapture.method == CaptureMethod.MAILTO))).scalar_one()
     assert (capture.source_url, capture.excerpt) == (page, "Bookings: info@glowhair.in")
-    assert capture.captured_at.isoformat().startswith("2026-11-12T")
+    # visited_at 10:30 IST is stored as 05:00 UTC: SQLite drops offsets and the app reads stored times as UTC
+    utc = datetime(2026, 11, 12, 5, 0, tzinfo=timezone.utc)
+    assert aware(capture.captured_at) == utc
     check = (await session.execute(select(WebsiteCheck).where(WebsiteCheck.target == "https://glowhair.in")
                                    )).scalar_one()
-    assert check.outcome == "ok" and check.detail["has_viewport"] is False
+    assert check.outcome == "ok" and check.detail["has_viewport"] is False and aware(check.observed_at) == utc
     business = (await session.execute(select(Business).where(Business.name == "Glow Hair Studio"))).scalar_one()
     assert business.country_code == "IN" and business.social_urls == {"instagram": "https://instagram.com/glowhair"}
 
