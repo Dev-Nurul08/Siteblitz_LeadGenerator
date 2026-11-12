@@ -269,3 +269,17 @@ async def test_commitment_request_gets_no_draft(factory, session, site, models):
     assert (await session.execute(select(ReplyDraft).where(
         ReplyDraft.kind == DraftKind.REPLY))).scalars().all() == []
     assert DraftState.WAITING   # (enum imported for the other modules' readers)
+
+
+async def test_an_unsubscribe_by_link_stops_the_local_sequence(factory, session, site, models):
+    await ready_mailbox(session)
+    sent = await sent_sequence(session)
+    async with factory() as db:   # a stop reply from someone else is already in the local mirror (newer row)
+        db.add(SuppressionMirror(email_hash=email_hash("other@shop.example"), reason="reply_stop",
+                                 suppressed_at=ist(TUE, 11), fetched_at=ist(TUE, 11)))
+        await db.commit()
+    site.suppressed.add(email_hash(OWNER))   # the owner clicked the unsubscribe link earlier (website only)
+    summary = await make_loop(factory, Clock(ist(TUE, 12)), site, FakeImapServer(), models).reconcile()
+    assert summary["website_unsubscribes"] == 1
+    session.expire_all()
+    assert (await session.get(EmailSequence, sent.sequence_id)).state == SequenceState.STOPPED_SUPPRESSED

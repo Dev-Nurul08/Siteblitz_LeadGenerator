@@ -772,10 +772,10 @@ class ReplyLoop:
         stopped = 0
         async with self.factory() as session:
             sending, rules = self._services(session)
-            last = (await session.execute(select(SuppressionMirror.fetched_at).order_by(
-                SuppressionMirror.fetched_at.desc()).limit(1))).scalar_one_or_none()
+            # The whole list every time (small in the pilot): the mirror also holds rows this app wrote itself, so
+            # its newest row is no safe cursor for what the website stored earlier.
             try:
-                await rules.sync_mirror(aware(last) - timedelta(days=1) if last else None, now)
+                await rules.sync_mirror(None, now)
             except SuppressionUnavailable as exc:
                 logger.info("suppression_mirror_sync_failed", error=str(exc)[:100])
                 await session.rollback()
