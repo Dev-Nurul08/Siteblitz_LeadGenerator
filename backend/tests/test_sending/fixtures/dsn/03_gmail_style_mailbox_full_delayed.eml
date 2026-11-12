@@ -1,0 +1,37 @@
+Return-Path: <>
+From: Mail Delivery Subsystem <mailer-daemon@mx.example.net>
+To: test.founder@send-one.example
+Subject: Delivery Status Notification (Delay)
+Date: Tue, 17 Nov 2026 13:02:11 +0530
+MIME-Version: 1.0
+Content-Type: multipart/report; boundary="b3"; report-type=delivery-status
+
+--b3
+Content-Type: text/plain; charset="UTF-8"
+
+** Delivery incomplete **
+
+There was a temporary problem delivering your message to owner.three@example.com. We will retry for 47 more hours.
+
+--b3
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mx.example.net
+
+Final-Recipient: rfc822; owner.three@example.com
+Action: delayed
+Status: 4.2.2
+Diagnostic-Code: smtp; 452-4.2.2 The recipient's inbox is out of storage space.
+Will-Retry-Until: Thu, 19 Nov 2026 09:02:11 +0530
+
+--b3
+Content-Type: message/rfc822
+
+Message-ID: <aaaaaaaa-0003@send-one.example>
+From: "Test Founder, SiteBlitz" <test.founder@send-one.example>
+To: owner.three@example.com
+Subject: Example Showroom: example.com did not load in our checks
+
+Body text.
+
+--b3--

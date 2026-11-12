@@ -26,7 +26,7 @@ from typing import Optional, Union
 HARD, POLICY, SOFT, UNKNOWN = "HARD", "POLICY", "SOFT", "UNKNOWN"
 
 _STATUS = re.compile(r"(?<![\d.])([245])\.(\d{1,3})\.(\d{1,3})(?![\d.])")
-_SMTP_CODE = re.compile(r"(?<!\d)([45]\d\d)(?:[ \-]|$)", re.MULTILINE)
+_SMTP_CODE = re.compile(r"(?<![\d.\[])([45]\d\d)(?:[ \-:]|$)", re.MULTILINE)
 _ADDRESS = re.compile(r"<?([A-Za-z0-9._%+'\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,63})>?")
 _MESSAGE_ID = re.compile(r"^\s*Message-ID:\s*(<[^>\s]+>)", re.IGNORECASE | re.MULTILINE)
 
@@ -164,7 +164,9 @@ def parse_bounce(raw: Union[bytes, str, Message]) -> BounceResult:
             status_groups.extend(_status_fields(part))
         elif ctype in ("text/plain", "text/html") and not part.is_multipart():
             texts.append(_payload_text(part))
-    text = "\n".join(texts)
+    full_text = "\n".join(texts)
+    # Only the report itself is classified: the copy of OUR message that bounces often carry must never decide.
+    text = _report_text(full_text)
     if not looks_like_bounce(message) and not status_groups:
         return BounceResult(is_bounce=False, kind=UNKNOWN)
 
@@ -196,15 +198,25 @@ def parse_bounce(raw: Union[bytes, str, Message]) -> BounceResult:
         if status and status.startswith("2."):
             kind = UNKNOWN
     return BounceResult(is_bounce=True, kind=kind, status=status, smtp_code=smtp_code, recipient=recipient,
-                        original_message_id=_original_message_id(message, text),
+                        original_message_id=_original_message_id(message, full_text),
                         diagnostic=(diagnostic or _first_error_line(text)), action=action)
+
+
+_COPY_MARKERS = re.compile(r"^\s*(?:-{2,}\s*(?:Below this line|This is a copy|Original message)|"
+                           r"Received:|Return-path:|Message-ID:)", re.IGNORECASE | re.MULTILINE)
+
+
+def _report_text(text: str) -> str:
+    found = _COPY_MARKERS.search(text)
+    return text[:found.start()] if found else text
 
 
 _RECIPIENT_HINTS = (
     re.compile(r"following address(?:\(es\))? failed:\s*\n\s*<?([^\s<>]+@[^\s<>]+?)>?\s*$", re.I | re.M),
+    re.compile(r"fatal errors\s*-*\s*\n\s*<?([^\s<>]+@[^\s<>]+?)>?\s*$", re.I | re.M),
     re.compile(r"following recipient(?:\(s\))?[^:\n]*:\s*\n\s*<?([^\s<>]+@[^\s<>]+?)>?\s*$", re.I | re.M),
     re.compile(r"following address[^:\n]*:\s*\n\s*<?([^\s<>]+@[^\s<>:]+?)>?:?\s*$", re.I | re.M),
-    re.compile(r"(?:message|mail) to\s+<?([^\s<>]+@[^\s<>]+?)>?\s+(?:could not|cannot|couldn't|was not)", re.I),
+    re.compile(r"(?:message|mail) to\s+<?([^\s<>]+@[^\s<>]+?)>?\s+(?:could not|cannot|couldn't|was not|has not)", re.I),
     re.compile(r"^\s*<([^\s<>]+@[^\s<>]+)>:\s*$", re.M),
 )
 

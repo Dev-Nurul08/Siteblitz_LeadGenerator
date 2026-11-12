@@ -1,0 +1,19 @@
+From: MAILER-DAEMON@mta.yahoo-style.example
+To: test.founder@send-one.example
+Subject: Failure Notice
+Date: Tue, 17 Nov 2026 04:10:00 +0000
+
+Sorry, we were unable to deliver your message to the following address.
+
+<owner.six@example.com>:
+554: delivery error: dd This user doesn't have a example.com account (owner.six@example.com) [0] - mta.yahoo-style.example
+
+--- Below this line is a copy of the message.
+
+Received: from mail.send-one.example (192.0.2.55)
+Message-ID: <aaaaaaaa-0006@send-one.example>
+From: "Test Founder, SiteBlitz" <test.founder@send-one.example>
+To: owner.six@example.com
+Subject: Example Salon: no website link in Instagram bio
+
+Body text.

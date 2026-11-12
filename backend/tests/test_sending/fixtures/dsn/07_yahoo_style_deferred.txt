@@ -1,0 +1,13 @@
+From: MAILER-DAEMON@mail.send-one.example
+To: test.founder@send-one.example
+Subject: Delivery delayed: Example Showroom: example.com did not load in our checks
+Date: Tue, 17 Nov 2026 05:00:00 +0000
+
+This is an automatically generated delivery notification.
+
+Your message to <owner.seven@example.com> has not been delivered yet. The mail system will still try.
+
+The remote server said:
+421 4.7.0 [TS04] Messages from 192.0.2.55 temporarily deferred due to unexpected volume or user complaints
+
+Message-ID: <aaaaaaaa-0007@send-one.example>

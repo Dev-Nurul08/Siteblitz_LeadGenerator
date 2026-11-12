@@ -1,0 +1,36 @@
+From: Microsoft Outlook <postmaster@outlook-style.example>
+To: test.founder@send-one.example
+Subject: Undeliverable: Example Coaching: your homepage on a phone
+Date: Tue, 17 Nov 2026 03:40:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="b5"
+
+--b5
+Content-Type: text/plain; charset="us-ascii"
+
+Delivery has failed to these recipients or groups:
+
+owner.five@example.org
+Your message wasn't delivered because the recipient's email provider rejected it.
+
+--b5
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns;EX2.outlook-style.example
+
+Final-Recipient: rfc822;owner.five@example.org
+Action: failed
+Status: 5.7.1
+Diagnostic-Code: smtp;550 5.7.1 Service unavailable, Client host [192.0.2.55] blocked using a reputation blocklist
+
+--b5
+Content-Type: message/rfc822
+
+Message-ID: <aaaaaaaa-0005@send-one.example>
+From: "Test Founder, SiteBlitz" <test.founder@send-one.example>
+To: owner.five@example.org
+Subject: Example Coaching: your homepage on a phone
+
+Body text.
+
+--b5--

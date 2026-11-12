@@ -1,0 +1,26 @@
+Return-path: <>
+From: Mail Delivery System <Mailer-Daemon@mx.exim-style.example>
+To: test.founder@send-one.example
+Subject: Mail delivery failed: returning message to sender
+X-Failed-Recipients: owner.eleven@example.com
+Date: Tue, 17 Nov 2026 04:20:00 +0000
+
+This message was created automatically by mail delivery software.
+
+A message that you sent could not be delivered to one or more of its
+recipients. This is a permanent error. The following address(es) failed:
+
+  owner.eleven@example.com
+    host mx.example.com [192.0.2.40]
+    SMTP error from remote mail server after RCPT TO:<owner.eleven@example.com>:
+    550 5.1.1 No such user here
+
+------ This is a copy of the message, including all the headers. ------
+
+Return-path: <test.founder@send-one.example>
+Message-ID: <aaaaaaaa-0011@send-one.example>
+From: "Test Founder, SiteBlitz" <test.founder@send-one.example>
+To: owner.eleven@example.com
+Subject: Example Salon: no website link in Instagram bio
+
+Body text.
