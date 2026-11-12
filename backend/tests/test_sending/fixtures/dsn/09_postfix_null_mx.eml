@@ -1,0 +1,35 @@
+Return-Path: <>
+From: MAILER-DAEMON@mail.send-one.example (Mail Delivery System)
+To: test.founder@send-one.example
+Subject: Undelivered Mail Returned to Sender
+Date: Tue, 17 Nov 2026 09:31:00 +0530
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="P9"
+
+--P9
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host mail.send-one.example.
+
+<owner.nine@example.net>: Domain example.net does not accept mail (nullMX)
+
+--P9
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mail.send-one.example
+
+Final-Recipient: rfc822; owner.nine@example.net
+Action: failed
+Status: 5.1.10
+Diagnostic-Code: X-Postfix; Domain example.net does not accept mail (nullMX)
+
+--P9
+Content-Description: Undelivered Message Headers
+Content-Type: text/rfc822-headers
+
+Message-ID: <aaaaaaaa-0009@send-one.example>
+To: owner.nine@example.net
+
+--P9--

@@ -1,0 +1,14 @@
+From: postmaster@relay.example.net
+To: test.founder@send-one.example
+Subject: Returned mail: see transcript for details
+Date: Tue, 17 Nov 2026 04:30:00 +0000
+
+The original message was received at Tue, 17 Nov 2026 04:29:00 +0000.
+
+   ----- The following addresses had permanent fatal errors -----
+<owner.thirteen@example.com>
+
+   ----- Transcript of session follows -----
+5.0.0 Delivery failed for an unspecified reason
+
+Message-ID: <aaaaaaaa-0013@send-one.example>

@@ -1,0 +1,47 @@
+From: Microsoft Outlook <postmaster@outlook-style.example>
+To: test.founder@send-one.example
+Subject: Undeliverable: Example Salon: no website link in Instagram bio
+Date: Tue, 17 Nov 2026 03:35:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="b4"
+
+--b4
+Content-Type: multipart/alternative; boundary="b4alt"
+
+--b4alt
+Content-Type: text/plain; charset="us-ascii"
+
+Your message to owner.four@example.org couldn't be delivered.
+owner.four wasn't found at example.org.
+
+Remote Server returned '550 5.1.10 RESOLVER.ADR.RecipientNotFound; Recipient not found by SMTP address lookup'
+
+--b4alt
+Content-Type: text/html; charset="us-ascii"
+
+<html><body><p>Your message to owner.four@example.org couldn't be delivered.</p></body></html>
+
+--b4alt--
+
+--b4
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns;EX1.outlook-style.example
+Received-From-MTA: dns;mail.send-one.example
+Arrival-Date: Tue, 17 Nov 2026 03:34:58 +0000
+
+Original-Recipient: rfc822;owner.four@example.org
+Final-Recipient: rfc822;owner.four@example.org
+Action: failed
+Status: 5.1.10
+Diagnostic-Code: smtp;550 5.1.10 RESOLVER.ADR.RecipientNotFound; Recipient not found by SMTP address lookup
+
+--b4
+Content-Type: text/rfc822-headers
+
+Message-ID: <aaaaaaaa-0004@send-one.example>
+From: "Test Founder, SiteBlitz" <test.founder@send-one.example>
+To: owner.four@example.org
+Subject: Example Salon: no website link in Instagram bio
+
+--b4--

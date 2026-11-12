@@ -1,0 +1,20 @@
+Return-path: <>
+From: Mail Delivery System <Mailer-Daemon@mx.exim-style.example>
+To: test.founder@send-one.example
+Subject: Mail delivery failed: returning message to sender
+Date: Tue, 17 Nov 2026 04:25:00 +0000
+
+This message was created automatically by mail delivery software.
+
+A message that you sent could not be delivered to one or more of its
+recipients. This is a permanent error. The following address(es) failed:
+
+  owner.twelve@example.com
+    host mx.example.com [192.0.2.41]
+    SMTP error from remote mail server after end of data:
+    550 5.7.1 Message rejected due to content restrictions
+
+------ This is a copy of the message, including all the headers. ------
+
+Message-ID: <aaaaaaaa-0012@send-one.example>
+To: owner.twelve@example.com

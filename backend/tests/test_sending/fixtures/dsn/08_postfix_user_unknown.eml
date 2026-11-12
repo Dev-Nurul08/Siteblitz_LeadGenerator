@@ -1,0 +1,50 @@
+Return-Path: <>
+From: MAILER-DAEMON@mail.send-one.example (Mail Delivery System)
+To: test.founder@send-one.example
+Subject: Undelivered Mail Returned to Sender
+Date: Tue, 17 Nov 2026 09:30:00 +0530
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="P8"
+
+--P8
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host mail.send-one.example.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+                   The mail system
+
+<owner.eight@example.org>: host mx.example.org[192.0.2.20] said: 550 5.1.1
+    <owner.eight@example.org>: Recipient address rejected: User unknown in
+    virtual mailbox table (in reply to RCPT TO command)
+
+--P8
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mail.send-one.example
+X-Postfix-Queue-ID: 4ABCD12345
+X-Postfix-Sender: rfc822; test.founder@send-one.example
+Arrival-Date: Tue, 17 Nov 2026 09:29:58 +0530
+
+Final-Recipient: rfc822; owner.eight@example.org
+Original-Recipient: rfc822;owner.eight@example.org
+Action: failed
+Status: 5.1.1
+Remote-MTA: dns; mx.example.org
+Diagnostic-Code: smtp; 550 5.1.1 <owner.eight@example.org>: Recipient address
+    rejected: User unknown in virtual mailbox table
+
+--P8
+Content-Description: Undelivered Message Headers
+Content-Type: text/rfc822-headers
+
+Message-ID: <aaaaaaaa-0008@send-one.example>
+From: "Test Founder, SiteBlitz" <test.founder@send-one.example>
+To: owner.eight@example.org
+Subject: Example Salon: no website link in Instagram bio
+
+--P8--

@@ -39,6 +39,8 @@ frontend/dist/
 *.db
 *.db-journal
 *.sqlite3
+# The sender worker's lock file (email engine v2, E2), next to the database
+outreach_worker.lock
 
 # OS
 .DS_Store

@@ -51,10 +51,14 @@ dependencies = [
     "structlog>=24.0.0",
     "tenacity>=8.5.0",
     "click>=8.1.0",
+    # Time-zone data for zoneinfo (Asia/Kolkata): Windows has no system tz database. Pure Python data package.
+    "tzdata>=2024.1",
 ]
 
 [project.optional-dependencies]
 dev = [
+    # Local SMTP server on 127.0.0.1 for the sender worker tests (pure Python)
+    "aiosmtpd>=1.4.6",
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
     "pytest-cov>=5.0.0",

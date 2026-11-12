@@ -54,6 +54,14 @@ class Settings(BaseSettings):
     SITEBLITZ_REPLY_EMAIL: Optional[str] = None
     SITEBLITZ_POSTAL_ADDRESS: Optional[str] = None
 
+    # === Email sending core (email engine v2, E2; contract: docs/spec/email-engine-v2-contracts.md) ===
+    # Shared with the SiteBlitz website. A value shorter than 32 characters (after trimming) counts as missing,
+    # and the worker then refuses to start. Mailbox passwords are NOT settings: MAILBOX_<SLUG>_PASSWORD is read
+    # from the environment / .env by backend/app/engines/sending/smtp.py only when a message is submitted.
+    OUTREACH_API_KEY: Optional[str] = None            # Bearer key for /api/outreach/suppressions*
+    OUTREACH_SIGNING_SECRET: Optional[str] = None     # HMAC secret for the /u/{token} unsubscribe tokens
+    OUTREACH_PUBLIC_BASE_URL: Optional[str] = None    # origin serving /u/ and /api/outreach/ (no trailing slash)
+
     # === Overture Maps Places ===
     # Dated release folder on s3://overturemaps-us-west-2/release/ (monthly). Newest on
     # 2026-11-08 = 2026-10-21.0; old releases are removed, so update this when reads fail.
@@ -84,6 +92,10 @@ class Settings(BaseSettings):
         "env_file": ".env",
         "env_file_encoding": "utf-8",
         "case_sensitive": True,
+        # E2: .env also holds MAILBOX_<SLUG>_PASSWORD lines, one per sending mailbox, which are deliberately not
+        # fields here (never loaded into a settings object that could be logged). pydantic-settings' default
+        # extra="forbid" would refuse to start on them, so unknown .env keys are ignored instead.
+        "extra": "ignore",
     }
 
 

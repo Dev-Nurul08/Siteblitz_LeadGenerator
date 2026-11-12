@@ -1,0 +1,39 @@
+Return-Path: <>
+From: MAILER-DAEMON@mail.send-one.example (Mail Delivery System)
+To: test.founder@send-one.example
+Subject: Delayed Mail (still being retried)
+Date: Tue, 17 Nov 2026 13:30:00 +0530
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="P10"
+
+--P10
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host mail.send-one.example.
+
+####################################################################
+# THIS IS A WARNING ONLY.  YOU DO NOT NEED TO RESEND YOUR MESSAGE. #
+####################################################################
+
+<owner.ten@example.org>: connect to mx.example.org[192.0.2.30]:25: Connection timed out
+
+--P10
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mail.send-one.example
+
+Final-Recipient: rfc822; owner.ten@example.org
+Action: delayed
+Status: 4.4.1
+Diagnostic-Code: X-Postfix; connect to mx.example.org[192.0.2.30]:25: Connection timed out
+Will-Retry-Until: Sat, 21 Nov 2026 09:30:00 +0530
+
+--P10
+Content-Description: Undelivered Message Headers
+Content-Type: text/rfc822-headers
+
+Message-ID: <aaaaaaaa-0010@send-one.example>
+
+--P10--
