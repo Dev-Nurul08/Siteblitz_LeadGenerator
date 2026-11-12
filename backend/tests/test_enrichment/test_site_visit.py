@@ -185,3 +185,30 @@ async def test_listing_social_and_empty_addresses_are_not_fetched():
     for empty in ("", "https://", "   "):
         visit = await visit_site(empty, extract())
         assert (visit.outcome, visit.requests) == ("no_address", 0)
+
+
+# ---------- email engine v2 E1: a block / challenge page is never "down"; homepage-only recheck ----------
+
+async def test_challenge_page_is_protected_not_down(serve):
+    challenge = b"<html><head><title>Just a moment...</title></head><body>cf-browser-verification</body></html>"
+    for status in (503, 200):
+        host, _ = serve({"/robots.txt": ROBOTS_OPEN, "/": (status, HTML, challenge)})
+        visit = await visit_site(f"http://{host}", extract())
+        assert visit.outcome == "protected", status
+        assert "challenge" in visit.note.lower()
+    # a plain server error is still a failed check
+    host, _ = serve({"/robots.txt": ROBOTS_OPEN, "/": (503, HTML, b"<html>Service unavailable</html>")})
+    assert (await visit_site(f"http://{host}", extract())).outcome == "failed"
+    # a normal page with a reCAPTCHA form is a normal page
+    host, _ = serve({"/robots.txt": ROBOTS_OPEN,
+                     "/": (200, HTML, b'<html><body><form><div class="g-recaptcha">captcha</div></form></body></html>')})
+    assert (await visit_site(f"http://{host}", extract())).outcome == "ok"
+
+
+async def test_homepage_only_check_reads_no_contact_pages(serve):
+    host, hits = serve({"/robots.txt": ROBOTS_OPEN, "/": (200, HTML, b"<html><body>Hi</body></html>"),
+                        "/contact": (200, HTML, b'<a href="mailto:owner@shop.in">mail</a>')})
+    visit = await visit_site(f"http://{host}", extract(), contact_pages=False)
+    assert visit.outcome == "ok" and visit.has_viewport is False
+    assert hits == ["/robots.txt", "/"]
+    assert visit.contacts == []

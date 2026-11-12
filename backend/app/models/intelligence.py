@@ -58,6 +58,9 @@ class CheckType(str, enum.Enum):
     MANUAL_SEARCH = "MANUAL_SEARCH"
     MANUAL_ACTIVITY = "MANUAL_ACTIVITY"
     SKIP_RULE = "SKIP_RULE"
+    # Email engine v2 (E1): a 390 px phone render of the homepage (scripts/render_check.cjs).
+    # outcome zoomed_out | fits | error; detail = inner_width, final_url, screenshot path.
+    PHONE_RENDER = "PHONE_RENDER"
 
 
 class FounderLabel(str, enum.Enum):

@@ -29,6 +29,14 @@ CONTACT_PATHS = ("/contact", "/contact-us", "/contactus", "/about")   # discover
 TIMEOUT_SECONDS = 12.0
 MAX_BYTES = 2 * 1024 * 1024
 MAX_REDIRECTS = 5
+# Block / challenge pages (Cloudflare, DDoS-Guard, Sucuri, ...). Email engine v2 spec row 4: "a block or challenge
+# page is not down", so such a homepage counts as `protected` (the site exists). STRONG tokens appear only on the
+# challenge page itself, so they are also checked on a 200 answer; the WEAK ones (a reCAPTCHA form, "access
+# denied" text) can be on a normal page and are checked only on error answers (4xx / 5xx).
+STRONG_CHALLENGE_TOKENS = ("<title>just a moment...</title>", "cf-browser-verification", "window._cf_chl_opt",
+                           "attention required! | cloudflare", "ddos-guard")
+WEAK_CHALLENGE_TOKENS = STRONG_CHALLENGE_TOKENS + ("captcha", "access denied", "sucuri website firewall",
+                                                   "request blocked", "/cdn-cgi/challenge-platform/")
 
 
 async def _guard(request: httpx.Request) -> None:
@@ -190,6 +198,11 @@ async def _load_robots(client: httpx.AsyncClient, origin: str, timeout: float,
     return RobotsRules.allow_all(), page
 
 
+def is_challenge(page: Page, strong_only: bool = False) -> bool:
+    head = (page.body or "")[:20000].lower()
+    return any(token in head for token in (STRONG_CHALLENGE_TOKENS if strong_only else WEAK_CHALLENGE_TOKENS))
+
+
 def _no_dns(page: Page) -> bool:
     detail = (page.detail or "").lower()
     return page.error == "connect" and ("getaddrinfo" in detail or "name or service" in detail
@@ -208,8 +221,11 @@ def new_client(timeout: float = TIMEOUT_SECONDS) -> httpx.AsyncClient:
 
 
 async def visit_site(listed_url: str, extract: Callable[[str, str], list],
-                     timeout: float = TIMEOUT_SECONDS) -> SiteVisit:
-    """`extract(html, source_url)` returns the contacts a page shows (ContactDiscoveryEngine._extract_from_html)."""
+                     timeout: float = TIMEOUT_SECONDS, contact_pages: bool = True) -> SiteVisit:
+    """`extract(html, source_url)` returns the contacts a page shows (ContactDiscoveryEngine._extract_from_html).
+
+    contact_pages=False = homepage check only (robots.txt + homepage, no extraction): the SITE_DOWN recheck.
+    """
     visit = SiteVisit(listed_url=listed_url)
     url = (listed_url or "").strip()
     if url and not url.startswith(("http://", "https://")):
@@ -263,7 +279,13 @@ async def visit_site(listed_url: str, extract: Callable[[str, str], list],
             visit.outcome = "protected"   # spec row 6: the site exists
             return visit
         if home.status >= 500 or home.status in (404, 410):
+            if is_challenge(home):
+                visit.outcome, visit.note = "protected", f"Block / challenge page (HTTP {home.status})"
+                return visit
             visit.note = f"HTTP {home.status}"
+            return visit
+        if is_challenge(home, strong_only=True):
+            visit.outcome, visit.note = "protected", f"Block / challenge page (HTTP {home.status})"
             return visit
         if any(token in home.body[:4000].lower() for token in PARKED_TOKENS):
             visit.note = "Parked / coming-soon page"
@@ -272,6 +294,9 @@ async def visit_site(listed_url: str, extract: Callable[[str, str], list],
         is_html = "html" in home.content_type
         if is_html:
             visit.has_viewport = WebsiteAuditor().audit_html(final, home.body).has_viewport_meta
+        if not contact_pages:
+            return visit
+        if is_html:
             visit.contacts = extract(home.body, final)
             visit.pages[-1]["emails"] = len(visit.contacts)
 

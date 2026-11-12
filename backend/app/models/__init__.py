@@ -45,6 +45,12 @@ from backend.app.models.campaign import (
     ReplyIntent,
 )
 from backend.app.models.lead_radar import LeadRadarEvaluation
+from backend.app.models.eligibility import (
+    EmailCapture,
+    EmailEligibility,
+    EmailVerification,
+    SocialConfirmation,
+)
 
 __all__ = [
     "Source",
@@ -81,4 +87,8 @@ __all__ = [
     "ReplyIntent",
     "EventType",
     "LeadRadarEvaluation",
+    "EmailCapture",
+    "EmailEligibility",
+    "EmailVerification",
+    "SocialConfirmation",
 ]

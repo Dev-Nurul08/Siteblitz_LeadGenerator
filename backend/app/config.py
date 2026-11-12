@@ -42,6 +42,11 @@ class Settings(BaseSettings):
     HUNTER_API_KEY: Optional[str] = None
     GOOGLE_PAGESPEED_API_KEY: Optional[str] = None
 
+    # === Email verifier (email engine v2, E1) ===
+    # Bouncer real-time API key (https://docs.usebouncer.com). Without it every address stays UNVERIFIED
+    # (HOLD NOT_VERIFIED): the app never pretends an address was verified.
+    BOUNCER_API_KEY: Optional[str] = None
+
     # === AI outreach writer (docs/spec/outreach-engine.md) ===
     ANTHROPIC_API_KEY: Optional[str] = None
     # Kept in .env, not in git: they appear in every signature and the postal address is personal.
